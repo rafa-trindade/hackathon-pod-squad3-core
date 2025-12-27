@@ -1,4 +1,4 @@
-## 🏗️ squad3-data-engineering
+## ⚙️ squad3-data-engineering
 
 Repositório de desenvolvimento e experimentação de engenharia de dados para o hackathon da Pod Academy - Squad 3 
 
@@ -7,3 +7,7 @@ Repositório de desenvolvimento e experimentação de engenharia de dados para o
 - **Frederico da Costa dos Santos**
 - **Rafael Araujo Trindade**
 - **Ronaldo Theodoro**
+
+## 🛠️ Arquitetura Local
+
+![Arquitetura Local](docs/data_architecture/arquitetura_local.png)
