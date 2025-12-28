@@ -100,7 +100,7 @@ Camada: `RAW`<br>
 Camada: `BRONZE`<br>
 **Estratégia:** Retenção curta baseada em runs técnicas
 
-Camada: `SILVER`<br>  
+Camada: `SILVER`<br>
 **Estratégia:** Retenção orientada a negócio e reprocessamento
 
 Camada: `GOLD`<br>
