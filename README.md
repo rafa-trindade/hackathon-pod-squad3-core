@@ -11,7 +11,7 @@ Repositório de desenvolvimento e experimentação de engenharia de dados para o
 ## 🎯 Princípios do Projeto
 
 - Simplicidade operacional
-- Governança pragmática
+- Governança por design
 - Observabilidade nativa
 - Reprocessamento como regra
 - Engenharia orientada a dados, não a ferramentas
