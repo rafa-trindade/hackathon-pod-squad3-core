@@ -104,7 +104,7 @@ Camada: `SILVER`<br>
 **Estratégia:** Retenção orientada a negócio e reprocessamento
 
 Camada: `GOLD`<br>
-**Estratégia:** Governada por SLA analítico e requisitos de ML
+**Estratégia:** Governada por requisitos de ML
 
 ---
 
