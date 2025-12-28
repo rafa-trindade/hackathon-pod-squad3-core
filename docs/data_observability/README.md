@@ -144,3 +144,4 @@ de ferramentas externas, através de:
 - Governança aplicada via código
 
 A observabilidade emerge como **resultado natural** das decisões de engenharia.
+
