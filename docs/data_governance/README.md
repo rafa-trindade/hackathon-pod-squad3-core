@@ -1,4 +1,4 @@
-# 🏛️ Data Governance
+# 🏛️ Data Governance - Mapeamento Prático do Projeto
 
 Este diretório concentra as **políticas, diretrizes e decisões estruturais**
 relacionadas à governança de dados do projeto.
