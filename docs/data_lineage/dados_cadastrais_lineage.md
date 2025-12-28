@@ -62,12 +62,12 @@
 
 ---
 
-#### 3. Observações
+### 3. Observações
 
 - RAW → BRONZE: apenas transformações técnicas, sem regras de negócio  
 - BRONZE → SILVER: transformações semânticas e de negócio  
 - Não há criação de surrogate keys nesta arquitetura (datalake)
-- Na camada `SILVER` será realizada a **validação da qualidade dos dados**, utilizando **Pandera** para garantir conformidade com esquemas, tipos, regras de integridade e restrições de negócio
+- Nas camadas `RAW` e `SILVER` será realizada a **validação da qualidade dos dados**, utilizando **Pandera** para garantir conformidade com esquemas, tipos, regras de integridade e restrições de negócio
 - A camada `SILVER` é a base de origem:
   - da camada `GOLD` do Data Lake (engenharia de atributos e ML)
   - da camada `SOURCE` do Data Warehouse (BI)
