@@ -39,7 +39,7 @@ Para evitar crescimento descontrolado de armazenamento e garantir governança op
 *Exemplo de configuração:*
 
 ```python
-BRONZE_MAX_RUNS = 3
+BRONZE_MAX_RUNS = 2
 ```
 
 Com essa configuração:
