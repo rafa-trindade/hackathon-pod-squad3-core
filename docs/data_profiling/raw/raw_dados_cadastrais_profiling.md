@@ -1,15 +1,9 @@
 # Relatório de Profiling: `raw/dados_cadastrais`
 
-### 📦 Volume Físico Parquet: `raw/dados_cadastrais`
-|   qtd_arquivos |   tamanho_comprimido_mb |   tamanho_comprimido_gb |   tamanho_descomprimido_mb |   tamanho_descomprimido_gb |
-|---------------:|------------------------:|------------------------:|---------------------------:|---------------------------:|
-|              1 |                   74.68 |                    0.07 |                     105.86 |                        0.1 |
-
----
-
-### 🔢 Volume Lógico: `raw/dados_cadastrais`
-- **Total de linhas:** 3900378
-- **Total de colunas:** 33
+### 📦 Volumetria: `raw/dados_cadastrais`
+|   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
+|---------------:|:------------|----------:|-------------------------:|----------------------------:|
+|              1 | 3.900.378   |        33 |                    74.68 |                      105.86 |
 
 ---
 
@@ -59,6 +53,7 @@
 #### ⚠️ Possíveis campos de data/hora sem tipagem (inferido pelo nome)
 
 - `DATADENASCIMENTO`
+- `SAFRA`
 
 
 ---
@@ -107,16 +102,16 @@
 
 | valor       |   qtd |
 |:------------|------:|
-| ZZTZ799U79T |     6 |
-| Y77ZYUXU8NW |     6 |
-| U8Z9ZZ8N8XZ |     6 |
-| ZX77YX8WNWN |     6 |
-| ZZZZZZZX7T9 |     6 |
-| WW7NWZ9Y8ZW |     6 |
-| 7X7NZ79YWU9 |     6 |
-| 888W78UZYYT |     6 |
 | WXZY8TNZ7XZ |     6 |
+| Y77ZYUXU8NW |     6 |
+| ZX77YX8WNWN |     6 |
+| WW7NWZ9Y8ZW |     6 |
+| U8Z9ZZ8N8XZ |     6 |
+| 7X7NZ79YWU9 |     6 |
 | XX9Z8T8YUZT |     6 |
+| ZZTZ799U79T |     6 |
+| ZZZZZZZX7T9 |     6 |
+| 888W78UZYYT |     6 |
 
 #### Coluna: `SAFRA`
 
@@ -182,11 +177,11 @@
 | 10/06/1981 |   349 |
 | 05/06/1981 |   348 |
 | 20/09/1985 |   346 |
-| 12/10/1989 |   345 |
 | 10/03/1988 |   345 |
+| 12/10/1989 |   345 |
 | 08/06/1982 |   344 |
 | 06/06/1988 |   343 |
-| 09/05/1988 |   342 |
+| 28/02/1983 |   342 |
 
 #### Coluna: `var_03`
 

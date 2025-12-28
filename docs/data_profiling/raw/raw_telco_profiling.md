@@ -1,15 +1,9 @@
 # Relatório de Profiling: `raw/telco`
 
-### 📦 Volume Físico Parquet: `raw/telco`
-|   qtd_arquivos |   tamanho_comprimido_mb |   tamanho_comprimido_gb |   tamanho_descomprimido_mb |   tamanho_descomprimido_gb |
-|---------------:|------------------------:|------------------------:|---------------------------:|---------------------------:|
-|              1 |                   83.61 |                    0.08 |                      111.1 |                       0.11 |
-
----
-
-### 🔢 Volume Lógico: `raw/telco`
-- **Total de linhas:** 1367104
-- **Total de colunas:** 74
+### 📦 Volumetria: `raw/telco`
+|   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
+|---------------:|:------------|----------:|-------------------------:|----------------------------:|
+|              1 | 1.367.104   |        74 |                    83.61 |                       111.1 |
 
 ---
 
@@ -99,7 +93,8 @@
 
 #### ⚠️ Possíveis campos de data/hora sem tipagem (inferido pelo nome)
 
-> Nenhuma coluna com nome sugestivo de data encontrada.
+- `SAFRA`
+
 
 ---
 
@@ -189,15 +184,15 @@
 | valor       |   qtd |
 |:------------|------:|
 | 888W78UZYYT |     6 |
-| ZYWUTZXXTU8 |     5 |
-| YY7ZZNNN8TY |     5 |
-| XYN7XZZU788 |     5 |
-| T9ZYTXZ7WYZ |     5 |
-| 78YYWZT9TN8 |     5 |
-| ZZUNWZYXXTZ |     5 |
-| ZNTN78ZW7XX |     5 |
+| UZTWX7NU8UY |     5 |
+| ZW8Z8ZXWW7Z |     5 |
+| Y97YZZX88TY |     5 |
+| XYTY9ZX879Z |     5 |
+| 8NYZZZUWTYW |     5 |
+| YTWN99NY8ZU |     5 |
 | ZXNUU77UYZ8 |     5 |
-| ZTZTWZXTYZX |     5 |
+| ZW9TYZXTWTZ |     5 |
+| UW7X8YWN88T |     5 |
 
 #### Coluna: `SAFRA`
 

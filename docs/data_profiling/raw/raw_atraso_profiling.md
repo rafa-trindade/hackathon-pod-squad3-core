@@ -1,15 +1,9 @@
 # Relatório de Profiling: `raw/atraso`
 
-### 📦 Volume Físico Parquet: `raw/atraso`
-|   qtd_arquivos |   tamanho_comprimido_mb |   tamanho_comprimido_gb |   tamanho_descomprimido_mb |   tamanho_descomprimido_gb |
-|---------------:|------------------------:|------------------------:|---------------------------:|---------------------------:|
-|             10 |                 4307.73 |                    4.21 |                     6358.9 |                       6.21 |
-
----
-
-### 🔢 Volume Lógico: `raw/atraso`
-- **Total de linhas:** 31611316
-- **Total de colunas:** 50
+### 📦 Volumetria: `raw/atraso`
+|   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
+|---------------:|:------------|----------:|-------------------------:|----------------------------:|
+|             10 | 31.611.316  |        50 |                  4307.73 |                      6358.9 |
 
 ---
 
@@ -184,14 +178,14 @@
 |:-----------------------------------------------------------------|--------:|
 | 5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9 | 1075903 |
 | d62379c48ce480322c400adcbb1f59cf4196d4c627a6fae49c3ea53eeb2c7e6d |     126 |
-| 5e554a259c4ab7e7278f111ffd3cb1f4c650f5302aa6098883804eb7ae847f1a |     108 |
-| c62d00706811e4bde9433086ebdbb4d382039c19df766ab577f35c7e9788370f |     108 |
 | b1919f3385bebd5c15277f02a4821e8359700433d474a45548aaa8c835efa071 |     108 |
-| f52141a360fdcf817eccbda4c1145d8b54ac9c0039fa0bf74439fd77df491a4b |     108 |
+| 0800dd401791559678cb955935325732500b31d51fed5f9af7af2b1c0a6075d3 |     108 |
+| 1167a8f04367c7ce16c0b2196587507231add8b93ff8f0c03d1722f0c9e890f0 |     108 |
+| dd68070a1f03c7746ec0ada0aece9eee84c38ddc6d3d23049c544a853e0743a8 |     108 |
+| 90f4486c32285d214018f11ce6d34601daed5b23a31c3178f448079f021d1337 |     108 |
 | e02f06436e1219eabeea7781d190542ed9b349c62ca3d00f04a33993dcf1fd7a |     108 |
-| 83a65c2bf58f3c8149363160eeb5020a2dbd9edad704e0170a075e180e536e1e |     108 |
-| fe97ea477f54f33e02e6a1cf84a244c46d2633b9b30939567eac4a3fa382c78b |     108 |
-| b8b2bf7948343f22cd785bb1e707b7a696d8ecd5eee4d9c15a0671fbe80ae1ac |     108 |
+| 46ee4af863d13359b4c10f00293f1307ae2914a79b80d0ee12c7101a36163e2d |     108 |
+| 065685ab18a3a1df24dfd9b22e165fdc8aaf8ff9b5308d2d90cf8d5c21dafb4b |     108 |
 
 #### Coluna: `NUM_ENT_SEQ_FATURA`
 
@@ -774,8 +768,8 @@
 |   93.37 |     1574 |
 |   72.33 |     1558 |
 |  107.78 |     1556 |
-|   92.38 |     1508 |
 |  108.93 |     1508 |
+|   92.38 |     1508 |
 
 #### Coluna: `VAL_PARC_APARELHO_LIQ`
 
@@ -783,8 +777,8 @@
 |---------:|---------:|
 |     0    | 31600434 |
 |   134.37 |      252 |
-|   127.97 |      224 |
 |   148.58 |      224 |
+|   127.97 |      224 |
 |   181.58 |      210 |
 |  2201.93 |      196 |
 | 20046.8  |      180 |

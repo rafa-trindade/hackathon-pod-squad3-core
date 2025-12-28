@@ -1,15 +1,9 @@
 # Relatório de Profiling: `raw/recarga`
 
-### 📦 Volume Físico Parquet: `raw/recarga`
-|   qtd_arquivos |   tamanho_comprimido_mb |   tamanho_comprimido_gb |   tamanho_descomprimido_mb |   tamanho_descomprimido_gb |
-|---------------:|------------------------:|------------------------:|---------------------------:|---------------------------:|
-|             10 |                 3104.31 |                    3.03 |                    5222.09 |                        5.1 |
-
----
-
-### 🔢 Volume Lógico: `raw/recarga`
-- **Total de linhas:** 100213651
-- **Total de colunas:** 24
+### 📦 Volumetria: `raw/recarga`
+|   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
+|---------------:|:------------|----------:|-------------------------:|----------------------------:|
+|             10 | 100.213.651 |        24 |                  3104.31 |                     5222.09 |
 
 ---
 

@@ -1,15 +1,9 @@
 # Relatório de Profiling: `raw/score_bureau_movel`
 
-### 📦 Volume Físico Parquet: `raw/score_bureau_movel`
-|   qtd_arquivos |   tamanho_comprimido_mb |   tamanho_comprimido_gb |   tamanho_descomprimido_mb |   tamanho_descomprimido_gb |
-|---------------:|------------------------:|------------------------:|---------------------------:|---------------------------:|
-|              1 |                    12.9 |                    0.01 |                      21.59 |                       0.02 |
-
----
-
-### 🔢 Volume Lógico: `raw/score_bureau_movel`
-- **Total de linhas:** 1290526
-- **Total de colunas:** 8
+### 📦 Volumetria: `raw/score_bureau_movel`
+|   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
+|---------------:|:------------|----------:|-------------------------:|----------------------------:|
+|              1 | 1.290.526   |         8 |                     12.9 |                       21.59 |
 
 ---
 
@@ -33,7 +27,8 @@
 
 #### ⚠️ Possíveis campos de data/hora sem tipagem (inferido pelo nome)
 
-> Nenhuma coluna com nome sugestivo de data encontrada.
+- `SAFRA`
+
 
 ---
 
@@ -123,15 +118,15 @@
 | valor       |   qtd |
 |:------------|------:|
 | ZW9TYZXTWTZ |     5 |
-| 78X9UYXZTWU |     4 |
-| TN8Y7XTNZ87 |     4 |
 | ZZUWWTYWZ8T |     4 |
-| ZW7UTZZYYW7 |     4 |
+| T87Z88U7U87 |     4 |
+| Z9XN9ZZWU7T |     4 |
 | XUWNXZXN7ZU |     4 |
-| ZUNUNZZNTZY |     4 |
 | 8Z7UTZ9XZ9X |     4 |
-| Z8Y88ZX77ZW |     4 |
 | ZTU8UZXYWWW |     4 |
+| XWYWZZZNNNN |     4 |
+| 78X9UYXZTWU |     4 |
+| Z8NZWZZ7U97 |     4 |
 
 
 
