@@ -10,6 +10,8 @@ Repositório de desenvolvimento e experimentação de engenharia de dados para o
 
 ## 🛠️ Arquitetura Local
 
+![Arquitetura Local](docs/data_architecture/arquitetura_local.png)
+
 | Componente | Papel na Arquitetura | Responsabilidades Técnicas | Diferencial Estratégico |
 | :--- | :--- | :--- | :--- |
 | **MinIO (S3)** | **Data Lakehouse Storage** | Armazenamento de dados nas camadas Raw, Bronze, Silver e Gold. | Compatibilidade total com S3 API, permitindo portabilidade para nuvem (AWS) sem alterar código. |
@@ -17,5 +19,3 @@ Repositório de desenvolvimento e experimentação de engenharia de dados para o
 | **Apache Airflow** | **Orquestração de Workflows** | Gestão de DAGs, controle de dependências, agendamento e alertas de falha. | Centralização do controle operacional e garantia de linhagem (lineage) básica do pipeline. |
 | **Docker** | **Isolamento de Infra** | Empacotamento de serviços, controle de versões de imagem e deploy reprodutível. | Facilidade de escalar e mover a stack inteira entre diferentes provedores de infraestrutura. |
 
-
-![Arquitetura Local](docs/data_architecture/arquitetura_local.png)
