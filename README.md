@@ -8,6 +8,14 @@ Repositório de desenvolvimento e experimentação de engenharia de dados para o
 - **Rafael Araujo Trindade**
 - **Ronaldo Theodoro**
 
+## 🎯 Princípios do Projeto
+
+- Simplicidade operacional
+- Governança pragmática
+- Observabilidade nativa
+- Reprocessamento como regra
+- Engenharia orientada a dados, não a ferramentas
+
 ## 📚 Mapeamento da Documentação
 
 A documentação do projeto está organizada por **domínios clássicos de engenharia de dados**,
@@ -93,12 +101,3 @@ Documenta os **contratos de dados** do projeto:
 - Regras semânticas (unicidade, elegibilidade, consistência)
 - Validações aplicadas com Pandera
 
----
-
-## 🎯 Princípios do Projeto
-
-- Simplicidade operacional
-- Governança pragmática
-- Observabilidade nativa
-- Reprocessamento como regra
-- Engenharia orientada a dados, não a ferramentas
