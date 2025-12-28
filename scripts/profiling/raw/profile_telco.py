@@ -33,9 +33,9 @@ con = get_duckdb_connection(
 
 
 # %%  
-# ARQUIVOS PARQUET: VOLUMETRIA FÍSICA ############
+# VOLUMETRIA #####################################
 ##################################################
-md = "### 📦 Volume Físico Parquet: `raw/telco`\n"
+md = "### 📦 Volumetria: `raw/telco`\n"
 
 try:
     df_files = con.execute(f"""
@@ -46,59 +46,55 @@ try:
         FROM parquet_metadata('{path_parquet}')
     """).df()
 
-    for col in ["tamanho_comprimido", "tamanho_descomprimido"]:
-        df_files[f"{col}_mb"] = (
-            df_files[f"{col}_bytes"] / 1024 / 1024
-        ).round(2)
 
-        df_files[f"{col}_gb"] = (
-            df_files[f"{col}_bytes"] / 1024 / 1024 / 1024
-        ).round(2)
+    df_files["tamanho_comprimido_mib"] = (
+        df_files["tamanho_comprimido_bytes"] / 1024 / 1024
+    ).round(2)
+
+    df_files["tamanho_descomprimido_mib"] = (
+        df_files["tamanho_descomprimido_bytes"] / 1024 / 1024
+    ).round(2)
+
+
+    total_registros = con.execute(f"""
+        SELECT COUNT(*) FROM read_parquet('{path_parquet}')
+    """).fetchone()[0]
+
+    total_colunas = con.execute(f"""
+        SELECT COUNT(*) FROM (
+            DESCRIBE
+            SELECT * FROM read_parquet('{path_parquet}')
+        )
+    """).fetchone()[0]
+
+    df_files["registros"] = total_registros
+    df_files["colunas"] = total_colunas
+
+    df_files["registros"] = (
+        df_files["registros"]
+        .fillna(0)
+        .astype("int64")
+        .apply(lambda x: f"{x:,}".replace(",", "."))
+    )
 
     md += df_files[
         [
             "qtd_arquivos",
-            "tamanho_comprimido_mb",
-            "tamanho_comprimido_gb",
-            "tamanho_descomprimido_mb",
-            "tamanho_descomprimido_gb",
+            "registros",
+            "colunas",
+            "tamanho_comprimido_mib",
+            "tamanho_descomprimido_mib",
+
         ]
     ].to_markdown(index=False)
 
 except Exception as e:
-
     md += (
         "> ⚠️ Não há arquivos Parquet disponíveis para análise de volume."
     )
 
 print_and_save_md(md, md_file)
 
-
-# %% 
-# VOLUMETRIA LÓGICA ##############################
-##################################################
-md = "### 🔢 Volume Lógico: `raw/telco`\n"
-
-total_linhas = con.execute(f"""
-    SELECT COUNT(*)
-    FROM read_parquet('{path_parquet}')
-""").fetchone()[0]
-
-total_colunas = con.execute(f"""
-    SELECT COUNT(*)
-    FROM (
-        DESCRIBE
-        SELECT *
-        FROM read_parquet('{path_parquet}')
-    )
-""").fetchone()[0]
-
-md += (
-    f"- **Total de linhas:** {total_linhas}\n"
-    f"- **Total de colunas:** {total_colunas}"
-)
-
-print_and_save_md(md, md_file)
 
 
 # %% 
@@ -126,7 +122,7 @@ date_cols_typed = df_schema[
     df_schema["column_type"].str.contains("DATE|TIMESTAMP", case=False, na=False)
 ]["column_name"].tolist()
 
-date_name_patterns = r"^(?:date|dt|data|dat|hor)"
+date_name_patterns = r"^(?:date|dt|data|dat|safra|hor)"
 
 date_cols_by_name = df_schema[
     df_schema["column_name"].str.contains(date_name_patterns, case=False, na=False)
@@ -185,8 +181,8 @@ for col in cols:
             ROUND(COUNT(*) FILTER (WHERE "{col}" IS NULL) * 100.0 / COUNT(*), 2) || '%' AS pct_nulos,
             ROUND((COUNT(*) - COUNT(DISTINCT "{col}")) * 100.0 / COUNT(*), 2) || '%' AS pct_duplicados,
             CASE
-                WHEN COUNT(DISTINCT "{col}") <= 0.001 * {total_linhas} THEN 'BAIXA'
-                WHEN COUNT(DISTINCT "{col}") <= 0.05 * {total_linhas} THEN 'MEDIA'
+                WHEN COUNT(DISTINCT "{col}") <= 0.001 * {total_registros} THEN 'BAIXA'
+                WHEN COUNT(DISTINCT "{col}") <= 0.05 * {total_registros} THEN 'MEDIA'
                 ELSE 'ALTA'
             END AS cardinalidade
         FROM read_parquet('{path_parquet}')
@@ -253,4 +249,3 @@ else:
         md += "\n\n"
     
 print_and_save_md(md, md_file)
-# %%
