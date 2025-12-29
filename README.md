@@ -2,10 +2,6 @@
 
 Repositório de desenvolvimento e experimentação de engenharia de dados para o hackathon da Pod Academy - Squad 3 
 
-```text
-- Engenharia orientada a dados, não a ferramentas
-```
-
 ## 👥 Time de Engenharia
 
 - **Frederico da Costa dos Santos**
