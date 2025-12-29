@@ -8,13 +8,6 @@ Repositório de desenvolvimento e experimentação de engenharia de dados para o
 - **Rafael Araujo Trindade**
 - **Ronaldo Theodoro**
 
-## 🎯 Princípios do Projeto
-
-- Simplicidade operacional
-- Governança por design
-- Observabilidade nativa
-- Engenharia orientada a dados, não a ferramentas
-
 ## 📚 Mapeamento da Documentação
 
 A documentação do projeto está organizada por **domínios clássicos de engenharia de dados**,
