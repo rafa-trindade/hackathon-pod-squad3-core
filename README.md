@@ -13,7 +13,6 @@ Repositório de desenvolvimento e experimentação de engenharia de dados para o
 - Simplicidade operacional
 - Governança por design
 - Observabilidade nativa
-- Reprocessamento como regra
 - Engenharia orientada a dados, não a ferramentas
 
 ## 📚 Mapeamento da Documentação
