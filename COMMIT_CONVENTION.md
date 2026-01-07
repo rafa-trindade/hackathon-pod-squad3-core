@@ -5,7 +5,6 @@ adaptado para engenharia de dados, pipelines, qualidade e performance.
 
 Objetivos:
 - Histórico de commits legível
-- Padronização entre scripts, dags e docs
 - Facilidade para CI/CD, changelog e manutenção
 
 ---
@@ -77,21 +76,7 @@ git commit -m "fix(config): corrige conexão com MinIO"
 git commit -m "refactor(config): reorganiza data_connections"
 ```
 
-
-#### **DAGS** `dags/`
-Escopo: `dags`
-
-```bash
-git commit -m "feat(dags): adiciona dag de profiling"
-```
-
-```bash
-git commit -m "fix(dags): corrige dependências entre tasks"
-```
-
-```bash
-git commit -m "perf(dags): otimiza paralelismo das dags"
-```
+---
 
 #### **SCRIPTS** `scripts/`
 Escopo: `scripts`
