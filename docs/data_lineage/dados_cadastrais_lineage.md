@@ -55,10 +55,8 @@
 
 | Etapa | Processo | Descrição | Ações / Regras | Resultado Esperado |
 |------:|----------|-----------|----------------|-------------------|
-| 1 | Consolidação de tabelas | Unificação das tabelas do domínio cadastral em uma única entidade de cliente | ex: Integração das diferentes tabelas cadastrais de PF; alinhamento de campos equivalentes; composição do cadastro único do cliente | Conjunto de dados cadastrais consolidado |
-| 2 | Deduplicação | Eliminação de registros duplicados com base em critérios de unicidade de negócio | ex: CPF; priorizar registros ativos e mais recentes | Um único registro por cliente |
-| 3 | Aplicação de regras de negócio | Aplicação das regras que definem elegibilidade e semântica do cliente | ex: Cliente ativo quando `status = 'A'`; PF com idade ≥ 18 | Dataset alinhado ao negócio |
-| 4 | Definição de chave técnica e chaves semânticas | Definição da chave de negócio que identifica unicamente o cliente | ex: CPF como chave; geração de hash estável quando necessário | Identificação única e consistente do cliente |
+| 1 | Deduplicação | Eliminação de registros duplicados com base em critérios de unicidade de negócio | ex: CPF; priorizar registros ativos e mais recentes | Um único registro por cliente |
+| 2 | Definição de chave técnica e chaves semânticas | Definição da chave de negócio que identifica unicamente o cliente | ex: CPF como chave; geração de hash estável quando necessário | Identificação única e consistente do cliente |
 
 ---
 
