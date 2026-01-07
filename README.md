@@ -10,11 +10,8 @@ Repositório de desenvolvimento e experimentação de engenharia de dados para o
 
 ## 📚 Mapeamento da Documentação
 
-A documentação do projeto está organizada por **domínios clássicos de engenharia de dados**,
-permitindo fácil navegação, auditoria e apresentação técnica.
-
 ### 🏗️ Data Architecture
-📁 `docs/data_architecture/`
+📄 [`docs/data_architecture/`](docs/data_architecture/README.md)
 
 Descreve a arquitetura técnica do projeto em execução:
 - Componentes da stack (MinIO, DuckDB, Airflow, Pandera, Docker)
@@ -24,7 +21,7 @@ Descreve a arquitetura técnica do projeto em execução:
 ---
 
 ### 📘 Data Dictionary
-📁 `docs/data_dictionary/`
+📁 [`docs/data_dictionary/*`](docs/data_dictionary/)
 
 Define o significado, tipagem e uso das colunas por camada:
 - Dicionário técnico e semântico
@@ -34,7 +31,7 @@ Define o significado, tipagem e uso das colunas por camada:
 ---
 
 ### 🏛️ Data Governance
-📁 `docs/data_governance/`
+📄 [`docs/data_governance/`](docs/data_governance/README.md)
 
 Centraliza as políticas e diretrizes do projeto e mapeia como a solução atende,
 na prática, aos pilares de **Data Governance**.
@@ -47,7 +44,7 @@ na prática, aos pilares de **Data Governance**.
 ---
 
 ### 🧬 Data Lineage
-📁 `docs/data_lineage/`
+📁 [`docs/data_lineage/*`](docs/data_lineage)
 
 Documenta a rastreabilidade ponta a ponta dos dados:
 - Origem dos dados
@@ -57,7 +54,7 @@ Documenta a rastreabilidade ponta a ponta dos dados:
 ---
 
 ### 🔍 Data Observability
-📁 `docs/data_observability/`
+📄 [`docs/data_observability/`](docs/data_observability/README.md)
 
 Mapeia como o projeto atende aos pilares de Data Observability:
 - Freshness
@@ -73,7 +70,7 @@ A observabilidade emerge como resultado das decisões de arquitetura e governan�
 ---
 
 ### 📊 Data Profiling
-📁 `docs/data_profiling/`
+📁 [`docs/data_profiling/*`](docs/data_profiling/)
 
 Apresenta análises exploratórias e estatísticas dos dados:
 - Volume por camada
@@ -83,10 +80,12 @@ Apresenta análises exploratórias e estatísticas dos dados:
 
 Utilizado como base para qualidade e observabilidade.
 
+> **Observação:** O profiling foi gerado por meio de um **script utilitário de EDA híbrido (Python + Jupyter Notebook)**, combinando automação e análise exploratória assistida, com geração de relatórios versionados para suporte às decisões de qualidade e modelagem.
+
 ---
 
 ### ✅ Data Quality
-📁 `docs/data_quality/`
+📁 [`docs/data_quality/*`](docs/data_quality/)
 
 Documenta os **contratos de dados** do projeto:
 - Regras estruturais (schema, tipos, obrigatoriedade)
