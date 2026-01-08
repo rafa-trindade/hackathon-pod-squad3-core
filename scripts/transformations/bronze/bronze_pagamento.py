@@ -62,6 +62,7 @@ def run():
                 strptime(DAT_ATUALIZACAO_PAGAMENTO, '%d%b%Y:%H:%M:%S')::TIMESTAMP AS dat_atualizacao_pagamento,
                 strptime(DAT_STATUS_PAGAMENTO, '%d%b%Y:%H:%M:%S')::DATE AS dat_status_pagamento,
                 strptime(DAT_CRIACAO_CREDITO, '%d%b%Y:%H:%M:%S')::TIMESTAMP AS dat_criacao_credito,
+                strptime(DAT_ATUALIZACAO_CREDITO, '%d%b%Y:%H:%M:%S')::TIMESTAMP AS dat_atualizacao_credito,
                 strptime(DAT_ATIVIDADE_CREDITO, '%d%b%Y:%H:%M:%S')::DATE AS dat_atividade_credito,
                 strptime(DAT_VENCIMENTO_CREDITO, '%d%b%Y:%H:%M:%S')::DATE AS dat_vencimento_credito,
 
@@ -134,7 +135,6 @@ def run():
         partitioned_data AS (
             SELECT 
                 *,
-                -- Agora calculamos a partição sobre o campo já tipado na CTE anterior
                 ((YEAR(dat_status_fatura) * 100) + MONTH(dat_status_fatura))::BIGINT AS _ano_mes_folder,
                 CURRENT_TIMESTAMP AS ingestion_ts
             FROM typed_data

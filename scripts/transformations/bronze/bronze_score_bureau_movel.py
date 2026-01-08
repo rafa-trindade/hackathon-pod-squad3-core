@@ -38,48 +38,47 @@ def run():
     # Transformação RAW -> BRONZE
     # ------------------------------------------------------------------
     query = f"""
-        CREATE OR REPLACE TABLE bronze_score_bureau_movel AS
-        WITH typed_data AS (
-            SELECT
-                -- ----------------------------
-                -- Tempo e Identificadores
-                -- ----------------------------
-                -- Mantendo o nome original 'safra' como DATE
-                MAKE_DATE(
-                    CAST(CAST(SAFRA AS INTEGER) / 100 AS INTEGER),
-                    CAST(CAST(SAFRA AS INTEGER) % 100 AS INTEGER),
-                    1
-                ) AS safra,
+            CREATE OR REPLACE TABLE bronze_score_bureau_movel AS
+            WITH typed_data AS (
+                SELECT
+                    -- ----------------------------
+                    -- Tempo e Identificadores
+                    -- ----------------------------
+                    MAKE_DATE(
+                        CAST(CAST(SAFRA AS INTEGER) / 100 AS INTEGER),
+                        CAST(CAST(SAFRA AS INTEGER) % 100 AS INTEGER),
+                        1
+                    ) AS safra,
 
-                NUM_CPF::VARCHAR AS cpf_hash,
+                    NUM_CPF::VARCHAR AS num_cpf,
 
-                -- ----------------------------
-                -- Flags (Booleans)
-                -- ----------------------------
-                CAST(FLAG_INSTALACAO = '1' AS BOOLEAN) AS has_instalacao,
-                CAST(FPD = '1' AS BOOLEAN) AS is_fpd,
+                    -- ----------------------------
+                    -- Flags (Booleans)
+                    -- ----------------------------
+                    CAST(FLAG_INSTALACAO = '1' AS BOOLEAN) AS flag_instalacao,
+                    CAST(FPD = '1' AS BOOLEAN) AS fpd,
 
-                -- ----------------------------
-                -- Domínios (Lowercase)
-                -- ----------------------------
-                PROD::VARCHAR AS produto,
-                flag_mig2::VARCHAR AS tipo_migracao,
+                    -- ----------------------------
+                    -- Domínios (Categorias)
+                    -- ----------------------------
+                    PROD::VARCHAR AS prod,
+                    flag_mig2::VARCHAR AS flag_mig2,
 
-                -- ----------------------------
-                -- Scores (Integers)
-                -- ----------------------------
-                CAST(SCORE_01 AS INTEGER) AS score_principal,
-                CAST(SCORE_02 AS INTEGER) AS score_secundario,
+                    -- ----------------------------
+                    -- Scores (Integers)
+                    -- ----------------------------
+                    CAST(SCORE_01 AS INTEGER) AS score_01,
+                    CAST(SCORE_02 AS INTEGER) AS score_02,
 
-                -- Campo técnico para partição das pastas (YYYYMM como BIGINT)
-                CAST(SAFRA AS BIGINT) AS ano_mes_folder
-                
-            FROM read_parquet('{RAW_PATH}')
-        )
-        SELECT 
-            *
-        FROM typed_data
-    """
+                    -- Campo técnico para partição
+                    CAST(SAFRA AS BIGINT) AS ano_mes_folder,
+                    
+                    CURRENT_TIMESTAMP AS ingestion_ts
+                    
+                FROM read_parquet('{RAW_PATH}')
+            )
+            SELECT * FROM typed_data
+        """
 
     print("🧱 Executando transformação Bronze...")
     con.execute(query)
@@ -103,7 +102,7 @@ def run():
                 * EXCLUDE (ano_mes_folder),
                 ano_mes_folder AS ano_mes
             FROM bronze_score_bureau_movel
-            ORDER BY ano_mes, cpf_hash
+            ORDER BY ano_mes, num_cpf
         )
         TO '{BRONZE_PATH}'
         (
