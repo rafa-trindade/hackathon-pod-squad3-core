@@ -68,7 +68,7 @@ try:
             SELECT
                 regexp_extract(
                     file_name,
-                    'safra_date=[^/]+'
+                    'safra=[^/]+'
                 ) AS safra_dir,
                 file_name,
                 total_compressed_size,
@@ -86,13 +86,13 @@ try:
         ),
         registros AS (
             SELECT
-                safra_date,
+                safra,
                 COUNT(*) AS qtd_registros
             FROM read_parquet(
                 '{path_parquet}',
                 hive_partitioning=1
             )
-            GROUP BY safra_date
+            GROUP BY safra
         ),
         colunas AS (
             SELECT COUNT(*) AS qtd_colunas
@@ -113,7 +113,7 @@ try:
                 0 AS ordem
             FROM base b
             LEFT JOIN registros r
-                ON b.diretorio = 'safra_date=' || CAST(r.safra_date AS VARCHAR)
+                ON b.diretorio = 'safra=' || CAST(r.safra AS VARCHAR)
             CROSS JOIN colunas c
 
             UNION ALL
@@ -135,7 +135,7 @@ try:
                     b.tamanho_descomprimido_bytes
                 FROM base b
                 LEFT JOIN registros r
-                    ON b.diretorio = 'safra_date=' || CAST(r.safra_date AS VARCHAR)
+                    ON b.diretorio = 'safra=' || CAST(r.safra AS VARCHAR)
                 CROSS JOIN colunas c
             )
         )
@@ -287,34 +287,3 @@ for col in df_column_statistics["coluna"]:
     md+= "\n\n"
 
 print_and_save_md(md, md_file)
-
-
-# %% 
-# STRINGS: MED, MIN, MÁX #########################
-##################################################
-md = "### 📏 Comprimento de Strings: `raw/score_bureau_movel`\n"
-
-string_cols = df_schema[
-    df_schema["column_type"].str.contains("VARCHAR|STRING", case=False, na=False)
-]["column_name"].tolist()
-
-if not string_cols:
-    md += "> ⚠️ Nenhuma coluna do tipo STRING ou VARCHAR encontrada.\n"
-else:
-    for col in string_cols:
-        md += f"#### Coluna: `{col}`\n"
-
-        df_str_len = con.execute(f"""
-            SELECT
-                MIN(LENGTH("{col}")) AS min_len,
-                ROUND(AVG(LENGTH("{col}")), 2) AS avg_len,
-                MAX(LENGTH("{col}")) AS max_len
-            FROM read_parquet('{path_parquet}')
-            WHERE "{col}" IS NOT NULL
-        """).df()
-
-        md += df_to_md(df_str_len)
-        md += "\n\n"
-    
-print_and_save_md(md, md_file)
-# %%
