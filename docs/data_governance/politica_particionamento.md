@@ -32,7 +32,6 @@ Os dados são classificados em duas categorias de ingestão:
 * **Particionamento Virtual (Hive):** A coluna técnica `ano_mes` é utilizada exclusivamente para a criação da estrutura de pastas no S3. Ela é removida do corpo do arquivo Parquet para evitar redundância, sendo "reconstruída" em tempo de execução pelos motores de consulta (DuckDB).
 * **Tipagem Numérica:** A partição `ano_mes` é tratada como `BIGINT` (formato `YYYYMM`). Isso garante ordenação natural e consultas de intervalo (`BETWEEN`) mais performáticas do que strings.
 * **Preservação da Data Real:** A coluna de referência original (ex: `dat_status_fatura`) é sempre mantida dentro do arquivo Parquet com tipagem `DATE` ou `TIMESTAMP`, garantindo a precisão do evento.
-* **Padronização de Nomenclatura:** Todas as colunas foram convertidas para *lowercase* para evitar conflitos de *case-sensitivity* entre diferentes ferramentas e sistemas de arquivos.
 
 ---
 
