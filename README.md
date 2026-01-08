@@ -32,7 +32,7 @@ Repositório de desenvolvimento e experimentação de engenharia de dados para o
 ---
 
 ### 🧬 Data Lineage
-📁 [`docs/data_lineage/`](docs/data_lineage/)
+📁 [`docs/data_lineage/*`](docs/data_lineage/)
 
 **Foco:** Rastreabilidade e Governança do Fluxo.
 - **Rastreabilidade:** Mapeamento ponta a ponta da jornada do dado (Raw → Bronze → Silver → Gold).
@@ -43,11 +43,11 @@ Repositório de desenvolvimento e experimentação de engenharia de dados para o
 ---
 
 ### 🧠 Feature Store & Book de Variáveis
-📁 [`docs/data_modelling/`](docs/data_modelling/)
+📁 [`docs/data_modelling/*`](docs/data_modelling/)
 
 **Foco:** Inteligência de Dados e Machine Learning (Camada Gold).
 - **Book de Variáveis:** Documentação detalhada das variáveis preditivas, contendo definições de negócio, lógicas de agregação temporal e lógicas de cálculo.
-- **Feature Engineering:** Registro das transformações analíticas e indicadores (KPIs) construídos especificamente para o treinamento e score dos modelos.
+- **Feature Engineering:** Registro das transformações construídas especificamente para o treinamento dos modelos.
 
 ---
 
@@ -63,7 +63,7 @@ Repositório de desenvolvimento e experimentação de engenharia de dados para o
 ---
 
 ### 📊 Data Profiling
-📁 [`docs/data_profiling/`](docs/data_profiling/)
+📁 [`docs/data_profiling/*`](docs/data_profiling/)
 
 **Foco:** Diagnóstico Estatístico e Saúde dos Dados.
 - **Relatórios:** Documentação automatizada de volumetria (MiB vs. Registros) e análise de Schema Drift.
@@ -73,7 +73,7 @@ Repositório de desenvolvimento e experimentação de engenharia de dados para o
 ---
 
 ### ✅ Data Quality
-📁 [`docs/data_quality/`](docs/data_quality/)
+📁 [`docs/data_quality/*`](docs/data_quality/)
 
 **Foco:** Contratos e Validação.
 - **Estrutural:** Tipagem e obrigatoriedade (Camada Bronze).
