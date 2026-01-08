@@ -1,4 +1,4 @@
-# Relatório de Profiling: `bronze/score_bureau_movel` - `20260108_130336`
+# Relatório de Profiling: `bronze/score_bureau_movel` - `20260108_204737`
 
 ### 📦 Volumetria: `bronze/score_bureau_movel`
 | diretorio      |   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
@@ -16,8 +16,8 @@
 ### 🧬 Schema: `bronze/score_bureau_movel`
 | column_name     | column_type              | null   | key   | default   | extra   |
 |:----------------|:-------------------------|:-------|:------|:----------|:--------|
-| safra           | DATE                     | YES    |       |           |         |
 | num_cpf         | VARCHAR                  | YES    |       |           |         |
+| safra           | DATE                     | YES    |       |           |         |
 | flag_instalacao | BOOLEAN                  | YES    |       |           |         |
 | fpd             | BOOLEAN                  | YES    |       |           |         |
 | prod            | VARCHAR                  | YES    |       |           |         |
@@ -39,7 +39,7 @@
 #### Coluna: `ingestion_ts`
 | min                              | max                              |
 |:---------------------------------|:---------------------------------|
-| 2026-01-08 10:03:36.644905-03:00 | 2026-01-08 10:03:36.644905-03:00 |
+| 2026-01-08 17:47:37.193060-03:00 | 2026-01-08 17:47:37.193060-03:00 |
 
 
 
@@ -48,8 +48,8 @@
 ### 📊 Estatísticas por Coluna: `bronze/score_bureau_movel`
 | coluna          |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
 |:----------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
-| safra           |           6 |       0 |      1290520 | 0.0%        | 100.0%           | BAIXA           |
 | num_cpf         |     1272095 |       0 |        18431 | 0.0%        | 1.43%            | ALTA            |
+| safra           |           6 |       0 |      1290520 | 0.0%        | 100.0%           | BAIXA           |
 | flag_instalacao |           1 |       0 |      1290525 | 0.0%        | 100.0%           | BAIXA           |
 | fpd             |           2 |       0 |      1290524 | 0.0%        | 100.0%           | BAIXA           |
 | prod            |           1 |       0 |      1290525 | 0.0%        | 100.0%           | BAIXA           |
@@ -63,6 +63,21 @@
 ---
 
 ### 🔟 Distribuição de Valores (Top 10): `bronze/score_bureau_movel`
+#### Coluna: `num_cpf`
+
+| valor       |   qtd |
+|:------------|------:|
+| ZW9TYZXTWTZ |     5 |
+| ZZUWWTYWZ8T |     4 |
+| T87Z88U7U87 |     4 |
+| 8Z7UTZ9XZ9X |     4 |
+| Z9XN9ZZWU7T |     4 |
+| ZTU8UZXYWWW |     4 |
+| Z8NZWZZ7U97 |     4 |
+| XWYWZZZNNNN |     4 |
+| XUWNXZXN7ZU |     4 |
+| 78X9UYXZTWU |     4 |
+
 #### Coluna: `safra`
 
 | valor               |    qtd |
@@ -73,21 +88,6 @@
 | 2025-03-01 00:00:00 | 207396 |
 | 2024-10-01 00:00:00 | 203828 |
 | 2025-02-01 00:00:00 | 203139 |
-
-#### Coluna: `num_cpf`
-
-| valor       |   qtd |
-|:------------|------:|
-| ZW9TYZXTWTZ |     5 |
-| ZTU8UZXYWWW |     4 |
-| Z8Y88ZX77ZW |     4 |
-| Z8NZWZZ7U97 |     4 |
-| XUWNXZXN7ZU |     4 |
-| ZZUWWTYWZ8T |     4 |
-| ZUNUNZZNTZY |     4 |
-| 78X9UYXZTWU |     4 |
-| Z9XN9ZZWU7T |     4 |
-| 8Z7UTZ9XZ9X |     4 |
 
 #### Coluna: `flag_instalacao`
 
@@ -148,7 +148,7 @@
 
 | valor                            |     qtd |
 |:---------------------------------|--------:|
-| 2026-01-08 10:03:36.644905-03:00 | 1290526 |
+| 2026-01-08 17:47:37.193060-03:00 | 1290526 |
 
 #### Coluna: `ano_mes`
 
@@ -165,7 +165,7 @@
 
 |           valor |     qtd |
 |----------------:|--------:|
-| 20260108_130336 | 1290526 |
+| 20260108_204737 | 1290526 |
 
 
 
