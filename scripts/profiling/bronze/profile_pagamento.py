@@ -54,7 +54,7 @@ md_file = init_md_report(
 # %%
 # VOLUMETRIA #####################################
 ##################################################
-md = "### 📦 Volumetria Particionada: `bronze/pagamento`\n"
+md = "### 📦 Volumetria: `bronze/pagamento`\n"
 
 try:
     df_files = con.execute(f"""
