@@ -12,7 +12,6 @@ sys.path.append(str(PROJECT_ROOT))
 from config.data_connections import get_duckdb_connection
 from scripts.transformations.utils.lake_retention import cleanup_old_runs
 
-
 # ------------------------------------------------------------------
 # CONFIGURAÇÕES DO PIPELINE
 # ------------------------------------------------------------------
@@ -23,8 +22,7 @@ BRONZE_BASE_PATH = "bronze/score_bureau_movel/"
 BRONZE_PATH = f"s3://lake/{BRONZE_BASE_PATH}run_id={RUN_ID}/"
 
 # Política de retenção
-MAX_BRONZE_RUNS = int(os.getenv("BRONZE_MAX_RUNS", 3))
-
+MAX_BRONZE_RUNS = int(os.getenv("BRONZE_MAX_RUNS", 1))
 
 def run():
     con = get_duckdb_connection(
@@ -41,48 +39,46 @@ def run():
     # ------------------------------------------------------------------
     query = f"""
         CREATE OR REPLACE TABLE bronze_score_bureau_movel AS
-        SELECT
-            -- ----------------------------
-            -- Tempo
-            -- ----------------------------
-            MAKE_DATE(
-                CAST(CAST(SAFRA AS INTEGER) / 100 AS INTEGER),
-                CAST(CAST(SAFRA AS INTEGER) % 100 AS INTEGER),
-                1
-            ) AS safra_date,
+        WITH typed_data AS (
+            SELECT
+                -- ----------------------------
+                -- Tempo e Identificadores
+                -- ----------------------------
+                -- Mantendo o nome original 'safra' como DATE
+                MAKE_DATE(
+                    CAST(CAST(SAFRA AS INTEGER) / 100 AS INTEGER),
+                    CAST(CAST(SAFRA AS INTEGER) % 100 AS INTEGER),
+                    1
+                ) AS safra,
 
-            LPAD(CAST(SAFRA AS VARCHAR), 6, '0') AS safra,
+                NUM_CPF::VARCHAR AS cpf_hash,
 
-            -- ----------------------------
-            -- Flags
-            -- ----------------------------
-            CAST(FLAG_INSTALACAO = '1' AS BOOLEAN) AS has_instalacao,
-            CAST(FPD = '1' AS BOOLEAN) AS is_fpd,
+                -- ----------------------------
+                -- Flags (Booleans)
+                -- ----------------------------
+                CAST(FLAG_INSTALACAO = '1' AS BOOLEAN) AS has_instalacao,
+                CAST(FPD = '1' AS BOOLEAN) AS is_fpd,
 
-            -- ----------------------------
-            -- Domínios
-            -- ----------------------------
-            PROD AS produto,
-            flag_mig2 AS tipo_migracao,
+                -- ----------------------------
+                -- Domínios (Lowercase)
+                -- ----------------------------
+                PROD::VARCHAR AS produto,
+                flag_mig2::VARCHAR AS tipo_migracao,
 
-            -- ----------------------------
-            -- Scores
-            -- ----------------------------
-            CAST(SCORE_01 AS INTEGER) AS score_principal,
-            CAST(SCORE_02 AS INTEGER) AS score_secundario,
+                -- ----------------------------
+                -- Scores (Integers)
+                -- ----------------------------
+                CAST(SCORE_01 AS INTEGER) AS score_principal,
+                CAST(SCORE_02 AS INTEGER) AS score_secundario,
 
-            -- ----------------------------
-            -- Identificador
-            -- ----------------------------
-            NUM_CPF AS cpf_hash,
-
-            -- ----------------------------
-            -- Metadados técnicos
-            -- ----------------------------
-            CURRENT_TIMESTAMP AS ingestion_ts,
-            filename AS source_file
-
-        FROM read_parquet('{RAW_PATH}')
+                -- Campo técnico para partição das pastas (YYYYMM como BIGINT)
+                CAST(SAFRA AS BIGINT) AS ano_mes_folder
+                
+            FROM read_parquet('{RAW_PATH}')
+        )
+        SELECT 
+            *
+        FROM typed_data
     """
 
     print("🧱 Executando transformação Bronze...")
@@ -95,22 +91,24 @@ def run():
     print(f"📊 Total de linhas na Bronze: {rows:,}".replace(",", "."))
 
     if rows == 0:
-        raise RuntimeError("❌ Bronze gerou 0 linhas — abortando escrita")
+        raise RuntimeError("❌ Bronze gerou 0 linhas - abortando escrita")
 
     # ------------------------------------------------------------------
-    # Escrita em Parquet (Bronze)
+    # Escrita em Parquet (Particionamento por ano_mes)
     # ------------------------------------------------------------------
-    print("💾 Gravando dados na camada Bronze...")
+    print("💾 Gravando dados na camada Bronze (Partição ano_mes)...")
     con.execute(f"""
         COPY (
-            SELECT *
+            SELECT 
+                * EXCLUDE (ano_mes_folder),
+                ano_mes_folder AS ano_mes
             FROM bronze_score_bureau_movel
-            ORDER BY safra, cpf_hash
+            ORDER BY ano_mes, cpf_hash
         )
         TO '{BRONZE_PATH}'
         (
             FORMAT PARQUET,
-            PARTITION_BY (safra)
+            PARTITION_BY (ano_mes)
         )
     """)
 
@@ -127,7 +125,7 @@ def run():
         protect_run_id=RUN_ID,
     )
 
-    print("🏁 Pipeline score_bureau_movel Bronze finalizado com sucesso!")
+    print("🏁 Pipeline score_bureau_movel Bronze finalizado!")
 
 
 if __name__ == "__main__":
