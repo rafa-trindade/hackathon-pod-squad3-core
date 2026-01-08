@@ -45,10 +45,10 @@ def run():
                 -- Identificadores e Tempo
                 -- ----------------------------
                 NUM_CPF::VARCHAR AS num_cpf,
-                DW_NUM_NTC::VARCHAR AS dw_num_ntc,
-                DW_NUM_CLIENTE::VARCHAR AS dw_num_cliente,
                 strptime(DAT_INSERCAO_CREDITO, '%d%b%Y:%H:%M:%S')::DATE AS dat_insercao_credito,
                 HOR_INSERCAO_CREDITO::VARCHAR AS hor_insercao_credito,
+                DW_NUM_NTC::VARCHAR AS dw_num_ntc,
+                DW_NUM_CLIENTE::VARCHAR AS dw_num_cliente,
 
                 -- ----------------------------
                 -- Flags (Booleans)

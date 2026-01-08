@@ -44,13 +44,12 @@ def run():
                     -- ----------------------------
                     -- Tempo e Identificadores
                     -- ----------------------------
+                    NUM_CPF::VARCHAR AS num_cpf,
                     MAKE_DATE(
                         CAST(CAST(SAFRA AS INTEGER) / 100 AS INTEGER),
                         CAST(CAST(SAFRA AS INTEGER) % 100 AS INTEGER),
                         1
                     ) AS safra,
-
-                    NUM_CPF::VARCHAR AS num_cpf,
 
                     -- ----------------------------
                     -- Flags (Booleans)

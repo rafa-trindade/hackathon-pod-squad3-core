@@ -45,6 +45,7 @@ def run():
                 -- Identificadores e Chaves
                 -- ----------------------------
                 NUM_CPF::VARCHAR AS num_cpf,
+                strptime(DAT_STATUS_FATURA, '%d%b%Y:%H:%M:%S')::DATE AS dat_status_fatura,
                 CONTRATO::VARCHAR AS contrato,
                 DW_NUM_CLIENTE::VARCHAR AS dw_num_cliente,
                 NUM_FATURA_PAGAMENTO::VARCHAR AS num_fatura_pagamento,
@@ -52,7 +53,6 @@ def run():
                 -- ----------------------------
                 -- Datas (Conversão String SAS -> DATE/TIMESTAMP)
                 -- ----------------------------
-                strptime(DAT_STATUS_FATURA, '%d%b%Y:%H:%M:%S')::DATE AS dat_status_fatura,
                 strptime(DAT_CRIACAO_DW, '%d%b%Y:%H:%M:%S')::TIMESTAMP AS dat_criacao_dw,
                 strptime(DAT_CRIACAO_ATIVIDADE, '%d%b%Y:%H:%M:%S')::TIMESTAMP AS dat_criacao_atividade,
                 strptime(DAT_ATUALIZACAO_ATIVIDADE, '%d%b%Y:%H:%M:%S')::TIMESTAMP AS dat_atualizacao_atividade,
