@@ -1,83 +1,66 @@
 # 🏛️ Data Governance - Mapeamento Prático do Projeto
 
-Este diretório concentra as **políticas, diretrizes e decisões estruturais**
-relacionadas à governança de dados do projeto.
+Este diretório concentra as **políticas, diretrizes e decisões estruturais** relacionadas à governança de dados da Squad 3. Nosso foco é garantir que o Data Lake seja uma fonte confiável, escalável e de baixo custo operacional.
 
-O objetivo da governança é garantir que os dados sejam:
-- Confiáveis
-- Reprocessáveis
-- Auditáveis
-- Sustentáveis em custo
-- Alinhados às necessidades do negócio
-
-A governança neste projeto é **pragmática**, orientada a engenharia e operação,
-evitando complexidade desnecessária.
+A governança neste projeto é **pragmática**, orientada a engenharia e aplicada diretamente via código (*Policy as Code*).
 
 ---
 
-## 📌 Escopo da Governança
+## 📌 Escopo e Princípios
 
-A governança de dados neste projeto cobre:
-
-- Organização lógica do Data Lake
-- Estratégias de retenção e descarte
-- Separação clara entre camadas técnicas e semânticas
-- Regras de reprocessamento
-- Definição de contratos de qualidade
-- Suporte à observabilidade e auditoria
-- Políticas regulatórias externas já são aplicadas na origem (LGPD, etc.)
+A governança atua de forma transversal para garantir:
+- **Reprocessabilidade:** Capacidade de reconstruir qualquer estado anterior.
+- **Eficiência:** Uso de formatos (Parquet) e partições (ano_mes) que reduzem custo de Cloud.
+- **Transparência:** Documentação viva refletindo exatamente o que está implementado nos scripts.
 
 ---
 
 ## 📄 Documentos Disponíveis
 
+🏛️ Governança de Dados - Squad 3
+
+Este diretório centraliza as definições políticas e arquiteturais que regem a organização, o ciclo de vida e a qualidade dos dados no Data Lake.
+
+---
+
+## 📄 Políticas e Documentos Centrais
+
 ### 🧹 Política de Retenção de Dados
-📄 [`data_governance/politica_retencao.md`](politica_retencao.md)
+📄 [`politica_retencao.md`](politica_retencao.md)
+**Foco:** Gestão do ciclo de vida e custos.
+- Define a estratégia de **Imutabilidade por Execução** (`run_id`).
+- Estabelece o protocolo de limpeza *post-write* para evitar perda de dados em falhas.
+- **Implementação:** Reforçada pelo utilitário `scripts/transformations/utils/lake_retention.py`.
 
-Define:
-- Estratégia de retenção baseada em runs
-- Estrutura de pastas por execução (`run_id`)
-- Quantidade máxima de histórico por camada
-- Momento seguro de limpeza
-- Garantias de rollback e reprocessamento
-
----
-
-### 🧭 Política de Particionamento no Data Lake
-📄 [`data_governance/politica_particionamento.md`](politica_particionamento.md)
-
-Define:
-- Padrão de particionamento adotado na camada Bronze
-- Uso de colunas temporais como eixo de organização dos dados
-- Diferença de estratégia entre snapshots e eventos
-- Relação entre particionamento, reprocessamento e modelagem nas camadas Silver e Gold
-
-Este documento registra **as decisões arquiteturais adotadas neste projeto**
-para a organização dos dados no Data Lake.
-
----
+### 🧭 Política de Particionamento
+📄 [`politica_particionamento.md`](politica_particionamento.md)
+**Foco:** Performance e padronização de consumo.
+- Padroniza a partição única `ano_mes=YYYYMM` (BIGINT) para todos os datasets.
+- Habilita o *Partition Pruning* no DuckDB/S3 para acelerar consultas em até 90%.
+- Unifica a visão temporal entre Snapshots Mensais e Eventos Transacionais.
 
 ### ✅ Política de Qualidade de Dados
-📄 [`data_governance/politica_qualidade.md`](politica_qualidade.md)
+📄 [`politica_qualidade.md`](politica_qualidade.md)
+**Foco:** Contratos de dados e integridade.
+- Define as validações estruturais (Raw) e semânticas (Silver).
+- Estabelece regras de unicidade e obrigatoriedade de campos.
+- **Ferramental:** Integração  com `Pandera` e validações nativas SQL.
 
+---
 
-Define:
-- Princípios gerais de qualidade de dados do projeto
-- Separação entre validações estruturais e semânticas
-- Responsabilidade de cada camada (RAW, BRONZE, SILVER, GOLD)
-- Regras de unicidade, obrigatoriedade e consistência
-- Diretrizes para criação de contratos de dados
-- Integração com validações automatizadas (Pandera)
+## ⚙️ Operação e Troubleshooting
 
-Essa política estabelece **o contrato geral de qualidade**, enquanto
-as regras específicas por dataset são documentadas no domínio de
-`data_quality/`.
+Graças às políticas acima, o projeto herda capacidades operacionais críticas:
+
+1. **Rollback Imediato:** Como mantemos as `MAX_RUNS` anteriores, voltar uma versão de um dataset é apenas uma alteração de ponteiro ou leitura da run anterior.
+2. **Isolamento de Erros:** Uma falha na ingestão da `run_id` atual não corrompe os dados já existentes.
+3. **Auditoria Simplificada:** Cada partição e cada run carregam consigo o metadado de tempo (`ingestion_ts`), permitindo rastrear a origem de qualquer inconsistência.
 
 ---
 
 ## 🔗 Integração com Outros Domínios
 
-A governança atua de forma integrada com:
+A governança atua como uma camada transversal, garantindo que as definições estratégicas se tornem realidade operacional através da integração com:
 
 - **Data Architecture:** define o desenho físico e lógico do lake
 - **Data Lineage:** permite rastreabilidade ponta a ponta
@@ -86,12 +69,3 @@ A governança atua de forma integrada com:
 
 Governança, neste contexto, **não é um silo**, mas uma camada transversal.
 
----
-
-## 🎯 Princípios Norteadores
-
-- Simplicidade operacional
-- Transparência técnica
-- Custos controlados
-- Reprocessamento como regra, não exceção
-- Governança aplicada via código e automação
