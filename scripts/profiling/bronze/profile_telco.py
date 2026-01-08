@@ -199,40 +199,53 @@ print_and_save_md(md, md_file)
 
 
 # %% 
-# ESTATÍSTICA POR COLUNA #########################
-##################################################
+# ESTATÍSTICA POR COLUNA (OTIMIZADO E CORRIGIDO) ####
+####################################################
+import pandas as pd
+
 md = "### 📊 Estatísticas por Coluna: `bronze/telco`\n"
 
 cols = df_schema["column_name"].tolist()
-selects = []
 
-total_registros = con.execute(f"""
-    SELECT COUNT(*) FROM read_parquet('{path_parquet}')
-""").fetchone()[0]
+total_registros = con.execute(f'SELECT COUNT(*) FROM read_parquet("{path_parquet}")').fetchone()[0]
 
+aggs = []
 for col in cols:
-    selects.append(f"""
-        SELECT
-            '{col}' AS coluna,
-            COUNT(DISTINCT "{col}") AS distintos,
-            COUNT(*) FILTER (WHERE "{col}" IS NULL) AS nulos,
-            COUNT(*) - COUNT(DISTINCT "{col}") AS duplicados,
-            ROUND(COUNT(*) FILTER (WHERE "{col}" IS NULL) * 100.0 / COUNT(*), 2) || '%' AS pct_nulos,
-            ROUND((COUNT(*) - COUNT(DISTINCT "{col}")) * 100.0 / COUNT(*), 2) || '%' AS pct_duplicados,
-            CASE
-                WHEN COUNT(DISTINCT "{col}") <= 0.001 * {total_registros} THEN 'BAIXA'
-                WHEN COUNT(DISTINCT "{col}") <= 0.05 * {total_registros} THEN 'MEDIA'
-                ELSE 'ALTA'
-            END AS cardinalidade
-        FROM read_parquet('{path_parquet}')
-    """)
+    aggs.append(f'APPROX_COUNT_DISTINCT("{col}") AS "dist_{col}"')
+    aggs.append(f'COUNT(*) FILTER (WHERE "{col}" IS NULL) AS "null_{col}"')
 
-sql_column_statistics = " UNION ALL ".join(selects)
-df_column_statistics = con.execute(sql_column_statistics).df()
+print("⏳ Iniciando scan único para estatísticas...")
+unified_results = con.execute(f'SELECT {", ".join(aggs)} FROM read_parquet("{path_parquet}")').df()
+
+stats_list = []
+for col in cols:
+    stats_list.append({
+        "coluna": col,
+        "distintos": unified_results[f"dist_{col}"].iloc[0],
+        "nulos": unified_results[f"null_{col}"].iloc[0]
+    })
+
+df_column_statistics = pd.DataFrame(stats_list)
+
+df_column_statistics['duplicados'] = total_registros - df_column_statistics['distintos']
+
+if total_registros > 0:
+    df_column_statistics['pct_nulos'] = (df_column_statistics['nulos'] * 100.0 / total_registros).round(2).astype(str) + '%'
+    df_column_statistics['pct_duplicados'] = (df_column_statistics['duplicados'] * 100.0 / total_registros).round(2).astype(str) + '%'
+else:
+    df_column_statistics['pct_nulos'] = '0.0%'
+    df_column_statistics['pct_duplicados'] = '0.0%'
+
+def get_cardinality(dist):
+    if dist <= 0.001 * total_registros: return 'BAIXA'
+    if dist <= 0.05 * total_registros: return 'MEDIA'
+    return 'ALTA'
+
+df_column_statistics['cardinalidade'] = df_column_statistics['distintos'].apply(get_cardinality)
 
 md += df_column_statistics.to_markdown(index=False)
-
 print_and_save_md(md, md_file)
+
 
 
 # %%  
