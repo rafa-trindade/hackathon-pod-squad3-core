@@ -32,7 +32,7 @@ A governança de dados neste projeto cobre:
 ## 📄 Documentos Disponíveis
 
 ### 🧹 Política de Retenção de Dados
-Arquivo: `politica_retencao.md`
+📄 [`data_governance/politica_retencao.md`](politica_retencao.md)
 
 Define:
 - Estratégia de retenção baseada em runs
@@ -43,8 +43,23 @@ Define:
 
 ---
 
+### 🧭 Política de Particionamento Temporal no Data Lake
+📄 [`data_governance/politica_particionamento_temporal.md`](politica_particionamento_temporal.md)
+
+Define:
+- Padrão de uso de colunas temporais na camada Bronze
+- Estratégia de particionamento por tipo de dado (snapshot vs evento)
+- Convenções técnicas para colunas de tempo
+- Relação entre a organização temporal e modelagem nas camadas Silver e Gold
+
+Este documento registra **as decisões arquiteturais adotadas neste projeto**
+para a organização temporal dos dados no Data Lake.
+
+---
+
 ### ✅ Política de Qualidade de Dados
-Arquivo: `politica_qualidade.md`
+📄 [`data_governance/politica_qualidade.md`](politica_qualidade.md)
+
 
 Define:
 - Princípios gerais de qualidade de dados do projeto
