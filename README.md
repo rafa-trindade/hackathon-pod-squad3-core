@@ -93,4 +93,3 @@ Documenta os **contratos de dados** do projeto:
 - Regras estruturais (schema, tipos, obrigatoriedade)
 - Regras semânticas (unicidade, elegibilidade, consistência)
 - Validações aplicadas com Pandera
-
