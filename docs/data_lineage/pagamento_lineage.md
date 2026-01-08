@@ -1,24 +1,24 @@
-## 📥 Ingestão - `raw/dados_cadastrais`
+## 📥 Ingestão - `raw/pagamento`
 
 - **Fonte:** Externa 
 - **Frequência:** Sob demanda (Ingestão manual/Parquet)
 - **Formato Original:** Parquet
-- **Volume médio:** ~74 MiB por carga (105 MiB descomprimido)
-- **Chave técnica:** CPF (candidata)
-- **Chave de Particionamento:** `SAFRA` (YYYYMM)
+- **Volume médio:** ~2115 MiB por carga (3677 MiB descomprimido)
+- **Chave técnica:** `a definir`
+- **Chave de Particionamento:** `DAT_STATUS_FATURA` (Mês/Ano)
 
 ---
 
-## ✅ Data Lineage - `dados_cadastrais`
+## ✅ Data Lineage - `pagamento`
 
 ### 1. Visão Geral
 
 | Item            | Valor                                 |
 |-----------------|---------------------------------------|
-| Origem          | `raw/dados_cadastrais`                |
-| Destino Bronze  | `bronze/dados_cadastrais`             |
-| Destino Silver  | `silver/dados_cadastrais`             |
-| Particionamento | `ano_mes` (Coluna Técnica)            |
+| Origem          | `raw/pagamento`                       |
+| Destino Bronze  | `bronze/pagamento`                    |
+| Destino Silver  | `silver/pagamento`                    |
+| Particionamento | `_ano_mes_folder` (Coluna Técnica)    |
 | Versionamento   | `run_id` (Isolamento de Execução)     |
 
 ---
@@ -27,8 +27,8 @@
 
 #### 2.1 RAW → BRONZE
 
-**Origem:** `s3://lake/raw/dados_cadastrais/*.parquet`  
-**Destino:** `s3://lake/bronze/dados_cadastrais/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
+**Origem:** `s3://lake/raw/pagamento/*.parquet`  
+**Destino:** `s3://lake/bronze/pagamento/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
 
 | Etapa | Processo | Descrição | Ações / Regras | Resultado Esperado |
 |------:|----------|-----------|----------------|-------------------|
@@ -37,10 +37,10 @@
 | 3 | **Observabilidade** | Enriquecimento de Metadados | Inclusão das colunas `ingestion_ts` e a organização por `run_id` no path do S3. | Rastreabilidade total de quando e como o dado foi carregado. |
 | 4 | **Particionamento Técnico** | Geração da estrutura de pastas | Criação da coluna `ano_mes` baseada na `safra` para habilitar o *Partition Pruning* e reduzir custos de scan. | Arquivos organizados fisicamente por `ano_mes=YYYYMM`. |
 
-#### 2.2 BRONZE → SILVER 
+#### 2.2 BRONZE → SILVER
 
-**Origem:** `s3://lake/bronze/dados_cadastrais/*.parquet`  
-**Destino:** `s3://lake/silver/dados_cadastrais/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
+**Origem:** `s3://lake/bronze/pagamento/*.parquet`  
+**Destino:** `s3://lake/silver/pagamento/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
 
 ... em desenvolvimento
 

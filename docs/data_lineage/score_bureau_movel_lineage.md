@@ -1,23 +1,23 @@
-## 📥 Ingestão - `raw/dados_cadastrais`
+## 📥 Ingestão - `raw/score_bureau_movel`
 
 - **Fonte:** Externa 
 - **Frequência:** Sob demanda (Ingestão manual/Parquet)
 - **Formato Original:** Parquet
-- **Volume médio:** ~74 MiB por carga (105 MiB descomprimido)
-- **Chave técnica:** CPF (candidata)
+- **Volume médio:** ~12 MiB por carga (21 MiB descomprimido)
+- **Chave técnica:** `a definir`
 - **Chave de Particionamento:** `SAFRA` (YYYYMM)
 
 ---
 
-## ✅ Data Lineage - `dados_cadastrais`
+## ✅ Data Lineage - `score_bureau_movel`
 
 ### 1. Visão Geral
 
 | Item            | Valor                                 |
 |-----------------|---------------------------------------|
-| Origem          | `raw/dados_cadastrais`                |
-| Destino Bronze  | `bronze/dados_cadastrais`             |
-| Destino Silver  | `silver/dados_cadastrais`             |
+| Origem          | `raw/score_bureau_movel`              |
+| Destino Bronze  | `bronze/score_bureau_movel`           |
+| Destino Silver  | `silver/score_bureau_movel`           |
 | Particionamento | `ano_mes` (Coluna Técnica)            |
 | Versionamento   | `run_id` (Isolamento de Execução)     |
 
@@ -27,8 +27,8 @@
 
 #### 2.1 RAW → BRONZE
 
-**Origem:** `s3://lake/raw/dados_cadastrais/*.parquet`  
-**Destino:** `s3://lake/bronze/dados_cadastrais/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
+**Origem:** `s3://lake/raw/score_bureau_movel/*.parquet`  
+**Destino:** `s3://lake/bronze/score_bureau_movel/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
 
 | Etapa | Processo | Descrição | Ações / Regras | Resultado Esperado |
 |------:|----------|-----------|----------------|-------------------|
@@ -39,8 +39,8 @@
 
 #### 2.2 BRONZE → SILVER 
 
-**Origem:** `s3://lake/bronze/dados_cadastrais/*.parquet`  
-**Destino:** `s3://lake/silver/dados_cadastrais/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
+**Origem:** `s3://lake/bronze/score_bureau_movel/*.parquet`  
+**Destino:** `s3://lake/silver/score_bureau_movel/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
 
 ... em desenvolvimento
 

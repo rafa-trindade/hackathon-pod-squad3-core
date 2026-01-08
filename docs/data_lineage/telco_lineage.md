@@ -1,23 +1,23 @@
-## 📥 Ingestão - `raw/dados_cadastrais`
+## 📥 Ingestão - `raw/telco`
 
 - **Fonte:** Externa 
 - **Frequência:** Sob demanda (Ingestão manual/Parquet)
 - **Formato Original:** Parquet
-- **Volume médio:** ~74 MiB por carga (105 MiB descomprimido)
-- **Chave técnica:** CPF (candidata)
+- **Volume médio:** ~83 MiB por carga (111 MiB descomprimido)
+- **Chave técnica:** `a definir`
 - **Chave de Particionamento:** `SAFRA` (YYYYMM)
 
 ---
 
-## ✅ Data Lineage - `dados_cadastrais`
+## ✅ Data Lineage - `telco`
 
 ### 1. Visão Geral
 
 | Item            | Valor                                 |
 |-----------------|---------------------------------------|
-| Origem          | `raw/dados_cadastrais`                |
-| Destino Bronze  | `bronze/dados_cadastrais`             |
-| Destino Silver  | `silver/dados_cadastrais`             |
+| Origem          | `raw/telco`                           |
+| Destino Bronze  | `bronze/telco`                        |
+| Destino Silver  | `silver/telco`                        |
 | Particionamento | `ano_mes` (Coluna Técnica)            |
 | Versionamento   | `run_id` (Isolamento de Execução)     |
 
@@ -25,10 +25,10 @@
 
 ### 2. Lineage por Camada
 
-#### 2.1 RAW → BRONZE
+#### 2.1 RAW → BRONZE 
 
-**Origem:** `s3://lake/raw/dados_cadastrais/*.parquet`  
-**Destino:** `s3://lake/bronze/dados_cadastrais/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
+**Origem:** `s3://lake/raw/telco/*.parquet`  
+**Destino:** `s3://lake/bronze/telco/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
 
 | Etapa | Processo | Descrição | Ações / Regras | Resultado Esperado |
 |------:|----------|-----------|----------------|-------------------|
@@ -37,10 +37,10 @@
 | 3 | **Observabilidade** | Enriquecimento de Metadados | Inclusão das colunas `ingestion_ts` e a organização por `run_id` no path do S3. | Rastreabilidade total de quando e como o dado foi carregado. |
 | 4 | **Particionamento Técnico** | Geração da estrutura de pastas | Criação da coluna `ano_mes` baseada na `safra` para habilitar o *Partition Pruning* e reduzir custos de scan. | Arquivos organizados fisicamente por `ano_mes=YYYYMM`. |
 
-#### 2.2 BRONZE → SILVER 
+#### 2.2 BRONZE → SILVER
 
-**Origem:** `s3://lake/bronze/dados_cadastrais/*.parquet`  
-**Destino:** `s3://lake/silver/dados_cadastrais/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
+**Origem:** `s3://lake/bronze/telco/*.parquet`  
+**Destino:** `s3://lake/silver/telco/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
 
 ... em desenvolvimento
 
