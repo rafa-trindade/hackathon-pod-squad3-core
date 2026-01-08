@@ -33,10 +33,12 @@ Define o significado, tipagem e uso das colunas por camada:
 ### 🏛️ Data Governance
 📄 [`docs/data_governance/`](docs/data_governance/README.md)
 
-Centraliza as políticas e diretrizes do projeto e mapeia como a solução atende,
-na prática, aos pilares de **Data Governance**.
+Centraliza as políticas, diretrizes e **decisões arquiteturais**
+do projeto, mapeando como a solução atende, na prática,
+aos pilares de **Data Governance**.
 - Política de retenção baseada em execuções técnicas (`run_id`)
 - Definição de contratos gerais de qualidade de dados
+- Padrões de particionamento e uso de colunas temporais no Data Lake
 - Estratégias seguras de reprocessamento e rollback
 - Suporte nativo à auditoria, observabilidade e controle de custos
 - Governança aplicada via código e automação
