@@ -18,11 +18,11 @@ sys.path.insert(0, str(PROJECT_ROOT))
 from config.data_connections import get_duckdb_connection
 from scripts.profiling.utils.profiling_utils import init_md_report, print_and_save_md, df_to_md
 
-BRONZE_BASE_PATH = "s3://lake/bronze/score_bureau_movel"
+BRONZE_BASE_PATH = "s3://lake/bronze/pagamento"
 
 con = get_duckdb_connection(
-    memory_limit="2GB",
-    threads=4
+    memory_limit="6GB",
+    threads=5
 )
 
 # Captura a última run_id via Hive Partitioning
@@ -35,7 +35,7 @@ latest_run_id = con.execute(f"""
 """).fetchone()[0]
 
 if latest_run_id is None:
-    raise RuntimeError("Nenhuma run_id encontrada na camada Bronze para score_bureau_movel")
+    raise RuntimeError("Nenhuma run_id encontrada na camada Bronze para pagamento")
 
 print(f"📌 Última run_id encontrada: {latest_run_id}")
 
@@ -45,8 +45,8 @@ path_parquet = (
 )
 
 md_file = init_md_report(
-    report_filename="bronze_score_bureau_movel_profiling.md",
-    dataset_name=f"bronze/score_bureau_movel` - `{latest_run_id}",
+    report_filename="bronze_pagamento_profiling.md",
+    dataset_name=f"bronze/pagamento` - `{latest_run_id}",
     layer="bronze"
 )
 
@@ -54,7 +54,7 @@ md_file = init_md_report(
 # %%
 # VOLUMETRIA #####################################
 ##################################################
-md = "### 📦 Volumetria: `bronze/score_bureau_movel`\n"
+md = "### 📦 Volumetria Particionada: `bronze/pagamento`\n"
 
 try:
     df_files = con.execute(f"""
@@ -67,11 +67,8 @@ try:
         ),
         enriched AS (
             SELECT
-                -- Ajustado para capturar a partição ano_mes
-                regexp_extract(
-                    file_name,
-                    'ano_mes=[^/]+'
-                ) AS ano_mes_dir,
+                -- Captura a partição única ano_mes=YYYYMM
+                regexp_extract(file_name, 'ano_mes=[^/]+') AS particao_dir,
                 file_name,
                 total_compressed_size,
                 total_uncompressed_size
@@ -79,12 +76,12 @@ try:
         ),
         base AS (
             SELECT
-                ano_mes_dir AS diretorio,
+                particao_dir AS diretorio,
                 COUNT(DISTINCT file_name) AS qtd_arquivos,
                 SUM(total_compressed_size) AS tamanho_comprimido_bytes,
                 SUM(total_uncompressed_size) AS tamanho_descomprimido_bytes
             FROM enriched
-            GROUP BY ano_mes_dir
+            GROUP BY particao_dir
         ),
         registros AS (
             SELECT
@@ -98,11 +95,7 @@ try:
         ),
         colunas AS (
             SELECT COUNT(*) AS qtd_colunas
-            FROM (
-                DESCRIBE
-                SELECT *
-                FROM read_parquet('{path_parquet}', hive_partitioning=1)
-            )
+            FROM (DESCRIBE SELECT * FROM read_parquet('{path_parquet}', hive_partitioning=1))
         ),
         joined AS (
             SELECT
@@ -114,8 +107,7 @@ try:
                 b.tamanho_descomprimido_bytes,
                 0 AS ordem
             FROM base b
-            LEFT JOIN registros r
-                ON b.diretorio = 'ano_mes=' || CAST(r.ano_mes AS VARCHAR)
+            LEFT JOIN registros r ON b.diretorio = 'ano_mes=' || CAST(r.ano_mes AS VARCHAR)
             CROSS JOIN colunas c
 
             UNION ALL
@@ -129,8 +121,7 @@ try:
                 SUM(tamanho_descomprimido_bytes),
                 1 AS ordem
             FROM base b
-            LEFT JOIN registros r
-                ON b.diretorio = 'ano_mes=' || CAST(r.ano_mes AS VARCHAR)
+            LEFT JOIN registros r ON b.diretorio = 'ano_mes=' || CAST(r.ano_mes AS VARCHAR)
             CROSS JOIN colunas c
         )
         SELECT
@@ -141,18 +132,10 @@ try:
             ROUND(tamanho_comprimido_bytes / 1024.0 / 1024.0, 2) AS tamanho_comprimido_mib,
             ROUND(tamanho_descomprimido_bytes / 1024.0 / 1024.0, 2) AS tamanho_descomprimido_mib
         FROM joined
-        ORDER BY
-            ordem,
-            diretorio
+        ORDER BY ordem, diretorio
     """).df()
 
-    df_files["registros"] = (
-        df_files["registros"]
-        .fillna(0)
-        .astype("int64")
-        .apply(lambda x: f"{x:,}".replace(",", "."))
-    )
-
+    df_files["registros"] = df_files["registros"].fillna(0).astype("int64").apply(lambda x: f"{x:,}".replace(",", "."))
     md += df_files.to_markdown(index=False)
 
 except Exception as e:
@@ -161,28 +144,23 @@ except Exception as e:
 print_and_save_md(md, md_file)
 
 
-
 # %% 
 # SCHEMA #########################################
 ##################################################
-md = "### 🧬 Schema: `bronze/score_bureau_movel`\n"
+md = "### 🧬 Schema: `bronze/pagamento` (Tipado)\n"
 
 df_schema = con.execute(f"""
-    DESCRIBE
-    SELECT *
-    FROM read_parquet('{path_parquet}', hive_partitioning=1)
+    DESCRIBE SELECT * FROM read_parquet('{path_parquet}', hive_partitioning=1)
 """).df()
 
 md += df_schema.to_markdown(index=False)
-
 print_and_save_md(md, md_file)
-
 
 
 # %%  
 # CAMPOS DATE/TIME ###############################
 ##################################################
-md = "### 📅 Range de Datas: `bronze/score_bureau_movel`\n"
+md = "### 📅 Range de Datas: `bronze/pagamento`\n"
 
 date_cols = df_schema[
     df_schema["column_type"].str.contains("DATE|TIMESTAMP", case=False, na=False)
@@ -193,7 +171,7 @@ if not date_cols:
 else:
     for col in date_cols:
         md += f"#### Coluna: `{col}`\n"
-        res = con.execute(f'SELECT MIN("{col}") as min, MAX("{col}") as max FROM read_parquet("{path_parquet}")').df()
+        res = con.execute(f'SELECT MIN("{col}") as min, MAX("{col}") as max FROM read_parquet("{path_parquet}", hive_partitioning=1)').df()
         md += res.to_markdown(index=False) + "\n\n"
 
 print_and_save_md(md, md_file)
@@ -202,15 +180,12 @@ print_and_save_md(md, md_file)
 # %% 
 # ESTATÍSTICA POR COLUNA #########################
 ##################################################
-md = "### 📊 Estatísticas por Coluna: `bronze/score_bureau_movel`\n"
+md = "### 📊 Estatísticas por Coluna: `bronze/pagamento`\n"
 
 cols = df_schema["column_name"].tolist()
 selects = []
 
-total_linhas = con.execute(f"""
-    SELECT COUNT(*)
-    FROM read_parquet('{path_parquet}')
-""").fetchone()[0]
+total_linhas = con.execute(f"SELECT COUNT(*) FROM read_parquet('{path_parquet}', hive_partitioning=1)").fetchone()[0]
 
 for col in cols:
     selects.append(f"""
@@ -219,8 +194,8 @@ for col in cols:
             COUNT(DISTINCT "{col}") AS distintos,
             COUNT(*) FILTER (WHERE "{col}" IS NULL) AS nulos,
             COUNT(*) - COUNT(DISTINCT "{col}") AS duplicados,
-            ROUND(COUNT(*) FILTER (WHERE "{col}" IS NULL) * 100.0 / COUNT(*), 2) || '%' AS pct_nulos,
-            ROUND((COUNT(*) - COUNT(DISTINCT "{col}")) * 100.0 / COUNT(*), 2) || '%' AS pct_duplicados,
+            ROUND(COUNT(*) FILTER (WHERE "{col}" IS NULL) * 100.0 / {total_linhas}, 2) || '%' AS pct_nulos,
+            ROUND((COUNT(*) - COUNT(DISTINCT "{col}")) * 100.0 / {total_linhas}, 2) || '%' AS pct_duplicados,
             CASE
                 WHEN COUNT(DISTINCT "{col}") <= 0.001 * {total_linhas} THEN 'BAIXA'
                 WHEN COUNT(DISTINCT "{col}") <= 0.05 * {total_linhas} THEN 'MEDIA'
@@ -240,23 +215,20 @@ print_and_save_md(md, md_file)
 # %%  
 # DISTRIBUIÇÃO POR VALORES (TOP 10) ##############
 ##################################################
-md = "### 🔟 Distribuição de Valores (Top 10): `bronze/score_bureau_movel`\n"
+md = "### 🔟 Distribuição de Valores (Top 10): `bronze/pagamento`\n"
 
 for col in df_column_statistics["coluna"]:
-    
     md += f"#### Coluna: `{col}`\n\n"
-
     df_top10 = con.execute(f"""
         SELECT
             "{col}" AS valor,
             COUNT(*) AS qtd
         FROM read_parquet('{path_parquet}', hive_partitioning=1)
-        GROUP BY "{col}"
-        ORDER BY qtd DESC
+        GROUP BY 1
+        ORDER BY 2 DESC
         LIMIT 10
     """).df()
-
     md += df_top10.to_markdown(index=False)
-    md+= "\n\n"
+    md += "\n\n"
 
 print_and_save_md(md, md_file)
