@@ -171,7 +171,7 @@ def run():
         )
     """)
 
-    print("✅ Escrita Bronze concluída com sucesso")
+    print("✅ Carga Bronze finalizada com sucesso!")
 
     # ------------------------------------------------------------------
     # Limpeza de runs antigas
@@ -185,6 +185,7 @@ def run():
     )
 
     print("🏁 Pipeline pagamento Bronze finalizado!")
+    
 
 if __name__ == "__main__":
     run()

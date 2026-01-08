@@ -15,10 +15,10 @@ from scripts.transformations.utils.lake_retention import cleanup_old_runs
 # ------------------------------------------------------------------
 # CONFIGURAÇÕES DO PIPELINE
 # ------------------------------------------------------------------
-RAW_PATH = "s3://lake/raw/score_bureau_movel/*.parquet"
+RAW_PATH = "s3://lake/raw/telco/*.parquet"
 
 RUN_ID = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
-BRONZE_BASE_PATH = "bronze/score_bureau_movel/"
+BRONZE_BASE_PATH = "bronze/telco/"
 BRONZE_PATH = f"s3://lake/{BRONZE_BASE_PATH}run_id={RUN_ID}/"
 
 # Política de retenção
@@ -30,7 +30,7 @@ def run():
         threads=5,
     )
 
-    print("🚀 Iniciando Bronze: score_bureau_movel")
+    print("🚀 Iniciando Bronze: telco")
     print(f"🧾 run_id = {RUN_ID}")
     print(f"🧹 Política de retenção: manter {MAX_BRONZE_RUNS} runs")
 
@@ -38,7 +38,7 @@ def run():
     # Transformação RAW -> BRONZE
     # ------------------------------------------------------------------
     query = f"""
-            CREATE OR REPLACE TABLE bronze_score_bureau_movel AS
+            CREATE OR REPLACE TABLE bronze_telco AS
             WITH typed_data AS (
                 SELECT
                     -- ----------------------------
@@ -59,16 +59,82 @@ def run():
                     CAST(FPD = '1' AS BOOLEAN) AS fpd,
 
                     -- ----------------------------
-                    -- Domínios (Categorias)
+                    -- Domínios e Atributos (VARCHAR)
                     -- ----------------------------
                     PROD::VARCHAR AS prod,
                     flag_mig2::VARCHAR AS flag_mig2,
+                    var_26::VARCHAR AS var_26,
+                    var_27::VARCHAR AS var_27,
+                    var_64::VARCHAR AS var_64,
+                    var_65::VARCHAR AS var_65,
+                    var_66::VARCHAR AS var_66,
+                    var_67::VARCHAR AS var_67,
+                    var_73::VARCHAR AS var_73,
+                    var_74::VARCHAR AS var_74,
+                    var_75::VARCHAR AS var_75,
+                    var_76::VARCHAR AS var_76,
+                    var_77::VARCHAR AS var_77,
+                    var_78::VARCHAR AS var_78,
+                    var_79::VARCHAR AS var_79,
+                    var_80::VARCHAR AS var_80,
+                    var_81::VARCHAR AS var_81,
+                    var_83::VARCHAR AS var_83,
+                    var_84::VARCHAR AS var_84,
+                    var_85::VARCHAR AS var_85,
+                    var_86::VARCHAR AS var_86,
+                    var_87::VARCHAR AS var_87,
+                    var_88::VARCHAR AS var_88,
+                    var_89::VARCHAR AS var_89,
+                    var_91::VARCHAR AS var_91,
+                    var_92::VARCHAR AS var_92,
+                    var_93::VARCHAR AS var_93,
 
                     -- ----------------------------
-                    -- Scores (Integers)
+                    -- Variáveis Numéricas (DOUBLE)
                     -- ----------------------------
-                    CAST(SCORE_01 AS INTEGER) AS score_01,
-                    CAST(SCORE_02 AS INTEGER) AS score_02,
+                    var_28::DOUBLE AS var_28,
+                    var_29::DOUBLE AS var_29,
+                    var_30::DOUBLE AS var_30,
+                    var_31::DOUBLE AS var_31,
+                    var_32::DOUBLE AS var_32,
+                    var_33::DOUBLE AS var_33,
+                    var_34::DOUBLE AS var_34,
+                    var_35::DOUBLE AS var_35,
+                    var_36::DOUBLE AS var_36,
+                    var_37::DOUBLE AS var_37,
+                    var_38::DOUBLE AS var_38,
+                    var_39::DOUBLE AS var_39,
+                    var_40::DOUBLE AS var_40,
+                    var_41::DOUBLE AS var_41,
+                    var_42::DOUBLE AS var_42,
+                    var_43::DOUBLE AS var_43,
+                    var_44::DOUBLE AS var_44,
+                    var_45::DOUBLE AS var_45,
+                    var_46::DOUBLE AS var_46,
+                    var_47::DOUBLE AS var_47,
+                    var_48::DOUBLE AS var_48,
+                    var_49::DOUBLE AS var_49,
+                    var_50::DOUBLE AS var_50,
+                    var_51::DOUBLE AS var_51,
+                    var_52::DOUBLE AS var_52,
+                    var_53::DOUBLE AS var_53,
+                    var_54::DOUBLE AS var_54,
+                    var_55::DOUBLE AS var_55,
+                    var_56::DOUBLE AS var_56,
+                    var_57::DOUBLE AS var_57,
+                    var_58::DOUBLE AS var_58,
+                    var_59::DOUBLE AS var_59,
+                    var_60::DOUBLE AS var_60,
+                    var_61::DOUBLE AS var_61,
+                    var_62::DOUBLE AS var_62,
+                    var_63::DOUBLE AS var_63,
+                    var_68::DOUBLE AS var_68,
+                    var_69::DOUBLE AS var_69,
+                    var_70::DOUBLE AS var_70,
+                    var_71::DOUBLE AS var_71,
+                    var_72::DOUBLE AS var_72,
+                    var_82::DOUBLE AS var_82,
+                    var_90::DOUBLE AS var_90,
 
                     -- Campo técnico para partição
                     CAST(SAFRA AS BIGINT) AS ano_mes_folder,
@@ -84,7 +150,7 @@ def run():
     con.execute(query)
 
     rows = con.execute(
-        "SELECT COUNT(*) FROM bronze_score_bureau_movel"
+        "SELECT COUNT(*) FROM bronze_telco"
     ).fetchone()[0]
 
     print(f"📊 Total de linhas na Bronze: {rows:,}".replace(",", "."))
@@ -101,7 +167,7 @@ def run():
             SELECT 
                 * EXCLUDE (ano_mes_folder),
                 ano_mes_folder AS ano_mes
-            FROM bronze_score_bureau_movel
+            FROM bronze_telco
             ORDER BY ano_mes, num_cpf
         )
         TO '{BRONZE_PATH}'
@@ -124,7 +190,7 @@ def run():
         protect_run_id=RUN_ID,
     )
 
-    print("🏁 Pipeline score_bureau_movel Bronze finalizado!")
+    print("🏁 Pipeline telco Bronze finalizado!")
 
 
 if __name__ == "__main__":
