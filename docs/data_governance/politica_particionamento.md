@@ -1,83 +1,53 @@
-## 🧭 Política de Particionamento no Data Lake
+# 🧭 Política de Particionamento no Data Lake
 
-**Objetivo:**  
-Documentar o **padrão de particionamento e uso de colunas temporais**
-adotado neste projeto, registrando as decisões técnicas aplicadas
-na organização dos dados no Data Lake.
+**Objetivo:** Documentar o padrão de particionamento e a estratégia de organização temporal adotada na camada Bronze, visando otimizar a performance de leitura, previsibilidade de armazenamento e suporte à modelagem nas camadas posteriores.
 
 ---
 
 ### 1. Visão Geral
 
-Para garantir organização temporal, previsibilidade de leitura e suporte à modelagem
-nas camadas posteriores, foi definido um padrão de particionamento baseado
-em colunas de tempo explícitas na camada Bronze.
+Para garantir uma arquitetura escalável e eficiente, foi definido um padrão de particionamento único baseado em colunas temporais explícitas. Este eixo temporal permite a leitura seletiva (Partition Pruning), essencial para o processamento de grandes volumes (ex: base de pagamentos com +20M de registros).
 
-Neste projeto, todos os datasets da camada **Bronze** possuem
-um **eixo temporal definido**, utilizado para:
-
-- Organização física dos dados no Data Lake
-- Particionamento eficiente por período
-- Base para joins e consolidação na camada Gold
-
-Os dados foram classificados em dois tipos principais:
-
-- **Snapshots mensais**
-- **Eventos**
+Os dados são classificados em duas categorias de ingestão:
+- **Snapshots Mensais:** Visões estáticas de posição em uma data de corte.
+- **Eventos:** Registros transacionais capturados no momento da ocorrência.
 
 ---
 
-#### 1.1 Padrão Adotado - Camada Bronze
+#### 1.1 Matriz de Particionamento: Camada Bronze
 
-| Base               | Tipo            | Coluna de referência  | Coluna técnica | Particionamento   | Exemplo             |
-|--------------------|-----------------|-----------------------|----------------|-------------------|---------------------|
-| atraso             | Snapshot mensal | DAT_REFERENCIA        | safra          | safra=YYYYMM      | safra=202501        |
-| pagamento          | Evento          | DAT_STATUS_FATURA     | data_evento    | ano=YYYY/mes=MM   | ano=2025/mes=01     |
-| recarga            | Evento          | DAT_INSERCAO_CREDITO  | data_evento    | ano=YYYY/mes=MM   | ano=2025/mes=03     |
-| dados_cadastrais   | Snapshot mensal | SAFRA                 | safra          | safra=YYYYMM      | safra=202501        |
-| score_bureau_movel | Snapshot mensal | SAFRA                 | safra          | safra=YYYYMM      | safra=202501        |
-| telco              | Snapshot mensal | SAFRA                 | safra          | safra=YYYYMM      | safra=202501        |
-
----
-
-#### 1.2 Decisões Técnicas
-
-- Snapshots mensais utilizam **SAFRA (YYYYMM)** como referência temporal
-- Bases de evento utilizam a **data real de ocorrência**
-- A coluna técnica temporal é padronizada para facilitar leitura e reutilização
-- O particionamento reflete a **granularidade real do dado**, evitando distorções
-
-Essas decisões facilitam:
-
-- Reprocessamentos por período
-- Leitura seletiva de dados
-- Consolidação na camada Silver
-- Consumo e modelagem na camada Gold
+| Base | Tipo de Dado | Coluna de Referência (Física) | Coluna Técnica (Partição) | Padrão de Diretório | Exemplo de Caminho |
+|:---|:---|:---|:---|:---|:---|
+| **atraso** | Snapshot | `dat_referencia` | `ano_mes` | `ano_mes=YYYYMM` | `ano_mes=202501` |
+| **pagamento** | Evento | `dat_status_fatura` | `ano_mes` | `ano_mes=YYYYMM` | `ano_mes=202501` |
+| **recarga** | Evento | `dat_insercao_credito` | `ano_mes` | `ano_mes=YYYYMM` | `ano_mes=202503` |
+| **dados_cadastrais** | Snapshot | `safra` | `ano_mes` | `ano_mes=YYYYMM` | `ano_mes=202501` |
+| **score_bureau_movel**| Snapshot | `safra` | `ano_mes` | `ano_mes=YYYYMM` | `ano_mes=202501` |
+| **telco** | Snapshot | `safra` | `ano_mes` | `ano_mes=YYYYMM` | `ano_mes=202501` |
 
 ---
 
-### 2. Relação com as Outras Camadas
+#### 1.2 Decisões Técnicas Fundamentais
 
-**Camada: Bronze**  
-Dados organizados e particionados por tempo, refletindo a forma como são recebidos das fontes,
-sem aplicação de regras de negócio.
-
-**Camada: Silver**  
-Consolidação e padronização, mantendo e respeitando
-o período de referência definido na Bronze.
-
-**Camada: Gold**  
-Camada final voltada à **modelagem para Machine Learning**, com datasets construídos
-a partir de períodos de referência explícitos e controlados conforme a necessidade dos modelos.
+* **Particionamento Virtual (Hive):** A coluna técnica `ano_mes` é utilizada exclusivamente para a criação da estrutura de pastas no S3. Ela é removida do corpo do arquivo Parquet para evitar redundância, sendo "reconstruída" em tempo de execução pelos motores de consulta (DuckDB).
+* **Tipagem Numérica:** A partição `ano_mes` é tratada como `BIGINT` (formato `YYYYMM`). Isso garante ordenação natural e consultas de intervalo (`BETWEEN`) mais performáticas do que strings.
+* **Preservação da Data Real:** A coluna de referência original (ex: `dat_status_fatura`) é sempre mantida dentro do arquivo Parquet com tipagem `DATE` ou `TIMESTAMP`, garantindo a precisão do evento.
+* **Padronização de Nomenclatura:** Todas as colunas foram convertidas para *lowercase* para evitar conflitos de *case-sensitivity* entre diferentes ferramentas e sistemas de arquivos.
 
 ---
 
-### 3. Observações Finais
+### 2. Fluxo entre Camadas
 
-Este documento descreve **as decisões adotadas neste projeto específico**
-para organização temporal e particionamento dos dados no Data Lake.
+* **Bronze:** Dados organizados por `ano_mes`, refletindo a granularidade da fonte. É a "Fonte da Verdade" particionada.
+* **Silver:** Realiza o saneamento e padronização. Respeita o particionamento definido na Bronze para permitir processamentos incrementais eficientes.
+* **Gold:** Camada de Feature Store e Modelagem. Os dados são agregados e transformados em vetores para Machine Learning, utilizando as janelas temporais definidas nas partições anteriores.
 
-O padrão aqui documentado:
-- Não é imutável
-- Não representa um framework genérico
-- Reflete exclusivamente as escolhas técnicas realizadas durante a implementação deste projeto
+---
+
+### 3. Governança e Retenção
+
+Para cada partição `ano_mes`, o sistema mantém um controle de `run_id` (timestamp da execução). A política de retenção padrão é configurada para manter as execuções mais recentes, permitindo o *rollback* imediato em caso de inconsistência nos dados recebidos.
+
+---
+
+**Observações Finais:** Este padrão reflete as escolhas técnicas para este ecossistema específico, priorizando a simplicidade da estrutura de diretórios em nível único e a performance de motores SQL modernos.
