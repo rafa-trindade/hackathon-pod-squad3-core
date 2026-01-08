@@ -43,17 +43,17 @@ Define:
 
 ---
 
-### 🧭 Política de Particionamento Temporal no Data Lake
-📄 [`data_governance/politica_particionamento_temporal.md`](politica_particionamento_temporal.md)
+### 🧭 Política de Particionamento no Data Lake
+📄 [`data_governance/politica_particionamento.md`](politica_particionamento.md)
 
 Define:
-- Padrão de uso de colunas temporais na camada Bronze
-- Estratégia de particionamento por tipo de dado (snapshot vs evento)
-- Convenções técnicas para colunas de tempo
-- Relação entre a organização temporal e modelagem nas camadas Silver e Gold
+- Padrão de particionamento adotado na camada Bronze
+- Uso de colunas temporais como eixo de organização dos dados
+- Diferença de estratégia entre snapshots e eventos
+- Relação entre particionamento, reprocessamento e modelagem nas camadas Silver e Gold
 
 Este documento registra **as decisões arquiteturais adotadas neste projeto**
-para a organização temporal dos dados no Data Lake.
+para a organização dos dados no Data Lake.
 
 ---
 
