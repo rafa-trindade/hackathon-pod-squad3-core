@@ -1,4 +1,4 @@
-## 🧭 Política de Particionamento Temporal no Data Lake
+## 🧭 Política de Particionamento no Data Lake
 
 **Objetivo:**  
 Documentar o **padrão de particionamento e uso de colunas temporais**
@@ -13,7 +13,7 @@ Para garantir organização temporal, previsibilidade de leitura e suporte à mo
 nas camadas posteriores, foi definido um padrão de particionamento baseado
 em colunas de tempo explícitas na camada Bronze.
 
-Neste projeto, todos os datasets a partir da camada **Bronze** possuem
+Neste projeto, todos os datasets da camada **Bronze** possuem
 um **eixo temporal definido**, utilizado para:
 
 - Organização física dos dados no Data Lake
@@ -80,4 +80,4 @@ para organização temporal e particionamento dos dados no Data Lake.
 O padrão aqui documentado:
 - Não é imutável
 - Não representa um framework genérico
-- Reflete exclusivamente as escolhas técnicas realizadas durante a implementação
+- Reflete exclusivamente as escolhas técnicas realizadas durante a implementação deste projeto
