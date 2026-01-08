@@ -1,160 +1,70 @@
-## 🧹 Política de Retenção de Dados no Data Lake
+# 🧹 Política de Retenção de Dados no Data Lake
 
-**Objetivo:**  
-Definir diretrizes de retenção de dados no Data Lake, equilibrando custo de armazenamento,
-capacidade de reprocessamento, governança e confiabilidade operacional.
-
-### 1. Visão Geral
-
-Para evitar crescimento descontrolado de armazenamento e garantir governança operacional, foi definida uma política de retenção baseada em runs nas camadas do Data Lake.
+**Objetivo:** Definir diretrizes de retenção de dados no Data Lake, equilibrando custos de armazenamento, governança de dados e resiliência operacional para processos de reprocessamento e rollback.
 
 ---
 
-#### 1.1 Estratégia de Retenção
+### 1. Visão Geral: Estratégia de Versionamento Técnico
 
-- A retenção é aplicada por dataset e por camada
-- Cada execução do pipeline gera uma nova pasta lógica identificada por `run_id`
-- O `run_id` é um identificador **técnico de execução**, não representando versão de negócio dos dados
+Adotamos uma abordagem de **Imutabilidade por Execução**. Em vez de sobrescrever dados existentes, cada ciclo do pipeline (Job) cria uma nova versão lógica do dataset completo ou particionado, garantindo isolamento total entre execuções.
 
-*Estrutura padrão:*
+#### 1.1 O Identificador `run_id`
 
-`s3://lake/{camada}/{dataset}/`<br>
-  └── run_id=YYYYMMDD_HHMMSS/
-
-*Exemplo:*
-
-`s3://lake/bronze/dados_cadastrais/`<br>
-  ├── run_id=20251226_091200/  
-  ├── run_id=20251227_101530/  
-  └── run_id=20251228_175545/
+* **Definição:** O `run_id` é um carimbo de tempo (Timestamp) no formato `YYYYMMDD_HHMMSS`.
+* **Função:** Atuar como um contêiner técnico para uma fotografia completa do dataset naquele instante.
+* **Estrutura física no S3:** `s3://lake/{camada}/{dataset}/run_id=YYYYMMDD_HHMMSS/`
 
 ---
 
-#### 1.2 Regra de Retenção (ex: Bronze)
+### 2. Regras de Retenção (Purge Policy)
 
-- Quantidade máxima de runs mantidas: configurável via parâmetro
-- Padrão atual: manter apenas as N runs mais recentes
-- Runs mais antigas são removidas automaticamente após uma execução bem-sucedida
+A retenção é gerenciada de forma automatizada pelo utilitário `lake_retention.py`, baseando-se na quantidade de execuções bem-sucedidas.
 
-*Exemplo de configuração:*
+#### 2.1 Retenção Baseada em Runs (Exemplo: Bronze)
 
-```python
-BRONZE_MAX_RUNS = 2
-```
+* **Parâmetro:** `MAX_RUNS` (configurável via variável de ambiente ou código).
+* **Lógica:** Mantemos as **N** versões mais recentes e removemos fisicamente as versões excedentes.
+* **Segurança:** A run atual é explicitamente protegida e nunca é alvo de deleção.
 
-Com essa configuração:
-- A run atual nunca é removida
-- A run imediatamente anterior é preservada
-- Todas as runs mais antigas são excluídas
+**Exemplo Prático (`MAX_RUNS = 2`):**
+1.  **Run T0:** Escrita finalizada (Total: 1 run).
+2.  **Run T1:** Escrita finalizada. Política mantem T0 e T1 (Total: 2 runs).
+3.  **Run T2:** Escrita finalizada. Política identifica excedente e **remove T0**. Restam T1 e T2.
 
----
+#### 2.2 Momento da Limpeza (Atomicidade Operacional)
 
-#### 1.3 Momento da Limpeza
+A limpeza **nunca** precede a escrita. O fluxo obedece rigorosamente a seguinte ordem:
+1.  **Escrita:** Novos dados são persistidos na nova `run_id`.
+2.  **Validação:** O processo de escrita deve retornar código de sucesso.
+3.  **Purge:** O utilitário de limpeza é invocado para remover as runs obsoletas.
 
-A limpeza ocorre somente após a escrita bem-sucedida dos dados.
-
-- Em caso de falha na ingestão ou transformação:
-  - Nenhuma run anterior é removida
-  - Garante-se capacidade de rollback e reprocessamento
-
-- Essa abordagem garante que:
-  - Nenhuma execução válida seja perdida
-  - O ambiente permaneça consistente mesmo em falhas intermediárias
-
-*Exemplo de Fluxo:*
-
-`RAW → BRONZE` *(write OK)*<br>
-  ↓  
-Aplicação da política de retenção
+> 💡 **Benefício:** Se o pipeline falhar no meio da transformação, os dados da run anterior permanecem intactos, garantindo que o consumo nunca fique indisponível.
 
 ---
 
-#### 1.4 Implementação Técnica
+### 3. Considerações por Camada
 
-A retenção é implementada via utilitário reutilizável: `scripts/transformations/utils/lake_retention.py`
-
-A função:
-  - Lista diretórios run_id=*
-  - Ordena por data (mais recentes primeiro)
-  - Remove apenas os objetos das runs excedentes
-  - Protege explicitamente o run_id da execução atual
-
----
-
-#### 1.5 Benefícios da Estratégia
-
-- Controle de custos de armazenamento
-- Parametrização da retenção por dataset (valores distintos de runs por base)
-- Histórico operacional suficiente para auditoria e troubleshooting
-- Simplicidade operacional
-- Alinhado a padrões modernos de Data Lake
+| Camada | Estratégia de Retenção | Justificativa |
+| :--- | :--- | :--- |
+| **RAW** | Histórico Longo / Permanente | Garantir a capacidade de reconstruir todo o Lake a partir do dado bruto se necessário. |
+| **BRONZE** | Curta (1 a 3 runs) | Camada intermediária de tipagem. Requer histórico apenas para validação imediata e rollback técnico. |
+| **SILVER** | Moderada | Dados limpos e padronizados. Retenção maior para suportar análises históricas e reprocessamentos de Gold. |
+| **GOLD** | Específica por Modelo | Governança baseada no ciclo de vida dos modelos de ML e requisitos de auditoria. |
 
 ---
 
-#### 1.6 Considerações por Camada
+### 4. Implementação e Governança
 
-Camada: `RAW`<br>
-**Estratégia:** Pode manter histórico maior ou completo, conforme custo e criticidade <br>
-*Para este projeto, a retenção na camada RAW não está implementada, devido à característica de ingestão manual dos dados.*
+A lógica de limpeza é centralizada no módulo `scripts/transformations/utils/lake_retention.py`, utilizando a biblioteca `boto3` para operações atômicas no S3.
 
-Camada: `BRONZE`<br>
-**Estratégia:** Retenção curta baseada em runs técnicas
-
-Camada: `SILVER`<br>
-**Estratégia:** Retenção orientada a negócio e reprocessamento
-
-Camada: `GOLD`<br>
-**Estratégia:** Governada por requisitos de ML
+**Responsabilidades:**
+* **Engenharia de Dados:** Configurar o parâmetro `MAX_RUNS` adequado para a volumetria de cada dataset.
+* **Infraestrutura/Cloud:** Monitorar logs de deleção e métricas de custo do S3.
 
 ---
 
-#### 1.7 Evoluções Futuras
+### 5. Observações Finais
 
-Esta política foi definida de forma incremental e poderá evoluir conforme a maturidade da plataforma e necessidades do negócio.
-
-Possíveis evoluções previstas:
-
-- Retenção baseada em tempo (ex: dias) combinada com retenção por run
-- Integração com métricas de custo e observabilidade do Data Lake
-
----
-
-### 2. Escopo e Aplicabilidade
-
-Esta política se aplica a:
-
-- Pipelines de ingestão e transformação executados via código
-- Camadas do Data Lake que utilizam versionamento técnico por execução (`run_id`)
-- Ambientes onde há necessidade de controle de custo e reprocessamento controlado
-
-Não se aplica a:
-
-- Sistemas transacionais de origem
-- Camadas analíticas finais com SLA de consumo direto (ex: marts BI expostos)
-
----
-
-### 3. Responsabilidades
-
-- **Engenharia de Dados**
-  - Implementação e manutenção da política
-  - Definição de parâmetros de retenção por camada/dataset
-
-- **Arquitetura de Dados**
-  - Revisão periódica da política
-  - Alinhamento com padrões corporativos e boas práticas
-
-- **Negócio / Analytics**
-  - Definição de requisitos de histórico mínimo para consumo e auditoria
-
----
-
-### 4. Observações Finais
-
-A política de retenção não substitui estratégias de backup, versionamento de código ou controle de qualidade dos dados.
-
-Seu objetivo é exclusivamente garantir equilíbrio entre:
-- Governança
-- Custo
-- Confiabilidade operacional
-- Capacidade de reprocessamento
+Esta política foca na **higiene técnica** do Lake. Ela não substitui:
+1.  **Backup de Desastre:** Gerenciado por políticas de versionamento e replicação do S3.
+2.  **Arquivamento de Longo Prazo:** Dados obsoletos de negócio devem ser movidos para classes de armazenamento de baixo custo (S3 Glacier) conforme legislação vigente (LGPD).
