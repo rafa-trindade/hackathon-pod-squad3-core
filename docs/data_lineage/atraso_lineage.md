@@ -1,24 +1,24 @@
-## 📥 Ingestão - `raw/pagamento`
+## 📥 Ingestão - `raw/atraso`
 
 - **Fonte:** Externa 
 - **Frequência:** Sob demanda (Ingestão manual/Parquet)
 - **Formato Original:** Parquet
-- **Volume médio:** ~2115 MiB por carga (3677 MiB descomprimido)
+- **Volume médio:** ~4307 MiB por carga (6358 MiB descomprimido)
 - **Chave técnica:** `a definir`
-- **Chave de Particionamento:** `DAT_STATUS_FATURA` (Mês/Ano)
+- **Chave de Particionamento:** `DAT_REFERENCIA` (YYYYMM)
 
 ---
 
-## ✅ Data Lineage - `pagamento`
+## ✅ Data Lineage - `atraso`
 
 ### 1. Visão Geral
 
 | Item            | Valor                                 |
 |-----------------|---------------------------------------|
-| Origem          | `raw/pagamento`                       |
-| Destino Bronze  | `bronze/pagamento`                    |
-| Destino Silver  | `silver/pagamento`                    |
-| Particionamento | `_ano_mes_folder` (Coluna Técnica)    |
+| Origem          | `raw/atraso`                |
+| Destino Bronze  | `bronze/atraso`             |
+| Destino Silver  | `silver/atraso`             |
+| Particionamento | `ano_mes` (Coluna Técnica)            |
 | Versionamento   | `run_id` (Isolamento de Execução)     |
 
 ---
@@ -27,10 +27,10 @@
 
 #### 2.1 RAW → BRONZE
 
-**Origem:** `s3://lake/raw/pagamento/*.parquet`  
-**Destino:** `s3://lake/bronze/pagamento/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
+**Origem:** `s3://lake/raw/atraso/*.parquet`  
+**Destino:** `s3://lake/bronze/atraso/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
 
-- **Volume médio:** ~1757 MiB por carga (2943 MiB descomprimido)
+- **Volume médio:** ~3541 MiB por carga (5213 MiB descomprimido)
 
 | Etapa | Processo | Descrição | Ações / Regras | Resultado Esperado |
 |------:|----------|-----------|----------------|-------------------|
@@ -41,10 +41,10 @@
 
 ---
 
-#### 2.2 BRONZE → SILVER
+#### 2.2 BRONZE → SILVER 
 
-**Origem:** `s3://lake/bronze/pagamento/*.parquet`  
-**Destino:** `s3://lake/silver/pagamento/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
+**Origem:** `s3://lake/bronze/atraso/*.parquet`  
+**Destino:** `s3://lake/silver/atraso/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
 
 - **Volume médio:** ~
 

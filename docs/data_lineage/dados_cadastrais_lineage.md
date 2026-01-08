@@ -4,7 +4,7 @@
 - **Frequência:** Sob demanda (Ingestão manual/Parquet)
 - **Formato Original:** Parquet
 - **Volume médio:** ~74 MiB por carga (105 MiB descomprimido)
-- **Chave técnica:** CPF (candidata)
+- **Chave técnica:** NUM_CPF (candidata)
 - **Chave de Particionamento:** `SAFRA` (YYYYMM)
 
 ---
@@ -30,6 +30,8 @@
 **Origem:** `s3://lake/raw/dados_cadastrais/*.parquet`  
 **Destino:** `s3://lake/bronze/dados_cadastrais/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
 
+- **Volume médio:** ~76 MiB por carga (109 MiB descomprimido)
+
 | Etapa | Processo | Descrição | Ações / Regras | Resultado Esperado |
 |------:|----------|-----------|----------------|-------------------|
 | 1 | **Normalization (Lowercase)** | Padronização de nomenclatura | Conversão de todos os nomes de colunas para minúsculo para evitar conflitos de case-sensitivity. | Nomes uniformes e sem conflitos de *case-sensitivity*. |
@@ -43,6 +45,8 @@
 
 **Origem:** `s3://lake/bronze/dados_cadastrais/*.parquet`  
 **Destino:** `s3://lake/silver/dados_cadastrais/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
+
+- **Volume médio:** ~
 
 ... em desenvolvimento
 

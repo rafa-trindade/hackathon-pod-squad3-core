@@ -30,6 +30,8 @@
 **Origem:** `s3://lake/raw/telco/*.parquet`  
 **Destino:** `s3://lake/bronze/telco/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
 
+- **Volume médio:** ~90 MiB por carga (128 MiB descomprimido)
+
 | Etapa | Processo | Descrição | Ações / Regras | Resultado Esperado |
 |------:|----------|-----------|----------------|-------------------|
 | 1 | **Normalization (Lowercase)** | Padronização de nomenclatura | Conversão de todos os nomes de colunas para minúsculo para evitar conflitos de case-sensitivity. | Nomes uniformes e sem conflitos de *case-sensitivity*. |
@@ -43,6 +45,8 @@
 
 **Origem:** `s3://lake/bronze/telco/*.parquet`  
 **Destino:** `s3://lake/silver/telco/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
+
+- **Volume médio:** ~
 
 ... em desenvolvimento
 

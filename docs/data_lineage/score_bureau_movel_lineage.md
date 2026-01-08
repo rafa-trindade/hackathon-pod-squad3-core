@@ -30,6 +30,8 @@
 **Origem:** `s3://lake/raw/score_bureau_movel/*.parquet`  
 **Destino:** `s3://lake/bronze/score_bureau_movel/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
 
+- **Volume médio:** ~12 MiB por carga (21 MiB descomprimido)
+
 | Etapa | Processo | Descrição | Ações / Regras | Resultado Esperado |
 |------:|----------|-----------|----------------|-------------------|
 | 1 | **Normalization (Lowercase)** | Padronização de nomenclatura | Conversão de todos os nomes de colunas para minúsculo para evitar conflitos de case-sensitivity. | Nomes uniformes e sem conflitos de *case-sensitivity*. |
@@ -43,6 +45,8 @@
 
 **Origem:** `s3://lake/bronze/score_bureau_movel/*.parquet`  
 **Destino:** `s3://lake/silver/score_bureau_movel/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
+
+- **Volume médio:** ~
 
 ... em desenvolvimento
 
