@@ -13,83 +13,69 @@ Repositório de desenvolvimento e experimentação de engenharia de dados para o
 ### 🏗️ Data Architecture
 📄 [`docs/data_architecture/`](docs/data_architecture/README.md)
 
-Descreve a arquitetura técnica do projeto em execução:
-- Componentes da stack (MinIO, DuckDB, Airflow, Pandera, Docker)
-- Papéis e responsabilidades de cada serviço
-- Integração entre ingestão, processamento e armazenamento
-
----
-
-### 📘 Data Dictionary
-📁 [`docs/data_dictionary/*`](docs/data_dictionary/)
-
-Define o significado, tipagem e uso das colunas por camada:
-- Dicionário técnico e semântico
-- Padronização de nomenclatura
-- Suporte a contratos de dados
+**Foco:** Infraestrutura e Stack Técnica.
+- **Solução:** Desenho de arquitetura local e escalável com Docker, MinIO e DuckDB.
+- **Engine:** Processamento analítico vetorizado com DuckDB e modelagem no PostgreSQL via dbt.
+- **Qualidade:** Validação de schemas e contratos de dados na origem com Pandera.
+- **Visualização:** Entrega de Data Apps analíticos integrados via Streamlit.
 
 ---
 
 ### 🏛️ Data Governance
 📄 [`docs/data_governance/`](docs/data_governance/README.md)
 
-Centraliza as políticas, diretrizes e **decisões arquiteturais**
-do projeto, mapeando como a solução atende, na prática,
-aos pilares de **Data Governance**.
-- Política de retenção baseada em execuções técnicas (`run_id`)
-- Definição de contratos gerais de qualidade de dados
-- Padrões de particionamento e uso de colunas temporais no Data Lake
-- Estratégias seguras de reprocessamento e rollback
-- Suporte nativo à auditoria, observabilidade e controle de custos
-- Governança aplicada via código e automação
+**Foco:** Diretrizes, Políticas e Custos.
+- **Retenção:** Gestão de ciclo de vida baseada em `run_id` (Rollback técnico).
+- **Particionamento:** Estratégia de `ano_mes` para eficiência de processamento e custo.
+- **Decisões:** Registro de escolhas arquiteturais aplicadas via código (Policy as Code).
 
 ---
 
 ### 🧬 Data Lineage
-📁 [`docs/data_lineage/*`](docs/data_lineage)
+📁 [`docs/data_lineage/`](docs/data_lineage/)
 
-Documenta a rastreabilidade ponta a ponta dos dados:
-- Origem dos dados
-- Transformações por camada (Raw → Bronze → Silver → Gold)
-- Separação entre transformações técnicas e semânticas
+**Foco:** Rastreabilidade e Governança do Fluxo.
+- **Rastreabilidade:** Mapeamento ponta a ponta da jornada do dado (Raw → Bronze → Silver → Gold).
+- **Processamento Técnico:** Padronização de nomes, tipagem forte e normalização na camada Bronze.
+- **Inteligência de Negócio:** Consolidação, deduplicação e aplicação de chaves semânticas na Silver.
+- **Qualidade:** Pontos de controle com Pandera garantindo conformidade entre as passagens de camada.
+
+---
+
+### 🧠 Feature Store & Book de Variáveis
+📁 [`docs/data_modelling/`](docs/data_modelling/)
+
+**Foco:** Inteligência de Dados e Machine Learning (Camada Gold).
+- **Book de Variáveis:** Documentação detalhada das variáveis preditivas, contendo definições de negócio, lógicas de agregação temporal e lógicas de cálculo.
+- **Feature Engineering:** Registro das transformações analíticas e indicadores (KPIs) construídos especificamente para o treinamento e score dos modelos.
 
 ---
 
 ### 🔍 Data Observability
 📄 [`docs/data_observability/`](docs/data_observability/README.md)
 
-Mapeia como o projeto atende aos pilares de Data Observability:
-- Freshness
-- Volume
-- Schema
-- Distribution
-- Lineage
-- Quality
-- Reliability e Reprocessamento
-
-A observabilidade emerge como resultado das decisões de arquitetura e governança.
+**Foco:** Saúde e Confiabilidade da Ingestão ao Consumo.
+- **Monitoramento:** Acompanhamento nativo de Freshness, Volume e Schema Drift sem ferramentas externas.
+- **Previsibilidade:** Uso de metadados técnicos (`run_id`, `ingestion_ts`) para auditoria de atrasos e falhas.
+- **Resiliência:** Protocolo de limpeza pós-sucesso e rollback imediato baseado na política de retenção.
+- **Diagnóstico:** Identificação de anomalias estatísticas e desbalanceamento de partições via Profiling.
 
 ---
 
 ### 📊 Data Profiling
-📁 [`docs/data_profiling/*`](docs/data_profiling/)
+📁 [`docs/data_profiling/`](docs/data_profiling/)
 
-Apresenta análises exploratórias e estatísticas dos dados:
-- Volume por camada
-- Cardinalidade
-- Distribuição de valores
-- Percentual de nulos
-
-Utilizado como base para qualidade e observabilidade.
-
-> **Observação:** O profiling foi gerado por meio de um **script utilitário de EDA híbrido (Python + Jupyter Notebook)**, combinando automação e análise exploratória assistida, com geração de relatórios versionados para suporte às decisões de qualidade e modelagem.
+**Foco:** Diagnóstico Estatístico e Saúde dos Dados.
+- **Relatórios:** Documentação automatizada de volumetria (MiB vs. Registros) e análise de Schema Drift.
+- **Estatística:** Visão detalhada de cardinalidade, integridade de nulos e distribuição de valores (Top 10).
+- **Método:** Execução via scripts híbridos (Python + Jupyter Notebook) com geração de evidências em Markdown versionadas para suporte à auditoria.
 
 ---
 
 ### ✅ Data Quality
-📁 [`docs/data_quality/*`](docs/data_quality/)
+📁 [`docs/data_quality/`](docs/data_quality/)
 
-Documenta os **contratos de dados** do projeto:
-- Regras estruturais (schema, tipos, obrigatoriedade)
-- Regras semânticas (unicidade, elegibilidade, consistência)
-- Validações aplicadas com Pandera
+**Foco:** Contratos e Validação.
+- **Estrutural:** Tipagem e obrigatoriedade (Camada Bronze).
+- **Semântico:** Regras de negócio, unicidade e elegibilidade (Camada Silver).
+- **Execução:** Validações programáticas integradas aos scripts de transformação.
