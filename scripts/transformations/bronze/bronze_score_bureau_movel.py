@@ -51,6 +51,8 @@ def run():
                 1
             ) AS safra_date,
 
+            LPAD(CAST(SAFRA AS VARCHAR), 6, '0') AS safra,
+
             -- ----------------------------
             -- Flags
             -- ----------------------------
@@ -103,12 +105,12 @@ def run():
         COPY (
             SELECT *
             FROM bronze_score_bureau_movel
-            ORDER BY safra_date, cpf_hash
+            ORDER BY safra, cpf_hash
         )
         TO '{BRONZE_PATH}'
         (
             FORMAT PARQUET,
-            PARTITION_BY (safra_date)
+            PARTITION_BY (safra)
         )
     """)
 
