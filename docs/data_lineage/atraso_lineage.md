@@ -60,8 +60,6 @@
 | 1 | **Deduplicação** | Garantia de unicidade no lote de carga | Aplicação da regra de grão sobre os novos registros. | Dados reprocessados com unicidade absoluta. |
 | 2 | **Normalização de Chaves** | Saneamento de identificadores | Conversão de *hashes* padrão ou valores fixos (vazios) para um padrão explícito de nulidade (`NULL`). | Chaves de relacionamento íntegras para operações de cruzamento (*JOIN*). |
 | 3 | **Limpeza de Colunas** | Otimização do esquema (*Schema*) | Remoção de colunas 100% nulas ou sem valor analítico identificadas no diagnóstico de dados. | Base de dados mais leve, com redução de custos de leitura e armazenamento. |
-| 4 | **Integridade de Métricas** | Tratamento de valores nulos | Aplicação de `COALESCE` em campos monetários e contadores para substituir nulos por zero. | Métricas prontas para cálculos matemáticos sem erros de propagação de nulos. |
-| 5 | **Saneamento Temporal** | Ajuste de campos de data | Tratamento de datas inválidas ou limites técnicos de sistemas de origem para o padrão do negócio. | Datas consistentes para análises de safras e ciclos de atraso. |
 
 ---
 
