@@ -13,9 +13,6 @@
 - **Frequência:** Sob demanda (Ingestão manual/Parquet)
 - **Formato Original:** Parquet
 - **Volume médio:** ~12 MiB por carga (21 MiB descomprimido)
-- **Entidade Principal:** Risco de Crédito do Cliente (`NUM_CPF` + `FPD`)
-- **Grão da Tabela (Unicidade):** `NUM_CPF, SAFRA, FPD`
-- **Chave de Particionamento:** `SAFRA` (Formato YYYYMM)
 
 ---
 

@@ -13,9 +13,6 @@
 - **Frequência:** Sob demanda (Ingestão manual/Parquet)
 - **Formato Original:** Parquet
 - **Volume médio:** ~3104 MiB por carga (5222 MiB descomprimido)
-- **Entidade Principal:** Linha do Cliente (`NUM_CPF` + `DW_NUM_NTC`)
-- **Grão da Tabela (Unicidade):** `NUM_CPF, DAT_INSERCAO_CREDITO, HOR_INSERCAO_CREDITO`
-- **Chave de Particionamento:** `DAT_INSERCAO_CREDITO` (Formato YYYYMM)
 
 ---
 

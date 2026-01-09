@@ -13,9 +13,6 @@
 - **Frequência:** Sob demanda (Ingestão manual/Parquet)
 - **Formato Original:** Parquet
 - **Volume médio:** ~74 MiB por carga (105 MiB descomprimido)
-- **Entidade Principal:** Cliente (`NUM_CPF`)
-- **Grão da Tabela (Unicidade):** `NUM_CPF, SAFRA, PROD`
-- **Chave de Particionamento:** `SAFRA` (Formato YYYYMM)
 
 ---
 

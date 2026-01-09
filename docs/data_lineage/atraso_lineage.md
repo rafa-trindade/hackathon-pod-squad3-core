@@ -13,9 +13,6 @@
 - **Frequência:** Sob demanda (Ingestão manual/Parquet)
 - **Formato Original:** Parquet
 - **Volume médio:** ~4307 MiB por carga (6358 MiB descomprimido)
-- **Entidade Principal:** Fatura do Cliente (`NUM_CPF` + `CONTRATO`)
-- **Grão da Tabela (Unicidade):** `NUM_CPF, CONTRATO, DAT_REFERENCIA, NUM_FATURA_HASH`
-- **Chave de Particionamento:** `DAT_REFERENCIA` (Formato YYYYMM)
 
 ---
 
