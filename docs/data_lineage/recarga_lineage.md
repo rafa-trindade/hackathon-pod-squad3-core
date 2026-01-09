@@ -4,7 +4,7 @@
 - **Frequência:** Sob demanda (Ingestão manual/Parquet)
 - **Formato Original:** Parquet
 - **Volume médio:** ~3104 MiB por carga (5222 MiB descomprimido)
-- **Chave Técnica Composta:** [`num_cpf`, `dat_insercao_credito`, `hor_insercao_credito`] (candidata)
+- **Chave Técnica Composta:** `num_cpf, dat_insercao_credito, hor_insercao_credito` (candidata)
 - **Chave de Particionamento:** `DAT_INSERCAO_CREDITO` (YYYYMM)
 
 ---
