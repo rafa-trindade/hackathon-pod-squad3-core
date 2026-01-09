@@ -57,7 +57,7 @@
 
 | Etapa | Processo | Descrição | Ações / Regras | Resultado Esperado |
 |------:|:---------|:----------|:---------------|:-------------------|
-| 1 | **Deduplicação Técnica** | Garantia de unicidade absoluta | Aplicação de `ROW_NUMBER()` sobre o grão definido, ordenando por data de alteração e `ingestion_ts`. | Tabela com 0% de duplicidade técnica e lógica. |
+| 1 | **Deduplicação Incremental** | Validação de novos registros contra o histórico | Aplicação da regra de grão para descartar redundâncias entre o lote atual e a base existente. | Base final consolidada com unicidade absoluta. |
 | 2 | **Normalização de Chaves** | Saneamento de identificadores | Conversão de *hashes* padrão ou valores fixos (vazios) para um padrão explícito de nulidade (`NULL`). | Chaves de relacionamento íntegras para operações de cruzamento (*JOIN*). |
 | 3 | **Limpeza de Colunas** | Otimização do esquema (*Schema*) | Remoção de colunas 100% nulas ou sem valor analítico identificadas no diagnóstico de dados. | Base de dados mais leve, com redução de custos de leitura e armazenamento. |
 | 4 | **Integridade de Métricas** | Tratamento de valores nulos | Aplicação de `COALESCE` em campos monetários e contadores para substituir nulos por zero. | Métricas prontas para cálculos matemáticos sem erros de propagação de nulos. |
