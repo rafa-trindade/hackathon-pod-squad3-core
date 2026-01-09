@@ -76,10 +76,12 @@ try:
             'CHAVE_TECNICA' AS coluna,
             distintos_aprox AS distintos,
             nulos,
-            (total_linhas - distintos_aprox) AS duplicados,
+            -- GREATEST garante que o número nunca seja menor que zero por erro estatístico
+            GREATEST(total_linhas - distintos_aprox, 0) AS duplicados,
             ROUND(nulos * 100.0 / total_linhas, 2) AS nulos_num,
             ROUND(nulos * 100.0 / total_linhas, 2) || '%' AS pct_nulos,
-            ROUND((total_linhas - distintos_aprox) * 100.0 / total_linhas, 2) || '%' AS pct_duplicados,
+            -- Ajuste no percentual para não mostrar negativo
+            ROUND(GREATEST(total_linhas - distintos_aprox, 0) * 100.0 / total_linhas, 2) || '%' AS pct_duplicados,
             CASE
                 WHEN distintos_aprox <= 0.001 * total_linhas THEN 'BAIXA'
                 WHEN distintos_aprox <= 0.05 * total_linhas THEN 'MEDIA'
@@ -88,6 +90,7 @@ try:
         FROM base
     """).df()
 
+    # Captura valores para as mensagens
     dups = int(df_unicidade['duplicados'].iloc[0])
     pct_dups = str(df_unicidade['pct_duplicados'].iloc[0])
     pct_nulos_raw = float(df_unicidade['nulos_num'].iloc[0])
@@ -100,21 +103,91 @@ try:
         msg_dups = f"* ℹ️ **Deduplicação Necessária:** Aproximação indica cerca de **{dups:,}** ({pct_dups}) duplicados. Na camada Silver, será obrigatório o uso de `ROW_NUMBER()` com `PARTITION BY` nas colunas da chave e `ORDER BY ingestion_ts DESC` para garantir a unicidade real."
         md += msg_dups.replace(",", ".") + "\n"
     else:
-        md += "* ✅ **Sucesso:** A chave técnica parece ser única para este conjunto de dados.\n"
+        md += "* ✅ **Sucesso:** A chave técnica parece ser única para este conjunto de dados (estimativa estatística).\n"
 
     if pct_nulos_raw > 0:
-        md += f"* ⚠️ **Tratamento de Nulos:** Identificamos **{pct_nulos_raw}%** de registros com campos nulos na composição da chave técnica. Para evitar perda de dados em operações de JOIN ou na deduplicação, é essencial aplicar `COALESCE` nos campos nulos (especialmente datas) na camada Silver.\n"
+        md += f"* ⚠️ **Tratamento de Nulos:** Identificamos **{pct_nulos_raw}%** de registros com campos nulos na composição da chave técnica. Para evitar perda de dados, use `COALESCE` na camada Silver.\n"
 
     if dups > 0:
-        md += "* ❗ **Risco de Integridade:** Não utilize esta tabela Bronze para `JOINs` diretos. A duplicidade detectada causará o efeito de explosão de registros, comprometendo a acurácia de métricas financeiras.\n"
+        md += "* ❗ **Risco de Integridade:** Não utilize esta tabela Bronze para `JOINs` diretos devido à duplicidade detectada.\n"
 
-    md += "* 👻 **Otimização de Schema:** Colunas detectadas como 100% nulas ou zeradas (ex: `dat_atualizacao_credito`, `val_desconto_item`) devem ser avaliadas para exclusão na Silver para ganho de performance.\n"
+    md += "* 👻 **Otimização de Schema:** Colunas 100% nulas ou zeradas detectadas em análises anteriores devem ser avaliadas para exclusão na Silver.\n"
 
 except Exception as e:
     md += f"\n> ⚠️ **Erro ao processar validação de unicidade:** `{e}`"
 
 print_and_save_md(md, md_file)
 
+
+# %% 
+# SCHEMA #########################################
+##################################################
+df_schema_info = con.execute(f"""
+    DESCRIBE 
+    SELECT * FROM read_parquet('{path_parquet}', hive_partitioning=1)
+""").df()[["column_name", "column_type"]]
+
+
+
+# %% 
+# SCHEMA E ESTATÍSTICA  ############################
+####################################################
+import pandas as pd
+
+md = "### 📊 Schema e Estatísticas: `bronze/atraso`\n"
+
+
+cols = df_schema_info["column_name"].tolist()
+
+total_registros = con.execute(f'SELECT COUNT(*) FROM read_parquet("{path_parquet}")').fetchone()[0]
+
+aggs = []
+for col in cols:
+    aggs.append(f'APPROX_COUNT_DISTINCT("{col}") AS "dist_{col}"')
+    aggs.append(f'COUNT(*) FILTER (WHERE "{col}" IS NULL) AS "null_{col}"')
+
+print("⏳ Iniciando scan unificado para estatísticas e tipos...")
+unified_results = con.execute(f'SELECT {", ".join(aggs)} FROM read_parquet("{path_parquet}")').df()
+
+stats_list = []
+for col in cols:
+    stats_list.append({
+        "coluna": col,
+        "distintos": unified_results[f"dist_{col}"].iloc[0],
+        "nulos": unified_results[f"null_{col}"].iloc[0]
+    })
+
+df_column_statistics = pd.DataFrame(stats_list)
+df_column_statistics['duplicados'] = total_registros - df_column_statistics['distintos']
+
+if total_registros > 0:
+    df_column_statistics['pct_nulos'] = (df_column_statistics['nulos'] * 100.0 / total_registros).round(2).astype(str) + '%'
+    df_column_statistics['pct_duplicados'] = (df_column_statistics['duplicados'] * 100.0 / total_registros).round(2).astype(str) + '%'
+else:
+    df_column_statistics['pct_nulos'] = '0.0%'
+    df_column_statistics['pct_duplicados'] = '0.0%'
+
+def get_cardinality(dist):
+    if total_registros == 0: return 'N/A'
+    if dist <= 0.001 * total_registros: return 'BAIXA'
+    if dist <= 0.05 * total_registros: return 'MEDIA'
+    return 'ALTA'
+
+df_column_statistics['cardinalidade'] = df_column_statistics['distintos'].apply(get_cardinality)
+
+
+df_report = pd.merge(
+    df_schema_info, 
+    df_column_statistics, 
+    left_on="column_name", 
+    right_on="coluna"
+).drop(columns=["coluna"])
+
+cols_order = ['column_name', 'column_type', 'distintos', 'nulos', 'duplicados', 'pct_nulos', 'pct_duplicados', 'cardinalidade']
+df_report = df_report[cols_order]
+
+md += df_report.to_markdown(index=False)
+print_and_save_md(md, md_file)
 
 
 # %%
@@ -227,30 +300,14 @@ print_and_save_md(md, md_file)
 
 
 
-# %% 
-# SCHEMA #########################################
-##################################################
-md = "### 🧬 Schema: `bronze/atraso`\n"
-
-df_schema = con.execute(f"""
-    DESCRIBE
-    SELECT *
-    FROM read_parquet('{path_parquet}', hive_partitioning=1)
-""").df()
-
-md += df_schema.to_markdown(index=False)
-
-print_and_save_md(md, md_file)
-
-
 
 # %%  
 # CAMPOS DATE/TIME ###############################
 ##################################################
 md = "### 📅 Range de Datas: `bronze/atraso`\n"
 
-date_cols = df_schema[
-    df_schema["column_type"].str.contains("DATE|TIMESTAMP", case=False, na=False)
+date_cols = df_schema_info[
+    df_schema_info["column_type"].str.contains("DATE|TIMESTAMP", case=False, na=False)
 ]["column_name"].tolist()
 
 if not date_cols:
@@ -270,8 +327,8 @@ print_and_save_md(md, md_file)
 ##################################################
 md = "### 🔢 Range de Valores Numéricos: `bronze/atraso`\n\n"
 
-num_cols = df_schema[
-    df_schema["column_type"].str.contains("INT|DOUBLE|FLOAT|DECIMAL|REAL", case=False, na=False)
+num_cols = df_schema_info[
+    df_schema_info["column_type"].str.contains("INT|DOUBLE|FLOAT|DECIMAL|REAL", case=False, na=False)
 ]["column_name"].tolist()
 
 cols_to_ignore = ['num_cpf', 'run_id', 'ano_mes']
@@ -296,55 +353,6 @@ else:
 
 print_and_save_md(md, md_file)
 
-
-
-# %% 
-# ESTATÍSTICA POR COLUNA ###########################
-####################################################
-import pandas as pd
-
-md = "### 📊 Estatísticas por Coluna: `bronze/atraso`\n"
-
-cols = df_schema["column_name"].tolist()
-
-total_registros = con.execute(f'SELECT COUNT(*) FROM read_parquet("{path_parquet}")').fetchone()[0]
-
-aggs = []
-for col in cols:
-    aggs.append(f'APPROX_COUNT_DISTINCT("{col}") AS "dist_{col}"')
-    aggs.append(f'COUNT(*) FILTER (WHERE "{col}" IS NULL) AS "null_{col}"')
-
-print("⏳ Iniciando scan único para estatísticas...")
-unified_results = con.execute(f'SELECT {", ".join(aggs)} FROM read_parquet("{path_parquet}")').df()
-
-stats_list = []
-for col in cols:
-    stats_list.append({
-        "coluna": col,
-        "distintos": unified_results[f"dist_{col}"].iloc[0],
-        "nulos": unified_results[f"null_{col}"].iloc[0]
-    })
-
-df_column_statistics = pd.DataFrame(stats_list)
-
-df_column_statistics['duplicados'] = total_registros - df_column_statistics['distintos']
-
-if total_registros > 0:
-    df_column_statistics['pct_nulos'] = (df_column_statistics['nulos'] * 100.0 / total_registros).round(2).astype(str) + '%'
-    df_column_statistics['pct_duplicados'] = (df_column_statistics['duplicados'] * 100.0 / total_registros).round(2).astype(str) + '%'
-else:
-    df_column_statistics['pct_nulos'] = '0.0%'
-    df_column_statistics['pct_duplicados'] = '0.0%'
-
-def get_cardinality(dist):
-    if dist <= 0.001 * total_registros: return 'BAIXA'
-    if dist <= 0.05 * total_registros: return 'MEDIA'
-    return 'ALTA'
-
-df_column_statistics['cardinalidade'] = df_column_statistics['distintos'].apply(get_cardinality)
-
-md += df_column_statistics.to_markdown(index=False)
-print_and_save_md(md, md_file)
 
 
 
