@@ -2,7 +2,7 @@
 
 - **Entidade Principal:** Consumo do Cliente (`NUM_CPF` + `PROD`)
 - **Grão da Tabela (Unicidade):** `NUM_CPF, SAFRA, PROD, FLAG_INSTALACAO`
-- **Chave de Relacionamento (Gold):** `NUM_CPF` (Identificador Único), `SAFRA` (Eixo Temporal)
+- **Chave de Relacionamento (Gold):** Sugestão: `NUM_CPF` (Identificador Único), `SAFRA` (Eixo Temporal)
 - **Chave de Particionamento:** `SAFRA` (Formato YYYYMM)
 
 ---
@@ -53,15 +53,24 @@
 **Origem:** `s3://lake/bronze/telco/*.parquet`  
 **Destino:** `s3://lake/silver/telco/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
 
-- **Volume médio:** ~
+- **Volume médio:** em desenvolvimento
 
-... em desenvolvimento
+| Etapa | Processo | Descrição | Ações / Regras | Resultado Esperado |
+|------:|:---------|:----------|:---------------|:-------------------|
+| 1 | **Deduplicação Técnica** | Garantia de unicidade absoluta | Aplicação de `ROW_NUMBER()` sobre o grão definido, ordenando por data de alteração e `ingestion_ts`. | Tabela com 0% de duplicidade técnica e lógica. |
+| 2 | **Normalização de Chaves** | Saneamento de identificadores | Conversão de *hashes* padrão ou valores fixos (vazios) para um padrão explícito de nulidade (`NULL`). | Chaves de relacionamento íntegras para operações de cruzamento (*JOIN*). |
+| 3 | **Limpeza de Colunas** | Otimização do esquema (*Schema*) | Remoção de colunas 100% nulas ou sem valor analítico identificadas no diagnóstico de dados. | Base de dados mais leve, com redução de custos de leitura e armazenamento. |
+| 4 | **Integridade de Métricas** | Tratamento de valores nulos | Aplicação de `COALESCE` em campos monetários e contadores para substituir nulos por zero. | Métricas prontas para cálculos matemáticos sem erros de propagação de nulos. |
+| 5 | **Saneamento Temporal** | Ajuste de campos de data | Tratamento de datas inválidas ou limites técnicos de sistemas de origem para o padrão do negócio. | Datas consistentes para análises de safras e ciclos de atraso. |
 
 ---
 
 ### 3. Observações Técnicas
 
-- **Imutabilidade:** Nenhuma linha da Raw é descartada na Bronze; apenas os tipos são corrigidos e a nomenclatura é padronizada.
-- **Isolamento de Runs:** O uso do `run_id` garante que reprocessamentos não causem duplicidade lógica, permitindo rollbacks seguros via política de retenção.
-- **Auditabilidade:** A coluna `ingestion_ts` registra o momento exato da transformação, permitindo monitorar a latência do pipeline.
-- **Escalabilidade:** O particionamento por `ano_mes` prepara a base para consultas analíticas de alta performance, lendo apenas as frações necessárias do Lake.
+- **Imutabilidade:** Nenhuma linha da camada *Raw* é descartada na *Bronze*; apenas os tipos são corrigidos e a nomenclatura é padronizada para garantir a fidelidade à origem.
+- **Isolamento de Execuções:** O uso de `run_id` garante que reprocessamentos não causem duplicidade lógica, permitindo *rollbacks* seguros e isolamento de cargas via política de retenção.
+- **Auditabilidade:** A coluna `ingestion_ts` registra o momento exato da transformação em cada camada, permitindo o monitoramento de latência e o rastreio da linhagem temporal do dado.
+- **Escalabilidade e Custo:** O particionamento físico por `ano_mes` habilita o *Partition Pruning*, garantindo que consultas analíticas leiam apenas as frações necessárias do Lake, reduzindo drasticamente o custo de scan.
+- **Preservação do Estado Atual:** A estratégia de deduplicação na *Silver* prioriza o registro mais recente (via data de atualização ou carimbo de tempo), garantindo que retificações e atualizações vindas da origem sejam refletidas corretamente sem gerar duplicidade.
+- **Idempotência do Pipeline:** O processo é desenhado para ser idempotente; qualquer reprocessamento da mesma partição sob o mesmo contexto resultará no mesmo estado final, evitando a inflação artificial de métricas e valores.
+- **Preservação do Grão:** O grão técnico na camada *Silver* é mantido em sua forma mais granular para permitir reconciliações detalhadas e garantir flexibilidade total para diferentes agregações na camada *Gold*.
