@@ -4,8 +4,9 @@
 - **Frequência:** Sob demanda (Ingestão manual/Parquet)
 - **Formato Original:** Parquet
 - **Volume médio:** ~83 MiB por carga (111 MiB descomprimido)
-- **Chave Técnica Composta:** `num_cpf, safra, fpd` (candidata)
-- **Chave de Particionamento:** `SAFRA` (YYYYMM)
+- **Entidade Principal:** Consumo do Cliente (`NUM_CPF` + `PROD`)
+- **Chave Primária Composta:** `NUM_CPF, SAFRA, PROD, FLAG_INSTALACAO`
+- **Chave de Particionamento:** `SAFRA` (Formato YYYYMM)
 
 ---
 

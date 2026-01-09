@@ -4,8 +4,9 @@
 - **Frequência:** Sob demanda (Ingestão manual/Parquet)
 - **Formato Original:** Parquet
 - **Volume médio:** ~2115 MiB por carga (3677 MiB descomprimido)
-- **Chave Técnica Composta:** `num_cpf, contrato, val_pagamento_fatura, dat_criacao_pagamento, seq_entidade_pagamento` (candidata)
-- **Chave de Particionamento:** `DAT_STATUS_FATURA` (Mês/Ano)
+- **Entidade Principal:** Pagamento do Cliente (`NUM_CPF` + `CONTRATO`)
+- **Chave Primária Composta:** `NUM_CPF, CONTRATO, SEQ_FATURA, NUM_SUB_SEQ_FATURA`
+- **Chave de Particionamento:** `DAT_STATUS_FATURA` (Formato YYYYMM)
 
 ---
 
