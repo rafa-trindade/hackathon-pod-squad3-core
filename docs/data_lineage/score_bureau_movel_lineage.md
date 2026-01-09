@@ -1,3 +1,12 @@
+## 🛡️ Visão Geral - `score_bureau_movel`
+
+- **Entidade Principal:** Risco de Crédito do Cliente (`NUM_CPF` + `FPD`)
+- **Grão da Tabela (Unicidade):** `NUM_CPF, SAFRA, FPD`
+- **Chave de Relacionamento (Gold):** `NUM_CPF` (Identificador Único), `SAFRA` (Eixo Temporal)
+- **Chave de Particionamento:** `SAFRA` (Formato YYYYMM)
+
+---
+
 ## 📥 Ingestão - `raw/score_bureau_movel`
 
 - **Fonte:** Externa 
@@ -5,7 +14,7 @@
 - **Formato Original:** Parquet
 - **Volume médio:** ~12 MiB por carga (21 MiB descomprimido)
 - **Entidade Principal:** Risco de Crédito do Cliente (`NUM_CPF` + `FPD`)
-- **Chave Primária Composta:** `NUM_CPF, SAFRA, FPD`
+- **Grão da Tabela (Unicidade):** `NUM_CPF, SAFRA, FPD`
 - **Chave de Particionamento:** `SAFRA` (Formato YYYYMM)
 
 ---

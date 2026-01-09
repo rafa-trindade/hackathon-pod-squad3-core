@@ -1,3 +1,12 @@
+## 📱 Visão Geral - `recarga`
+
+- **Entidade Principal:** Linha do Cliente (`NUM_CPF` + `DW_NUM_NTC`)
+- **Grão da Tabela (Unicidade):** `NUM_CPF, DAT_INSERCAO_CREDITO, HOR_INSERCAO_CREDITO`
+- **Chave de Relacionamento (Gold):** `NUM_CPF` (Identificador Único), `DW_NUM_NTC` (Vínculo de Linha), `DAT_INSERCAO_CREDITO` (Eixo Temporal)
+- **Chave de Particionamento:** `DAT_INSERCAO_CREDITO` (Formato YYYYMM)
+
+---
+
 ## 📥 Ingestão - `raw/recarga`
 
 - **Fonte:** Externa 
@@ -5,7 +14,7 @@
 - **Formato Original:** Parquet
 - **Volume médio:** ~3104 MiB por carga (5222 MiB descomprimido)
 - **Entidade Principal:** Linha do Cliente (`NUM_CPF` + `DW_NUM_NTC`)
-- **Chave Primária Composta:** `NUM_CPF, DAT_INSERCAO_CREDITO, HOR_INSERCAO_CREDITO`
+- **Grão da Tabela (Unicidade):** `NUM_CPF, DAT_INSERCAO_CREDITO, HOR_INSERCAO_CREDITO`
 - **Chave de Particionamento:** `DAT_INSERCAO_CREDITO` (Formato YYYYMM)
 
 ---

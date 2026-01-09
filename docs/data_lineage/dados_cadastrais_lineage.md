@@ -1,3 +1,12 @@
+## 👤 Visão Geral - `dados_cadastrais`
+
+- **Entidade Principal:** Cliente (`NUM_CPF`)
+- **Grão da Tabela (Unicidade):** `NUM_CPF, SAFRA, PROD`
+- **Chave de Relacionamento (Gold):** `NUM_CPF` (Identificador Único), `SAFRA` (Eixo Temporal)
+- **Chave de Particionamento:** `SAFRA` (Formato YYYYMM)
+
+---
+
 ## 📥 Ingestão - `raw/dados_cadastrais`
 
 - **Fonte:** Externa 
@@ -5,7 +14,7 @@
 - **Formato Original:** Parquet
 - **Volume médio:** ~74 MiB por carga (105 MiB descomprimido)
 - **Entidade Principal:** Cliente (`NUM_CPF`)
-- **Chave Primária Composta:** `NUM_CPF, SAFRA, PROD`
+- **Grão da Tabela (Unicidade):** `NUM_CPF, SAFRA, PROD`
 - **Chave de Particionamento:** `SAFRA` (Formato YYYYMM)
 
 ---

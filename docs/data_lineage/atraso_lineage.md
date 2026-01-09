@@ -1,3 +1,12 @@
+## 📉 Visão Geral - `atraso`
+
+- **Entidade Principal:** Fatura do Cliente (`NUM_CPF` + `CONTRATO`)
+- **Grão da Tabela (Unicidade):** `NUM_CPF, CONTRATO, DAT_REFERENCIA, NUM_FATURA_HASH`
+- **Chave de Relacionamento (Gold):** `NUM_CPF` (Identificador Único), `CONTRATO` (Vínculo de Produto), `DAT_REFERENCIA` (Eixo Temporal)
+- **Chave de Particionamento:** `DAT_REFERENCIA` (Formato YYYYMM)
+
+---
+
 ## 📥 Ingestão - `raw/atraso`
 
 - **Fonte:** Externa 
@@ -5,7 +14,7 @@
 - **Formato Original:** Parquet
 - **Volume médio:** ~4307 MiB por carga (6358 MiB descomprimido)
 - **Entidade Principal:** Fatura do Cliente (`NUM_CPF` + `CONTRATO`)
-- **Chave Primária Composta:** `NUM_CPF, CONTRATO, DAT_REFERENCIA, NUM_FATURA_HASH`
+- **Grão da Tabela (Unicidade):** `NUM_CPF, CONTRATO, DAT_REFERENCIA, NUM_FATURA_HASH`
 - **Chave de Particionamento:** `DAT_REFERENCIA` (Formato YYYYMM)
 
 ---

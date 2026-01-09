@@ -1,12 +1,18 @@
+## 📡 Visão Geral - `telco`
+
+- **Entidade Principal:** Consumo do Cliente (`NUM_CPF` + `PROD`)
+- **Grão da Tabela (Unicidade):** `NUM_CPF, SAFRA, PROD, FLAG_INSTALACAO`
+- **Chave de Relacionamento (Gold):** `NUM_CPF` (Identificador Único), `SAFRA` (Eixo Temporal)
+- **Chave de Particionamento:** `SAFRA` (Formato YYYYMM)
+
+---
+
 ## 📥 Ingestão - `raw/telco`
 
 - **Fonte:** Externa 
 - **Frequência:** Sob demanda (Ingestão manual/Parquet)
 - **Formato Original:** Parquet
 - **Volume médio:** ~83 MiB por carga (111 MiB descomprimido)
-- **Entidade Principal:** Consumo do Cliente (`NUM_CPF` + `PROD`)
-- **Chave Primária Composta:** `NUM_CPF, SAFRA, PROD, FLAG_INSTALACAO`
-- **Chave de Particionamento:** `SAFRA` (Formato YYYYMM)
 
 ---
 
