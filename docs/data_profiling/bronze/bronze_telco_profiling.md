@@ -1,17 +1,17 @@
 # Relatório de Profiling: `bronze/telco` - `20260108_204751`
 
 ### 🔑 Garantia de Unicidade: `bronze/telco`
-- **Chave Técnica:** `num_cpf, safra`
+- **Chave Técnica:** `num_cpf, safra, fpd`
 - **Tipo:** `COMPOSTA`
 
 | coluna        |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
 |:--------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
-| CHAVE_TECNICA |     1230896 |       0 |       136208 | 0.0%        | 9.96%            | ALTA            |
+| CHAVE_TECNICA |     1461700 |   45936 |            0 | 3.36%       | 0.0%             | ALTA            |
 
 ### 🚩 Diagnóstico e Observações Técnicas
-* ℹ️ **Deduplicação Necessária:** Aproximação indica cerca de **136.208** (9.96%) duplicados. Na camada Silver. será obrigatório o uso de `ROW_NUMBER()` com `PARTITION BY` nas colunas da chave e `ORDER BY ingestion_ts DESC` para garantir a unicidade real.
-* ❗ **Risco de Integridade:** Não utilize esta tabela Bronze para `JOINs` diretos. A duplicidade detectada causará o efeito de explosão de registros, comprometendo a acurácia de métricas financeiras.
-* 👻 **Otimização de Schema:** Colunas detectadas como 100% nulas ou zeradas (ex: `dat_atualizacao_credito`, `val_desconto_item`) devem ser avaliadas para exclusão na Silver para ganho de performance.
+* ✅ **Sucesso:** A chave técnica parece ser única para este conjunto de dados (estimativa estatística).
+* ⚠️ **Tratamento de Nulos:** Identificamos **3.36%** de registros com campos nulos na composição da chave técnica. Para evitar perda de dados, use `COALESCE` na camada Silver.
+* 👻 **Otimização de Schema:** Colunas 100% nulas ou zeradas detectadas em análises anteriores devem ser avaliadas para exclusão na Silver.
 
 ---
 
@@ -440,15 +440,15 @@
 | valor       |   qtd |
 |:------------|------:|
 | 888W78UZYYT |     6 |
-| YW99TTN98UN |     5 |
-| 7ZU8NNN7XUN |     5 |
-| ZWZT9ZZUZU8 |     5 |
-| XNW79U9Z7WN |     5 |
-| ZW9TYZXTWTZ |     5 |
-| XNXXWZZ97TZ |     5 |
-| ZTZTWZXTYZX |     5 |
-| ZZUNWZYXXTZ |     5 |
+| ZW8Z8ZXWW7Z |     5 |
 | T9ZYTXZ7WYZ |     5 |
+| WXXT7WUX8Y9 |     5 |
+| XYUZ8ZXUUZ9 |     5 |
+| ZTZTWZXTYZX |     5 |
+| WN7WWZXW8X9 |     5 |
+| Y79XYXNN8T8 |     5 |
+| ZNTN78ZW7XX |     5 |
+| ZYNYYUWWTZN |     5 |
 
 #### Coluna: `safra`
 
