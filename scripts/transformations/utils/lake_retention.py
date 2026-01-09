@@ -69,7 +69,7 @@ def cleanup_old_runs(
     # ------------------------------------------------------------
     for run_id in runs_to_delete:
         prefix = f"{base_path}run_id={run_id}/"
-        print(f"🧹 Removendo {prefix}")
+        print(f"✨ Removendo {prefix}")
 
         for page in paginator.paginate(Bucket=bucket, Prefix=prefix):
             objects = page.get("Contents", [])
@@ -84,4 +84,4 @@ def cleanup_old_runs(
                 },
             )
 
-    print("✅ Limpeza de runs antigas concluída")
+    print("✨ Limpeza de runs antigas concluída")
