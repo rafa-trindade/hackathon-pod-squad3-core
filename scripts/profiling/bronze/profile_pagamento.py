@@ -55,7 +55,7 @@ md_file = init_md_report(
 # %% 
 # GARANTIA DE UNICIDADE E QUALIDADE #################
 #####################################################
-chave_tecnica_cols = ["num_cpf", "contrato", "val_pagamento_fatura", "dat_criacao_pagamento", "seq_entidade_pagamento"]
+chave_tecnica_cols = ["num_cpf", "contrato", "seq_fatura", "num_sub_seq_fatura"]
 
 
 md = "### 🔑 Garantia de Unicidade: `bronze/pagamento`\n"
@@ -77,10 +77,12 @@ try:
             'CHAVE_TECNICA' AS coluna,
             distintos_aprox AS distintos,
             nulos,
-            (total_linhas - distintos_aprox) AS duplicados,
+            -- GREATEST garante que o número nunca seja menor que zero por erro estatístico
+            GREATEST(total_linhas - distintos_aprox, 0) AS duplicados,
             ROUND(nulos * 100.0 / total_linhas, 2) AS nulos_num,
             ROUND(nulos * 100.0 / total_linhas, 2) || '%' AS pct_nulos,
-            ROUND((total_linhas - distintos_aprox) * 100.0 / total_linhas, 2) || '%' AS pct_duplicados,
+            -- Ajuste no percentual para não mostrar negativo
+            ROUND(GREATEST(total_linhas - distintos_aprox, 0) * 100.0 / total_linhas, 2) || '%' AS pct_duplicados,
             CASE
                 WHEN distintos_aprox <= 0.001 * total_linhas THEN 'BAIXA'
                 WHEN distintos_aprox <= 0.05 * total_linhas THEN 'MEDIA'
@@ -89,6 +91,7 @@ try:
         FROM base
     """).df()
 
+    # Captura valores para as mensagens
     dups = int(df_unicidade['duplicados'].iloc[0])
     pct_dups = str(df_unicidade['pct_duplicados'].iloc[0])
     pct_nulos_raw = float(df_unicidade['nulos_num'].iloc[0])
@@ -101,20 +104,19 @@ try:
         msg_dups = f"* ℹ️ **Deduplicação Necessária:** Aproximação indica cerca de **{dups:,}** ({pct_dups}) duplicados. Na camada Silver, será obrigatório o uso de `ROW_NUMBER()` com `PARTITION BY` nas colunas da chave e `ORDER BY ingestion_ts DESC` para garantir a unicidade real."
         md += msg_dups.replace(",", ".") + "\n"
     else:
-        md += "* ✅ **Sucesso:** A chave técnica parece ser única para este conjunto de dados.\n"
+        md += "* ✅ **Sucesso:** A chave técnica parece ser única para este conjunto de dados (estimativa estatística).\n"
 
     if pct_nulos_raw > 0:
-        md += f"* ⚠️ **Tratamento de Nulos:** Identificamos **{pct_nulos_raw}%** de registros com campos nulos na composição da chave técnica. Para evitar perda de dados em operações de JOIN ou na deduplicação, é essencial aplicar `COALESCE` nos campos nulos (especialmente datas) na camada Silver.\n"
+        md += f"* ⚠️ **Tratamento de Nulos:** Identificamos **{pct_nulos_raw}%** de registros com campos nulos na composição da chave técnica. Para evitar perda de dados, use `COALESCE` na camada Silver.\n"
 
     if dups > 0:
-        md += "* ❗ **Risco de Integridade:** Não utilize esta tabela Bronze para `JOINs` diretos. A duplicidade detectada causará o efeito de explosão de registros, comprometendo a acurácia de métricas financeiras.\n"
+        md += "* ❗ **Risco de Integridade:** Não utilize esta tabela Bronze para `JOINs` diretos devido à duplicidade detectada.\n"
 
-    md += "* 👻 **Otimização de Schema:** Colunas detectadas como 100% nulas ou zeradas (ex: `dat_atualizacao_credito`, `val_desconto_item`) devem ser avaliadas para exclusão na Silver para ganho de performance.\n"
+    md += "* 👻 **Otimização de Schema:** Colunas 100% nulas ou zeradas detectadas em análises anteriores devem ser avaliadas para exclusão na Silver.\n"
 
 except Exception as e:
     md += f"\n> ⚠️ **Erro ao processar validação de unicidade:** `{e}`"
 
-md += "\n---\n\n"
 print_and_save_md(md, md_file)
 
 

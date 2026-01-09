@@ -116,7 +116,6 @@ try:
 except Exception as e:
     md += f"\n> ⚠️ **Erro ao processar validação de unicidade:** `{e}`"
 
-md += "\n---\n\n"
 print_and_save_md(md, md_file)
 
 

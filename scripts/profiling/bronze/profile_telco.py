@@ -55,7 +55,7 @@ md_file = init_md_report(
 # %% 
 # GARANTIA DE UNICIDADE E QUALIDADE #################
 #####################################################
-chave_tecnica_cols = ["num_cpf", "safra", "fpd"]
+chave_tecnica_cols = ["num_cpf", "safra", "prod", "flag_instalacao"]
 
 md = "### 🔑 Garantia de Unicidade: `bronze/telco`\n"
 md += f"- **Chave Técnica:** `{', '.join(chave_tecnica_cols)}`\n"
@@ -116,7 +116,6 @@ try:
 except Exception as e:
     md += f"\n> ⚠️ **Erro ao processar validação de unicidade:** `{e}`"
 
-md += "\n---\n\n"
 print_and_save_md(md, md_file)
 
 
