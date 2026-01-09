@@ -4,7 +4,7 @@
 - **Frequência:** Sob demanda (Ingestão manual/Parquet)
 - **Formato Original:** Parquet
 - **Volume médio:** ~4307 MiB por carga (6358 MiB descomprimido)
-- **Chave técnica:** `a definir`
+- **Chave Técnica Composta:** [`num_cpf`, `dat_referencia`, `num_fatura_hash`, `contrato`] (candidatas)
 - **Chave de Particionamento:** `DAT_REFERENCIA` (YYYYMM)
 
 ---
