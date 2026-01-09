@@ -1,7 +1,7 @@
 # Relatório de Profiling: `bronze/atraso` - `20260108_185925`
 
 ### 🔑 Garantia de Unicidade: `bronze/atraso`
-- **Chave Técnica:** `num_cpf, dat_referencia, num_fatura_hash, contrato`
+- **Chave Técnica:** `num_cpf, contrato, dat_referencia, num_fatura_hash`
 - **Tipo:** `COMPOSTA`
 
 | coluna        |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
