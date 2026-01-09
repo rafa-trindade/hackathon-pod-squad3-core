@@ -1,17 +1,16 @@
 # Relatório de Profiling: `bronze/dados_cadastrais` - `20260108_140523`
 
 ### 🔑 Garantia de Unicidade: `bronze/dados_cadastrais`
-- **Chave Técnica:** `num_cpf, safra`
+- **Chave Técnica:** `num_cpf, safra, prod`
 - **Tipo:** `COMPOSTA`
 
 | coluna        |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
 |:--------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
-| CHAVE_TECNICA |     3787342 |       0 |       113036 | 0.0%        | 2.9%             | ALTA            |
+| CHAVE_TECNICA |     4976877 |       0 |            0 | 0.0%        | 0.0%             | ALTA            |
 
 ### 🚩 Diagnóstico e Observações Técnicas
-* ℹ️ **Deduplicação Necessária:** Aproximação indica cerca de **113.036** (2.9%) duplicados. Na camada Silver. será obrigatório o uso de `ROW_NUMBER()` com `PARTITION BY` nas colunas da chave e `ORDER BY ingestion_ts DESC` para garantir a unicidade real.
-* ❗ **Risco de Integridade:** Não utilize esta tabela Bronze para `JOINs` diretos. A duplicidade detectada causará o efeito de explosão de registros, comprometendo a acurácia de métricas financeiras.
-* 👻 **Otimização de Schema:** Colunas detectadas como 100% nulas ou zeradas (ex: `dat_atualizacao_credito`, `val_desconto_item`) devem ser avaliadas para exclusão na Silver para ganho de performance.
+* ✅ **Sucesso:** A chave técnica parece ser única para este conjunto de dados (estimativa estatística).
+* 👻 **Otimização de Schema:** Colunas 100% nulas ou zeradas detectadas em análises anteriores devem ser avaliadas para exclusão na Silver.
 
 ---
 
@@ -217,15 +216,15 @@
 
 | valor       |   qtd |
 |:------------|------:|
-| ZZTZ799U79T |     6 |
-| WW7NWZ9Y8ZW |     6 |
 | XX9Z8T8YUZT |     6 |
-| Y77ZYUXU8NW |     6 |
-| 888W78UZYYT |     6 |
-| 7X7NZ79YWU9 |     6 |
 | WXZY8TNZ7XZ |     6 |
-| U8Z9ZZ8N8XZ |     6 |
+| Y77ZYUXU8NW |     6 |
+| WW7NWZ9Y8ZW |     6 |
 | ZZZZZZZX7T9 |     6 |
+| 7X7NZ79YWU9 |     6 |
+| 888W78UZYYT |     6 |
+| ZZTZ799U79T |     6 |
+| U8Z9ZZ8N8XZ |     6 |
 | ZX77YX8WNWN |     6 |
 
 #### Coluna: `safra`
@@ -248,11 +247,11 @@
 | 1981-06-10 |   349 |
 | 1981-06-05 |   348 |
 | 1985-09-20 |   346 |
-| 1988-03-10 |   345 |
 | 1989-10-12 |   345 |
+| 1988-03-10 |   345 |
 | 1982-06-08 |   344 |
 | 1988-06-06 |   343 |
-| 1981-06-29 |   342 |
+| 1983-02-28 |   342 |
 
 #### Coluna: `var_12`
 
