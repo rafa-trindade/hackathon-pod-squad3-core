@@ -12,9 +12,6 @@
 * ✅ **Sucesso:** A chave técnica parece ser única para este conjunto de dados (estimativa estatística).
 * 👻 **Otimização de Schema:** Colunas 100% nulas ou zeradas detectadas em análises anteriores devem ser avaliadas para exclusão na Silver.
 
----
-
-
 
 ---
 

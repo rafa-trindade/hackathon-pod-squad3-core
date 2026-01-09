@@ -1,20 +1,16 @@
 # Relatório de Profiling: `bronze/telco` - `20260108_204751`
 
 ### 🔑 Garantia de Unicidade: `bronze/telco`
-- **Chave Técnica:** `num_cpf, safra, fpd`
+- **Chave Técnica:** `num_cpf, safra, prod, flag_instalacao`
 - **Tipo:** `COMPOSTA`
 
 | coluna        |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
 |:--------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
-| CHAVE_TECNICA |     1461700 |   45936 |            0 | 3.36%       | 0.0%             | ALTA            |
+| CHAVE_TECNICA |     1439667 |       0 |            0 | 0.0%        | 0.0%             | ALTA            |
 
 ### 🚩 Diagnóstico e Observações Técnicas
 * ✅ **Sucesso:** A chave técnica parece ser única para este conjunto de dados (estimativa estatística).
-* ⚠️ **Tratamento de Nulos:** Identificamos **3.36%** de registros com campos nulos na composição da chave técnica. Para evitar perda de dados, use `COALESCE` na camada Silver.
 * 👻 **Otimização de Schema:** Colunas 100% nulas ou zeradas detectadas em análises anteriores devem ser avaliadas para exclusão na Silver.
-
----
-
 
 
 ---
@@ -440,15 +436,15 @@
 | valor       |   qtd |
 |:------------|------:|
 | 888W78UZYYT |     6 |
-| ZW8Z8ZXWW7Z |     5 |
-| T9ZYTXZ7WYZ |     5 |
-| WXXT7WUX8Y9 |     5 |
-| XYUZ8ZXUUZ9 |     5 |
-| ZTZTWZXTYZX |     5 |
-| WN7WWZXW8X9 |     5 |
-| Y79XYXNN8T8 |     5 |
-| ZNTN78ZW7XX |     5 |
+| X8XXWNZZ8UX |     5 |
 | ZYNYYUWWTZN |     5 |
+| XYUZ8ZXUUZ9 |     5 |
+| ZW9TYZXTWTZ |     5 |
+| XNW79U9Z7WN |     5 |
+| Y97YZZX88TY |     5 |
+| ZNTN78ZW7XX |     5 |
+| XYTY9ZX879Z |     5 |
+| YW99TTN98UN |     5 |
 
 #### Coluna: `safra`
 

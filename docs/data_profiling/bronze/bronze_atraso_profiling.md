@@ -13,9 +13,6 @@
 * ❗ **Risco de Integridade:** Não utilize esta tabela Bronze para `JOINs` diretos. A duplicidade detectada causará o efeito de explosão de registros, comprometendo a acurácia de métricas financeiras.
 * 👻 **Otimização de Schema:** Colunas detectadas como 100% nulas ou zeradas (ex: `dat_atualizacao_credito`, `val_desconto_item`) devem ser avaliadas para exclusão na Silver para ganho de performance.
 
----
-
-
 
 ---
 
@@ -335,14 +332,14 @@
 |:-----------------------------------------------------------------|--------:|
 | 5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9 | 1075903 |
 | d62379c48ce480322c400adcbb1f59cf4196d4c627a6fae49c3ea53eeb2c7e6d |     126 |
-| 0800dd401791559678cb955935325732500b31d51fed5f9af7af2b1c0a6075d3 |     108 |
-| f52141a360fdcf817eccbda4c1145d8b54ac9c0039fa0bf74439fd77df491a4b |     108 |
-| bb73dadd64ae804b72b568c3e0f22f42d2c7ca1c53085b6f04f4ab18108efe32 |     108 |
-| c62d00706811e4bde9433086ebdbb4d382039c19df766ab577f35c7e9788370f |     108 |
+| 029ea7d470f8de06cea55c9033d4f3966d10739aec333dd5cc88edfa9992b7de |     108 |
+| e02f06436e1219eabeea7781d190542ed9b349c62ca3d00f04a33993dcf1fd7a |     108 |
+| 83a65c2bf58f3c8149363160eeb5020a2dbd9edad704e0170a075e180e536e1e |     108 |
+| 585fd5e93b24f9c5df32e4a2952af37b6f416e80bc9ee05759c3cb3728707c44 |     108 |
+| 8efb6c2d8d444da9dcf904720a7c8f89c19fa322d9ccb786641fd6232faa4a4b |     108 |
 | 9d1f3cd61f729de61c011a31d36f09a608727197578d2ab12c818fe4ef178f23 |     108 |
-| b8b2bf7948343f22cd785bb1e707b7a696d8ecd5eee4d9c15a0671fbe80ae1ac |     108 |
-| 5e554a259c4ab7e7278f111ffd3cb1f4c650f5302aa6098883804eb7ae847f1a |     108 |
-| 1fee07d5c66e52b73fdda793e1debd4ac21257c713261e339a8b0132f351c1c7 |     108 |
+| 11dab86d9d9800fd5f20c2c53f391d0552fa2dc8bed1b0dda453c2e735d1f6b7 |     108 |
+| f85a2590dc90b7085a6911fadb58616e91e9b5124bd8b41ee204bdd33a5b6ba6 |     108 |
 
 #### Coluna: `contrato`
 
@@ -955,8 +952,8 @@
 |   93.37 |     1574 |
 |   72.33 |     1558 |
 |  107.78 |     1556 |
-|  108.93 |     1508 |
 |   92.38 |     1508 |
+|  108.93 |     1508 |
 
 #### Coluna: `val_parc_aparelho_liq`
 
@@ -964,8 +961,8 @@
 |---------:|---------:|
 |     0    | 31600434 |
 |   134.37 |      252 |
-|   148.58 |      224 |
 |   127.97 |      224 |
+|   148.58 |      224 |
 |   181.58 |      210 |
 |  2201.93 |      196 |
 | 20046.8  |      180 |

@@ -1,18 +1,16 @@
 # Relatório de Profiling: `bronze/pagamento` - `20260108_204106`
 
 ### 🔑 Garantia de Unicidade: `bronze/pagamento`
-- **Chave Técnica:** `num_cpf, contrato, val_pagamento_fatura, dat_criacao_pagamento, seq_entidade_pagamento`
+- **Chave Técnica:** `num_cpf, contrato, seq_fatura, num_sub_seq_fatura`
 - **Tipo:** `COMPOSTA`
 
 | coluna        |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
 |:--------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
-| CHAVE_TECNICA |    17810338 | 6118973 |      4019290 | 28.03%      | 18.41%           | ALTA            |
+| CHAVE_TECNICA |    23283525 |       0 |            0 | 0.0%        | 0.0%             | ALTA            |
 
 ### 🚩 Diagnóstico e Observações Técnicas
-* ℹ️ **Deduplicação Necessária:** Aproximação indica cerca de **4.019.290** (18.41%) duplicados. Na camada Silver. será obrigatório o uso de `ROW_NUMBER()` com `PARTITION BY` nas colunas da chave e `ORDER BY ingestion_ts DESC` para garantir a unicidade real.
-* ⚠️ **Tratamento de Nulos:** Identificamos **28.03%** de registros com campos nulos na composição da chave técnica. Para evitar perda de dados em operações de JOIN ou na deduplicação, é essencial aplicar `COALESCE` nos campos nulos (especialmente datas) na camada Silver.
-* ❗ **Risco de Integridade:** Não utilize esta tabela Bronze para `JOINs` diretos. A duplicidade detectada causará o efeito de explosão de registros, comprometendo a acurácia de métricas financeiras.
-* 👻 **Otimização de Schema:** Colunas detectadas como 100% nulas ou zeradas (ex: `dat_atualizacao_credito`, `val_desconto_item`) devem ser avaliadas para exclusão na Silver para ganho de performance.
+* ✅ **Sucesso:** A chave técnica parece ser única para este conjunto de dados (estimativa estatística).
+* 👻 **Otimização de Schema:** Colunas 100% nulas ou zeradas detectadas em análises anteriores devem ser avaliadas para exclusão na Silver.
 
 ---
 
@@ -411,15 +409,15 @@
 | valor        |     qtd |
 |:-------------|--------:|
 | NULL         | 6845630 |
-| 966132196124 |      24 |
 | 966132196123 |      24 |
+| 966132196124 |      24 |
 | 120004027064 |      22 |
+| 913625840147 |      21 |
 | 966132196122 |      21 |
-| 966132196125 |      21 |
+| 966132196132 |      21 |
+| 966132196127 |      21 |
+| 966132196130 |      21 |
 | 966132196128 |      21 |
-| 966132196129 |      21 |
-| 966132196131 |      21 |
-| 966132196133 |      21 |
 
 #### Coluna: `dat_criacao_dw`
 
@@ -445,8 +443,8 @@
 | 2025-03-06 14:36:43 |     245 |
 | 2025-03-06 14:36:07 |     241 |
 | 2025-02-21 12:47:38 |     236 |
-| 2025-02-21 12:47:16 |     235 |
 | 2025-03-06 14:36:36 |     235 |
+| 2025-02-21 12:47:16 |     235 |
 | 2025-03-06 14:36:11 |     234 |
 | 2025-02-21 12:47:22 |     233 |
 | 2025-03-06 14:36:38 |     232 |
@@ -505,10 +503,10 @@
 | 2025-03-06 14:36:43 |     245 |
 | 2025-03-06 14:36:07 |     241 |
 | 2025-02-21 12:47:38 |     236 |
-| 2025-02-21 12:47:16 |     234 |
 | 2025-03-06 14:36:11 |     234 |
-| 2025-03-06 14:36:36 |     233 |
+| 2025-02-21 12:47:16 |     234 |
 | 2025-02-21 12:47:22 |     233 |
+| 2025-03-06 14:36:36 |     233 |
 | 2025-03-06 14:36:38 |     232 |
 
 #### Coluna: `dat_atualizacao_pagamento`
@@ -654,8 +652,8 @@
 |    2.62 |       91 |
 |    2.29 |       87 |
 |    1.97 |       84 |
-|    1.64 |       83 |
 |  120    |       83 |
+|    1.64 |       83 |
 |   18.36 |       82 |
 
 #### Coluna: `val_multa_equip_total`
@@ -1221,8 +1219,8 @@
 | 1981200000000030624C |      142 |
 | 4779200000000220824C |      128 |
 | 2875200000000241024C |      127 |
-| 5912200000000250624C |      122 |
 | 6908200000000250724C |      122 |
+| 5912200000000250624C |      122 |
 | 1178200000000020524C |      117 |
 | 4878200000000090125C |      111 |
 | 8050091012345270125C |      109 |
