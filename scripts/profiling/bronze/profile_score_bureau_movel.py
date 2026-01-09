@@ -21,8 +21,8 @@ from scripts.profiling.utils.profiling_utils import init_md_report, print_and_sa
 BRONZE_BASE_PATH = "s3://lake/bronze/score_bureau_movel"
 
 con = get_duckdb_connection(
-    memory_limit="2GB",
-    threads=4
+    memory_limit="6GB",
+    threads=5
 )
 
 # Captura a última run_id via Hive Partitioning
@@ -51,6 +51,73 @@ md_file = init_md_report(
 )
 
 
+
+# %% 
+# GARANTIA DE UNICIDADE E QUALIDADE #################
+#####################################################
+chave_tecnica_cols = ["num_cpf", "safra"]
+
+md = "### 🔑 Garantia de Unicidade: `bronze/score_bureau_movel`\n"
+md += f"- **Chave Técnica:** `{', '.join(chave_tecnica_cols)}`\n"
+md += f"- **Tipo:** `COMPOSTA`\n\n"
+
+try:
+    df_unicidade = con.execute(f"""
+        WITH base AS (
+            SELECT 
+                COUNT(*) AS total_linhas,
+                APPROX_COUNT_DISTINCT({{ 
+                    {", ".join([f"'{c}': \"{c}\"" for c in chave_tecnica_cols])} 
+                }}) AS distintos_aprox,
+                COUNT(*) FILTER (WHERE {' OR '.join([f'"{c}" IS NULL' for c in chave_tecnica_cols])}) AS nulos
+            FROM read_parquet('{path_parquet}', hive_partitioning=1)
+        )
+        SELECT
+            'CHAVE_TECNICA' AS coluna,
+            distintos_aprox AS distintos,
+            nulos,
+            (total_linhas - distintos_aprox) AS duplicados,
+            ROUND(nulos * 100.0 / total_linhas, 2) AS nulos_num,
+            ROUND(nulos * 100.0 / total_linhas, 2) || '%' AS pct_nulos,
+            ROUND((total_linhas - distintos_aprox) * 100.0 / total_linhas, 2) || '%' AS pct_duplicados,
+            CASE
+                WHEN distintos_aprox <= 0.001 * total_linhas THEN 'BAIXA'
+                WHEN distintos_aprox <= 0.05 * total_linhas THEN 'MEDIA'
+                ELSE 'ALTA'
+            END AS cardinalidade
+        FROM base
+    """).df()
+
+    dups = int(df_unicidade['duplicados'].iloc[0])
+    pct_dups = str(df_unicidade['pct_duplicados'].iloc[0])
+    pct_nulos_raw = float(df_unicidade['nulos_num'].iloc[0])
+
+    md += df_unicidade.drop(columns=['nulos_num']).to_markdown(index=False)
+
+    md += "\n\n### 🚩 Diagnóstico e Observações Técnicas\n"
+
+    if dups > 0:
+        msg_dups = f"* ℹ️ **Deduplicação Necessária:** Aproximação indica cerca de **{dups:,}** ({pct_dups}) duplicados. Na camada Silver, será obrigatório o uso de `ROW_NUMBER()` com `PARTITION BY` nas colunas da chave e `ORDER BY ingestion_ts DESC` para garantir a unicidade real."
+        md += msg_dups.replace(",", ".") + "\n"
+    else:
+        md += "* ✅ **Sucesso:** A chave técnica parece ser única para este conjunto de dados.\n"
+
+    if pct_nulos_raw > 0:
+        md += f"* ⚠️ **Tratamento de Nulos:** Identificamos **{pct_nulos_raw}%** de registros com campos nulos na composição da chave técnica. Para evitar perda de dados em operações de JOIN ou na deduplicação, é essencial aplicar `COALESCE` nos campos nulos (especialmente datas) na camada Silver.\n"
+
+    if dups > 0:
+        md += "* ❗ **Risco de Integridade:** Não utilize esta tabela Bronze para `JOINs` diretos. A duplicidade detectada causará o efeito de explosão de registros, comprometendo a acurácia de métricas financeiras.\n"
+
+    md += "* 👻 **Otimização de Schema:** Colunas detectadas como 100% nulas ou zeradas (ex: `dat_atualizacao_credito`, `val_desconto_item`) devem ser avaliadas para exclusão na Silver para ganho de performance.\n"
+
+except Exception as e:
+    md += f"\n> ⚠️ **Erro ao processar validação de unicidade:** `{e}`"
+
+md += "\n---\n\n"
+print_and_save_md(md, md_file)
+
+
+
 # %%
 # VOLUMETRIA #####################################
 ##################################################
@@ -67,7 +134,6 @@ try:
         ),
         enriched AS (
             SELECT
-                -- Ajustado para capturar a partição ano_mes
                 regexp_extract(
                     file_name,
                     'ano_mes=[^/]+'
@@ -193,48 +259,94 @@ if not date_cols:
 else:
     for col in date_cols:
         md += f"#### Coluna: `{col}`\n"
-        res = con.execute(f'SELECT MIN("{col}") as min, MAX("{col}") as max FROM read_parquet("{path_parquet}")').df()
+        res = con.execute(f'SELECT MIN("{col}") as min, MAX("{col}") as max FROM read_parquet("{path_parquet}", hive_partitioning=1)').df()
         md += res.to_markdown(index=False) + "\n\n"
 
 print_and_save_md(md, md_file)
 
 
-# %% 
-# ESTATÍSTICA POR COLUNA #########################
+
+# %%  
+# CAMPOS NUMÉRICOS (MIN/MAX) #####################
 ##################################################
+md = "### 🔢 Range de Valores Numéricos: `bronze/score_bureau_movel`\n\n"
+
+num_cols = df_schema[
+    df_schema["column_type"].str.contains("INT|DOUBLE|FLOAT|DECIMAL|REAL", case=False, na=False)
+]["column_name"].tolist()
+
+cols_to_ignore = ['num_cpf', 'run_id', 'ano_mes']
+num_cols = [c for c in num_cols if c not in cols_to_ignore]
+
+if not num_cols:
+    md += "> ⚠️ Nenhuma coluna numérica relevante encontrada.\n\n"
+else:
+    for col in num_cols:
+        md += f"#### Coluna: `{col}`\n"
+        try:
+            res = con.execute(f"""
+                SELECT 
+                    MIN("{col}") as min, 
+                    MAX("{col}") as max,
+                    ROUND(AVG("{col}"), 2) as media 
+                FROM read_parquet("{path_parquet}", hive_partitioning=1)
+            """).df()
+            md += res.to_markdown(index=False) + "\n\n"
+        except Exception as e:
+            md += f"> ⚠️ Erro ao calcular range para `{col}`: {e}\n\n"
+
+print_and_save_md(md, md_file)
+
+
+
+# %% 
+# ESTATÍSTICA POR COLUNA ###########################
+####################################################
+import pandas as pd
+
 md = "### 📊 Estatísticas por Coluna: `bronze/score_bureau_movel`\n"
 
 cols = df_schema["column_name"].tolist()
-selects = []
 
-total_linhas = con.execute(f"""
-    SELECT COUNT(*)
-    FROM read_parquet('{path_parquet}')
-""").fetchone()[0]
+total_registros = con.execute(f'SELECT COUNT(*) FROM read_parquet("{path_parquet}")').fetchone()[0]
 
+aggs = []
 for col in cols:
-    selects.append(f"""
-        SELECT
-            '{col}' AS coluna,
-            COUNT(DISTINCT "{col}") AS distintos,
-            COUNT(*) FILTER (WHERE "{col}" IS NULL) AS nulos,
-            COUNT(*) - COUNT(DISTINCT "{col}") AS duplicados,
-            ROUND(COUNT(*) FILTER (WHERE "{col}" IS NULL) * 100.0 / COUNT(*), 2) || '%' AS pct_nulos,
-            ROUND((COUNT(*) - COUNT(DISTINCT "{col}")) * 100.0 / COUNT(*), 2) || '%' AS pct_duplicados,
-            CASE
-                WHEN COUNT(DISTINCT "{col}") <= 0.001 * {total_linhas} THEN 'BAIXA'
-                WHEN COUNT(DISTINCT "{col}") <= 0.05 * {total_linhas} THEN 'MEDIA'
-                ELSE 'ALTA'
-            END AS cardinalidade
-        FROM read_parquet('{path_parquet}', hive_partitioning=1)
-    """)
+    aggs.append(f'APPROX_COUNT_DISTINCT("{col}") AS "dist_{col}"')
+    aggs.append(f'COUNT(*) FILTER (WHERE "{col}" IS NULL) AS "null_{col}"')
 
-sql_column_statistics = " UNION ALL ".join(selects)
-df_column_statistics = con.execute(sql_column_statistics).df()
+print("⏳ Iniciando scan único para estatísticas...")
+unified_results = con.execute(f'SELECT {", ".join(aggs)} FROM read_parquet("{path_parquet}")').df()
+
+stats_list = []
+for col in cols:
+    stats_list.append({
+        "coluna": col,
+        "distintos": unified_results[f"dist_{col}"].iloc[0],
+        "nulos": unified_results[f"null_{col}"].iloc[0]
+    })
+
+df_column_statistics = pd.DataFrame(stats_list)
+
+df_column_statistics['duplicados'] = total_registros - df_column_statistics['distintos']
+
+if total_registros > 0:
+    df_column_statistics['pct_nulos'] = (df_column_statistics['nulos'] * 100.0 / total_registros).round(2).astype(str) + '%'
+    df_column_statistics['pct_duplicados'] = (df_column_statistics['duplicados'] * 100.0 / total_registros).round(2).astype(str) + '%'
+else:
+    df_column_statistics['pct_nulos'] = '0.0%'
+    df_column_statistics['pct_duplicados'] = '0.0%'
+
+def get_cardinality(dist):
+    if dist <= 0.001 * total_registros: return 'BAIXA'
+    if dist <= 0.05 * total_registros: return 'MEDIA'
+    return 'ALTA'
+
+df_column_statistics['cardinalidade'] = df_column_statistics['distintos'].apply(get_cardinality)
 
 md += df_column_statistics.to_markdown(index=False)
-
 print_and_save_md(md, md_file)
+
 
 
 # %%  
@@ -246,17 +358,23 @@ for col in df_column_statistics["coluna"]:
     
     md += f"#### Coluna: `{col}`\n\n"
 
-    df_top10 = con.execute(f"""
-        SELECT
-            "{col}" AS valor,
-            COUNT(*) AS qtd
-        FROM read_parquet('{path_parquet}', hive_partitioning=1)
-        GROUP BY "{col}"
-        ORDER BY qtd DESC
-        LIMIT 10
-    """).df()
+    try:
+        df_top10 = con.execute(f"""
+            SELECT
+                CAST("{col}" AS VARCHAR) AS valor,
+                COUNT(*) AS qtd
+            FROM read_parquet('{path_parquet}', hive_partitioning=1)
+            GROUP BY valor
+            ORDER BY qtd DESC
+            LIMIT 10
+        """).df()
 
-    md += df_top10.to_markdown(index=False)
-    md+= "\n\n"
+        df_top10 = df_top10.fillna("NULL")
+
+        md += df_top10.to_markdown(index=False)
+    except Exception as e:
+        md += f"> ⚠️ Erro ao calcular distribuição para `{col}`: {e}"
+        
+    md += "\n\n"
 
 print_and_save_md(md, md_file)
