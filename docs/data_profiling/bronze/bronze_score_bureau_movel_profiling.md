@@ -12,9 +12,23 @@
 * ✅ **Sucesso:** A chave técnica parece ser única para este conjunto de dados (estimativa estatística).
 * 👻 **Otimização de Schema:** Colunas 100% nulas ou zeradas detectadas em análises anteriores devem ser avaliadas para exclusão na Silver.
 
+
 ---
 
-
+### 📊 Schema e Estatísticas: `bronze/score_bureau_movel`
+| column_name     | column_type              |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
+|:----------------|:-------------------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
+| num_cpf         | VARCHAR                  |     1187719 |       0 |       102807 | 0.0%        | 7.97%            | ALTA            |
+| safra           | DATE                     |           6 |       0 |      1290520 | 0.0%        | 100.0%           | BAIXA           |
+| flag_instalacao | BOOLEAN                  |           1 |       0 |      1290525 | 0.0%        | 100.0%           | BAIXA           |
+| fpd             | BOOLEAN                  |           2 |       0 |      1290524 | 0.0%        | 100.0%           | BAIXA           |
+| prod            | VARCHAR                  |           1 |       0 |      1290525 | 0.0%        | 100.0%           | BAIXA           |
+| flag_mig2       | VARCHAR                  |           1 |       0 |      1290525 | 0.0%        | 100.0%           | BAIXA           |
+| score_01        | INTEGER                  |         330 |    9439 |      1290196 | 0.73%       | 99.97%           | BAIXA           |
+| score_02        | INTEGER                  |         598 |     576 |      1289928 | 0.04%       | 99.95%           | BAIXA           |
+| ingestion_ts    | TIMESTAMP WITH TIME ZONE |           1 |       0 |      1290525 | 0.0%        | 100.0%           | BAIXA           |
+| ano_mes         | BIGINT                   |           6 |       0 |      1290520 | 0.0%        | 100.0%           | BAIXA           |
+| run_id          | VARCHAR                  |           1 |       0 |      1290525 | 0.0%        | 100.0%           | BAIXA           |
 
 ---
 
@@ -28,23 +42,6 @@
 | ano_mes=202502 |              1 | 203.139     |        11 |                     2.04 |                        3.43 |
 | ano_mes=202503 |              1 | 207.396     |        11 |                     2.08 |                        3.5  |
 | TOTAL          |              6 | 1.290.526   |        11 |                    12.94 |                       21.81 |
-
----
-
-### 🧬 Schema: `bronze/score_bureau_movel`
-| column_name     | column_type              | null   | key   | default   | extra   |
-|:----------------|:-------------------------|:-------|:------|:----------|:--------|
-| num_cpf         | VARCHAR                  | YES    |       |           |         |
-| safra           | DATE                     | YES    |       |           |         |
-| flag_instalacao | BOOLEAN                  | YES    |       |           |         |
-| fpd             | BOOLEAN                  | YES    |       |           |         |
-| prod            | VARCHAR                  | YES    |       |           |         |
-| flag_mig2       | VARCHAR                  | YES    |       |           |         |
-| score_01        | INTEGER                  | YES    |       |           |         |
-| score_02        | INTEGER                  | YES    |       |           |         |
-| ingestion_ts    | TIMESTAMP WITH TIME ZONE | YES    |       |           |         |
-| ano_mes         | BIGINT                   | YES    |       |           |         |
-| run_id          | VARCHAR                  | YES    |       |           |         |
 
 ---
 
@@ -79,38 +76,21 @@
 
 ---
 
-### 📊 Estatísticas por Coluna: `bronze/score_bureau_movel`
-| coluna          |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
-|:----------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
-| num_cpf         |     1187719 |       0 |       102807 | 0.0%        | 7.97%            | ALTA            |
-| safra           |           6 |       0 |      1290520 | 0.0%        | 100.0%           | BAIXA           |
-| flag_instalacao |           1 |       0 |      1290525 | 0.0%        | 100.0%           | BAIXA           |
-| fpd             |           2 |       0 |      1290524 | 0.0%        | 100.0%           | BAIXA           |
-| prod            |           1 |       0 |      1290525 | 0.0%        | 100.0%           | BAIXA           |
-| flag_mig2       |           1 |       0 |      1290525 | 0.0%        | 100.0%           | BAIXA           |
-| score_01        |         330 |    9439 |      1290196 | 0.73%       | 99.97%           | BAIXA           |
-| score_02        |         598 |     576 |      1289928 | 0.04%       | 99.95%           | BAIXA           |
-| ingestion_ts    |           1 |       0 |      1290525 | 0.0%        | 100.0%           | BAIXA           |
-| ano_mes         |           6 |       0 |      1290520 | 0.0%        | 100.0%           | BAIXA           |
-| run_id          |           1 |       0 |      1290525 | 0.0%        | 100.0%           | BAIXA           |
-
----
-
 ### 🔟 Distribuição de Valores (Top 10): `bronze/score_bureau_movel`
 #### Coluna: `num_cpf`
 
 | valor       |   qtd |
 |:------------|------:|
 | ZW9TYZXTWTZ |     5 |
-| ZYWUTZXXTU8 |     4 |
+| 8Z7UTZ9XZ9X |     4 |
+| ZZUWWTYWZ8T |     4 |
 | XUWNXZXN7ZU |     4 |
 | XWYWZZZNNNN |     4 |
-| 8Z7UTZ9XZ9X |     4 |
-| Z8Y88ZX77ZW |     4 |
-| ZTU8UZXYWWW |     4 |
-| Z8NZWZZ7U97 |     4 |
+| 78X9UYXZTWU |     4 |
+| TN8Y7XTNZ87 |     4 |
 | ZW7UTZZYYW7 |     4 |
-| Z9XN9ZZWU7T |     4 |
+| T87Z88U7U87 |     4 |
+| Z8NZWZZ7U97 |     4 |
 
 #### Coluna: `safra`
 

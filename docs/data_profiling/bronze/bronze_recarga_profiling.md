@@ -15,6 +15,39 @@
 
 ---
 
+### 📊 Schema e Estatísticas: `bronze/recarga`
+| column_name           | column_type              |   distintos |    nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
+|:----------------------|:-------------------------|------------:|---------:|-------------:|:------------|:-----------------|:----------------|
+| num_cpf               | VARCHAR                  |     2746295 |        0 |     97467356 | 0.0%        | 97.26%           | MEDIA           |
+| dat_insercao_credito  | DATE                     |         538 |        0 |    100213113 | 0.0%        | 100.0%           | BAIXA           |
+| hor_insercao_credito  | VARCHAR                  |       86309 |        0 |    100127342 | 0.0%        | 99.91%           | BAIXA           |
+| dw_num_ntc            | VARCHAR                  |     4144008 |        0 |     96069643 | 0.0%        | 95.86%           | MEDIA           |
+| dw_num_cliente        | VARCHAR                  |     6245708 |        0 |     93967943 | 0.0%        | 93.77%           | ALTA            |
+| flag_sos              | BOOLEAN                  |           2 |        0 |    100213649 | 0.0%        | 100.0%           | BAIXA           |
+| cod_tecnologia_dw     | VARCHAR                  |           1 |        0 |    100213650 | 0.0%        | 100.0%           | BAIXA           |
+| cod_canal_aquisicao   | VARCHAR                  |         133 |        0 |    100213518 | 0.0%        | 100.0%           | BAIXA           |
+| cod_tipo_credito      | VARCHAR                  |           2 |        0 |    100213649 | 0.0%        | 100.0%           | BAIXA           |
+| cod_promocao          | VARCHAR                  |           1 |  2152012 |    100213650 | 2.15%       | 100.0%           | BAIXA           |
+| cod_plataforma_atu    | VARCHAR                  |          13 |        0 |    100213638 | 0.0%        | 100.0%           | BAIXA           |
+| cod_status_plataforma | VARCHAR                  |          17 |        0 |    100213634 | 0.0%        | 100.0%           | BAIXA           |
+| ind_metodo_pagamento  | VARCHAR                  |           2 |        0 |    100213649 | 0.0%        | 100.0%           | BAIXA           |
+| dw_plano_tarifacao    | VARCHAR                  |         104 |  2152012 |    100213547 | 2.15%       | 100.0%           | BAIXA           |
+| dw_tipo_recarga       | VARCHAR                  |           3 |  2152012 |    100213648 | 2.15%       | 100.0%           | BAIXA           |
+| dw_tipo_insercao      | VARCHAR                  |          11 |        0 |    100213640 | 0.0%        | 100.0%           | BAIXA           |
+| dw_forma_pagamento    | VARCHAR                  |           2 |        0 |    100213649 | 0.0%        | 100.0%           | BAIXA           |
+| dw_instituicao        | VARCHAR                  |         129 |        0 |    100213522 | 0.0%        | 100.0%           | BAIXA           |
+| cod_grupo_cartao      | VARCHAR                  |         240 |        0 |    100213411 | 0.0%        | 100.0%           | BAIXA           |
+| dsc_grupo_cartao_wpp  | VARCHAR                  |          25 |        0 |    100213626 | 0.0%        | 100.0%           | BAIXA           |
+| val_credito_inserido  | DOUBLE                   |        4613 |        0 |    100209038 | 0.0%        | 100.0%           | BAIXA           |
+| val_bonus             | DOUBLE                   |       65011 |        0 |    100148640 | 0.0%        | 99.94%           | BAIXA           |
+| val_real              | DOUBLE                   |       50763 |        0 |    100162888 | 0.0%        | 99.95%           | BAIXA           |
+| valor_sos             | DOUBLE                   |           5 | 93679237 |    100213646 | 93.48%      | 100.0%           | BAIXA           |
+| ingestion_ts          | TIMESTAMP WITH TIME ZONE |           1 |        0 |    100213650 | 0.0%        | 100.0%           | BAIXA           |
+| ano_mes               | BIGINT                   |          20 |        0 |    100213631 | 0.0%        | 100.0%           | BAIXA           |
+| run_id                | VARCHAR                  |           1 |        0 |    100213650 | 0.0%        | 100.0%           | BAIXA           |
+
+---
+
 ### 📦 Volumetria: `bronze/recarga`
 | diretorio      |   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
 |:---------------|---------------:|:------------|----------:|-------------------------:|----------------------------:|
@@ -37,39 +70,6 @@
 | ano_mes=202502 |              1 | 6.271.393   |        27 |                   155.93 |                      366.69 |
 | ano_mes=202503 |              1 | 6.335.417   |        27 |                   156.34 |                      370.75 |
 | TOTAL          |             18 | 100.213.651 |        27 |                  2443.31 |                     5882.53 |
-
----
-
-### 🧬 Schema: `bronze/recarga`
-| column_name           | column_type              | null   | key   | default   | extra   |
-|:----------------------|:-------------------------|:-------|:------|:----------|:--------|
-| num_cpf               | VARCHAR                  | YES    |       |           |         |
-| dat_insercao_credito  | DATE                     | YES    |       |           |         |
-| hor_insercao_credito  | VARCHAR                  | YES    |       |           |         |
-| dw_num_ntc            | VARCHAR                  | YES    |       |           |         |
-| dw_num_cliente        | VARCHAR                  | YES    |       |           |         |
-| flag_sos              | BOOLEAN                  | YES    |       |           |         |
-| cod_tecnologia_dw     | VARCHAR                  | YES    |       |           |         |
-| cod_canal_aquisicao   | VARCHAR                  | YES    |       |           |         |
-| cod_tipo_credito      | VARCHAR                  | YES    |       |           |         |
-| cod_promocao          | VARCHAR                  | YES    |       |           |         |
-| cod_plataforma_atu    | VARCHAR                  | YES    |       |           |         |
-| cod_status_plataforma | VARCHAR                  | YES    |       |           |         |
-| ind_metodo_pagamento  | VARCHAR                  | YES    |       |           |         |
-| dw_plano_tarifacao    | VARCHAR                  | YES    |       |           |         |
-| dw_tipo_recarga       | VARCHAR                  | YES    |       |           |         |
-| dw_tipo_insercao      | VARCHAR                  | YES    |       |           |         |
-| dw_forma_pagamento    | VARCHAR                  | YES    |       |           |         |
-| dw_instituicao        | VARCHAR                  | YES    |       |           |         |
-| cod_grupo_cartao      | VARCHAR                  | YES    |       |           |         |
-| dsc_grupo_cartao_wpp  | VARCHAR                  | YES    |       |           |         |
-| val_credito_inserido  | DOUBLE                   | YES    |       |           |         |
-| val_bonus             | DOUBLE                   | YES    |       |           |         |
-| val_real              | DOUBLE                   | YES    |       |           |         |
-| valor_sos             | DOUBLE                   | YES    |       |           |         |
-| ingestion_ts          | TIMESTAMP WITH TIME ZONE | YES    |       |           |         |
-| ano_mes               | BIGINT                   | YES    |       |           |         |
-| run_id                | VARCHAR                  | YES    |       |           |         |
 
 ---
 
@@ -111,39 +111,6 @@
 |     3 |    20 |    7.55 |
 
 
-
----
-
-### 📊 Estatísticas por Coluna: `bronze/recarga`
-| coluna                |   distintos |    nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
-|:----------------------|------------:|---------:|-------------:|:------------|:-----------------|:----------------|
-| num_cpf               |     2746295 |        0 |     97467356 | 0.0%        | 97.26%           | MEDIA           |
-| dat_insercao_credito  |         538 |        0 |    100213113 | 0.0%        | 100.0%           | BAIXA           |
-| hor_insercao_credito  |       86309 |        0 |    100127342 | 0.0%        | 99.91%           | BAIXA           |
-| dw_num_ntc            |     4144008 |        0 |     96069643 | 0.0%        | 95.86%           | MEDIA           |
-| dw_num_cliente        |     6245708 |        0 |     93967943 | 0.0%        | 93.77%           | ALTA            |
-| flag_sos              |           2 |        0 |    100213649 | 0.0%        | 100.0%           | BAIXA           |
-| cod_tecnologia_dw     |           1 |        0 |    100213650 | 0.0%        | 100.0%           | BAIXA           |
-| cod_canal_aquisicao   |         133 |        0 |    100213518 | 0.0%        | 100.0%           | BAIXA           |
-| cod_tipo_credito      |           2 |        0 |    100213649 | 0.0%        | 100.0%           | BAIXA           |
-| cod_promocao          |           1 |  2152012 |    100213650 | 2.15%       | 100.0%           | BAIXA           |
-| cod_plataforma_atu    |          13 |        0 |    100213638 | 0.0%        | 100.0%           | BAIXA           |
-| cod_status_plataforma |          17 |        0 |    100213634 | 0.0%        | 100.0%           | BAIXA           |
-| ind_metodo_pagamento  |           2 |        0 |    100213649 | 0.0%        | 100.0%           | BAIXA           |
-| dw_plano_tarifacao    |         104 |  2152012 |    100213547 | 2.15%       | 100.0%           | BAIXA           |
-| dw_tipo_recarga       |           3 |  2152012 |    100213648 | 2.15%       | 100.0%           | BAIXA           |
-| dw_tipo_insercao      |          11 |        0 |    100213640 | 0.0%        | 100.0%           | BAIXA           |
-| dw_forma_pagamento    |           2 |        0 |    100213649 | 0.0%        | 100.0%           | BAIXA           |
-| dw_instituicao        |         129 |        0 |    100213522 | 0.0%        | 100.0%           | BAIXA           |
-| cod_grupo_cartao      |         240 |        0 |    100213411 | 0.0%        | 100.0%           | BAIXA           |
-| dsc_grupo_cartao_wpp  |          25 |        0 |    100213626 | 0.0%        | 100.0%           | BAIXA           |
-| val_credito_inserido  |        4613 |        0 |    100209038 | 0.0%        | 100.0%           | BAIXA           |
-| val_bonus             |       65011 |        0 |    100148640 | 0.0%        | 99.94%           | BAIXA           |
-| val_real              |       50763 |        0 |    100162888 | 0.0%        | 99.95%           | BAIXA           |
-| valor_sos             |           5 | 93679237 |    100213646 | 93.48%      | 100.0%           | BAIXA           |
-| ingestion_ts          |           1 |        0 |    100213650 | 0.0%        | 100.0%           | BAIXA           |
-| ano_mes               |          20 |        0 |    100213631 | 0.0%        | 100.0%           | BAIXA           |
-| run_id                |           1 |        0 |    100213650 | 0.0%        | 100.0%           | BAIXA           |
 
 ---
 

@@ -12,9 +12,88 @@
 * ✅ **Sucesso:** A chave técnica parece ser única para este conjunto de dados (estimativa estatística).
 * 👻 **Otimização de Schema:** Colunas 100% nulas ou zeradas detectadas em análises anteriores devem ser avaliadas para exclusão na Silver.
 
+
 ---
 
-
+### 📊 Schema e Estatísticas: `bronze/pagamento`
+| column_name                  | column_type              |   distintos |    nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
+|:-----------------------------|:-------------------------|------------:|---------:|-------------:|:------------|:-----------------|:----------------|
+| num_cpf                      | VARCHAR                  |     1930320 |        0 |     19899308 | 0.0%        | 91.16%           | ALTA            |
+| dat_status_fatura            | DATE                     |         538 |        0 |     21829090 | 0.0%        | 100.0%           | BAIXA           |
+| contrato                     | VARCHAR                  |     2304298 |        0 |     19525330 | 0.0%        | 89.44%           | ALTA            |
+| dw_num_cliente               | VARCHAR                  |     2954149 |        0 |     18875479 | 0.0%        | 86.47%           | ALTA            |
+| num_fatura_pagamento         | VARCHAR                  |    12888878 |  6845630 |      8940750 | 31.36%      | 40.96%           | ALTA            |
+| dat_criacao_dw               | TIMESTAMP                |       49276 |        0 |     21780352 | 0.0%        | 99.77%           | MEDIA           |
+| dat_criacao_atividade        | TIMESTAMP                |     6572610 |  6118973 |     15257018 | 28.03%      | 69.89%           | ALTA            |
+| dat_atualizacao_atividade    | TIMESTAMP                |      392769 | 20730830 |     21436859 | 94.97%      | 98.2%            | MEDIA           |
+| dat_baixa_atividade          | DATE                     |         382 |  6118973 |     21829246 | 28.03%      | 100.0%           | BAIXA           |
+| dat_deposito_atividade       | DATE                     |         756 |  6118973 |     21828872 | 28.03%      | 100.0%           | BAIXA           |
+| dat_criacao_pagamento        | TIMESTAMP                |     6572610 |  6118973 |     15257018 | 28.03%      | 69.89%           | ALTA            |
+| dat_atualizacao_pagamento    | TIMESTAMP                |      153177 | 18882483 |     21676451 | 86.5%       | 99.3%            | MEDIA           |
+| dat_status_pagamento         | DATE                     |         397 |  6118973 |     21829231 | 28.03%      | 100.0%           | BAIXA           |
+| dat_criacao_credito          | TIMESTAMP                |     6657349 |  6118973 |     15172279 | 28.03%      | 69.5%            | ALTA            |
+| dat_atualizacao_credito      | TIMESTAMP                |           0 | 21829628 |     21829628 | 100.0%      | 100.0%           | BAIXA           |
+| dat_atividade_credito        | DATE                     |         508 |  6118973 |     21829120 | 28.03%      | 100.0%           | BAIXA           |
+| dat_vencimento_credito       | DATE                     |        1420 |  6118973 |     21828208 | 28.03%      | 99.99%           | BAIXA           |
+| val_pagamento_fatura         | DOUBLE                   |       59667 |        0 |     21769961 | 0.0%        | 99.73%           | MEDIA           |
+| val_desconto_item            | DOUBLE                   |           1 |        0 |     21829627 | 0.0%        | 100.0%           | BAIXA           |
+| val_pagamento_item           | DOUBLE                   |       59667 |        0 |     21769961 | 0.0%        | 99.73%           | MEDIA           |
+| val_juros_multas_item        | DOUBLE                   |        3886 |        0 |     21825742 | 0.0%        | 99.98%           | BAIXA           |
+| val_multa_equip_item         | DOUBLE                   |        6123 |        0 |     21823505 | 0.0%        | 99.97%           | BAIXA           |
+| val_multa_equip_total        | DOUBLE                   |        6123 |        0 |     21823505 | 0.0%        | 99.97%           | BAIXA           |
+| val_multa_fid_item           | DOUBLE                   |           1 |        0 |     21829627 | 0.0%        | 100.0%           | BAIXA           |
+| val_baixa_atividade          | DOUBLE                   |       70406 |  6118973 |     21759222 | 28.03%      | 99.68%           | MEDIA           |
+| val_original_pagamento       | DOUBLE                   |       63233 |  6118973 |     21766395 | 28.03%      | 99.71%           | MEDIA           |
+| val_atual_pagamento          | DOUBLE                   |       68805 |  6118978 |     21760823 | 28.03%      | 99.68%           | MEDIA           |
+| val_pagamento_credito        | DOUBLE                   |       55384 |  6118973 |     21774244 | 28.03%      | 99.75%           | MEDIA           |
+| seq_fatura                   | VARCHAR                  |         251 |        0 |     21829377 | 0.0%        | 100.0%           | BAIXA           |
+| num_sub_seq_fatura           | VARCHAR                  |        1333 |        0 |     21828295 | 0.0%        | 99.99%           | BAIXA           |
+| num_credito_seq              | VARCHAR                  |         321 |        0 |     21829307 | 0.0%        | 100.0%           | BAIXA           |
+| dw_tipo_fatura               | VARCHAR                  |          24 |        0 |     21829604 | 0.0%        | 100.0%           | BAIXA           |
+| ind_status_fatura            | VARCHAR                  |           2 |        0 |     21829626 | 0.0%        | 100.0%           | BAIXA           |
+| dw_area                      | VARCHAR                  |          71 |        0 |     21829557 | 0.0%        | 100.0%           | BAIXA           |
+| dw_un_negocio                | VARCHAR                  |          10 |        0 |     21829618 | 0.0%        | 100.0%           | BAIXA           |
+| dw_forma_pagamento           | VARCHAR                  |           4 |        0 |     21829624 | 0.0%        | 100.0%           | BAIXA           |
+| dw_banco                     | VARCHAR                  |          55 |        0 |     21829573 | 0.0%        | 100.0%           | BAIXA           |
+| dw_tipo_pagamento            | VARCHAR                  |           4 |        0 |     21829624 | 0.0%        | 100.0%           | BAIXA           |
+| num_banco_pagamento          | VARCHAR                  |          39 |        0 |     21829589 | 0.0%        | 100.0%           | BAIXA           |
+| num_agencia_pagamento        | VARCHAR                  |        9154 |        0 |     21820474 | 0.0%        | 99.96%           | BAIXA           |
+| num_cc_pagamento             | VARCHAR                  |      325591 |        0 |     21504037 | 0.0%        | 98.51%           | MEDIA           |
+| dw_motivo_estorno            | VARCHAR                  |           1 |        0 |     21829627 | 0.0%        | 100.0%           | BAIXA           |
+| cod_origem_netuno            | VARCHAR                  |      419749 | 13566081 |     21409879 | 62.15%      | 98.08%           | MEDIA           |
+| cod_conta_atividade          | VARCHAR                  |     2730825 |  6118973 |     19098803 | 28.03%      | 87.49%           | ALTA            |
+| seq_entidade_atividade       | VARCHAR                  |         313 |  6118973 |     21829315 | 28.03%      | 100.0%           | BAIXA           |
+| cod_login_operador_atividade | VARCHAR                  |         971 | 14215870 |     21828657 | 65.12%      | 100.0%           | BAIXA           |
+| cod_atividade                | VARCHAR                  |           5 |  6118973 |     21829623 | 28.03%      | 100.0%           | BAIXA           |
+| cod_razao_atividade          | VARCHAR                  |           6 |  8446071 |     21829622 | 38.69%      | 100.0%           | BAIXA           |
+| cod_fundo_atividade          | VARCHAR                  |        1601 | 21819036 |     21828027 | 99.95%      | 99.99%           | BAIXA           |
+| cod_banco_atividade          | VARCHAR                  |          37 | 13732767 |     21829591 | 62.91%      | 100.0%           | BAIXA           |
+| num_conta_atividade          | VARCHAR                  |      293957 | 19502508 |     21535671 | 89.34%      | 98.65%           | MEDIA           |
+| cod_agencia_atividade        | VARCHAR                  |        9154 | 15077146 |     21820474 | 69.07%      | 99.96%           | BAIXA           |
+| seq_entidade_pagamento       | VARCHAR                  |         313 |  6118973 |     21829315 | 28.03%      | 100.0%           | BAIXA           |
+| cod_login_pagamento          | VARCHAR                  |         971 | 14539993 |     21828657 | 66.61%      | 100.0%           | BAIXA           |
+| cod_forma_pagamento          | VARCHAR                  |           4 |  6118973 |     21829624 | 28.03%      | 100.0%           | BAIXA           |
+| cod_tipo_pagamento           | VARCHAR                  |           5 |  6118973 |     21829623 | 28.03%      | 100.0%           | BAIXA           |
+| dsc_nome_banco_pagamento     | VARCHAR                  |          78 |  6118973 |     21829550 | 28.03%      | 100.0%           | BAIXA           |
+| seq_arquivo_pagamento        | VARCHAR                  |        6533 | 13775460 |     21823095 | 63.1%       | 99.97%           | BAIXA           |
+| num_parcela_pagamento        | VARCHAR                  |         601 | 21268211 |     21829027 | 97.43%      | 100.0%           | BAIXA           |
+| num_agrupador_pagamento      | VARCHAR                  |      338523 | 16102580 |     21491105 | 73.76%      | 98.45%           | MEDIA           |
+| dsc_pagamento                | VARCHAR                  |     2141789 | 18848477 |     19687839 | 86.34%      | 90.19%           | ALTA            |
+| cod_metodo_pagamento         | VARCHAR                  |           6 | 16297184 |     21829622 | 74.66%      | 100.0%           | BAIXA           |
+| ind_status_pagamento         | VARCHAR                  |           4 |  8996090 |     21829624 | 41.21%      | 100.0%           | BAIXA           |
+| cod_arquivo_pagamento        | VARCHAR                  |     2230500 | 18390641 |     19599128 | 84.25%      | 89.78%           | ALTA            |
+| cod_netuno_pagamento         | VARCHAR                  |           0 | 21829628 |     21829628 | 100.0%      | 100.0%           | BAIXA           |
+| cod_login_credito            | VARCHAR                  |        1179 | 14223305 |     21828449 | 65.16%      | 99.99%           | BAIXA           |
+| ind_tipo_credito             | VARCHAR                  |           1 |  6118973 |     21829627 | 28.03%      | 100.0%           | BAIXA           |
+| seq_pagamento_credito        | VARCHAR                  |         313 |  6118973 |     21829315 | 28.03%      | 100.0%           | BAIXA           |
+| seq_fatura_credito           | VARCHAR                  |        1245 |  6118973 |     21828383 | 28.03%      | 99.99%           | BAIXA           |
+| cod_alocacao_credito         | VARCHAR                  |           9 |  6118973 |     21829619 | 28.03%      | 100.0%           | BAIXA           |
+| cod_desalocacao_credito      | VARCHAR                  |           0 | 21829628 |     21829628 | 100.0%      | 100.0%           | BAIXA           |
+| seq_entidade_credito         | VARCHAR                  |        7916 |  6118973 |     21821712 | 28.03%      | 99.96%           | BAIXA           |
+| cod_tipo_fatura              | VARCHAR                  |          32 |  6118973 |     21829596 | 28.03%      | 100.0%           | BAIXA           |
+| ingestion_ts                 | TIMESTAMP WITH TIME ZONE |           1 |        0 |     21829627 | 0.0%        | 100.0%           | BAIXA           |
+| ano_mes                      | BIGINT                   |          20 |        0 |     21829608 | 0.0%        | 100.0%           | BAIXA           |
+| run_id                       | VARCHAR                  |           1 |        0 |     21829627 | 0.0%        | 100.0%           | BAIXA           |
 
 ---
 
@@ -40,88 +119,6 @@
 | ano_mes=202502 |              1 | 2.015.493   |        76 |                   190.46 |                      314.27 |
 | ano_mes=202503 |              1 | 2.465.787   |        76 |                   230.21 |                      382.21 |
 | TOTAL          |             18 | 21.829.628  |        76 |                  1759.13 |                     2948.11 |
-
----
-
-### 🧬 Schema: `bronze/pagamento`
-| column_name                  | column_type              | null   | key   | default   | extra   |
-|:-----------------------------|:-------------------------|:-------|:------|:----------|:--------|
-| num_cpf                      | VARCHAR                  | YES    |       |           |         |
-| dat_status_fatura            | DATE                     | YES    |       |           |         |
-| contrato                     | VARCHAR                  | YES    |       |           |         |
-| dw_num_cliente               | VARCHAR                  | YES    |       |           |         |
-| num_fatura_pagamento         | VARCHAR                  | YES    |       |           |         |
-| dat_criacao_dw               | TIMESTAMP                | YES    |       |           |         |
-| dat_criacao_atividade        | TIMESTAMP                | YES    |       |           |         |
-| dat_atualizacao_atividade    | TIMESTAMP                | YES    |       |           |         |
-| dat_baixa_atividade          | DATE                     | YES    |       |           |         |
-| dat_deposito_atividade       | DATE                     | YES    |       |           |         |
-| dat_criacao_pagamento        | TIMESTAMP                | YES    |       |           |         |
-| dat_atualizacao_pagamento    | TIMESTAMP                | YES    |       |           |         |
-| dat_status_pagamento         | DATE                     | YES    |       |           |         |
-| dat_criacao_credito          | TIMESTAMP                | YES    |       |           |         |
-| dat_atualizacao_credito      | TIMESTAMP                | YES    |       |           |         |
-| dat_atividade_credito        | DATE                     | YES    |       |           |         |
-| dat_vencimento_credito       | DATE                     | YES    |       |           |         |
-| val_pagamento_fatura         | DOUBLE                   | YES    |       |           |         |
-| val_desconto_item            | DOUBLE                   | YES    |       |           |         |
-| val_pagamento_item           | DOUBLE                   | YES    |       |           |         |
-| val_juros_multas_item        | DOUBLE                   | YES    |       |           |         |
-| val_multa_equip_item         | DOUBLE                   | YES    |       |           |         |
-| val_multa_equip_total        | DOUBLE                   | YES    |       |           |         |
-| val_multa_fid_item           | DOUBLE                   | YES    |       |           |         |
-| val_baixa_atividade          | DOUBLE                   | YES    |       |           |         |
-| val_original_pagamento       | DOUBLE                   | YES    |       |           |         |
-| val_atual_pagamento          | DOUBLE                   | YES    |       |           |         |
-| val_pagamento_credito        | DOUBLE                   | YES    |       |           |         |
-| seq_fatura                   | VARCHAR                  | YES    |       |           |         |
-| num_sub_seq_fatura           | VARCHAR                  | YES    |       |           |         |
-| num_credito_seq              | VARCHAR                  | YES    |       |           |         |
-| dw_tipo_fatura               | VARCHAR                  | YES    |       |           |         |
-| ind_status_fatura            | VARCHAR                  | YES    |       |           |         |
-| dw_area                      | VARCHAR                  | YES    |       |           |         |
-| dw_un_negocio                | VARCHAR                  | YES    |       |           |         |
-| dw_forma_pagamento           | VARCHAR                  | YES    |       |           |         |
-| dw_banco                     | VARCHAR                  | YES    |       |           |         |
-| dw_tipo_pagamento            | VARCHAR                  | YES    |       |           |         |
-| num_banco_pagamento          | VARCHAR                  | YES    |       |           |         |
-| num_agencia_pagamento        | VARCHAR                  | YES    |       |           |         |
-| num_cc_pagamento             | VARCHAR                  | YES    |       |           |         |
-| dw_motivo_estorno            | VARCHAR                  | YES    |       |           |         |
-| cod_origem_netuno            | VARCHAR                  | YES    |       |           |         |
-| cod_conta_atividade          | VARCHAR                  | YES    |       |           |         |
-| seq_entidade_atividade       | VARCHAR                  | YES    |       |           |         |
-| cod_login_operador_atividade | VARCHAR                  | YES    |       |           |         |
-| cod_atividade                | VARCHAR                  | YES    |       |           |         |
-| cod_razao_atividade          | VARCHAR                  | YES    |       |           |         |
-| cod_fundo_atividade          | VARCHAR                  | YES    |       |           |         |
-| cod_banco_atividade          | VARCHAR                  | YES    |       |           |         |
-| num_conta_atividade          | VARCHAR                  | YES    |       |           |         |
-| cod_agencia_atividade        | VARCHAR                  | YES    |       |           |         |
-| seq_entidade_pagamento       | VARCHAR                  | YES    |       |           |         |
-| cod_login_pagamento          | VARCHAR                  | YES    |       |           |         |
-| cod_forma_pagamento          | VARCHAR                  | YES    |       |           |         |
-| cod_tipo_pagamento           | VARCHAR                  | YES    |       |           |         |
-| dsc_nome_banco_pagamento     | VARCHAR                  | YES    |       |           |         |
-| seq_arquivo_pagamento        | VARCHAR                  | YES    |       |           |         |
-| num_parcela_pagamento        | VARCHAR                  | YES    |       |           |         |
-| num_agrupador_pagamento      | VARCHAR                  | YES    |       |           |         |
-| dsc_pagamento                | VARCHAR                  | YES    |       |           |         |
-| cod_metodo_pagamento         | VARCHAR                  | YES    |       |           |         |
-| ind_status_pagamento         | VARCHAR                  | YES    |       |           |         |
-| cod_arquivo_pagamento        | VARCHAR                  | YES    |       |           |         |
-| cod_netuno_pagamento         | VARCHAR                  | YES    |       |           |         |
-| cod_login_credito            | VARCHAR                  | YES    |       |           |         |
-| ind_tipo_credito             | VARCHAR                  | YES    |       |           |         |
-| seq_pagamento_credito        | VARCHAR                  | YES    |       |           |         |
-| seq_fatura_credito           | VARCHAR                  | YES    |       |           |         |
-| cod_alocacao_credito         | VARCHAR                  | YES    |       |           |         |
-| cod_desalocacao_credito      | VARCHAR                  | YES    |       |           |         |
-| seq_entidade_credito         | VARCHAR                  | YES    |       |           |         |
-| cod_tipo_fatura              | VARCHAR                  | YES    |       |           |         |
-| ingestion_ts                 | TIMESTAMP WITH TIME ZONE | YES    |       |           |         |
-| ano_mes                      | BIGINT                   | YES    |       |           |         |
-| run_id                       | VARCHAR                  | YES    |       |           |         |
 
 ---
 
@@ -261,88 +258,6 @@
 
 ---
 
-### 📊 Estatísticas por Coluna: `bronze/pagamento`
-| coluna                       |   distintos |    nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
-|:-----------------------------|------------:|---------:|-------------:|:------------|:-----------------|:----------------|
-| num_cpf                      |     1930320 |        0 |     19899308 | 0.0%        | 91.16%           | ALTA            |
-| dat_status_fatura            |         538 |        0 |     21829090 | 0.0%        | 100.0%           | BAIXA           |
-| contrato                     |     2304298 |        0 |     19525330 | 0.0%        | 89.44%           | ALTA            |
-| dw_num_cliente               |     2954149 |        0 |     18875479 | 0.0%        | 86.47%           | ALTA            |
-| num_fatura_pagamento         |    12888878 |  6845630 |      8940750 | 31.36%      | 40.96%           | ALTA            |
-| dat_criacao_dw               |       49276 |        0 |     21780352 | 0.0%        | 99.77%           | MEDIA           |
-| dat_criacao_atividade        |     6572610 |  6118973 |     15257018 | 28.03%      | 69.89%           | ALTA            |
-| dat_atualizacao_atividade    |      392769 | 20730830 |     21436859 | 94.97%      | 98.2%            | MEDIA           |
-| dat_baixa_atividade          |         382 |  6118973 |     21829246 | 28.03%      | 100.0%           | BAIXA           |
-| dat_deposito_atividade       |         756 |  6118973 |     21828872 | 28.03%      | 100.0%           | BAIXA           |
-| dat_criacao_pagamento        |     6572610 |  6118973 |     15257018 | 28.03%      | 69.89%           | ALTA            |
-| dat_atualizacao_pagamento    |      153177 | 18882483 |     21676451 | 86.5%       | 99.3%            | MEDIA           |
-| dat_status_pagamento         |         397 |  6118973 |     21829231 | 28.03%      | 100.0%           | BAIXA           |
-| dat_criacao_credito          |     6657349 |  6118973 |     15172279 | 28.03%      | 69.5%            | ALTA            |
-| dat_atualizacao_credito      |           0 | 21829628 |     21829628 | 100.0%      | 100.0%           | BAIXA           |
-| dat_atividade_credito        |         508 |  6118973 |     21829120 | 28.03%      | 100.0%           | BAIXA           |
-| dat_vencimento_credito       |        1420 |  6118973 |     21828208 | 28.03%      | 99.99%           | BAIXA           |
-| val_pagamento_fatura         |       59667 |        0 |     21769961 | 0.0%        | 99.73%           | MEDIA           |
-| val_desconto_item            |           1 |        0 |     21829627 | 0.0%        | 100.0%           | BAIXA           |
-| val_pagamento_item           |       59667 |        0 |     21769961 | 0.0%        | 99.73%           | MEDIA           |
-| val_juros_multas_item        |        3886 |        0 |     21825742 | 0.0%        | 99.98%           | BAIXA           |
-| val_multa_equip_item         |        6123 |        0 |     21823505 | 0.0%        | 99.97%           | BAIXA           |
-| val_multa_equip_total        |        6123 |        0 |     21823505 | 0.0%        | 99.97%           | BAIXA           |
-| val_multa_fid_item           |           1 |        0 |     21829627 | 0.0%        | 100.0%           | BAIXA           |
-| val_baixa_atividade          |       70406 |  6118973 |     21759222 | 28.03%      | 99.68%           | MEDIA           |
-| val_original_pagamento       |       63233 |  6118973 |     21766395 | 28.03%      | 99.71%           | MEDIA           |
-| val_atual_pagamento          |       68805 |  6118978 |     21760823 | 28.03%      | 99.68%           | MEDIA           |
-| val_pagamento_credito        |       55384 |  6118973 |     21774244 | 28.03%      | 99.75%           | MEDIA           |
-| seq_fatura                   |         251 |        0 |     21829377 | 0.0%        | 100.0%           | BAIXA           |
-| num_sub_seq_fatura           |        1333 |        0 |     21828295 | 0.0%        | 99.99%           | BAIXA           |
-| num_credito_seq              |         321 |        0 |     21829307 | 0.0%        | 100.0%           | BAIXA           |
-| dw_tipo_fatura               |          24 |        0 |     21829604 | 0.0%        | 100.0%           | BAIXA           |
-| ind_status_fatura            |           2 |        0 |     21829626 | 0.0%        | 100.0%           | BAIXA           |
-| dw_area                      |          71 |        0 |     21829557 | 0.0%        | 100.0%           | BAIXA           |
-| dw_un_negocio                |          10 |        0 |     21829618 | 0.0%        | 100.0%           | BAIXA           |
-| dw_forma_pagamento           |           4 |        0 |     21829624 | 0.0%        | 100.0%           | BAIXA           |
-| dw_banco                     |          55 |        0 |     21829573 | 0.0%        | 100.0%           | BAIXA           |
-| dw_tipo_pagamento            |           4 |        0 |     21829624 | 0.0%        | 100.0%           | BAIXA           |
-| num_banco_pagamento          |          39 |        0 |     21829589 | 0.0%        | 100.0%           | BAIXA           |
-| num_agencia_pagamento        |        9154 |        0 |     21820474 | 0.0%        | 99.96%           | BAIXA           |
-| num_cc_pagamento             |      325591 |        0 |     21504037 | 0.0%        | 98.51%           | MEDIA           |
-| dw_motivo_estorno            |           1 |        0 |     21829627 | 0.0%        | 100.0%           | BAIXA           |
-| cod_origem_netuno            |      419749 | 13566081 |     21409879 | 62.15%      | 98.08%           | MEDIA           |
-| cod_conta_atividade          |     2730825 |  6118973 |     19098803 | 28.03%      | 87.49%           | ALTA            |
-| seq_entidade_atividade       |         313 |  6118973 |     21829315 | 28.03%      | 100.0%           | BAIXA           |
-| cod_login_operador_atividade |         971 | 14215870 |     21828657 | 65.12%      | 100.0%           | BAIXA           |
-| cod_atividade                |           5 |  6118973 |     21829623 | 28.03%      | 100.0%           | BAIXA           |
-| cod_razao_atividade          |           6 |  8446071 |     21829622 | 38.69%      | 100.0%           | BAIXA           |
-| cod_fundo_atividade          |        1601 | 21819036 |     21828027 | 99.95%      | 99.99%           | BAIXA           |
-| cod_banco_atividade          |          37 | 13732767 |     21829591 | 62.91%      | 100.0%           | BAIXA           |
-| num_conta_atividade          |      293957 | 19502508 |     21535671 | 89.34%      | 98.65%           | MEDIA           |
-| cod_agencia_atividade        |        9154 | 15077146 |     21820474 | 69.07%      | 99.96%           | BAIXA           |
-| seq_entidade_pagamento       |         313 |  6118973 |     21829315 | 28.03%      | 100.0%           | BAIXA           |
-| cod_login_pagamento          |         971 | 14539993 |     21828657 | 66.61%      | 100.0%           | BAIXA           |
-| cod_forma_pagamento          |           4 |  6118973 |     21829624 | 28.03%      | 100.0%           | BAIXA           |
-| cod_tipo_pagamento           |           5 |  6118973 |     21829623 | 28.03%      | 100.0%           | BAIXA           |
-| dsc_nome_banco_pagamento     |          78 |  6118973 |     21829550 | 28.03%      | 100.0%           | BAIXA           |
-| seq_arquivo_pagamento        |        6533 | 13775460 |     21823095 | 63.1%       | 99.97%           | BAIXA           |
-| num_parcela_pagamento        |         601 | 21268211 |     21829027 | 97.43%      | 100.0%           | BAIXA           |
-| num_agrupador_pagamento      |      338523 | 16102580 |     21491105 | 73.76%      | 98.45%           | MEDIA           |
-| dsc_pagamento                |     2141789 | 18848477 |     19687839 | 86.34%      | 90.19%           | ALTA            |
-| cod_metodo_pagamento         |           6 | 16297184 |     21829622 | 74.66%      | 100.0%           | BAIXA           |
-| ind_status_pagamento         |           4 |  8996090 |     21829624 | 41.21%      | 100.0%           | BAIXA           |
-| cod_arquivo_pagamento        |     2230500 | 18390641 |     19599128 | 84.25%      | 89.78%           | ALTA            |
-| cod_netuno_pagamento         |           0 | 21829628 |     21829628 | 100.0%      | 100.0%           | BAIXA           |
-| cod_login_credito            |        1179 | 14223305 |     21828449 | 65.16%      | 99.99%           | BAIXA           |
-| ind_tipo_credito             |           1 |  6118973 |     21829627 | 28.03%      | 100.0%           | BAIXA           |
-| seq_pagamento_credito        |         313 |  6118973 |     21829315 | 28.03%      | 100.0%           | BAIXA           |
-| seq_fatura_credito           |        1245 |  6118973 |     21828383 | 28.03%      | 99.99%           | BAIXA           |
-| cod_alocacao_credito         |           9 |  6118973 |     21829619 | 28.03%      | 100.0%           | BAIXA           |
-| cod_desalocacao_credito      |           0 | 21829628 |     21829628 | 100.0%      | 100.0%           | BAIXA           |
-| seq_entidade_credito         |        7916 |  6118973 |     21821712 | 28.03%      | 99.96%           | BAIXA           |
-| cod_tipo_fatura              |          32 |  6118973 |     21829596 | 28.03%      | 100.0%           | BAIXA           |
-| ingestion_ts                 |           1 |        0 |     21829627 | 0.0%        | 100.0%           | BAIXA           |
-| ano_mes                      |          20 |        0 |     21829608 | 0.0%        | 100.0%           | BAIXA           |
-| run_id                       |           1 |        0 |     21829627 | 0.0%        | 100.0%           | BAIXA           |
-
----
-
 ### 🔟 Distribuição de Valores (Top 10): `bronze/pagamento`
 #### Coluna: `num_cpf`
 
@@ -412,12 +327,12 @@
 | 966132196123 |      24 |
 | 966132196124 |      24 |
 | 120004027064 |      22 |
-| 913625840147 |      21 |
-| 966132196122 |      21 |
-| 966132196132 |      21 |
-| 966132196127 |      21 |
-| 966132196130 |      21 |
+| 966132196125 |      21 |
+| 966132196133 |      21 |
 | 966132196128 |      21 |
+| 966132196129 |      21 |
+| 966132196126 |      21 |
+| 966132196132 |      21 |
 
 #### Coluna: `dat_criacao_dw`
 
@@ -461,8 +376,8 @@
 | 2025-02-18 18:54:48 |      186 |
 | 2025-03-12 04:19:30 |      182 |
 | 2025-02-18 18:54:49 |      169 |
-| 2025-02-08 05:25:18 |      167 |
 | 2025-01-08 03:40:08 |      167 |
+| 2025-02-08 05:25:18 |      167 |
 
 #### Coluna: `dat_baixa_atividade`
 
@@ -503,10 +418,10 @@
 | 2025-03-06 14:36:43 |     245 |
 | 2025-03-06 14:36:07 |     241 |
 | 2025-02-21 12:47:38 |     236 |
-| 2025-03-06 14:36:11 |     234 |
 | 2025-02-21 12:47:16 |     234 |
-| 2025-02-21 12:47:22 |     233 |
+| 2025-03-06 14:36:11 |     234 |
 | 2025-03-06 14:36:36 |     233 |
+| 2025-02-21 12:47:22 |     233 |
 | 2025-03-06 14:36:38 |     232 |
 
 #### Coluna: `dat_atualizacao_pagamento`
@@ -652,8 +567,8 @@
 |    2.62 |       91 |
 |    2.29 |       87 |
 |    1.97 |       84 |
-|  120    |       83 |
 |    1.64 |       83 |
+|  120    |       83 |
 |   18.36 |       82 |
 
 #### Coluna: `val_multa_equip_total`

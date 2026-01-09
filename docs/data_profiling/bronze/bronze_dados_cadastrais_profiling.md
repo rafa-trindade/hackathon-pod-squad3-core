@@ -12,9 +12,48 @@
 * ✅ **Sucesso:** A chave técnica parece ser única para este conjunto de dados (estimativa estatística).
 * 👻 **Otimização de Schema:** Colunas 100% nulas ou zeradas detectadas em análises anteriores devem ser avaliadas para exclusão na Silver.
 
+
 ---
 
-
+### 📊 Schema e Estatísticas: `bronze/dados_cadastrais`
+| column_name      | column_type              |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
+|:-----------------|:-------------------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
+| num_cpf          | VARCHAR                  |     3034069 |       0 |       866309 | 0.0%        | 22.21%           | ALTA            |
+| safra            | DATE                     |           6 |       0 |      3900372 | 0.0%        | 100.0%           | BAIXA           |
+| datadenascimento | DATE                     |       27242 |   16831 |      3873136 | 0.43%       | 99.3%            | MEDIA           |
+| var_12           | DATE                     |       11971 | 1490335 |      3888407 | 38.21%      | 99.69%           | MEDIA           |
+| var_13           | DATE                     |        1614 | 3314097 |      3898764 | 84.97%      | 99.96%           | BAIXA           |
+| flag_instalacao  | BOOLEAN                  |           2 |       0 |      3900376 | 0.0%        | 100.0%           | BAIXA           |
+| fpd              | BOOLEAN                  |           2 | 1203757 |      3900376 | 30.86%      | 100.0%           | BAIXA           |
+| prod             | VARCHAR                  |           3 |       0 |      3900375 | 0.0%        | 100.0%           | BAIXA           |
+| flag_mig2        | VARCHAR                  |           3 | 1266478 |      3900375 | 32.47%      | 100.0%           | BAIXA           |
+| statusrf         | VARCHAR                  |           6 |   15154 |      3900372 | 0.39%       | 100.0%           | BAIXA           |
+| var_10           | VARCHAR                  |        3707 | 3838163 |      3896671 | 98.4%       | 99.9%            | BAIXA           |
+| var_15           | VARCHAR                  |          28 | 3315375 |      3900350 | 85.0%       | 100.0%           | BAIXA           |
+| var_18           | VARCHAR                  |           1 | 3157126 |      3900377 | 80.94%      | 100.0%           | BAIXA           |
+| var_19           | VARCHAR                  |           1 | 2223690 |      3900377 | 57.01%      | 100.0%           | BAIXA           |
+| var_20           | VARCHAR                  |           1 | 3827574 |      3900377 | 98.13%      | 100.0%           | BAIXA           |
+| var_21           | VARCHAR                  |           1 | 1490335 |      3900377 | 38.21%      | 100.0%           | BAIXA           |
+| var_22           | VARCHAR                  |           1 | 3533608 |      3900377 | 90.6%       | 100.0%           | BAIXA           |
+| var_23           | VARCHAR                  |           1 | 3315375 |      3900377 | 85.0%       | 100.0%           | BAIXA           |
+| var_24           | VARCHAR                  |           2 | 1490335 |      3900376 | 38.21%      | 100.0%           | BAIXA           |
+| var_25           | VARCHAR                  |          87 |  467469 |      3900291 | 11.99%      | 100.0%           | BAIXA           |
+| cep_3_digitos    | VARCHAR                  |        1093 |  292051 |      3899285 | 7.49%       | 99.97%           | BAIXA           |
+| var_03           | INTEGER                  |          96 |  269970 |      3900282 | 6.92%       | 100.0%           | BAIXA           |
+| var_02           | INTEGER                  |        2231 | 3685278 |      3898147 | 94.49%      | 99.94%           | BAIXA           |
+| var_04           | INTEGER                  |           6 |   15154 |      3900372 | 0.39%       | 100.0%           | BAIXA           |
+| var_05           | INTEGER                  |          11 |  196424 |      3900367 | 5.04%       | 100.0%           | BAIXA           |
+| var_06           | INTEGER                  |           1 | 3157126 |      3900377 | 80.94%      | 100.0%           | BAIXA           |
+| var_07           | DOUBLE                   |      231241 | 3250748 |      3669137 | 83.34%      | 94.07%           | ALTA            |
+| var_08           | INTEGER                  |          51 | 3157325 |      3900327 | 80.95%      | 100.0%           | BAIXA           |
+| var_09           | INTEGER                  |          20 | 2223690 |      3900358 | 57.01%      | 100.0%           | BAIXA           |
+| var_11           | DOUBLE                   |       15194 | 3842389 |      3885184 | 98.51%      | 99.61%           | MEDIA           |
+| var_14           | INTEGER                  |          46 | 3533608 |      3900332 | 90.6%       | 100.0%           | BAIXA           |
+| var_16           | INTEGER                  |        1514 | 3315375 |      3898864 | 85.0%       | 99.96%           | BAIXA           |
+| var_17           | INTEGER                  |          20 | 3315375 |      3900358 | 85.0%       | 100.0%           | BAIXA           |
+| ingestion_ts     | TIMESTAMP WITH TIME ZONE |           1 |       0 |      3900377 | 0.0%        | 100.0%           | BAIXA           |
+| ano_mes          | BIGINT                   |           6 |       0 |      3900372 | 0.0%        | 100.0%           | BAIXA           |
+| run_id           | VARCHAR                  |           1 |       0 |      3900377 | 0.0%        | 100.0%           | BAIXA           |
 
 ---
 
@@ -28,48 +67,6 @@
 | ano_mes=202502 |              1 | 619.961     |        36 |                    12.43 |                       17.77 |
 | ano_mes=202503 |              1 | 647.830     |        36 |                    12.46 |                       18.06 |
 | TOTAL          |              6 | 3.900.378   |        36 |                    76.11 |                      109.73 |
-
----
-
-### 🧬 Schema: `bronze/dados_cadastrais`
-| column_name      | column_type              | null   | key   | default   | extra   |
-|:-----------------|:-------------------------|:-------|:------|:----------|:--------|
-| num_cpf          | VARCHAR                  | YES    |       |           |         |
-| safra            | DATE                     | YES    |       |           |         |
-| datadenascimento | DATE                     | YES    |       |           |         |
-| var_12           | DATE                     | YES    |       |           |         |
-| var_13           | DATE                     | YES    |       |           |         |
-| flag_instalacao  | BOOLEAN                  | YES    |       |           |         |
-| fpd              | BOOLEAN                  | YES    |       |           |         |
-| prod             | VARCHAR                  | YES    |       |           |         |
-| flag_mig2        | VARCHAR                  | YES    |       |           |         |
-| statusrf         | VARCHAR                  | YES    |       |           |         |
-| var_10           | VARCHAR                  | YES    |       |           |         |
-| var_15           | VARCHAR                  | YES    |       |           |         |
-| var_18           | VARCHAR                  | YES    |       |           |         |
-| var_19           | VARCHAR                  | YES    |       |           |         |
-| var_20           | VARCHAR                  | YES    |       |           |         |
-| var_21           | VARCHAR                  | YES    |       |           |         |
-| var_22           | VARCHAR                  | YES    |       |           |         |
-| var_23           | VARCHAR                  | YES    |       |           |         |
-| var_24           | VARCHAR                  | YES    |       |           |         |
-| var_25           | VARCHAR                  | YES    |       |           |         |
-| cep_3_digitos    | VARCHAR                  | YES    |       |           |         |
-| var_03           | INTEGER                  | YES    |       |           |         |
-| var_02           | INTEGER                  | YES    |       |           |         |
-| var_04           | INTEGER                  | YES    |       |           |         |
-| var_05           | INTEGER                  | YES    |       |           |         |
-| var_06           | INTEGER                  | YES    |       |           |         |
-| var_07           | DOUBLE                   | YES    |       |           |         |
-| var_08           | INTEGER                  | YES    |       |           |         |
-| var_09           | INTEGER                  | YES    |       |           |         |
-| var_11           | DOUBLE                   | YES    |       |           |         |
-| var_14           | INTEGER                  | YES    |       |           |         |
-| var_16           | INTEGER                  | YES    |       |           |         |
-| var_17           | INTEGER                  | YES    |       |           |         |
-| ingestion_ts     | TIMESTAMP WITH TIME ZONE | YES    |       |           |         |
-| ano_mes          | BIGINT                   | YES    |       |           |         |
-| run_id           | VARCHAR                  | YES    |       |           |         |
 
 ---
 
@@ -169,63 +166,21 @@
 
 ---
 
-### 📊 Estatísticas por Coluna: `bronze/dados_cadastrais`
-| coluna           |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
-|:-----------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
-| num_cpf          |     3034069 |       0 |       866309 | 0.0%        | 22.21%           | ALTA            |
-| safra            |           6 |       0 |      3900372 | 0.0%        | 100.0%           | BAIXA           |
-| datadenascimento |       27242 |   16831 |      3873136 | 0.43%       | 99.3%            | MEDIA           |
-| var_12           |       11971 | 1490335 |      3888407 | 38.21%      | 99.69%           | MEDIA           |
-| var_13           |        1614 | 3314097 |      3898764 | 84.97%      | 99.96%           | BAIXA           |
-| flag_instalacao  |           2 |       0 |      3900376 | 0.0%        | 100.0%           | BAIXA           |
-| fpd              |           2 | 1203757 |      3900376 | 30.86%      | 100.0%           | BAIXA           |
-| prod             |           3 |       0 |      3900375 | 0.0%        | 100.0%           | BAIXA           |
-| flag_mig2        |           3 | 1266478 |      3900375 | 32.47%      | 100.0%           | BAIXA           |
-| statusrf         |           6 |   15154 |      3900372 | 0.39%       | 100.0%           | BAIXA           |
-| var_10           |        3707 | 3838163 |      3896671 | 98.4%       | 99.9%            | BAIXA           |
-| var_15           |          28 | 3315375 |      3900350 | 85.0%       | 100.0%           | BAIXA           |
-| var_18           |           1 | 3157126 |      3900377 | 80.94%      | 100.0%           | BAIXA           |
-| var_19           |           1 | 2223690 |      3900377 | 57.01%      | 100.0%           | BAIXA           |
-| var_20           |           1 | 3827574 |      3900377 | 98.13%      | 100.0%           | BAIXA           |
-| var_21           |           1 | 1490335 |      3900377 | 38.21%      | 100.0%           | BAIXA           |
-| var_22           |           1 | 3533608 |      3900377 | 90.6%       | 100.0%           | BAIXA           |
-| var_23           |           1 | 3315375 |      3900377 | 85.0%       | 100.0%           | BAIXA           |
-| var_24           |           2 | 1490335 |      3900376 | 38.21%      | 100.0%           | BAIXA           |
-| var_25           |          87 |  467469 |      3900291 | 11.99%      | 100.0%           | BAIXA           |
-| cep_3_digitos    |        1093 |  292051 |      3899285 | 7.49%       | 99.97%           | BAIXA           |
-| var_03           |          96 |  269970 |      3900282 | 6.92%       | 100.0%           | BAIXA           |
-| var_02           |        2231 | 3685278 |      3898147 | 94.49%      | 99.94%           | BAIXA           |
-| var_04           |           6 |   15154 |      3900372 | 0.39%       | 100.0%           | BAIXA           |
-| var_05           |          11 |  196424 |      3900367 | 5.04%       | 100.0%           | BAIXA           |
-| var_06           |           1 | 3157126 |      3900377 | 80.94%      | 100.0%           | BAIXA           |
-| var_07           |      231241 | 3250748 |      3669137 | 83.34%      | 94.07%           | ALTA            |
-| var_08           |          51 | 3157325 |      3900327 | 80.95%      | 100.0%           | BAIXA           |
-| var_09           |          20 | 2223690 |      3900358 | 57.01%      | 100.0%           | BAIXA           |
-| var_11           |       15194 | 3842389 |      3885184 | 98.51%      | 99.61%           | MEDIA           |
-| var_14           |          46 | 3533608 |      3900332 | 90.6%       | 100.0%           | BAIXA           |
-| var_16           |        1514 | 3315375 |      3898864 | 85.0%       | 99.96%           | BAIXA           |
-| var_17           |          20 | 3315375 |      3900358 | 85.0%       | 100.0%           | BAIXA           |
-| ingestion_ts     |           1 |       0 |      3900377 | 0.0%        | 100.0%           | BAIXA           |
-| ano_mes          |           6 |       0 |      3900372 | 0.0%        | 100.0%           | BAIXA           |
-| run_id           |           1 |       0 |      3900377 | 0.0%        | 100.0%           | BAIXA           |
-
----
-
 ### 🔟 Distribuição de Valores (Top 10): `bronze/dados_cadastrais`
 #### Coluna: `num_cpf`
 
 | valor       |   qtd |
 |:------------|------:|
-| XX9Z8T8YUZT |     6 |
-| WXZY8TNZ7XZ |     6 |
-| Y77ZYUXU8NW |     6 |
 | WW7NWZ9Y8ZW |     6 |
-| ZZZZZZZX7T9 |     6 |
-| 7X7NZ79YWU9 |     6 |
-| 888W78UZYYT |     6 |
-| ZZTZ799U79T |     6 |
-| U8Z9ZZ8N8XZ |     6 |
 | ZX77YX8WNWN |     6 |
+| 7X7NZ79YWU9 |     6 |
+| WXZY8TNZ7XZ |     6 |
+| U8Z9ZZ8N8XZ |     6 |
+| ZZZZZZZX7T9 |     6 |
+| Y77ZYUXU8NW |     6 |
+| XX9Z8T8YUZT |     6 |
+| ZZTZ799U79T |     6 |
+| 888W78UZYYT |     6 |
 
 #### Coluna: `safra`
 
@@ -251,7 +206,7 @@
 | 1988-03-10 |   345 |
 | 1982-06-08 |   344 |
 | 1988-06-06 |   343 |
-| 1983-02-28 |   342 |
+| 1988-05-09 |   342 |
 
 #### Coluna: `var_12`
 

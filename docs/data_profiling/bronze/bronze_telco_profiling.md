@@ -15,6 +15,89 @@
 
 ---
 
+### 📊 Schema e Estatísticas: `bronze/telco`
+| column_name     | column_type              |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
+|:----------------|:-------------------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
+| num_cpf         | VARCHAR                  |     1187719 |       0 |       179385 | 0.0%        | 13.12%           | ALTA            |
+| safra           | DATE                     |           6 |       0 |      1367098 | 0.0%        | 100.0%           | BAIXA           |
+| flag_instalacao | BOOLEAN                  |           2 |       0 |      1367102 | 0.0%        | 100.0%           | BAIXA           |
+| fpd             | BOOLEAN                  |           2 |   45936 |      1367102 | 3.36%       | 100.0%           | BAIXA           |
+| prod            | VARCHAR                  |           3 |       0 |      1367101 | 0.0%        | 100.0%           | BAIXA           |
+| flag_mig2       | VARCHAR                  |           3 |   58130 |      1367101 | 4.25%       | 100.0%           | BAIXA           |
+| var_26          | VARCHAR                  |           7 |    1295 |      1367097 | 0.09%       | 100.0%           | BAIXA           |
+| var_27          | VARCHAR                  |           7 |    1295 |      1367097 | 0.09%       | 100.0%           | BAIXA           |
+| var_64          | VARCHAR                  |          27 |    1295 |      1367077 | 0.09%       | 100.0%           | BAIXA           |
+| var_65          | VARCHAR                  |         245 |    1295 |      1366859 | 0.09%       | 99.98%           | BAIXA           |
+| var_66          | VARCHAR                  |          59 |    1295 |      1367045 | 0.09%       | 100.0%           | BAIXA           |
+| var_67          | VARCHAR                  |          65 |    1295 |      1367039 | 0.09%       | 100.0%           | BAIXA           |
+| var_73          | VARCHAR                  |          11 |    1295 |      1367093 | 0.09%       | 100.0%           | BAIXA           |
+| var_74          | VARCHAR                  |          14 |    1295 |      1367090 | 0.09%       | 100.0%           | BAIXA           |
+| var_75          | VARCHAR                  |          12 |    1295 |      1367092 | 0.09%       | 100.0%           | BAIXA           |
+| var_76          | VARCHAR                  |          12 |    1295 |      1367092 | 0.09%       | 100.0%           | BAIXA           |
+| var_77          | VARCHAR                  |           9 |    1295 |      1367095 | 0.09%       | 100.0%           | BAIXA           |
+| var_78          | VARCHAR                  |          16 |       0 |      1367088 | 0.0%        | 100.0%           | BAIXA           |
+| var_79          | VARCHAR                  |          13 |       0 |      1367091 | 0.0%        | 100.0%           | BAIXA           |
+| var_80          | VARCHAR                  |          13 |       0 |      1367091 | 0.0%        | 100.0%           | BAIXA           |
+| var_81          | VARCHAR                  |          96 |       0 |      1367008 | 0.0%        | 99.99%           | BAIXA           |
+| var_83          | VARCHAR                  |          14 |       0 |      1367090 | 0.0%        | 100.0%           | BAIXA           |
+| var_84          | VARCHAR                  |          16 |       0 |      1367088 | 0.0%        | 100.0%           | BAIXA           |
+| var_85          | VARCHAR                  |          16 |       0 |      1367088 | 0.0%        | 100.0%           | BAIXA           |
+| var_86          | VARCHAR                  |          17 |       0 |      1367087 | 0.0%        | 100.0%           | BAIXA           |
+| var_87          | VARCHAR                  |          13 |       0 |      1367091 | 0.0%        | 100.0%           | BAIXA           |
+| var_88          | VARCHAR                  |          13 |       0 |      1367091 | 0.0%        | 100.0%           | BAIXA           |
+| var_89          | VARCHAR                  |          96 |       0 |      1367008 | 0.0%        | 99.99%           | BAIXA           |
+| var_91          | VARCHAR                  |          16 |       0 |      1367088 | 0.0%        | 100.0%           | BAIXA           |
+| var_92          | VARCHAR                  |          16 |       0 |      1367088 | 0.0%        | 100.0%           | BAIXA           |
+| var_93          | VARCHAR                  |          14 |       0 |      1367090 | 0.0%        | 100.0%           | BAIXA           |
+| var_28          | DOUBLE                   |         853 |    1295 |      1366251 | 0.09%       | 99.94%           | BAIXA           |
+| var_29          | DOUBLE                   |          70 |    1295 |      1367034 | 0.09%       | 99.99%           | BAIXA           |
+| var_30          | DOUBLE                   |         119 |    1295 |      1366985 | 0.09%       | 99.99%           | BAIXA           |
+| var_31          | DOUBLE                   |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
+| var_32          | DOUBLE                   |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
+| var_33          | DOUBLE                   |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
+| var_34          | DOUBLE                   |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
+| var_35          | DOUBLE                   |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
+| var_36          | DOUBLE                   |         107 |    1295 |      1366997 | 0.09%       | 99.99%           | BAIXA           |
+| var_37          | DOUBLE                   |          56 |    1295 |      1367048 | 0.09%       | 100.0%           | BAIXA           |
+| var_38          | DOUBLE                   |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
+| var_39          | DOUBLE                   |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
+| var_40          | DOUBLE                   |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
+| var_41          | DOUBLE                   |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
+| var_42          | DOUBLE                   |         109 |    1295 |      1366995 | 0.09%       | 99.99%           | BAIXA           |
+| var_43          | DOUBLE                   |         109 |    1295 |      1366995 | 0.09%       | 99.99%           | BAIXA           |
+| var_44          | DOUBLE                   |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
+| var_45          | DOUBLE                   |          16 |    1295 |      1367088 | 0.09%       | 100.0%           | BAIXA           |
+| var_46          | DOUBLE                   |          42 |    1295 |      1367062 | 0.09%       | 100.0%           | BAIXA           |
+| var_47          | DOUBLE                   |        1124 |    1295 |      1365980 | 0.09%       | 99.92%           | BAIXA           |
+| var_48          | DOUBLE                   |        2989 |    1295 |      1364115 | 0.09%       | 99.78%           | MEDIA           |
+| var_49          | DOUBLE                   |        7006 |    1295 |      1360098 | 0.09%       | 99.49%           | MEDIA           |
+| var_50          | DOUBLE                   |        6164 |    1295 |      1360940 | 0.09%       | 99.55%           | MEDIA           |
+| var_51          | DOUBLE                   |        1179 |    1295 |      1365925 | 0.09%       | 99.91%           | BAIXA           |
+| var_52          | DOUBLE                   |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
+| var_53          | DOUBLE                   |          32 |    1295 |      1367072 | 0.09%       | 100.0%           | BAIXA           |
+| var_54          | DOUBLE                   |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
+| var_55          | DOUBLE                   |          42 |    1295 |      1367062 | 0.09%       | 100.0%           | BAIXA           |
+| var_56          | DOUBLE                   |          90 |    1295 |      1367014 | 0.09%       | 99.99%           | BAIXA           |
+| var_57          | DOUBLE                   |          23 |    1295 |      1367081 | 0.09%       | 100.0%           | BAIXA           |
+| var_58          | DOUBLE                   |         643 |    1295 |      1366461 | 0.09%       | 99.95%           | BAIXA           |
+| var_59          | DOUBLE                   |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
+| var_60          | DOUBLE                   |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
+| var_61          | DOUBLE                   |        4449 |    1295 |      1362655 | 0.09%       | 99.67%           | MEDIA           |
+| var_62          | DOUBLE                   |         144 |    1295 |      1366960 | 0.09%       | 99.99%           | BAIXA           |
+| var_63          | DOUBLE                   |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
+| var_68          | DOUBLE                   |        7311 |    1295 |      1359793 | 0.09%       | 99.47%           | MEDIA           |
+| var_69          | DOUBLE                   |        3400 |    1295 |      1363704 | 0.09%       | 99.75%           | MEDIA           |
+| var_70          | DOUBLE                   |          23 |    1295 |      1367081 | 0.09%       | 100.0%           | BAIXA           |
+| var_71          | DOUBLE                   |          23 |    1295 |      1367081 | 0.09%       | 100.0%           | BAIXA           |
+| var_72          | DOUBLE                   |          23 |    1295 |      1367081 | 0.09%       | 100.0%           | BAIXA           |
+| var_82          | DOUBLE                   |         953 |       0 |      1366151 | 0.0%        | 99.93%           | BAIXA           |
+| var_90          | DOUBLE                   |        1412 |       0 |      1365692 | 0.0%        | 99.9%            | MEDIA           |
+| ingestion_ts    | TIMESTAMP WITH TIME ZONE |           1 |       0 |      1367103 | 0.0%        | 100.0%           | BAIXA           |
+| ano_mes         | BIGINT                   |           6 |       0 |      1367098 | 0.0%        | 100.0%           | BAIXA           |
+| run_id          | VARCHAR                  |           1 |       0 |      1367103 | 0.0%        | 100.0%           | BAIXA           |
+
+---
+
 ### 📦 Volumetria: `bronze/telco`
 | diretorio      |   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
 |:---------------|---------------:|:------------|----------:|-------------------------:|----------------------------:|
@@ -25,89 +108,6 @@
 | ano_mes=202502 |              1 | 214.665     |        77 |                    14.05 |                       19.75 |
 | ano_mes=202503 |              1 | 216.896     |        77 |                    14.49 |                       20.98 |
 | TOTAL          |              6 | 1.367.104   |        77 |                    90.85 |                      130.26 |
-
----
-
-### 🧬 Schema: `bronze/telco`
-| column_name     | column_type              | null   | key   | default   | extra   |
-|:----------------|:-------------------------|:-------|:------|:----------|:--------|
-| num_cpf         | VARCHAR                  | YES    |       |           |         |
-| safra           | DATE                     | YES    |       |           |         |
-| flag_instalacao | BOOLEAN                  | YES    |       |           |         |
-| fpd             | BOOLEAN                  | YES    |       |           |         |
-| prod            | VARCHAR                  | YES    |       |           |         |
-| flag_mig2       | VARCHAR                  | YES    |       |           |         |
-| var_26          | VARCHAR                  | YES    |       |           |         |
-| var_27          | VARCHAR                  | YES    |       |           |         |
-| var_64          | VARCHAR                  | YES    |       |           |         |
-| var_65          | VARCHAR                  | YES    |       |           |         |
-| var_66          | VARCHAR                  | YES    |       |           |         |
-| var_67          | VARCHAR                  | YES    |       |           |         |
-| var_73          | VARCHAR                  | YES    |       |           |         |
-| var_74          | VARCHAR                  | YES    |       |           |         |
-| var_75          | VARCHAR                  | YES    |       |           |         |
-| var_76          | VARCHAR                  | YES    |       |           |         |
-| var_77          | VARCHAR                  | YES    |       |           |         |
-| var_78          | VARCHAR                  | YES    |       |           |         |
-| var_79          | VARCHAR                  | YES    |       |           |         |
-| var_80          | VARCHAR                  | YES    |       |           |         |
-| var_81          | VARCHAR                  | YES    |       |           |         |
-| var_83          | VARCHAR                  | YES    |       |           |         |
-| var_84          | VARCHAR                  | YES    |       |           |         |
-| var_85          | VARCHAR                  | YES    |       |           |         |
-| var_86          | VARCHAR                  | YES    |       |           |         |
-| var_87          | VARCHAR                  | YES    |       |           |         |
-| var_88          | VARCHAR                  | YES    |       |           |         |
-| var_89          | VARCHAR                  | YES    |       |           |         |
-| var_91          | VARCHAR                  | YES    |       |           |         |
-| var_92          | VARCHAR                  | YES    |       |           |         |
-| var_93          | VARCHAR                  | YES    |       |           |         |
-| var_28          | DOUBLE                   | YES    |       |           |         |
-| var_29          | DOUBLE                   | YES    |       |           |         |
-| var_30          | DOUBLE                   | YES    |       |           |         |
-| var_31          | DOUBLE                   | YES    |       |           |         |
-| var_32          | DOUBLE                   | YES    |       |           |         |
-| var_33          | DOUBLE                   | YES    |       |           |         |
-| var_34          | DOUBLE                   | YES    |       |           |         |
-| var_35          | DOUBLE                   | YES    |       |           |         |
-| var_36          | DOUBLE                   | YES    |       |           |         |
-| var_37          | DOUBLE                   | YES    |       |           |         |
-| var_38          | DOUBLE                   | YES    |       |           |         |
-| var_39          | DOUBLE                   | YES    |       |           |         |
-| var_40          | DOUBLE                   | YES    |       |           |         |
-| var_41          | DOUBLE                   | YES    |       |           |         |
-| var_42          | DOUBLE                   | YES    |       |           |         |
-| var_43          | DOUBLE                   | YES    |       |           |         |
-| var_44          | DOUBLE                   | YES    |       |           |         |
-| var_45          | DOUBLE                   | YES    |       |           |         |
-| var_46          | DOUBLE                   | YES    |       |           |         |
-| var_47          | DOUBLE                   | YES    |       |           |         |
-| var_48          | DOUBLE                   | YES    |       |           |         |
-| var_49          | DOUBLE                   | YES    |       |           |         |
-| var_50          | DOUBLE                   | YES    |       |           |         |
-| var_51          | DOUBLE                   | YES    |       |           |         |
-| var_52          | DOUBLE                   | YES    |       |           |         |
-| var_53          | DOUBLE                   | YES    |       |           |         |
-| var_54          | DOUBLE                   | YES    |       |           |         |
-| var_55          | DOUBLE                   | YES    |       |           |         |
-| var_56          | DOUBLE                   | YES    |       |           |         |
-| var_57          | DOUBLE                   | YES    |       |           |         |
-| var_58          | DOUBLE                   | YES    |       |           |         |
-| var_59          | DOUBLE                   | YES    |       |           |         |
-| var_60          | DOUBLE                   | YES    |       |           |         |
-| var_61          | DOUBLE                   | YES    |       |           |         |
-| var_62          | DOUBLE                   | YES    |       |           |         |
-| var_63          | DOUBLE                   | YES    |       |           |         |
-| var_68          | DOUBLE                   | YES    |       |           |         |
-| var_69          | DOUBLE                   | YES    |       |           |         |
-| var_70          | DOUBLE                   | YES    |       |           |         |
-| var_71          | DOUBLE                   | YES    |       |           |         |
-| var_72          | DOUBLE                   | YES    |       |           |         |
-| var_82          | DOUBLE                   | YES    |       |           |         |
-| var_90          | DOUBLE                   | YES    |       |           |         |
-| ingestion_ts    | TIMESTAMP WITH TIME ZONE | YES    |       |           |         |
-| ano_mes         | BIGINT                   | YES    |       |           |         |
-| run_id          | VARCHAR                  | YES    |       |           |         |
 
 ---
 
@@ -347,104 +347,21 @@
 
 ---
 
-### 📊 Estatísticas por Coluna: `bronze/telco`
-| coluna          |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
-|:----------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
-| num_cpf         |     1187719 |       0 |       179385 | 0.0%        | 13.12%           | ALTA            |
-| safra           |           6 |       0 |      1367098 | 0.0%        | 100.0%           | BAIXA           |
-| flag_instalacao |           2 |       0 |      1367102 | 0.0%        | 100.0%           | BAIXA           |
-| fpd             |           2 |   45936 |      1367102 | 3.36%       | 100.0%           | BAIXA           |
-| prod            |           3 |       0 |      1367101 | 0.0%        | 100.0%           | BAIXA           |
-| flag_mig2       |           3 |   58130 |      1367101 | 4.25%       | 100.0%           | BAIXA           |
-| var_26          |           7 |    1295 |      1367097 | 0.09%       | 100.0%           | BAIXA           |
-| var_27          |           7 |    1295 |      1367097 | 0.09%       | 100.0%           | BAIXA           |
-| var_64          |          27 |    1295 |      1367077 | 0.09%       | 100.0%           | BAIXA           |
-| var_65          |         245 |    1295 |      1366859 | 0.09%       | 99.98%           | BAIXA           |
-| var_66          |          59 |    1295 |      1367045 | 0.09%       | 100.0%           | BAIXA           |
-| var_67          |          65 |    1295 |      1367039 | 0.09%       | 100.0%           | BAIXA           |
-| var_73          |          11 |    1295 |      1367093 | 0.09%       | 100.0%           | BAIXA           |
-| var_74          |          14 |    1295 |      1367090 | 0.09%       | 100.0%           | BAIXA           |
-| var_75          |          12 |    1295 |      1367092 | 0.09%       | 100.0%           | BAIXA           |
-| var_76          |          12 |    1295 |      1367092 | 0.09%       | 100.0%           | BAIXA           |
-| var_77          |           9 |    1295 |      1367095 | 0.09%       | 100.0%           | BAIXA           |
-| var_78          |          16 |       0 |      1367088 | 0.0%        | 100.0%           | BAIXA           |
-| var_79          |          13 |       0 |      1367091 | 0.0%        | 100.0%           | BAIXA           |
-| var_80          |          13 |       0 |      1367091 | 0.0%        | 100.0%           | BAIXA           |
-| var_81          |          96 |       0 |      1367008 | 0.0%        | 99.99%           | BAIXA           |
-| var_83          |          14 |       0 |      1367090 | 0.0%        | 100.0%           | BAIXA           |
-| var_84          |          16 |       0 |      1367088 | 0.0%        | 100.0%           | BAIXA           |
-| var_85          |          16 |       0 |      1367088 | 0.0%        | 100.0%           | BAIXA           |
-| var_86          |          17 |       0 |      1367087 | 0.0%        | 100.0%           | BAIXA           |
-| var_87          |          13 |       0 |      1367091 | 0.0%        | 100.0%           | BAIXA           |
-| var_88          |          13 |       0 |      1367091 | 0.0%        | 100.0%           | BAIXA           |
-| var_89          |          96 |       0 |      1367008 | 0.0%        | 99.99%           | BAIXA           |
-| var_91          |          16 |       0 |      1367088 | 0.0%        | 100.0%           | BAIXA           |
-| var_92          |          16 |       0 |      1367088 | 0.0%        | 100.0%           | BAIXA           |
-| var_93          |          14 |       0 |      1367090 | 0.0%        | 100.0%           | BAIXA           |
-| var_28          |         853 |    1295 |      1366251 | 0.09%       | 99.94%           | BAIXA           |
-| var_29          |          70 |    1295 |      1367034 | 0.09%       | 99.99%           | BAIXA           |
-| var_30          |         119 |    1295 |      1366985 | 0.09%       | 99.99%           | BAIXA           |
-| var_31          |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
-| var_32          |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
-| var_33          |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
-| var_34          |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
-| var_35          |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
-| var_36          |         107 |    1295 |      1366997 | 0.09%       | 99.99%           | BAIXA           |
-| var_37          |          56 |    1295 |      1367048 | 0.09%       | 100.0%           | BAIXA           |
-| var_38          |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
-| var_39          |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
-| var_40          |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
-| var_41          |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
-| var_42          |         109 |    1295 |      1366995 | 0.09%       | 99.99%           | BAIXA           |
-| var_43          |         109 |    1295 |      1366995 | 0.09%       | 99.99%           | BAIXA           |
-| var_44          |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
-| var_45          |          16 |    1295 |      1367088 | 0.09%       | 100.0%           | BAIXA           |
-| var_46          |          42 |    1295 |      1367062 | 0.09%       | 100.0%           | BAIXA           |
-| var_47          |        1124 |    1295 |      1365980 | 0.09%       | 99.92%           | BAIXA           |
-| var_48          |        2989 |    1295 |      1364115 | 0.09%       | 99.78%           | MEDIA           |
-| var_49          |        7006 |    1295 |      1360098 | 0.09%       | 99.49%           | MEDIA           |
-| var_50          |        6164 |    1295 |      1360940 | 0.09%       | 99.55%           | MEDIA           |
-| var_51          |        1179 |    1295 |      1365925 | 0.09%       | 99.91%           | BAIXA           |
-| var_52          |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
-| var_53          |          32 |    1295 |      1367072 | 0.09%       | 100.0%           | BAIXA           |
-| var_54          |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
-| var_55          |          42 |    1295 |      1367062 | 0.09%       | 100.0%           | BAIXA           |
-| var_56          |          90 |    1295 |      1367014 | 0.09%       | 99.99%           | BAIXA           |
-| var_57          |          23 |    1295 |      1367081 | 0.09%       | 100.0%           | BAIXA           |
-| var_58          |         643 |    1295 |      1366461 | 0.09%       | 99.95%           | BAIXA           |
-| var_59          |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
-| var_60          |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
-| var_61          |        4449 |    1295 |      1362655 | 0.09%       | 99.67%           | MEDIA           |
-| var_62          |         144 |    1295 |      1366960 | 0.09%       | 99.99%           | BAIXA           |
-| var_63          |        7761 |    1295 |      1359343 | 0.09%       | 99.43%           | MEDIA           |
-| var_68          |        7311 |    1295 |      1359793 | 0.09%       | 99.47%           | MEDIA           |
-| var_69          |        3400 |    1295 |      1363704 | 0.09%       | 99.75%           | MEDIA           |
-| var_70          |          23 |    1295 |      1367081 | 0.09%       | 100.0%           | BAIXA           |
-| var_71          |          23 |    1295 |      1367081 | 0.09%       | 100.0%           | BAIXA           |
-| var_72          |          23 |    1295 |      1367081 | 0.09%       | 100.0%           | BAIXA           |
-| var_82          |         953 |       0 |      1366151 | 0.0%        | 99.93%           | BAIXA           |
-| var_90          |        1412 |       0 |      1365692 | 0.0%        | 99.9%            | MEDIA           |
-| ingestion_ts    |           1 |       0 |      1367103 | 0.0%        | 100.0%           | BAIXA           |
-| ano_mes         |           6 |       0 |      1367098 | 0.0%        | 100.0%           | BAIXA           |
-| run_id          |           1 |       0 |      1367103 | 0.0%        | 100.0%           | BAIXA           |
-
----
-
 ### 🔟 Distribuição de Valores (Top 10): `bronze/telco`
 #### Coluna: `num_cpf`
 
 | valor       |   qtd |
 |:------------|------:|
 | 888W78UZYYT |     6 |
-| X8XXWNZZ8UX |     5 |
-| ZYNYYUWWTZN |     5 |
-| XYUZ8ZXUUZ9 |     5 |
-| ZW9TYZXTWTZ |     5 |
-| XNW79U9Z7WN |     5 |
-| Y97YZZX88TY |     5 |
+| 78YYWZT9TN8 |     5 |
 | ZNTN78ZW7XX |     5 |
-| XYTY9ZX879Z |     5 |
-| YW99TTN98UN |     5 |
+| 8T9NWWT8TUZ |     5 |
+| ZUZUZZX7X88 |     5 |
+| ZWZT9ZZUZU8 |     5 |
+| ZTZTWZXTYZX |     5 |
+| ZW9TYZXTWTZ |     5 |
+| UZTWX7NU8UY |     5 |
+| ZU7N8UW8XYX |     5 |
 
 #### Coluna: `safra`
 

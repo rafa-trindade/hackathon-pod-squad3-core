@@ -6,13 +6,72 @@
 
 | coluna        |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
 |:--------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
-| CHAVE_TECNICA |    29312759 |       0 |      2298557 | 0.0%        | 7.27%            | ALTA            |
+| CHAVE_TECNICA |    26148076 |       0 |      5463240 | 0.0%        | 17.28%           | ALTA            |
 
 ### 🚩 Diagnóstico e Observações Técnicas
-* ℹ️ **Deduplicação Necessária:** Aproximação indica cerca de **2.298.557** (7.27%) duplicados. Na camada Silver. será obrigatório o uso de `ROW_NUMBER()` com `PARTITION BY` nas colunas da chave e `ORDER BY ingestion_ts DESC` para garantir a unicidade real.
-* ❗ **Risco de Integridade:** Não utilize esta tabela Bronze para `JOINs` diretos. A duplicidade detectada causará o efeito de explosão de registros, comprometendo a acurácia de métricas financeiras.
-* 👻 **Otimização de Schema:** Colunas detectadas como 100% nulas ou zeradas (ex: `dat_atualizacao_credito`, `val_desconto_item`) devem ser avaliadas para exclusão na Silver para ganho de performance.
+* ℹ️ **Deduplicação Necessária:** Aproximação indica cerca de **5.463.240** (17.28%) duplicados. Na camada Silver. será obrigatório o uso de `ROW_NUMBER()` com `PARTITION BY` nas colunas da chave e `ORDER BY ingestion_ts DESC` para garantir a unicidade real.
+* ❗ **Risco de Integridade:** Não utilize esta tabela Bronze para `JOINs` diretos devido à duplicidade detectada.
+* 👻 **Otimização de Schema:** Colunas 100% nulas ou zeradas detectadas em análises anteriores devem ser avaliadas para exclusão na Silver.
 
+
+---
+
+### 📊 Schema e Estatísticas: `bronze/atraso`
+| column_name                  | column_type              |   distintos |    nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
+|:-----------------------------|:-------------------------|------------:|---------:|-------------:|:------------|:-----------------|:----------------|
+| num_cpf                      | VARCHAR                  |     1945472 |        0 |     29665844 | 0.0%        | 93.85%           | ALTA            |
+| dat_referencia               | DATE                     |          20 |        0 |     31611296 | 0.0%        | 100.0%           | BAIXA           |
+| num_fatura_hash              | VARCHAR                  |    15078517 |        0 |     16532799 | 0.0%        | 52.3%            | ALTA            |
+| contrato                     | VARCHAR                  |     2726020 |        0 |     28885296 | 0.0%        | 91.38%           | ALTA            |
+| dw_num_cliente               | VARCHAR                  |     2782990 |        0 |     28828326 | 0.0%        | 91.2%            | ALTA            |
+| dat_criacao_registro_trans   | TIMESTAMP                |     2636446 |        0 |     28974870 | 0.0%        | 91.66%           | ALTA            |
+| dat_alteracao_registro_trans | TIMESTAMP                |     3395699 |      214 |     28215617 | 0.0%        | 89.26%           | ALTA            |
+| dat_cancelamento_fat         | DATE                     |           0 | 31611316 |     31611316 | 100.0%      | 100.0%           | BAIXA           |
+| dat_original_vcto_fat        | DATE                     |        2861 |  1121787 |     31608455 | 3.55%       | 99.99%           | BAIXA           |
+| dat_alteracao_vcto_fat       | DATE                     |         694 | 31523457 |     31610622 | 99.72%      | 100.0%           | BAIXA           |
+| dat_criacao_fat              | TIMESTAMP                |        3087 |        0 |     31608229 | 0.0%        | 99.99%           | BAIXA           |
+| dat_vencimento_fat           | DATE                     |        2275 |        0 |     31609041 | 0.0%        | 99.99%           | BAIXA           |
+| dat_status_fat               | TIMESTAMP                |        3135 |  1075903 |     31608181 | 3.4%        | 99.99%           | BAIXA           |
+| dat_min_vencimento_fat       | DATE                     |        1943 |        0 |     31609373 | 0.0%        | 99.99%           | BAIXA           |
+| dat_ativacao_conta_cli       | DATE                     |        7144 |        0 |     31604172 | 0.0%        | 99.98%           | BAIXA           |
+| dat_criacao_dw               | TIMESTAMP                |      156976 |        0 |     31454340 | 0.0%        | 99.5%            | MEDIA           |
+| num_ent_seq_fatura           | VARCHAR                  |        1333 |        0 |     31609983 | 0.0%        | 100.0%           | BAIXA           |
+| dw_un_negocio                | VARCHAR                  |          10 |        0 |     31611306 | 0.0%        | 100.0%           | BAIXA           |
+| dw_his_ponto_venda_comta     | VARCHAR                  |       72024 |        0 |     31539292 | 0.0%        | 99.77%           | MEDIA           |
+| dw_area                      | VARCHAR                  |          71 |        0 |     31611245 | 0.0%        | 100.0%           | BAIXA           |
+| dw_ciclo                     | VARCHAR                  |          43 |        0 |     31611273 | 0.0%        | 100.0%           | BAIXA           |
+| dw_tipo_cliente_conta        | VARCHAR                  |          41 |        0 |     31611275 | 0.0%        | 100.0%           | BAIXA           |
+| dw_oferta                    | VARCHAR                  |        1099 |        0 |     31610217 | 0.0%        | 100.0%           | BAIXA           |
+| dw_faixa_aging_fatura        | VARCHAR                  |          25 |        0 |     31611291 | 0.0%        | 100.0%           | BAIXA           |
+| dw_faixa_aging_divida        | VARCHAR                  |          15 |        0 |     31611301 | 0.0%        | 100.0%           | BAIXA           |
+| dw_faixa_tempo_base          | VARCHAR                  |           7 |        0 |     31611309 | 0.0%        | 100.0%           | BAIXA           |
+| dw_faixa_aging_prox_fech     | VARCHAR                  |          17 |        0 |     31611299 | 0.0%        | 100.0%           | BAIXA           |
+| dw_tipo_faturamento          | VARCHAR                  |          29 |        0 |     31611287 | 0.0%        | 100.0%           | BAIXA           |
+| cod_plataforma               | VARCHAR                  |          14 |        0 |     31611302 | 0.0%        | 100.0%           | BAIXA           |
+| num_bill_seq_fat             | VARCHAR                  |         251 |        0 |     31611065 | 0.0%        | 100.0%           | BAIXA           |
+| num_seq_acordo_fat           | VARCHAR                  |          71 |        0 |     31611245 | 0.0%        | 100.0%           | BAIXA           |
+| ind_isencao_cob_fat          | VARCHAR                  |           4 |        0 |     31611312 | 0.0%        | 100.0%           | BAIXA           |
+| ind_wo                       | VARCHAR                  |           3 |        0 |     31611313 | 0.0%        | 100.0%           | BAIXA           |
+| ind_pdd                      | VARCHAR                  |           3 |        0 |     31611313 | 0.0%        | 100.0%           | BAIXA           |
+| ind_pccr                     | VARCHAR                  |           4 |        0 |     31611312 | 0.0%        | 100.0%           | BAIXA           |
+| ind_aca                      | VARCHAR                  |           3 |        0 |     31611313 | 0.0%        | 100.0%           | BAIXA           |
+| ind_primeira_fat             | VARCHAR                  |           2 |        0 |     31611314 | 0.0%        | 100.0%           | BAIXA           |
+| ind_fraude                   | VARCHAR                  |           2 |        0 |     31611314 | 0.0%        | 100.0%           | BAIXA           |
+| val_fat_liquido              | DOUBLE                   |       64864 |        0 |     31546452 | 0.0%        | 99.79%           | MEDIA           |
+| val_fat_bruto                | DOUBLE                   |       68926 |        0 |     31542390 | 0.0%        | 99.78%           | MEDIA           |
+| val_fat_credito              | DOUBLE                   |       22414 |        0 |     31588902 | 0.0%        | 99.93%           | BAIXA           |
+| val_fat_ajuste               | DOUBLE                   |        6996 |        0 |     31604320 | 0.0%        | 99.98%           | BAIXA           |
+| val_fat_bruto_bc             | DOUBLE                   |       60944 |        0 |     31550372 | 0.0%        | 99.81%           | MEDIA           |
+| val_fat_pagamento_bruto      | DOUBLE                   |       19258 |        0 |     31592058 | 0.0%        | 99.94%           | BAIXA           |
+| val_fat_aberto               | DOUBLE                   |       65567 |        0 |     31545749 | 0.0%        | 99.79%           | MEDIA           |
+| val_fat_aberto_liq           | DOUBLE                   |       65742 |        0 |     31545574 | 0.0%        | 99.79%           | MEDIA           |
+| val_multa_juros              | DOUBLE                   |        4022 |        0 |     31607294 | 0.0%        | 99.99%           | BAIXA           |
+| val_multa_cancelamento       | DOUBLE                   |        8110 |        0 |     31603206 | 0.0%        | 99.97%           | BAIXA           |
+| val_parc_aparelho_liq        | DOUBLE                   |         578 |        0 |     31610738 | 0.0%        | 100.0%           | BAIXA           |
+| val_fat_liq_jm_mc            | DOUBLE                   |       59375 |        0 |     31551941 | 0.0%        | 99.81%           | MEDIA           |
+| ingestion_ts                 | TIMESTAMP WITH TIME ZONE |           1 |        0 |     31611315 | 0.0%        | 100.0%           | BAIXA           |
+| ano_mes                      | BIGINT                   |          20 |        0 |     31611296 | 0.0%        | 100.0%           | BAIXA           |
+| run_id                       | VARCHAR                  |           1 |        0 |     31611315 | 0.0%        | 100.0%           | BAIXA           |
 
 ---
 
@@ -38,65 +97,6 @@
 | ano_mes=202502 |              1 | 3.643.289   |        53 |                   414.83 |                      599.08 |
 | ano_mes=202503 |              1 | 4.394.665   |        53 |                   500.09 |                      721.95 |
 | TOTAL          |             18 | 31.611.316  |        53 |                  3541.69 |                     5213.9  |
-
----
-
-### 🧬 Schema: `bronze/atraso`
-| column_name                  | column_type              | null   | key   | default   | extra   |
-|:-----------------------------|:-------------------------|:-------|:------|:----------|:--------|
-| num_cpf                      | VARCHAR                  | YES    |       |           |         |
-| dat_referencia               | DATE                     | YES    |       |           |         |
-| num_fatura_hash              | VARCHAR                  | YES    |       |           |         |
-| contrato                     | VARCHAR                  | YES    |       |           |         |
-| dw_num_cliente               | VARCHAR                  | YES    |       |           |         |
-| dat_criacao_registro_trans   | TIMESTAMP                | YES    |       |           |         |
-| dat_alteracao_registro_trans | TIMESTAMP                | YES    |       |           |         |
-| dat_cancelamento_fat         | DATE                     | YES    |       |           |         |
-| dat_original_vcto_fat        | DATE                     | YES    |       |           |         |
-| dat_alteracao_vcto_fat       | DATE                     | YES    |       |           |         |
-| dat_criacao_fat              | TIMESTAMP                | YES    |       |           |         |
-| dat_vencimento_fat           | DATE                     | YES    |       |           |         |
-| dat_status_fat               | TIMESTAMP                | YES    |       |           |         |
-| dat_min_vencimento_fat       | DATE                     | YES    |       |           |         |
-| dat_ativacao_conta_cli       | DATE                     | YES    |       |           |         |
-| dat_criacao_dw               | TIMESTAMP                | YES    |       |           |         |
-| num_ent_seq_fatura           | VARCHAR                  | YES    |       |           |         |
-| dw_un_negocio                | VARCHAR                  | YES    |       |           |         |
-| dw_his_ponto_venda_comta     | VARCHAR                  | YES    |       |           |         |
-| dw_area                      | VARCHAR                  | YES    |       |           |         |
-| dw_ciclo                     | VARCHAR                  | YES    |       |           |         |
-| dw_tipo_cliente_conta        | VARCHAR                  | YES    |       |           |         |
-| dw_oferta                    | VARCHAR                  | YES    |       |           |         |
-| dw_faixa_aging_fatura        | VARCHAR                  | YES    |       |           |         |
-| dw_faixa_aging_divida        | VARCHAR                  | YES    |       |           |         |
-| dw_faixa_tempo_base          | VARCHAR                  | YES    |       |           |         |
-| dw_faixa_aging_prox_fech     | VARCHAR                  | YES    |       |           |         |
-| dw_tipo_faturamento          | VARCHAR                  | YES    |       |           |         |
-| cod_plataforma               | VARCHAR                  | YES    |       |           |         |
-| num_bill_seq_fat             | VARCHAR                  | YES    |       |           |         |
-| num_seq_acordo_fat           | VARCHAR                  | YES    |       |           |         |
-| ind_isencao_cob_fat          | VARCHAR                  | YES    |       |           |         |
-| ind_wo                       | VARCHAR                  | YES    |       |           |         |
-| ind_pdd                      | VARCHAR                  | YES    |       |           |         |
-| ind_pccr                     | VARCHAR                  | YES    |       |           |         |
-| ind_aca                      | VARCHAR                  | YES    |       |           |         |
-| ind_primeira_fat             | VARCHAR                  | YES    |       |           |         |
-| ind_fraude                   | VARCHAR                  | YES    |       |           |         |
-| val_fat_liquido              | DOUBLE                   | YES    |       |           |         |
-| val_fat_bruto                | DOUBLE                   | YES    |       |           |         |
-| val_fat_credito              | DOUBLE                   | YES    |       |           |         |
-| val_fat_ajuste               | DOUBLE                   | YES    |       |           |         |
-| val_fat_bruto_bc             | DOUBLE                   | YES    |       |           |         |
-| val_fat_pagamento_bruto      | DOUBLE                   | YES    |       |           |         |
-| val_fat_aberto               | DOUBLE                   | YES    |       |           |         |
-| val_fat_aberto_liq           | DOUBLE                   | YES    |       |           |         |
-| val_multa_juros              | DOUBLE                   | YES    |       |           |         |
-| val_multa_cancelamento       | DOUBLE                   | YES    |       |           |         |
-| val_parc_aparelho_liq        | DOUBLE                   | YES    |       |           |         |
-| val_fat_liq_jm_mc            | DOUBLE                   | YES    |       |           |         |
-| ingestion_ts                 | TIMESTAMP WITH TIME ZONE | YES    |       |           |         |
-| ano_mes                      | BIGINT                   | YES    |       |           |         |
-| run_id                       | VARCHAR                  | YES    |       |           |         |
 
 ---
 
@@ -236,65 +236,6 @@
 
 ---
 
-### 📊 Estatísticas por Coluna: `bronze/atraso`
-| coluna                       |   distintos |    nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
-|:-----------------------------|------------:|---------:|-------------:|:------------|:-----------------|:----------------|
-| num_cpf                      |     1945472 |        0 |     29665844 | 0.0%        | 93.85%           | ALTA            |
-| dat_referencia               |          20 |        0 |     31611296 | 0.0%        | 100.0%           | BAIXA           |
-| num_fatura_hash              |    15078517 |        0 |     16532799 | 0.0%        | 52.3%            | ALTA            |
-| contrato                     |     2726020 |        0 |     28885296 | 0.0%        | 91.38%           | ALTA            |
-| dw_num_cliente               |     2782990 |        0 |     28828326 | 0.0%        | 91.2%            | ALTA            |
-| dat_criacao_registro_trans   |     2636446 |        0 |     28974870 | 0.0%        | 91.66%           | ALTA            |
-| dat_alteracao_registro_trans |     3395699 |      214 |     28215617 | 0.0%        | 89.26%           | ALTA            |
-| dat_cancelamento_fat         |           0 | 31611316 |     31611316 | 100.0%      | 100.0%           | BAIXA           |
-| dat_original_vcto_fat        |        2861 |  1121787 |     31608455 | 3.55%       | 99.99%           | BAIXA           |
-| dat_alteracao_vcto_fat       |         694 | 31523457 |     31610622 | 99.72%      | 100.0%           | BAIXA           |
-| dat_criacao_fat              |        3087 |        0 |     31608229 | 0.0%        | 99.99%           | BAIXA           |
-| dat_vencimento_fat           |        2275 |        0 |     31609041 | 0.0%        | 99.99%           | BAIXA           |
-| dat_status_fat               |        3135 |  1075903 |     31608181 | 3.4%        | 99.99%           | BAIXA           |
-| dat_min_vencimento_fat       |        1943 |        0 |     31609373 | 0.0%        | 99.99%           | BAIXA           |
-| dat_ativacao_conta_cli       |        7144 |        0 |     31604172 | 0.0%        | 99.98%           | BAIXA           |
-| dat_criacao_dw               |      156976 |        0 |     31454340 | 0.0%        | 99.5%            | MEDIA           |
-| num_ent_seq_fatura           |        1333 |        0 |     31609983 | 0.0%        | 100.0%           | BAIXA           |
-| dw_un_negocio                |          10 |        0 |     31611306 | 0.0%        | 100.0%           | BAIXA           |
-| dw_his_ponto_venda_comta     |       72024 |        0 |     31539292 | 0.0%        | 99.77%           | MEDIA           |
-| dw_area                      |          71 |        0 |     31611245 | 0.0%        | 100.0%           | BAIXA           |
-| dw_ciclo                     |          43 |        0 |     31611273 | 0.0%        | 100.0%           | BAIXA           |
-| dw_tipo_cliente_conta        |          41 |        0 |     31611275 | 0.0%        | 100.0%           | BAIXA           |
-| dw_oferta                    |        1099 |        0 |     31610217 | 0.0%        | 100.0%           | BAIXA           |
-| dw_faixa_aging_fatura        |          25 |        0 |     31611291 | 0.0%        | 100.0%           | BAIXA           |
-| dw_faixa_aging_divida        |          15 |        0 |     31611301 | 0.0%        | 100.0%           | BAIXA           |
-| dw_faixa_tempo_base          |           7 |        0 |     31611309 | 0.0%        | 100.0%           | BAIXA           |
-| dw_faixa_aging_prox_fech     |          17 |        0 |     31611299 | 0.0%        | 100.0%           | BAIXA           |
-| dw_tipo_faturamento          |          29 |        0 |     31611287 | 0.0%        | 100.0%           | BAIXA           |
-| cod_plataforma               |          14 |        0 |     31611302 | 0.0%        | 100.0%           | BAIXA           |
-| num_bill_seq_fat             |         251 |        0 |     31611065 | 0.0%        | 100.0%           | BAIXA           |
-| num_seq_acordo_fat           |          71 |        0 |     31611245 | 0.0%        | 100.0%           | BAIXA           |
-| ind_isencao_cob_fat          |           4 |        0 |     31611312 | 0.0%        | 100.0%           | BAIXA           |
-| ind_wo                       |           3 |        0 |     31611313 | 0.0%        | 100.0%           | BAIXA           |
-| ind_pdd                      |           3 |        0 |     31611313 | 0.0%        | 100.0%           | BAIXA           |
-| ind_pccr                     |           4 |        0 |     31611312 | 0.0%        | 100.0%           | BAIXA           |
-| ind_aca                      |           3 |        0 |     31611313 | 0.0%        | 100.0%           | BAIXA           |
-| ind_primeira_fat             |           2 |        0 |     31611314 | 0.0%        | 100.0%           | BAIXA           |
-| ind_fraude                   |           2 |        0 |     31611314 | 0.0%        | 100.0%           | BAIXA           |
-| val_fat_liquido              |       64864 |        0 |     31546452 | 0.0%        | 99.79%           | MEDIA           |
-| val_fat_bruto                |       68926 |        0 |     31542390 | 0.0%        | 99.78%           | MEDIA           |
-| val_fat_credito              |       22414 |        0 |     31588902 | 0.0%        | 99.93%           | BAIXA           |
-| val_fat_ajuste               |        6996 |        0 |     31604320 | 0.0%        | 99.98%           | BAIXA           |
-| val_fat_bruto_bc             |       60944 |        0 |     31550372 | 0.0%        | 99.81%           | MEDIA           |
-| val_fat_pagamento_bruto      |       19258 |        0 |     31592058 | 0.0%        | 99.94%           | BAIXA           |
-| val_fat_aberto               |       65567 |        0 |     31545749 | 0.0%        | 99.79%           | MEDIA           |
-| val_fat_aberto_liq           |       65742 |        0 |     31545574 | 0.0%        | 99.79%           | MEDIA           |
-| val_multa_juros              |        4022 |        0 |     31607294 | 0.0%        | 99.99%           | BAIXA           |
-| val_multa_cancelamento       |        8110 |        0 |     31603206 | 0.0%        | 99.97%           | BAIXA           |
-| val_parc_aparelho_liq        |         578 |        0 |     31610738 | 0.0%        | 100.0%           | BAIXA           |
-| val_fat_liq_jm_mc            |       59375 |        0 |     31551941 | 0.0%        | 99.81%           | MEDIA           |
-| ingestion_ts                 |           1 |        0 |     31611315 | 0.0%        | 100.0%           | BAIXA           |
-| ano_mes                      |          20 |        0 |     31611296 | 0.0%        | 100.0%           | BAIXA           |
-| run_id                       |           1 |        0 |     31611315 | 0.0%        | 100.0%           | BAIXA           |
-
----
-
 ### 🔟 Distribuição de Valores (Top 10): `bronze/atraso`
 #### Coluna: `num_cpf`
 
@@ -332,14 +273,14 @@
 |:-----------------------------------------------------------------|--------:|
 | 5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9 | 1075903 |
 | d62379c48ce480322c400adcbb1f59cf4196d4c627a6fae49c3ea53eeb2c7e6d |     126 |
-| 029ea7d470f8de06cea55c9033d4f3966d10739aec333dd5cc88edfa9992b7de |     108 |
-| e02f06436e1219eabeea7781d190542ed9b349c62ca3d00f04a33993dcf1fd7a |     108 |
+| 4a0aed3f3067bc32b7faead80de21694fcfd1113117b3fc3b227e7b9bdf269ef |     108 |
+| b1919f3385bebd5c15277f02a4821e8359700433d474a45548aaa8c835efa071 |     108 |
+| 46ee4af863d13359b4c10f00293f1307ae2914a79b80d0ee12c7101a36163e2d |     108 |
+| 8a1edb76bdef151ba7fd1b2c6d90bb2b0301869d5ab8d68c8468d9d429cc6351 |     108 |
 | 83a65c2bf58f3c8149363160eeb5020a2dbd9edad704e0170a075e180e536e1e |     108 |
-| 585fd5e93b24f9c5df32e4a2952af37b6f416e80bc9ee05759c3cb3728707c44 |     108 |
-| 8efb6c2d8d444da9dcf904720a7c8f89c19fa322d9ccb786641fd6232faa4a4b |     108 |
-| 9d1f3cd61f729de61c011a31d36f09a608727197578d2ab12c818fe4ef178f23 |     108 |
-| 11dab86d9d9800fd5f20c2c53f391d0552fa2dc8bed1b0dda453c2e735d1f6b7 |     108 |
-| f85a2590dc90b7085a6911fadb58616e91e9b5124bd8b41ee204bdd33a5b6ba6 |     108 |
+| e02f06436e1219eabeea7781d190542ed9b349c62ca3d00f04a33993dcf1fd7a |     108 |
+| b8b2bf7948343f22cd785bb1e707b7a696d8ecd5eee4d9c15a0671fbe80ae1ac |     108 |
+| bb73dadd64ae804b72b568c3e0f22f42d2c7ca1c53085b6f04f4ab18108efe32 |     108 |
 
 #### Coluna: `contrato`
 
@@ -353,8 +294,8 @@
 | 833912847 |  1837 |
 | 846007545 |  1350 |
 | 882711546 |  1233 |
-| 842432062 |  1098 |
 | 851965102 |  1098 |
+| 842432062 |  1098 |
 
 #### Coluna: `dw_num_cliente`
 
