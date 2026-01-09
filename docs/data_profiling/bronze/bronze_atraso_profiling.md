@@ -1,16 +1,15 @@
 # Relatório de Profiling: `bronze/atraso` - `20260108_185925`
 
 ### 🔑 Garantia de Unicidade: `bronze/atraso`
-- **Chave Técnica:** `num_cpf, contrato, dat_referencia, num_fatura_hash`
+- **Chave Técnica:** `num_cpf, contrato, dat_referencia, num_fatura_hash, num_ent_seq_fatura`
 - **Tipo:** `COMPOSTA`
 
 | coluna        |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
 |:--------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
-| CHAVE_TECNICA |    26148076 |       0 |      5463240 | 0.0%        | 17.28%           | ALTA            |
+| CHAVE_TECNICA |    34293064 |       0 |            0 | 0.0%        | 0.0%             | ALTA            |
 
 ### 🚩 Diagnóstico e Observações Técnicas
-* ℹ️ **Deduplicação Necessária:** Aproximação indica cerca de **5.463.240** (17.28%) duplicados. Na camada Silver. será obrigatório o uso de `ROW_NUMBER()` com `PARTITION BY` nas colunas da chave e `ORDER BY ingestion_ts DESC` para garantir a unicidade real.
-* ❗ **Risco de Integridade:** Não utilize esta tabela Bronze para `JOINs` diretos devido à duplicidade detectada.
+* ✅ **Sucesso:** A chave técnica parece ser única para este conjunto de dados (estimativa estatística).
 * 👻 **Otimização de Schema:** Colunas 100% nulas ou zeradas detectadas em análises anteriores devem ser avaliadas para exclusão na Silver.
 
 
@@ -273,14 +272,14 @@
 |:-----------------------------------------------------------------|--------:|
 | 5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9 | 1075903 |
 | d62379c48ce480322c400adcbb1f59cf4196d4c627a6fae49c3ea53eeb2c7e6d |     126 |
-| 4a0aed3f3067bc32b7faead80de21694fcfd1113117b3fc3b227e7b9bdf269ef |     108 |
-| b1919f3385bebd5c15277f02a4821e8359700433d474a45548aaa8c835efa071 |     108 |
-| 46ee4af863d13359b4c10f00293f1307ae2914a79b80d0ee12c7101a36163e2d |     108 |
-| 8a1edb76bdef151ba7fd1b2c6d90bb2b0301869d5ab8d68c8468d9d429cc6351 |     108 |
 | 83a65c2bf58f3c8149363160eeb5020a2dbd9edad704e0170a075e180e536e1e |     108 |
+| 585fd5e93b24f9c5df32e4a2952af37b6f416e80bc9ee05759c3cb3728707c44 |     108 |
+| 5e554a259c4ab7e7278f111ffd3cb1f4c650f5302aa6098883804eb7ae847f1a |     108 |
 | e02f06436e1219eabeea7781d190542ed9b349c62ca3d00f04a33993dcf1fd7a |     108 |
-| b8b2bf7948343f22cd785bb1e707b7a696d8ecd5eee4d9c15a0671fbe80ae1ac |     108 |
-| bb73dadd64ae804b72b568c3e0f22f42d2c7ca1c53085b6f04f4ab18108efe32 |     108 |
+| 029ea7d470f8de06cea55c9033d4f3966d10739aec333dd5cc88edfa9992b7de |     108 |
+| a8a73dcaba13e70045243f4514a5074f55c7d25567121350e523d545c92476e3 |     108 |
+| 2286794687ca5566d774c712d44c8672394f8ced25815023b1a5d37d9e7f56d6 |     108 |
+| 1fee07d5c66e52b73fdda793e1debd4ac21257c713261e339a8b0132f351c1c7 |     108 |
 
 #### Coluna: `contrato`
 
@@ -294,8 +293,8 @@
 | 833912847 |  1837 |
 | 846007545 |  1350 |
 | 882711546 |  1233 |
-| 851965102 |  1098 |
 | 842432062 |  1098 |
+| 851965102 |  1098 |
 
 #### Coluna: `dw_num_cliente`
 
@@ -310,7 +309,7 @@
 | 1439218861 |  1365 |
 |  947775947 |  1350 |
 | 1170659040 |  1233 |
-| 1146709793 |  1098 |
+|  929754533 |  1098 |
 
 #### Coluna: `dat_criacao_registro_trans`
 
