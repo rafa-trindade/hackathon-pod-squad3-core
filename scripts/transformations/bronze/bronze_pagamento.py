@@ -48,7 +48,6 @@ def run():
                 strptime(DAT_STATUS_FATURA, '%d%b%Y:%H:%M:%S')::DATE AS dat_status_fatura,
                 CONTRATO::VARCHAR AS contrato,
                 DW_NUM_CLIENTE::VARCHAR AS dw_num_cliente,
-                NUM_FATURA_PAGAMENTO::VARCHAR AS num_fatura_pagamento,
 
                 -- ----------------------------
                 -- Datas (Conversão String SAS -> DATE/TIMESTAMP)
@@ -87,6 +86,7 @@ def run():
                 SEQ_FATURA::VARCHAR AS seq_fatura, 
                 NUM_SUB_SEQ_FATURA::VARCHAR AS num_sub_seq_fatura, 
                 NUM_CREDITO_SEQ::VARCHAR AS num_credito_seq, 
+                NUM_FATURA_PAGAMENTO::VARCHAR AS num_fatura_pagamento,
                 DW_TIPO_FATURA::VARCHAR AS dw_tipo_fatura, 
                 IND_STATUS_FATURA::VARCHAR AS ind_status_fatura,
                 DW_AREA::VARCHAR AS dw_area, 
