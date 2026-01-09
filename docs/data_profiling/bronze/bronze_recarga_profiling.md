@@ -1,5 +1,23 @@
 # Relatório de Profiling: `bronze/recarga` - `20260108_204357`
 
+### 🔑 Garantia de Unicidade: `bronze/recarga`
+- **Chave Técnica:** `num_cpf, dat_insercao_credito, hor_insercao_credito`
+- **Tipo:** `COMPOSTA`
+
+| coluna        |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
+|:--------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
+| CHAVE_TECNICA |   109711241 |       0 |            0 | 0.0%        | 0.0%             | ALTA            |
+
+### 🚩 Diagnóstico e Observações Técnicas
+* ✅ **Sucesso:** A chave técnica parece ser única para este conjunto de dados (estimativa estatística).
+* 👻 **Otimização de Schema:** Colunas 100% nulas ou zeradas detectadas em análises anteriores devem ser avaliadas para exclusão na Silver.
+
+---
+
+
+
+---
+
 ### 📦 Volumetria: `bronze/recarga`
 | diretorio      |   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
 |:---------------|---------------:|:------------|----------:|-------------------------:|----------------------------:|
@@ -73,35 +91,61 @@
 
 ---
 
+### 🔢 Range de Valores Numéricos: `bronze/recarga`
+
+#### Coluna: `val_credito_inserido`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 | 25000 |    8.09 |
+
+#### Coluna: `val_bonus`
+|      min |   max |   media |
+|---------:|------:|--------:|
+| -87895.2 | 95500 | 10079.4 |
+
+#### Coluna: `val_real`
+|      min |   max |   media |
+|---------:|------:|--------:|
+| -87895.2 | 95500 | 10087.5 |
+
+#### Coluna: `valor_sos`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     3 |    20 |    7.55 |
+
+
+
+---
+
 ### 📊 Estatísticas por Coluna: `bronze/recarga`
 | coluna                |   distintos |    nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
 |:----------------------|------------:|---------:|-------------:|:------------|:-----------------|:----------------|
-| num_cpf               |     3077601 |        0 |     97136050 | 0.0%        | 96.93%           | MEDIA           |
-| dat_insercao_credito  |         548 |        0 |    100213103 | 0.0%        | 100.0%           | BAIXA           |
-| hor_insercao_credito  |       86400 |        0 |    100127251 | 0.0%        | 99.91%           | BAIXA           |
-| dw_num_ntc            |     5211901 |        0 |     95001750 | 0.0%        | 94.8%            | ALTA            |
-| dw_num_cliente        |     7607360 |        0 |     92606291 | 0.0%        | 92.41%           | ALTA            |
+| num_cpf               |     2746295 |        0 |     97467356 | 0.0%        | 97.26%           | MEDIA           |
+| dat_insercao_credito  |         538 |        0 |    100213113 | 0.0%        | 100.0%           | BAIXA           |
+| hor_insercao_credito  |       86309 |        0 |    100127342 | 0.0%        | 99.91%           | BAIXA           |
+| dw_num_ntc            |     4144008 |        0 |     96069643 | 0.0%        | 95.86%           | MEDIA           |
+| dw_num_cliente        |     6245708 |        0 |     93967943 | 0.0%        | 93.77%           | ALTA            |
 | flag_sos              |           2 |        0 |    100213649 | 0.0%        | 100.0%           | BAIXA           |
 | cod_tecnologia_dw     |           1 |        0 |    100213650 | 0.0%        | 100.0%           | BAIXA           |
-| cod_canal_aquisicao   |         138 |        0 |    100213513 | 0.0%        | 100.0%           | BAIXA           |
+| cod_canal_aquisicao   |         133 |        0 |    100213518 | 0.0%        | 100.0%           | BAIXA           |
 | cod_tipo_credito      |           2 |        0 |    100213649 | 0.0%        | 100.0%           | BAIXA           |
 | cod_promocao          |           1 |  2152012 |    100213650 | 2.15%       | 100.0%           | BAIXA           |
 | cod_plataforma_atu    |          13 |        0 |    100213638 | 0.0%        | 100.0%           | BAIXA           |
 | cod_status_plataforma |          17 |        0 |    100213634 | 0.0%        | 100.0%           | BAIXA           |
 | ind_metodo_pagamento  |           2 |        0 |    100213649 | 0.0%        | 100.0%           | BAIXA           |
-| dw_plano_tarifacao    |          97 |  2152012 |    100213554 | 2.15%       | 100.0%           | BAIXA           |
+| dw_plano_tarifacao    |         104 |  2152012 |    100213547 | 2.15%       | 100.0%           | BAIXA           |
 | dw_tipo_recarga       |           3 |  2152012 |    100213648 | 2.15%       | 100.0%           | BAIXA           |
 | dw_tipo_insercao      |          11 |        0 |    100213640 | 0.0%        | 100.0%           | BAIXA           |
 | dw_forma_pagamento    |           2 |        0 |    100213649 | 0.0%        | 100.0%           | BAIXA           |
-| dw_instituicao        |         137 |        0 |    100213514 | 0.0%        | 100.0%           | BAIXA           |
-| cod_grupo_cartao      |         250 |        0 |    100213401 | 0.0%        | 100.0%           | BAIXA           |
-| dsc_grupo_cartao_wpp  |          23 |        0 |    100213628 | 0.0%        | 100.0%           | BAIXA           |
-| val_credito_inserido  |        4609 |        0 |    100209042 | 0.0%        | 100.0%           | BAIXA           |
-| val_bonus             |       75920 |        0 |    100137731 | 0.0%        | 99.92%           | BAIXA           |
-| val_real              |       51832 |        0 |    100161819 | 0.0%        | 99.95%           | BAIXA           |
+| dw_instituicao        |         129 |        0 |    100213522 | 0.0%        | 100.0%           | BAIXA           |
+| cod_grupo_cartao      |         240 |        0 |    100213411 | 0.0%        | 100.0%           | BAIXA           |
+| dsc_grupo_cartao_wpp  |          25 |        0 |    100213626 | 0.0%        | 100.0%           | BAIXA           |
+| val_credito_inserido  |        4613 |        0 |    100209038 | 0.0%        | 100.0%           | BAIXA           |
+| val_bonus             |       65011 |        0 |    100148640 | 0.0%        | 99.94%           | BAIXA           |
+| val_real              |       50763 |        0 |    100162888 | 0.0%        | 99.95%           | BAIXA           |
 | valor_sos             |           5 | 93679237 |    100213646 | 93.48%      | 100.0%           | BAIXA           |
 | ingestion_ts          |           1 |        0 |    100213650 | 0.0%        | 100.0%           | BAIXA           |
-| ano_mes               |          18 |        0 |    100213633 | 0.0%        | 100.0%           | BAIXA           |
+| ano_mes               |          20 |        0 |    100213631 | 0.0%        | 100.0%           | BAIXA           |
 | run_id                |           1 |        0 |    100213650 | 0.0%        | 100.0%           | BAIXA           |
 
 ---

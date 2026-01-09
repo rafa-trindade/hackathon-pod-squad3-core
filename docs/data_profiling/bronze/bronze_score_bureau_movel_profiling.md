@@ -1,5 +1,24 @@
 # Relatório de Profiling: `bronze/score_bureau_movel` - `20260108_204737`
 
+### 🔑 Garantia de Unicidade: `bronze/score_bureau_movel`
+- **Chave Técnica:** `num_cpf, safra`
+- **Tipo:** `COMPOSTA`
+
+| coluna        |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
+|:--------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
+| CHAVE_TECNICA |     1168677 |       0 |       121849 | 0.0%        | 9.44%            | ALTA            |
+
+### 🚩 Diagnóstico e Observações Técnicas
+* ℹ️ **Deduplicação Necessária:** Aproximação indica cerca de **121.849** (9.44%) duplicados. Na camada Silver. será obrigatório o uso de `ROW_NUMBER()` com `PARTITION BY` nas colunas da chave e `ORDER BY ingestion_ts DESC` para garantir a unicidade real.
+* ❗ **Risco de Integridade:** Não utilize esta tabela Bronze para `JOINs` diretos. A duplicidade detectada causará o efeito de explosão de registros, comprometendo a acurácia de métricas financeiras.
+* 👻 **Otimização de Schema:** Colunas detectadas como 100% nulas ou zeradas (ex: `dat_atualizacao_credito`, `val_desconto_item`) devem ser avaliadas para exclusão na Silver para ganho de performance.
+
+---
+
+
+
+---
+
 ### 📦 Volumetria: `bronze/score_bureau_movel`
 | diretorio      |   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
 |:---------------|---------------:|:------------|----------:|-------------------------:|----------------------------:|
@@ -45,17 +64,33 @@
 
 ---
 
+### 🔢 Range de Valores Numéricos: `bronze/score_bureau_movel`
+
+#### Coluna: `score_01`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   778 |   586.9 |
+
+#### Coluna: `score_02`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     1 |   917 |  627.55 |
+
+
+
+---
+
 ### 📊 Estatísticas por Coluna: `bronze/score_bureau_movel`
 | coluna          |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
 |:----------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
-| num_cpf         |     1272095 |       0 |        18431 | 0.0%        | 1.43%            | ALTA            |
+| num_cpf         |     1187719 |       0 |       102807 | 0.0%        | 7.97%            | ALTA            |
 | safra           |           6 |       0 |      1290520 | 0.0%        | 100.0%           | BAIXA           |
 | flag_instalacao |           1 |       0 |      1290525 | 0.0%        | 100.0%           | BAIXA           |
 | fpd             |           2 |       0 |      1290524 | 0.0%        | 100.0%           | BAIXA           |
 | prod            |           1 |       0 |      1290525 | 0.0%        | 100.0%           | BAIXA           |
 | flag_mig2       |           1 |       0 |      1290525 | 0.0%        | 100.0%           | BAIXA           |
-| score_01        |         298 |    9439 |      1290228 | 0.73%       | 99.98%           | BAIXA           |
-| score_02        |         585 |     576 |      1289941 | 0.04%       | 99.95%           | BAIXA           |
+| score_01        |         330 |    9439 |      1290196 | 0.73%       | 99.97%           | BAIXA           |
+| score_02        |         598 |     576 |      1289928 | 0.04%       | 99.95%           | BAIXA           |
 | ingestion_ts    |           1 |       0 |      1290525 | 0.0%        | 100.0%           | BAIXA           |
 | ano_mes         |           6 |       0 |      1290520 | 0.0%        | 100.0%           | BAIXA           |
 | run_id          |           1 |       0 |      1290525 | 0.0%        | 100.0%           | BAIXA           |
@@ -69,38 +104,38 @@
 |:------------|------:|
 | ZW9TYZXTWTZ |     5 |
 | ZZUWWTYWZ8T |     4 |
-| T87Z88U7U87 |     4 |
-| 8Z7UTZ9XZ9X |     4 |
-| Z9XN9ZZWU7T |     4 |
-| ZTU8UZXYWWW |     4 |
-| Z8NZWZZ7U97 |     4 |
-| XWYWZZZNNNN |     4 |
+| ZW7UTZZYYW7 |     4 |
+| TN8Y7XTNZ87 |     4 |
 | XUWNXZXN7ZU |     4 |
-| 78X9UYXZTWU |     4 |
+| Z8NZWZZ7U97 |     4 |
+| ZTU8UZXYWWW |     4 |
+| ZYWUTZXXTU8 |     4 |
+| 8Z7UTZ9XZ9X |     4 |
+| XWYWZZZNNNN |     4 |
 
 #### Coluna: `safra`
 
-| valor               |    qtd |
-|:--------------------|-------:|
-| 2024-12-01 00:00:00 | 227985 |
-| 2024-11-01 00:00:00 | 227176 |
-| 2025-01-01 00:00:00 | 221002 |
-| 2025-03-01 00:00:00 | 207396 |
-| 2024-10-01 00:00:00 | 203828 |
-| 2025-02-01 00:00:00 | 203139 |
+| valor      |    qtd |
+|:-----------|-------:|
+| 2024-12-01 | 227985 |
+| 2024-11-01 | 227176 |
+| 2025-01-01 | 221002 |
+| 2025-03-01 | 207396 |
+| 2024-10-01 | 203828 |
+| 2025-02-01 | 203139 |
 
 #### Coluna: `flag_instalacao`
 
 | valor   |     qtd |
 |:--------|--------:|
-| True    | 1290526 |
+| true    | 1290526 |
 
 #### Coluna: `fpd`
 
 | valor   |    qtd |
 |:--------|-------:|
-| False   | 986330 |
-| True    | 304196 |
+| false   | 986330 |
+| true    | 304196 |
 
 #### Coluna: `prod`
 
@@ -146,9 +181,9 @@
 
 #### Coluna: `ingestion_ts`
 
-| valor                            |     qtd |
-|:---------------------------------|--------:|
-| 2026-01-08 17:47:37.193060-03:00 | 1290526 |
+| valor                        |     qtd |
+|:-----------------------------|--------:|
+| 2026-01-08 17:47:37.19306-03 | 1290526 |
 
 #### Coluna: `ano_mes`
 

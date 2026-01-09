@@ -1,5 +1,24 @@
 # Relatório de Profiling: `bronze/telco` - `20260108_204751`
 
+### 🔑 Garantia de Unicidade: `bronze/telco`
+- **Chave Técnica:** `num_cpf, safra`
+- **Tipo:** `COMPOSTA`
+
+| coluna        |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
+|:--------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
+| CHAVE_TECNICA |     1230896 |       0 |       136208 | 0.0%        | 9.96%            | ALTA            |
+
+### 🚩 Diagnóstico e Observações Técnicas
+* ℹ️ **Deduplicação Necessária:** Aproximação indica cerca de **136.208** (9.96%) duplicados. Na camada Silver. será obrigatório o uso de `ROW_NUMBER()` com `PARTITION BY` nas colunas da chave e `ORDER BY ingestion_ts DESC` para garantir a unicidade real.
+* ❗ **Risco de Integridade:** Não utilize esta tabela Bronze para `JOINs` diretos. A duplicidade detectada causará o efeito de explosão de registros, comprometendo a acurácia de métricas financeiras.
+* 👻 **Otimização de Schema:** Colunas detectadas como 100% nulas ou zeradas (ex: `dat_atualizacao_credito`, `val_desconto_item`) devem ser avaliadas para exclusão na Silver para ganho de performance.
+
+---
+
+
+
+---
+
 ### 📦 Volumetria: `bronze/telco`
 | diretorio      |   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
 |:---------------|---------------:|:------------|----------:|-------------------------:|----------------------------:|
@@ -111,6 +130,227 @@
 
 ---
 
+### 🔢 Range de Valores Numéricos: `bronze/telco`
+
+#### Coluna: `var_28`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  111.67 |
+
+#### Coluna: `var_29`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  209.18 |
+
+#### Coluna: `var_30`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  124.56 |
+
+#### Coluna: `var_31`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |   80.95 |
+
+#### Coluna: `var_32`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  133.36 |
+
+#### Coluna: `var_33`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |   99.86 |
+
+#### Coluna: `var_34`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  158.53 |
+
+#### Coluna: `var_35`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  128.34 |
+
+#### Coluna: `var_36`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |   235.3 |
+
+#### Coluna: `var_37`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  238.62 |
+
+#### Coluna: `var_38`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  244.72 |
+
+#### Coluna: `var_39`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |   234.2 |
+
+#### Coluna: `var_40`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  123.05 |
+
+#### Coluna: `var_41`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  102.34 |
+
+#### Coluna: `var_42`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     2 |   308 |  190.62 |
+
+#### Coluna: `var_43`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     2 |   308 |  189.24 |
+
+#### Coluna: `var_44`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  182.02 |
+
+#### Coluna: `var_45`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |   87.11 |
+
+#### Coluna: `var_46`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |   73.98 |
+
+#### Coluna: `var_47`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  234.01 |
+
+#### Coluna: `var_48`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |   86.68 |
+
+#### Coluna: `var_49`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  185.37 |
+
+#### Coluna: `var_50`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |   77.49 |
+
+#### Coluna: `var_51`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  198.88 |
+
+#### Coluna: `var_52`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  197.74 |
+
+#### Coluna: `var_53`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |   95.97 |
+
+#### Coluna: `var_54`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |   97.47 |
+
+#### Coluna: `var_55`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |   83.79 |
+
+#### Coluna: `var_56`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |    98.4 |
+
+#### Coluna: `var_57`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  106.68 |
+
+#### Coluna: `var_58`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |     163 |
+
+#### Coluna: `var_59`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  194.23 |
+
+#### Coluna: `var_60`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  215.11 |
+
+#### Coluna: `var_61`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  139.84 |
+
+#### Coluna: `var_62`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  135.05 |
+
+#### Coluna: `var_63`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  131.56 |
+
+#### Coluna: `var_68`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |   81.99 |
+
+#### Coluna: `var_69`
+|   min |   max |   media |
+|------:|------:|--------:|
+| 23.84 |   308 |   98.53 |
+
+#### Coluna: `var_70`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  172.81 |
+
+#### Coluna: `var_71`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  237.87 |
+
+#### Coluna: `var_72`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  146.41 |
+
+#### Coluna: `var_82`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |   308 |  263.39 |
+
+#### Coluna: `var_90`
+|   min |        max |   media |
+|------:|-----------:|--------:|
+|     0 | 1.0056e+11 |  212586 |
+
+
+
+---
+
 ### 📊 Estatísticas por Coluna: `bronze/telco`
 | coluna          |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
 |:----------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
@@ -200,15 +440,15 @@
 | valor       |   qtd |
 |:------------|------:|
 | 888W78UZYYT |     6 |
-| ZY9NYT7NXWW |     5 |
-| XNW79U9Z7WN |     5 |
-| ZZUNWZYXXTZ |     5 |
-| XYN7XZZU788 |     5 |
 | YW99TTN98UN |     5 |
 | 7ZU8NNN7XUN |     5 |
-| ZU7N8UW8XYX |     5 |
+| ZWZT9ZZUZU8 |     5 |
+| XNW79U9Z7WN |     5 |
+| ZW9TYZXTWTZ |     5 |
 | XNXXWZZ97TZ |     5 |
-| Y97YZZX88TY |     5 |
+| ZTZTWZXTYZX |     5 |
+| ZZUNWZYXXTZ |     5 |
+| T9ZYTXZ7WYZ |     5 |
 
 #### Coluna: `safra`
 

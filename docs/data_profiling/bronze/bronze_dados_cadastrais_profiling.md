@@ -1,5 +1,24 @@
 # Relatório de Profiling: `bronze/dados_cadastrais` - `20260108_140523`
 
+### 🔑 Garantia de Unicidade: `bronze/dados_cadastrais`
+- **Chave Técnica:** `num_cpf, safra`
+- **Tipo:** `COMPOSTA`
+
+| coluna        |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
+|:--------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
+| CHAVE_TECNICA |     3787342 |       0 |       113036 | 0.0%        | 2.9%             | ALTA            |
+
+### 🚩 Diagnóstico e Observações Técnicas
+* ℹ️ **Deduplicação Necessária:** Aproximação indica cerca de **113.036** (2.9%) duplicados. Na camada Silver. será obrigatório o uso de `ROW_NUMBER()` com `PARTITION BY` nas colunas da chave e `ORDER BY ingestion_ts DESC` para garantir a unicidade real.
+* ❗ **Risco de Integridade:** Não utilize esta tabela Bronze para `JOINs` diretos. A duplicidade detectada causará o efeito de explosão de registros, comprometendo a acurácia de métricas financeiras.
+* 👻 **Otimização de Schema:** Colunas detectadas como 100% nulas ou zeradas (ex: `dat_atualizacao_credito`, `val_desconto_item`) devem ser avaliadas para exclusão na Silver para ganho de performance.
+
+---
+
+
+
+---
+
 ### 📦 Volumetria: `bronze/dados_cadastrais`
 | diretorio      |   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
 |:---------------|---------------:|:------------|----------:|-------------------------:|----------------------------:|
@@ -85,21 +104,87 @@
 
 ---
 
+### 🔢 Range de Valores Numéricos: `bronze/dados_cadastrais`
+
+#### Coluna: `var_03`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     1 |   100 |   32.78 |
+
+#### Coluna: `var_02`
+|   min |    max |   media |
+|------:|-------:|--------:|
+|     1 | 992225 |  523977 |
+
+#### Coluna: `var_04`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |     5 |    0.18 |
+
+#### Coluna: `var_05`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     1 |    10 |    1.95 |
+
+#### Coluna: `var_06`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     1 |     1 |       1 |
+
+#### Coluna: `var_07`
+|   min |         max |   media |
+|------:|------------:|--------:|
+|     0 | 3.79754e+07 | 46166.8 |
+
+#### Coluna: `var_08`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     1 |    98 |   46.32 |
+
+#### Coluna: `var_09`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     1 |    18 |    7.77 |
+
+#### Coluna: `var_11`
+|      min |     max |   media |
+|---------:|--------:|--------:|
+| -2791.67 | 49329.2 | 3988.71 |
+
+#### Coluna: `var_14`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     1 |   154 |    1.18 |
+
+#### Coluna: `var_16`
+|   min |   max |   media |
+|------:|------:|--------:|
+|    41 |  3046 |  569.71 |
+
+#### Coluna: `var_17`
+|    min |    max |   media |
+|-------:|-------:|--------:|
+| 202001 | 202406 |  202317 |
+
+
+
+---
+
 ### 📊 Estatísticas por Coluna: `bronze/dados_cadastrais`
 | coluna           |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
 |:-----------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
-| num_cpf          |     3590459 |       0 |       309919 | 0.0%        | 7.95%            | ALTA            |
+| num_cpf          |     3034069 |       0 |       866309 | 0.0%        | 22.21%           | ALTA            |
 | safra            |           6 |       0 |      3900372 | 0.0%        | 100.0%           | BAIXA           |
-| datadenascimento |       30046 |   16831 |      3870332 | 0.43%       | 99.23%           | MEDIA           |
-| var_12           |       15469 | 1490335 |      3884909 | 38.21%      | 99.6%            | MEDIA           |
-| var_13           |        1264 | 3314097 |      3899114 | 84.97%      | 99.97%           | BAIXA           |
+| datadenascimento |       27242 |   16831 |      3873136 | 0.43%       | 99.3%            | MEDIA           |
+| var_12           |       11971 | 1490335 |      3888407 | 38.21%      | 99.69%           | MEDIA           |
+| var_13           |        1614 | 3314097 |      3898764 | 84.97%      | 99.96%           | BAIXA           |
 | flag_instalacao  |           2 |       0 |      3900376 | 0.0%        | 100.0%           | BAIXA           |
 | fpd              |           2 | 1203757 |      3900376 | 30.86%      | 100.0%           | BAIXA           |
 | prod             |           3 |       0 |      3900375 | 0.0%        | 100.0%           | BAIXA           |
 | flag_mig2        |           3 | 1266478 |      3900375 | 32.47%      | 100.0%           | BAIXA           |
 | statusrf         |           6 |   15154 |      3900372 | 0.39%       | 100.0%           | BAIXA           |
-| var_10           |        3320 | 3838163 |      3897058 | 98.4%       | 99.91%           | BAIXA           |
-| var_15           |          27 | 3315375 |      3900351 | 85.0%       | 100.0%           | BAIXA           |
+| var_10           |        3707 | 3838163 |      3896671 | 98.4%       | 99.9%            | BAIXA           |
+| var_15           |          28 | 3315375 |      3900350 | 85.0%       | 100.0%           | BAIXA           |
 | var_18           |           1 | 3157126 |      3900377 | 80.94%      | 100.0%           | BAIXA           |
 | var_19           |           1 | 2223690 |      3900377 | 57.01%      | 100.0%           | BAIXA           |
 | var_20           |           1 | 3827574 |      3900377 | 98.13%      | 100.0%           | BAIXA           |
@@ -107,19 +192,19 @@
 | var_22           |           1 | 3533608 |      3900377 | 90.6%       | 100.0%           | BAIXA           |
 | var_23           |           1 | 3315375 |      3900377 | 85.0%       | 100.0%           | BAIXA           |
 | var_24           |           2 | 1490335 |      3900376 | 38.21%      | 100.0%           | BAIXA           |
-| var_25           |          63 |  467469 |      3900315 | 11.99%      | 100.0%           | BAIXA           |
-| cep_3_digitos    |         922 |  292051 |      3899456 | 7.49%       | 99.98%           | BAIXA           |
-| var_03           |         100 |  269970 |      3900278 | 6.92%       | 100.0%           | BAIXA           |
-| var_02           |        2130 | 3685278 |      3898248 | 94.49%      | 99.95%           | BAIXA           |
+| var_25           |          87 |  467469 |      3900291 | 11.99%      | 100.0%           | BAIXA           |
+| cep_3_digitos    |        1093 |  292051 |      3899285 | 7.49%       | 99.97%           | BAIXA           |
+| var_03           |          96 |  269970 |      3900282 | 6.92%       | 100.0%           | BAIXA           |
+| var_02           |        2231 | 3685278 |      3898147 | 94.49%      | 99.94%           | BAIXA           |
 | var_04           |           6 |   15154 |      3900372 | 0.39%       | 100.0%           | BAIXA           |
-| var_05           |          10 |  196424 |      3900368 | 5.04%       | 100.0%           | BAIXA           |
+| var_05           |          11 |  196424 |      3900367 | 5.04%       | 100.0%           | BAIXA           |
 | var_06           |           1 | 3157126 |      3900377 | 80.94%      | 100.0%           | BAIXA           |
-| var_07           |      225525 | 3250748 |      3674853 | 83.34%      | 94.22%           | ALTA            |
-| var_08           |          53 | 3157325 |      3900325 | 80.95%      | 100.0%           | BAIXA           |
-| var_09           |          17 | 2223690 |      3900361 | 57.01%      | 100.0%           | BAIXA           |
-| var_11           |       16030 | 3842389 |      3884348 | 98.51%      | 99.59%           | MEDIA           |
-| var_14           |          49 | 3533608 |      3900329 | 90.6%       | 100.0%           | BAIXA           |
-| var_16           |        1513 | 3315375 |      3898865 | 85.0%       | 99.96%           | BAIXA           |
+| var_07           |      231241 | 3250748 |      3669137 | 83.34%      | 94.07%           | ALTA            |
+| var_08           |          51 | 3157325 |      3900327 | 80.95%      | 100.0%           | BAIXA           |
+| var_09           |          20 | 2223690 |      3900358 | 57.01%      | 100.0%           | BAIXA           |
+| var_11           |       15194 | 3842389 |      3885184 | 98.51%      | 99.61%           | MEDIA           |
+| var_14           |          46 | 3533608 |      3900332 | 90.6%       | 100.0%           | BAIXA           |
+| var_16           |        1514 | 3315375 |      3898864 | 85.0%       | 99.96%           | BAIXA           |
 | var_17           |          20 | 3315375 |      3900358 | 85.0%       | 100.0%           | BAIXA           |
 | ingestion_ts     |           1 |       0 |      3900377 | 0.0%        | 100.0%           | BAIXA           |
 | ano_mes          |           6 |       0 |      3900372 | 0.0%        | 100.0%           | BAIXA           |
@@ -132,14 +217,14 @@
 
 | valor       |   qtd |
 |:------------|------:|
-| Y77ZYUXU8NW |     6 |
+| ZZTZ799U79T |     6 |
 | WW7NWZ9Y8ZW |     6 |
+| XX9Z8T8YUZT |     6 |
+| Y77ZYUXU8NW |     6 |
+| 888W78UZYYT |     6 |
 | 7X7NZ79YWU9 |     6 |
 | WXZY8TNZ7XZ |     6 |
-| 888W78UZYYT |     6 |
-| XX9Z8T8YUZT |     6 |
 | U8Z9ZZ8N8XZ |     6 |
-| ZZTZ799U79T |     6 |
 | ZZZZZZZX7T9 |     6 |
 | ZX77YX8WNWN |     6 |
 
