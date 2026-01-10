@@ -1,4 +1,4 @@
-# Relatório de Profiling: `silver/telco` - `20260110_052507`
+# Relatório de Profiling: `silver/telco` - `20260110_154715`
 
 ### 🔑 Garantia de Unicidade: `silver/telco`
 - **Chave Técnica:** `num_cpf, safra, prod, flag_instalacao`
@@ -18,9 +18,9 @@
 | column_name     | column_type              |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
 |:----------------|:-------------------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
 | num_cpf         | VARCHAR                  |     1187719 |       0 |       179385 | 0.0%        | 13.12%           | ALTA            |
-| safra           | VARCHAR                  |           6 |       0 |      1367098 | 0.0%        | 100.0%           | BAIXA           |
+| safra           | DATE                     |           6 |       0 |      1367098 | 0.0%        | 100.0%           | BAIXA           |
 | prod            | VARCHAR                  |           3 |       0 |      1367101 | 0.0%        | 100.0%           | BAIXA           |
-| flag_instalacao | VARCHAR                  |           2 |       0 |      1367102 | 0.0%        | 100.0%           | BAIXA           |
+| flag_instalacao | BOOLEAN                  |           2 |       0 |      1367102 | 0.0%        | 100.0%           | BAIXA           |
 | flag_mig2       | VARCHAR                  |           3 |   58130 |      1367101 | 4.25%       | 100.0%           | BAIXA           |
 | fpd             | BOOLEAN                  |           2 |   45936 |      1367102 | 3.36%       | 100.0%           | BAIXA           |
 | var_26          | VARCHAR                  |           7 |    1295 |      1367097 | 0.09%       | 100.0%           | BAIXA           |
@@ -100,17 +100,22 @@
 ### 📦 Volumetria: `silver/telco`
 | diretorio      |   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
 |:---------------|---------------:|:------------|----------:|-------------------------:|----------------------------:|
-| ano_mes=202410 |              1 | 219.860     |        77 |                    14.41 |                       20.21 |
-| ano_mes=202411 |              1 | 240.520     |        77 |                    15.98 |                       23.29 |
-| ano_mes=202412 |              1 | 241.453     |        77 |                    16.15 |                       23.45 |
-| ano_mes=202501 |              1 | 233.710     |        77 |                    15.83 |                       22.82 |
-| ano_mes=202502 |              1 | 214.665     |        77 |                    14.07 |                       19.8  |
-| ano_mes=202503 |              1 | 216.896     |        77 |                    14.49 |                       21.01 |
-| TOTAL          |              6 | 1.367.104   |        77 |                    90.92 |                      130.57 |
+| ano_mes=202410 |              1 | 219.860     |        77 |                    14.35 |                       20.15 |
+| ano_mes=202411 |              1 | 240.520     |        77 |                    15.99 |                       23.42 |
+| ano_mes=202412 |              1 | 241.453     |        77 |                    16.15 |                       23.44 |
+| ano_mes=202501 |              1 | 233.710     |        77 |                    15.8  |                       22.63 |
+| ano_mes=202502 |              1 | 214.665     |        77 |                    14.08 |                       19.78 |
+| ano_mes=202503 |              1 | 216.896     |        77 |                    14.48 |                       20.99 |
+| TOTAL          |              6 | 1.367.104   |        77 |                    90.86 |                      130.41 |
 
 ---
 
 ### 📅 Range de Datas: `silver/telco`
+#### Coluna: `safra`
+| min                        | max                        |
+|:---------------------------|:---------------------------|
+| 2024-10-01T00:00:00.000000 | 2025-03-01T00:00:00.000000 |
+
 #### Coluna: `ingestion_ts`
 | min                              | max                              |
 |:---------------------------------|:---------------------------------|
@@ -347,15 +352,15 @@
 | valor       |   qtd |
 |:------------|------:|
 | 888W78UZYYT |     6 |
-| XNXXWZZ97TZ |     5 |
-| UZTWX7NU8UY |     5 |
-| ZZUNWZYXXTZ |     5 |
-| ZUZUZZX7X88 |     5 |
+| 8T9NWWT8TUZ |     5 |
+| T9ZYTXZ7WYZ |     5 |
+| YY7ZZNNN8TY |     5 |
+| ZXNUU77UYZ8 |     5 |
+| ZYWUTZXXTU8 |     5 |
+| ZY9NYT7NXWW |     5 |
+| XYTY9ZX879Z |     5 |
+| Y97YZZX88TY |     5 |
 | ZW9TYZXTWTZ |     5 |
-| XNW79U9Z7WN |     5 |
-| 8NYZZZUWTYW |     5 |
-| 7ZU8NNN7XUN |     5 |
-| XYN7XZZU788 |     5 |
 
 #### Coluna: `safra`
 
@@ -1428,7 +1433,7 @@
 
 |           valor |     qtd |
 |----------------:|--------:|
-| 20260110_052507 | 1367104 |
+| 20260110_154715 | 1367104 |
 
 #### Coluna: `ano_mes`
 

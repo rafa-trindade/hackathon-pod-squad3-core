@@ -1,4 +1,4 @@
-# Relatório de Profiling: `silver/dados_cadastrais` - `20260110_045042`
+# Relatório de Profiling: `silver/dados_cadastrais` - `20260110_150431`
 
 ### 🔑 Garantia de Unicidade: `silver/dados_cadastrais`
 - **Chave Técnica:** `num_cpf, safra, prod`
@@ -18,7 +18,7 @@
 | column_name      | column_type              |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
 |:-----------------|:-------------------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
 | num_cpf          | VARCHAR                  |     3034069 |       0 |       866309 | 0.0%        | 22.21%           | ALTA            |
-| safra            | VARCHAR                  |           6 |       0 |      3900372 | 0.0%        | 100.0%           | BAIXA           |
+| safra            | DATE                     |           6 |       0 |      3900372 | 0.0%        | 100.0%           | BAIXA           |
 | prod             | VARCHAR                  |           3 |       0 |      3900375 | 0.0%        | 100.0%           | BAIXA           |
 | cep_3_digitos    | VARCHAR                  |        1093 |  292051 |      3899285 | 7.49%       | 99.97%           | BAIXA           |
 | datadenascimento | DATE                     |       27242 |   16831 |      3873136 | 0.43%       | 99.3%            | MEDIA           |
@@ -60,16 +60,21 @@
 | diretorio      |   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
 |:---------------|---------------:|:------------|----------:|-------------------------:|----------------------------:|
 | ano_mes=202410 |              1 | 653.586     |        36 |                    12.68 |                       18.31 |
-| ano_mes=202411 |              1 | 665.737     |        36 |                    12.93 |                       18.66 |
-| ano_mes=202412 |              1 | 646.037     |        36 |                    12.56 |                       18.13 |
-| ano_mes=202501 |              1 | 667.227     |        36 |                    13.04 |                       18.82 |
-| ano_mes=202502 |              1 | 619.961     |        36 |                    12.42 |                       17.78 |
-| ano_mes=202503 |              1 | 647.830     |        36 |                    12.64 |                       18.23 |
-| TOTAL          |              6 | 3.900.378   |        36 |                    76.28 |                      109.92 |
+| ano_mes=202411 |              1 | 665.737     |        36 |                    12.92 |                       18.66 |
+| ano_mes=202412 |              1 | 646.037     |        36 |                    12.55 |                       18.11 |
+| ano_mes=202501 |              1 | 667.227     |        36 |                    13.07 |                       18.82 |
+| ano_mes=202502 |              1 | 619.961     |        36 |                    12.45 |                       17.78 |
+| ano_mes=202503 |              1 | 647.830     |        36 |                    12.48 |                       18.06 |
+| TOTAL          |              6 | 3.900.378   |        36 |                    76.15 |                      109.75 |
 
 ---
 
 ### 📅 Range de Datas: `silver/dados_cadastrais`
+#### Coluna: `safra`
+| min                        | max                        |
+|:---------------------------|:---------------------------|
+| 2024-10-01T00:00:00.000000 | 2025-03-01T00:00:00.000000 |
+
 #### Coluna: `datadenascimento`
 | min                        | max                        |
 |:---------------------------|:---------------------------|
@@ -165,15 +170,15 @@
 
 | valor       |   qtd |
 |:------------|------:|
-| XX9Z8T8YUZT |     6 |
-| WXZY8TNZ7XZ |     6 |
-| WW7NWZ9Y8ZW |     6 |
-| U8Z9ZZ8N8XZ |     6 |
-| ZZZZZZZX7T9 |     6 |
-| 7X7NZ79YWU9 |     6 |
-| ZZTZ799U79T |     6 |
 | 888W78UZYYT |     6 |
 | Y77ZYUXU8NW |     6 |
+| 7X7NZ79YWU9 |     6 |
+| WW7NWZ9Y8ZW |     6 |
+| WXZY8TNZ7XZ |     6 |
+| XX9Z8T8YUZT |     6 |
+| U8Z9ZZ8N8XZ |     6 |
+| ZZTZ799U79T |     6 |
+| ZZZZZZZX7T9 |     6 |
 | ZX77YX8WNWN |     6 |
 
 #### Coluna: `safra`
@@ -219,8 +224,8 @@
 | 1981-06-10 |   349 |
 | 1981-06-05 |   348 |
 | 1985-09-20 |   346 |
-| 1988-03-10 |   345 |
 | 1989-10-12 |   345 |
+| 1988-03-10 |   345 |
 | 1982-06-08 |   344 |
 | 1988-06-06 |   343 |
 | 1983-02-28 |   342 |
@@ -565,7 +570,7 @@
 
 |           valor |     qtd |
 |----------------:|--------:|
-| 20260110_045042 | 3900378 |
+| 20260110_150431 | 3900378 |
 
 #### Coluna: `ano_mes`
 
