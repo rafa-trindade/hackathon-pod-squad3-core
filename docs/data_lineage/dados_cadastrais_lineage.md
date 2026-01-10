@@ -2,7 +2,7 @@
 
 - **Entidade Principal:** Cliente (`NUM_CPF`)
 - **Grão da Tabela (Unicidade):** `NUM_CPF, SAFRA, PROD`
-- **Chave de Relacionamento (Gold):** Sugestão: `NUM_CPF` (Identificador Único), `SAFRA` (Eixo Temporal)
+- **Sugestão Chave de Relacionamento (Gold):** `NUM_CPF` (Identificador Único), `SAFRA` (Eixo Temporal)
 - **Chave de Particionamento:** `SAFRA` (Formato YYYYMM)
 
 ---
@@ -12,7 +12,7 @@
 - **Fonte:** Externa 
 - **Frequência:** Sob demanda (Ingestão manual/Parquet)
 - **Formato Original:** Parquet
-- **Volume médio:** ~74 MiB por carga (105 MiB descomprimido)
+- **Volume Médio:** ~74 MiB por carga (105 MiB descomprimido)
 
 ---
 
@@ -37,8 +37,6 @@
 **Origem:** `s3://lake/raw/dados_cadastrais/*.parquet`  
 **Destino:** `s3://lake/bronze/dados_cadastrais/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
 
-- **Volume médio:** ~76 MiB por carga (109 MiB descomprimido)
-
 | Etapa | Processo | Descrição | Ações / Regras | Resultado Esperado |
 |------:|----------|-----------|----------------|-------------------|
 | 1 | **Normalization (Lowercase)** | Padronização de nomenclatura | Conversão de todos os nomes de colunas para minúsculo para evitar conflitos de case-sensitivity. | Nomes uniformes e sem conflitos de *case-sensitivity*. |
@@ -53,13 +51,25 @@
 **Origem:** `s3://lake/bronze/dados_cadastrais/*.parquet`  
 **Destino:** `s3://lake/silver/dados_cadastrais/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
 
-- **Volume médio:** em desenvolvimento
-
 | Etapa | Processo | Descrição | Ações / Regras | Resultado Esperado |
 |------:|:---------|:----------|:---------------|:-------------------|
 | 1 | **Deduplicação** | Garantia de unicidade no lote de carga | Aplicação da regra de grão sobre os novos registros. | Dados reprocessados com unicidade absoluta. |
 | 2 | **Normalização de Chaves** | Saneamento de identificadores | Conversão de *hashes* padrão ou valores fixos (vazios) para um padrão explícito de nulidade (`NULL`). | Chaves de relacionamento íntegras para operações de cruzamento (*JOIN*). |
 | 3 | **Limpeza de Colunas** | Otimização do esquema (*Schema*) | Remoção de colunas 100% nulas ou sem valor analítico identificadas no diagnóstico de dados. | Base de dados mais leve, com redução de custos de leitura e armazenamento. |
+
+---
+
+#### 2.2.1 🔍 Auditoria e Saneamento
+
+**Grãos em Conformidade:** `num_cpf`, `safra`, `prod`
+
+**Estatísticas de Processamento:**
+* 📥 **Registros Iniciais (Bronze):** `3.900.378`
+* 💎 **Registros Mantidos (Silver):** `3.900.378`
+* ⚠️ **Registros Removidos (Duplicados):** `0` (**0.00%**)
+
+**Otimização de Schema (Colunas Excluídas):**
+* ✨ **Nenhuma coluna 100% nula encontrada:** Todas as colunas originais continham dados e foram preservadas.
 
 ---
 

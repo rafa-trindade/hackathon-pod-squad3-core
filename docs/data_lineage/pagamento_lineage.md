@@ -2,7 +2,7 @@
 
 - **Entidade Principal:** Pagamento do Cliente (`NUM_CPF` + `CONTRATO`)
 - **Grão da Tabela (Unicidade):** `NUM_CPF, CONTRATO, SEQ_FATURA, NUM_SUB_SEQ_FATURA`
-- **Chave de Relacionamento (Gold):** Sugestão: `NUM_CPF` (Identificador Único), `CONTRATO` (Vínculo de Produto), `DAT_STATUS_FATURA` (Eixo Temporal)
+- **Sugestão Chave de Relacionamento (Gold):** `NUM_CPF` (Identificador Único), `CONTRATO` (Vínculo de Produto), `DAT_STATUS_FATURA` (Eixo Temporal)
 - **Chave de Particionamento:** `DAT_STATUS_FATURA` (Formato YYYYMM)
 
 ---
@@ -12,7 +12,7 @@
 - **Fonte:** Externa 
 - **Frequência:** Sob demanda (Ingestão manual/Parquet)
 - **Formato Original:** Parquet
-- **Volume médio:** ~2115 MiB por carga (3677 MiB descomprimido)
+- **Volume Médio:** ~2115 MiB por carga (3677 MiB descomprimido)
 
 ---
 
@@ -37,8 +37,6 @@
 **Origem:** `s3://lake/raw/pagamento/*.parquet`  
 **Destino:** `s3://lake/bronze/pagamento/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
 
-- **Volume médio:** ~1757 MiB por carga (2943 MiB descomprimido)
-
 | Etapa | Processo | Descrição | Ações / Regras | Resultado Esperado |
 |------:|----------|-----------|----------------|-------------------|
 | 1 | **Normalization (Lowercase)** | Padronização de nomenclatura | Conversão de todos os nomes de colunas para minúsculo para evitar conflitos de case-sensitivity. | Nomes uniformes e sem conflitos de *case-sensitivity*. |
@@ -53,13 +51,25 @@
 **Origem:** `s3://lake/bronze/pagamento/*.parquet`  
 **Destino:** `s3://lake/silver/pagamento/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
 
-- **Volume médio:** em desenvolvimento
-
 | Etapa | Processo | Descrição | Ações / Regras | Resultado Esperado |
 |------:|:---------|:----------|:---------------|:-------------------|
 | 1 | **Deduplicação** | Garantia de unicidade no lote de carga | Aplicação da regra de grão sobre os novos registros. | Dados reprocessados com unicidade absoluta. |
 | 2 | **Normalização de Chaves** | Saneamento de identificadores | Conversão de *hashes* padrão ou valores fixos (vazios) para um padrão explícito de nulidade (`NULL`). | Chaves de relacionamento íntegras para operações de cruzamento (*JOIN*). |
 | 3 | **Limpeza de Colunas** | Otimização do esquema (*Schema*) | Remoção de colunas 100% nulas ou sem valor analítico identificadas no diagnóstico de dados. | Base de dados mais leve, com redução de custos de leitura e armazenamento. |
+
+---
+
+#### 2.2.1 🔍 Auditoria e Saneamento
+
+**Grãos em Conformidade:** `num_cpf`, `contrato`, `seq_fatura`, `num_sub_seq_fatura`
+
+**Estatísticas de Processamento:**
+* 📥 **Registros Iniciais (Bronze):** `21.829.628`
+* 💎 **Registros Mantidos (Silver):** `21.567.614`
+* ⚠️ **Registros Removidos (Duplicados):** `262.014` (**1.20%**)
+
+**Otimização de Schema (Colunas Excluídas):**
+* ✂️ **Colunas 100% Nulas Removidas:** `dat_atualizacao_credito`, `cod_netuno_pagamento`, `cod_desalocacao_credito`.
 
 ---
 

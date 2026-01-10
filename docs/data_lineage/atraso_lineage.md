@@ -2,7 +2,7 @@
 
 - **Entidade Principal:** Fatura do Cliente (`NUM_CPF` + `CONTRATO`)
 - **Grão da Tabela (Unicidade):** `NUM_CPF, CONTRATO, DAT_REFERENCIA, NUM_FATURA_HASH, NUM_ENT_SEQ_FATURA`
-- **Chave de Relacionamento (Gold):** Sugestão: `NUM_CPF` (Identificador Único), `CONTRATO` (Vínculo de Produto), `DAT_REFERENCIA` (Eixo Temporal)
+- **Sugestão Chave de Relacionamento (Gold):** `NUM_CPF` (Identificador Único), `CONTRATO` (Vínculo de Produto), `DAT_REFERENCIA` (Eixo Temporal)
 - **Chave de Particionamento:** `DAT_REFERENCIA` (Formato YYYYMM)
 
 ---
@@ -12,7 +12,7 @@
 - **Fonte:** Externa 
 - **Frequência:** Sob demanda (Ingestão manual/Parquet)
 - **Formato Original:** Parquet
-- **Volume médio:** ~4307 MiB por carga (6358 MiB descomprimido)
+- **Volume Médio:** ~4307 MiB por carga (6358 MiB descomprimido)
 
 ---
 
@@ -37,8 +37,6 @@
 **Origem:** `s3://lake/raw/atraso/*.parquet`  
 **Destino:** `s3://lake/bronze/atraso/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
 
-- **Volume médio:** ~3541 MiB por carga (5213 MiB descomprimido)
-
 | Etapa | Processo | Descrição | Ações / Regras | Resultado Esperado |
 |------:|----------|-----------|----------------|-------------------|
 | 1 | **Normalization (Lowercase)** | Padronização de nomenclatura | Conversão de todos os nomes de colunas para minúsculo para evitar conflitos de case-sensitivity. | Nomes uniformes e sem conflitos de *case-sensitivity*. |
@@ -53,13 +51,29 @@
 **Origem:** `s3://lake/bronze/atraso/*.parquet`  
 **Destino:** `s3://lake/silver/atraso/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
 
-- **Volume médio:** em desenvolvimento
-
 | Etapa | Processo | Descrição | Ações / Regras | Resultado Esperado |
 |------:|:---------|:----------|:---------------|:-------------------|
 | 1 | **Deduplicação** | Garantia de unicidade no lote de carga | Aplicação da regra de grão sobre os novos registros. | Dados reprocessados com unicidade absoluta. |
 | 2 | **Normalização de Chaves** | Saneamento de identificadores | Conversão de *hashes* padrão ou valores fixos (vazios) para um padrão explícito de nulidade (`NULL`). | Chaves de relacionamento íntegras para operações de cruzamento (*JOIN*). |
 | 3 | **Limpeza de Colunas** | Otimização do esquema (*Schema*) | Remoção de colunas 100% nulas ou sem valor analítico identificadas no diagnóstico de dados. | Base de dados mais leve, com redução de custos de leitura e armazenamento. |
+
+---
+
+#### 2.2.1 🔍 Auditoria e Saneamento
+
+**Grãos em Conformidade:** `num_cpf`, `contrato`, `dat_referencia`, `num_fatura_hash`, `num_ent_seq_fatura`
+
+**Estatísticas de Processamento:**
+* 📥 **Registros Iniciais (Bronze):** `31.611.316`
+* 💎 **Registros Mantidos (Silver):** `31.611.219`
+* ⚠️ **Registros Removidos (Duplicados):** `97` (**< 0.01%**)
+
+**Otimização de Schema (Colunas Excluídas):**
+* ✂️ **Colunas 100% Nulas Removidas:** `dat_cancelamento_fat`.
+
+**Notas de Saneamento:**
+* 🛠️ **Saneamento de Identificadores:** A coluna `num_fatura_hash` teve 1.075.903 registros normalizados.
+* 🔍 **Blacklist de Hash:** O valor técnico `5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9` (hash de valor nulo) foi detectado e convertido para o padrão `'0'`.
 
 ---
 
