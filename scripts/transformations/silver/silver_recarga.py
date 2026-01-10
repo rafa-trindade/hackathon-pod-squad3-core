@@ -169,25 +169,32 @@ def run():
     # ETAPA 3: Limpeza de Colunas
     # ------------------------------------------------------------------
     print("--------------------------------------------------")
-    print("🧹 Etapa 3: Analisando colunas para limpeza de schema...")
+    print("🧹 Etapa 3: Analisando colunas e reordenando schema...")
     
     step2_table = f"work_db.silver_{TABLE_NAME}_step2"
-    df_check = con.execute(f"SELECT * FROM {step2_table} LIMIT 100").df()
-    all_columns = df_check.columns.tolist()
     
-    null_counts = con.execute(f"""
-        SELECT {', '.join([f"COUNT({c}) AS {c}" for c in all_columns])} FROM {step2_table}
-    """).df()
+    all_columns = con.execute(f"DESCRIBE {step2_table}").df()['column_name'].tolist()
     
+    null_counts = con.execute(f"SELECT {', '.join([f'COUNT({c}) AS {c}' for c in all_columns])} FROM {step2_table}").df()
     cols_to_drop = [col for col in null_counts.columns if null_counts[col][0] == 0]
+    
+    cols_remaining = [c for c in all_columns if c not in cols_to_drop]
+    
+    metadata_cols = ['ingestion_ts', 'run_id', 'ano_mes']
+    business_keys = list(keys_to_clean.keys())
+    
+    other_cols = sorted([c for c in cols_remaining if c not in business_keys and c not in metadata_cols])
+    
+    ordered_cols = business_keys + other_cols + [c for c in metadata_cols if c in cols_remaining]
+
     final_table = f"work_db.silver_{TABLE_NAME}_final"
+    con.execute(f"CREATE TABLE {final_table} AS SELECT {', '.join(ordered_cols)} FROM {step2_table}")
 
     if cols_to_drop:
-        con.execute(f"CREATE TABLE {final_table} AS SELECT * EXCLUDE({', '.join(cols_to_drop)}) FROM {step2_table}")
         print(f"✂️ Colunas 100% nulas excluídas: {cols_to_drop}")
     else:
-        con.execute(f"CREATE TABLE {final_table} AS SELECT * FROM {step2_table}")
         print("✨ Nenhuma coluna 100% nula encontrada.")
+    print(f"🔄 Schema reordenado: {len(ordered_cols)} colunas processadas.")
 
     # ------------------------------------------------------------------
     # Gravação Parquet (S3)
