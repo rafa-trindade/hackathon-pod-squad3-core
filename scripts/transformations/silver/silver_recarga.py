@@ -73,23 +73,26 @@ def run():
         sql_transform = []
         diff_conditions = []
 
+        col_types_df = con.execute(f"DESCRIBE SELECT * FROM read_parquet('{BRONZE_PATH}')").df()
+        col_types = dict(zip(col_types_df['column_name'], col_types_df['column_type']))
+
         for col, config in keys_to_clean.items():
             val_default = config['default']
+            target_type = col_types.get(col, 'VARCHAR') 
 
             blacklist = config['replace'] + ['', 'nan', 'NULL']
             formatted_blacklist = ", ".join([f"'{x}'" for x in blacklist])
 
             transform_expr = f"""
-                CASE 
+                (CASE 
                     WHEN TRIM({col}::VARCHAR) IN ({formatted_blacklist}) OR {col} IS NULL 
                     THEN '{val_default}' 
-                    ELSE TRIM({col}::VARCHAR) 
-                END
+                    ELSE {col}::VARCHAR 
+                END)::{target_type}
             """
             sql_transform.append(f"{transform_expr} AS {col}")
 
-            diff_conditions.append(f"SUM(CASE WHEN {col}::VARCHAR IS DISTINCT FROM ({transform_expr}) THEN 1 ELSE 0 END) AS diff_{col}")
-
+            diff_conditions.append(f"SUM(CASE WHEN {col}::VARCHAR IS DISTINCT FROM ({transform_expr})::VARCHAR THEN 1 ELSE 0 END) AS diff_{col}")
 
         stats_query = f"SELECT {', '.join(diff_conditions)} FROM read_parquet('{BRONZE_PATH}')"
         stats_result = con.execute(stats_query).fetchone()
