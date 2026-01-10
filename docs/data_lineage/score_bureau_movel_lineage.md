@@ -73,6 +73,33 @@
 
 ---
 
+#### 2.2.2 📁 Auditoria de Particionamento Físico (Hive)
+
+Para garantir que a estratégia de particionamento no S3 está correta, foi executado um script de inspeção em lote na camada Silver. O objetivo é validar se o conteúdo interno da coluna de data corresponde exatamente à estrutura de pastas `ano_mes=YYYYMM` onde os arquivos Parquet estão armazenados.
+
+**Evidência de Integridade (Run: 20260110_052433):**
+
+```text
+🚀 Iniciando Inspeção em Lote: score_bureau_movel
+📅 Período: 202410 até 202503
+🔑 Chave de conferência: safra
+==================================================================================================
+📁 Pasta 202410:    203,828 linhas | Min: 2024-10-01 00:00:00 | Max: 2024-10-01 00:00:00 | ✅ OK
+📁 Pasta 202411:    227,176 linhas | Min: 2024-11-01 00:00:00 | Max: 2024-11-01 00:00:00 | ✅ OK
+📁 Pasta 202412:    227,985 linhas | Min: 2024-12-01 00:00:00 | Max: 2024-12-01 00:00:00 | ✅ OK
+📁 Pasta 202501:    221,002 linhas | Min: 2025-01-01 00:00:00 | Max: 2025-01-01 00:00:00 | ✅ OK
+📁 Pasta 202502:    203,139 linhas | Min: 2025-02-01 00:00:00 | Max: 2025-02-01 00:00:00 | ✅ OK
+📁 Pasta 202503:    207,396 linhas | Min: 2025-03-01 00:00:00 | Max: 2025-03-01 00:00:00 | ✅ OK
+==================================================================================================
+```
+
+**Principais Observações Técnicas:**
+- **Consistência Temporal:** Confirmado que 100% dos registros possuem a coluna `safra` estritamente igual ao diretório de destino.
+- **Volume Global:** O total processado e validado nesta run é de **1.290.526** registros.
+- **Grão de Snapshot:** A base mantém a integridade de fotos mensais, com volumetria estável em torno de 215k registros por partição.
+
+---
+
 ### 3. Observações Técnicas
 
 - **Imutabilidade:** Nenhuma linha da camada *Raw* é descartada na *Bronze*; apenas os tipos são corrigidos e a nomenclatura é padronizada para garantir a fidelidade à origem.

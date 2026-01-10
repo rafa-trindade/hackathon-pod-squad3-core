@@ -77,6 +77,45 @@
 
 ---
 
+#### 📁 Auditoria de Particionamento Físico (Hive)
+
+Para garantir que a estratégia de particionamento no S3 está correta, foi executado um script de inspeção em lote na camada Silver. O objetivo é validar se o conteúdo interno da coluna de data corresponde exatamente à estrutura de pastas `ano_mes=YYYYMM` onde os arquivos Parquet estão armazenados.
+
+**Evidência de Integridade (Run: 20260110_045327):**
+
+```text
+🚀 Iniciando Inspeção em Lote: atraso
+📅 Período: 202310 até 202503
+🔑 Chave de conferência: dat_referencia
+==================================================================================================
+📁 Pasta 202310:  1,173,205 linhas | Min: 2023-10-01 00:00:00 | Max: 2023-10-01 00:00:00 | ✅ OK
+📁 Pasta 202311:  1,152,922 linhas | Min: 2023-11-01 00:00:00 | Max: 2023-11-01 00:00:00 | ✅ OK
+📁 Pasta 202312:  1,252,111 linhas | Min: 2023-12-01 00:00:00 | Max: 2023-12-01 00:00:00 | ✅ OK
+📁 Pasta 202401:  1,026,478 linhas | Min: 2024-01-01 00:00:00 | Max: 2024-01-01 00:00:00 | ✅ OK
+📁 Pasta 202402:  1,055,098 linhas | Min: 2024-02-01 00:00:00 | Max: 2024-02-01 00:00:00 | ✅ OK
+📁 Pasta 202403:  1,074,593 linhas | Min: 2024-03-01 00:00:00 | Max: 2024-03-01 00:00:00 | ✅ OK
+📁 Pasta 202404:  1,160,777 linhas | Min: 2024-04-01 00:00:00 | Max: 2024-04-01 00:00:00 | ✅ OK
+📁 Pasta 202405:  1,196,731 linhas | Min: 2024-05-01 00:00:00 | Max: 2024-05-01 00:00:00 | ✅ OK
+📁 Pasta 202406:  1,225,694 linhas | Min: 2024-06-01 00:00:00 | Max: 2024-06-01 00:00:00 | ✅ OK
+📁 Pasta 202407:  1,318,087 linhas | Min: 2024-07-01 00:00:00 | Max: 2024-07-01 00:00:00 | ✅ OK
+📁 Pasta 202408:  1,397,247 linhas | Min: 2024-08-01 00:00:00 | Max: 2024-08-01 00:00:00 | ✅ OK
+📁 Pasta 202409:  1,510,312 linhas | Min: 2024-09-01 00:00:00 | Max: 2024-09-01 00:00:00 | ✅ OK
+📁 Pasta 202410:  1,683,363 linhas | Min: 2024-10-01 00:00:00 | Max: 2024-10-01 00:00:00 | ✅ OK
+📁 Pasta 202411:  1,883,050 linhas | Min: 2024-11-01 00:00:00 | Max: 2024-11-01 00:00:00 | ✅ OK
+📁 Pasta 202412:  2,444,916 linhas | Min: 2024-12-01 00:00:00 | Max: 2024-12-01 00:00:00 | ✅ OK
+📁 Pasta 202501:  3,018,681 linhas | Min: 2025-01-01 00:00:00 | Max: 2025-01-01 00:00:00 | ✅ OK
+📁 Pasta 202502:  3,643,289 linhas | Min: 2025-02-01 00:00:00 | Max: 2025-02-01 00:00:00 | ✅ OK
+📁 Pasta 202503:  4,394,665 linhas | Min: 2025-03-01 00:00:00 | Max: 2025-03-01 00:00:00 | ✅ OK
+==================================================================================================
+```
+
+**Principais Observações Técnicas:**
+- **Consistência Temporal:** Confirmado que 100% dos registros possuem a coluna `dat_referencia` estritamente igual ao diretório de destino.
+- **Volume Global:** O total processado e validado nesta run é de **31.611.219** registros.
+- **Grão de Snapshot:** A base mantém a integridade de fotos mensais com data de referência sempre no dia 01, mantendo a integridade do particionamento mensal.
+
+---
+
 ### 3. Observações Técnicas
 
 - **Imutabilidade:** Nenhuma linha da camada *Raw* é descartada na *Bronze*; apenas os tipos são corrigidos e a nomenclatura é padronizada para garantir a fidelidade à origem.

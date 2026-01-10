@@ -73,6 +73,45 @@
 
 ---
 
+#### 2.2.2 📁 Auditoria de Particionamento Físico (Hive)
+
+Para garantir que a estratégia de particionamento no S3 está correta, foi executado um script de inspeção em lote na camada Silver. O objetivo é validar se o conteúdo interno da coluna de data corresponde exatamente à estrutura de pastas `ano_mes=YYYYMM` onde os arquivos Parquet estão armazenados.
+
+**Evidência de Integridade (Run: 20260110_050631):**
+
+```text
+🚀 Iniciando Inspeção em Lote: recarga
+📅 Período: 202310 até 202503
+🔑 Chave de conferência: dat_insercao_credito
+==================================================================================================
+📁 Pasta 202310:  4,182,629 linhas | Min: 2023-10-01 00:00:00 | Max: 2023-10-31 00:00:00 | ✅ OK
+📁 Pasta 202311:  4,153,371 linhas | Min: 2023-11-01 00:00:00 | Max: 2023-11-30 00:00:00 | ✅ OK
+📁 Pasta 202312:  4,440,690 linhas | Min: 2023-12-01 00:00:00 | Max: 2023-12-31 00:00:00 | ✅ OK
+📁 Pasta 202401:  4,238,829 linhas | Min: 2024-01-01 00:00:00 | Max: 2024-01-31 00:00:00 | ✅ OK
+📁 Pasta 202402:  4,254,204 linhas | Min: 2024-02-01 00:00:00 | Max: 2024-02-29 00:00:00 | ✅ OK
+📁 Pasta 202403:  4,736,808 linhas | Min: 2024-03-01 00:00:00 | Max: 2024-03-31 00:00:00 | ✅ OK
+📁 Pasta 202404:  4,641,082 linhas | Min: 2024-04-01 00:00:00 | Max: 2024-04-30 00:00:00 | ✅ OK
+📁 Pasta 202405:  4,822,127 linhas | Min: 2024-05-01 00:00:00 | Max: 2024-05-31 00:00:00 | ✅ OK
+📁 Pasta 202406:  4,886,421 linhas | Min: 2024-06-01 00:00:00 | Max: 2024-06-30 00:00:00 | ✅ OK
+📁 Pasta 202407:  5,257,411 linhas | Min: 2024-07-01 00:00:00 | Max: 2024-07-31 00:00:00 | ✅ OK
+📁 Pasta 202408:  5,557,900 linhas | Min: 2024-08-01 00:00:00 | Max: 2024-08-31 00:00:00 | ✅ OK
+📁 Pasta 202409:  5,512,580 linhas | Min: 2024-09-01 00:00:00 | Max: 2024-09-30 00:00:00 | ✅ OK
+📁 Pasta 202410:  6,480,407 linhas | Min: 2024-10-01 00:00:00 | Max: 2024-10-31 00:00:00 | ✅ OK
+📁 Pasta 202411:  6,800,420 linhas | Min: 2024-11-01 00:00:00 | Max: 2024-11-30 00:00:00 | ✅ OK
+📁 Pasta 202412:  6,927,326 linhas | Min: 2024-12-01 00:00:00 | Max: 2024-12-31 00:00:00 | ✅ OK
+📁 Pasta 202501:  6,366,515 linhas | Min: 2025-01-01 00:00:00 | Max: 2025-01-31 00:00:00 | ✅ OK
+📁 Pasta 202502:  6,030,903 linhas | Min: 2025-02-01 00:00:00 | Max: 2025-02-28 00:00:00 | ✅ OK
+📁 Pasta 202503:  6,096,666 linhas | Min: 2025-03-01 00:00:00 | Max: 2025-03-31 00:00:00 | ✅ OK
+==================================================================================================
+```
+
+**Principais Observações Técnicas:**
+- **Consistência Temporal:** Confirmado que 100% dos registros possuem a coluna `dat_insercao_credito` estritamente dentro do intervalo do diretório de destino.
+- **Volume Global:** O total processado e validado nesta run é de **95.386.289** registros.
+- **Grão de Transação:** Esta tabela reflete a volumetria de transações diárias (com Min/Max cobrindo o mês completo), garantindo a correta agregação física por partição mensal.
+
+---
+
 ### 3. Observações Técnicas
 
 - **Imutabilidade:** Nenhuma linha da camada *Raw* é descartada na *Bronze*; apenas os tipos são corrigidos e a nomenclatura é padronizada para garantir a fidelidade à origem.
