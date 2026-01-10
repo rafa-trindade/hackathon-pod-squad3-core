@@ -1,4 +1,4 @@
-# 🏗️ Squad 3 - Data Engineering
+## 🏗️ Squad 3 - Data Engineering
 
 Repositório de desenvolvimento e experimentação de engenharia de dados para o hackathon da Pod Academy - Squad 3 
 
