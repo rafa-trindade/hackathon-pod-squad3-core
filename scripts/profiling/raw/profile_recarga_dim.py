@@ -46,7 +46,7 @@ for file_path in files:
 
     md+= "---"
 
-    # 2. AMOSTRA DE DADOS (HEAD 10)
+    # 2. AMOSTRA DE DADOS (HEAD 5)
     md = f"#### 🔍 Amostra de Dados (Head 5)  - `{file_name}`\n\n"
     df_head = con.execute(f"SELECT * FROM read_csv_auto('{file_path}') LIMIT 5").df()
     md += df_head.to_markdown(index=False)
