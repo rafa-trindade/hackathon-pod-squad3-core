@@ -36,9 +36,9 @@ Repositório de desenvolvimento e experimentação de engenharia de dados para o
 
 **Foco:** Rastreabilidade e Governança do Fluxo.
 - **Rastreabilidade:** Mapeamento ponta a ponta da jornada do dado (Raw → Bronze → Silver → Gold).
-- **Processamento Técnico:** Padronização de nomes, tipagem forte e normalização na camada Bronze.
-- **Inteligência de Negócio:** Consolidação, deduplicação e aplicação de chaves semânticas na Silver.
-- **Qualidade:** Pontos de controle com Pandera garantindo conformidade entre as passagens de camada.
+- **Processamento Técnico:** Padronização de nomes, tipagem forte e enriquecimento de metadados na camada Bronze.
+- **Integridade de Dados:** Deduplicação por grão técnico, tratamento de *hashes* inválidos e saneamento de chaves na Silver.
+- **Otimização:** Particionamento físico por `ano_mes` e limpeza de colunas nulas para eficiência de custo e scan.
 
 ---
 
