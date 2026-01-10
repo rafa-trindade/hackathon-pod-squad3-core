@@ -18,7 +18,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 from config.data_connections import get_duckdb_connection
 from scripts.profiling.utils.profiling_utils import init_md_report, print_and_save_md
 
-SILVER_BASE_PATH = "s3://lake/silver/atraso"
+SILVER_BASE_PATH = "s3://lake/silver/dados_cadastrais"
 
 con = get_duckdb_connection(
     memory_limit="6GB",
@@ -35,7 +35,7 @@ latest_run_id = con.execute(f"""
 """).fetchone()[0]
 
 if latest_run_id is None:
-    raise RuntimeError("Nenhuma run_id encontrada na camada Bronze para atraso")
+    raise RuntimeError("Nenhuma run_id encontrada na camada Bronze para dados_cadastrais")
 
 print(f"📌 Última run_id encontrada: {latest_run_id}")
 
@@ -45,18 +45,19 @@ path_parquet = (
 )
 
 md_file = init_md_report(
-    report_filename="silver_atraso_profiling.md",
-    dataset_name=f"silver/atraso` - `{latest_run_id}",
+    report_filename="silver_dados_cadastrais_profiling.md",
+    dataset_name=f"silver/dados_cadastrais` - `{latest_run_id}",
     layer="silver"
 )
+
 
 
 # %% 
 # GARANTIA DE UNICIDADE E QUALIDADE #################
 #####################################################
-chave_tecnica_cols = ["num_cpf", "contrato", "dat_referencia", "num_fatura_hash", "num_ent_seq_fatura"]
+chave_tecnica_cols = ["num_cpf", "safra", "prod"]
 
-md = "### 🔑 Garantia de Unicidade: `silver/atraso`\n"
+md = "### 🔑 Garantia de Unicidade: `silver/dados_cadastrais`\n"
 md += f"- **Chave Técnica:** `{', '.join(chave_tecnica_cols)}`\n"
 md += f"- **Tipo:** `COMPOSTA`\n\n"
 
@@ -108,13 +109,12 @@ print_and_save_md(md, md_file)
 
 
 
-
 # %% 
 # SCHEMA E ESTATÍSTICA  ############################
 ####################################################
 import pandas as pd
 
-md = "### 📊 Schema e Estatísticas: `silver/atraso`\n"
+md = "### 📊 Schema e Estatísticas: `silver/dados_cadastrais`\n"
 
 df_schema_info = con.execute(f"""
     DESCRIBE 
@@ -178,7 +178,7 @@ print_and_save_md(md, md_file)
 # %%
 # VOLUMETRIA #####################################
 ##################################################
-md = "### 📦 Volumetria: `silver/atraso`\n"
+md = "### 📦 Volumetria: `silver/dados_cadastrais`\n"
 
 try:
     df_files = con.execute(f"""
@@ -289,7 +289,7 @@ print_and_save_md(md, md_file)
 # %%  
 # CAMPOS DATE/TIME ###############################
 ##################################################
-md = "### 📅 Range de Datas: `silver/atraso`\n"
+md = "### 📅 Range de Datas: `silver/dados_cadastrais`\n"
 
 date_cols = df_schema_info[
     df_schema_info["column_type"].str.contains("DATE|TIMESTAMP", case=False, na=False)
@@ -310,7 +310,7 @@ print_and_save_md(md, md_file)
 # %%  
 # CAMPOS NUMÉRICOS (MIN/MAX) #####################
 ##################################################
-md = "### 🔢 Range de Valores Numéricos: `silver/atraso`\n\n"
+md = "### 🔢 Range de Valores Numéricos: `silver/dados_cadastrais`\n\n"
 
 num_cols = df_schema_info[
     df_schema_info["column_type"].str.contains("INT|DOUBLE|FLOAT|DECIMAL|REAL", case=False, na=False)
@@ -344,7 +344,7 @@ print_and_save_md(md, md_file)
 # %%  
 # DISTRIBUIÇÃO POR VALORES (TOP 10) ##############
 ##################################################
-md = "### 🔟 Distribuição de Valores (Top 10): `silver/atraso`\n"
+md = "### 🔟 Distribuição de Valores (Top 10): `silver/dados_cadastrais`\n"
 
 for col in df_column_statistics["coluna"]:
     
