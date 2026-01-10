@@ -15,7 +15,7 @@ from scripts.transformations.utils.lake_retention import cleanup_old_runs
 # ------------------------------------------------------------------
 # CONFIGURAÇÕES DO PIPELINE
 # ------------------------------------------------------------------
-TABLE_NAME = "atraso"
+TABLE_NAME = "recarga"
 
 BRONZE_PATH = f"s3://lake/bronze/{TABLE_NAME}/**/*.parquet"
 RUN_ID = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
@@ -33,25 +33,16 @@ keys_to_clean = {
         'default': '0'
     },
     
-    'contrato': {
-        'replace': [], 
-        'default': '0'
-    },
-
-    'dat_referencia': {
+    'dat_insercao_credito': {
         'replace': [], 
         'default': '1900-01-01'
     },
 
-    'num_fatura_hash': {
-        'replace': ['5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9'], 
-        'default': '0'
+    'hor_insercao_credito': {
+        'replace': [], 
+        'default': '00:00:00'
     },
 
-    'num_ent_seq_fatura': {
-        'replace': [], 
-        'default': '0'
-    }
 }
 
 def run():

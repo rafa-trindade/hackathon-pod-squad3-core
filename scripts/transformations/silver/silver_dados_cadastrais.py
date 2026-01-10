@@ -15,7 +15,7 @@ from scripts.transformations.utils.lake_retention import cleanup_old_runs
 # ------------------------------------------------------------------
 # CONFIGURAÇÕES DO PIPELINE
 # ------------------------------------------------------------------
-TABLE_NAME = "atraso"
+TABLE_NAME = "dados_cadastrais"
 
 BRONZE_PATH = f"s3://lake/bronze/{TABLE_NAME}/**/*.parquet"
 RUN_ID = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
@@ -32,28 +32,17 @@ keys_to_clean = {
         'replace': [], 
         'default': '0'
     },
-    
-    'contrato': {
-        'replace': [], 
-        'default': '0'
-    },
-
-    'dat_referencia': {
+  
+    'safra': {
         'replace': [], 
         'default': '1900-01-01'
     },
 
-    'num_fatura_hash': {
-        'replace': ['5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9'], 
-        'default': '0'
-    },
-
-    'num_ent_seq_fatura': {
+    'prod': {
         'replace': [], 
         'default': '0'
     }
 }
-
 def run():
     con = get_duckdb_connection(
         memory_limit="6GB", 
