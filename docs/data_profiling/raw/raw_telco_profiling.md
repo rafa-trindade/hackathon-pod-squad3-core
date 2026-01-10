@@ -7,6 +7,7 @@
 
 ---
 
+
 ### 🧬 Schema: `raw/telco`
 | column_name     | column_type   | null   | key   | default   | extra   |
 |:----------------|:--------------|:-------|:------|:----------|:--------|

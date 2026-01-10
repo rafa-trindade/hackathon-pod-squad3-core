@@ -7,6 +7,7 @@
 
 ---
 
+
 ### 🧬 Schema: `raw/recarga`
 | column_name           | column_type   | null   | key   | default   | extra   |
 |:----------------------|:--------------|:-------|:------|:----------|:--------|

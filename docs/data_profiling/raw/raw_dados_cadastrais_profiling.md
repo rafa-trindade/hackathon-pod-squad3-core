@@ -7,6 +7,7 @@
 
 ---
 
+
 ### 🧬 Schema: `raw/dados_cadastrais`
 | column_name      | column_type   | null   | key   | default   | extra   |
 |:-----------------|:--------------|:-------|:------|:----------|:--------|

@@ -7,6 +7,7 @@
 
 ---
 
+
 ### 🧬 Schema: `raw/score_bureau_movel`
 | column_name     | column_type   | null   | key   | default   | extra   |
 |:----------------|:--------------|:-------|:------|:----------|:--------|
