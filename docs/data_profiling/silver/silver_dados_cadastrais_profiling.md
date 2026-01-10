@@ -1,4 +1,4 @@
-# Relatório de Profiling: `silver/dados_cadastrais` - `20260110_033403`
+# Relatório de Profiling: `silver/dados_cadastrais` - `20260110_045042`
 
 ### 🔑 Garantia de Unicidade: `silver/dados_cadastrais`
 - **Chave Técnica:** `num_cpf, safra, prod`
@@ -17,15 +17,31 @@
 ### 📊 Schema e Estatísticas: `silver/dados_cadastrais`
 | column_name      | column_type              |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
 |:-----------------|:-------------------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
+| num_cpf          | VARCHAR                  |     3034069 |       0 |       866309 | 0.0%        | 22.21%           | ALTA            |
+| safra            | VARCHAR                  |           6 |       0 |      3900372 | 0.0%        | 100.0%           | BAIXA           |
+| prod             | VARCHAR                  |           3 |       0 |      3900375 | 0.0%        | 100.0%           | BAIXA           |
+| cep_3_digitos    | VARCHAR                  |        1093 |  292051 |      3899285 | 7.49%       | 99.97%           | BAIXA           |
 | datadenascimento | DATE                     |       27242 |   16831 |      3873136 | 0.43%       | 99.3%            | MEDIA           |
+| flag_instalacao  | BOOLEAN                  |           2 |       0 |      3900376 | 0.0%        | 100.0%           | BAIXA           |
+| flag_mig2        | VARCHAR                  |           3 | 1266478 |      3900375 | 32.47%      | 100.0%           | BAIXA           |
+| fpd              | BOOLEAN                  |           2 | 1203757 |      3900376 | 30.86%      | 100.0%           | BAIXA           |
+| statusrf         | VARCHAR                  |           6 |   15154 |      3900372 | 0.39%       | 100.0%           | BAIXA           |
+| var_02           | INTEGER                  |        2231 | 3685278 |      3898147 | 94.49%      | 99.94%           | BAIXA           |
+| var_03           | INTEGER                  |          96 |  269970 |      3900282 | 6.92%       | 100.0%           | BAIXA           |
+| var_04           | INTEGER                  |           6 |   15154 |      3900372 | 0.39%       | 100.0%           | BAIXA           |
+| var_05           | INTEGER                  |          11 |  196424 |      3900367 | 5.04%       | 100.0%           | BAIXA           |
+| var_06           | INTEGER                  |           1 | 3157126 |      3900377 | 80.94%      | 100.0%           | BAIXA           |
+| var_07           | DOUBLE                   |      231241 | 3250748 |      3669137 | 83.34%      | 94.07%           | ALTA            |
+| var_08           | INTEGER                  |          51 | 3157325 |      3900327 | 80.95%      | 100.0%           | BAIXA           |
+| var_09           | INTEGER                  |          20 | 2223690 |      3900358 | 57.01%      | 100.0%           | BAIXA           |
+| var_10           | VARCHAR                  |        3707 | 3838163 |      3896671 | 98.4%       | 99.9%            | BAIXA           |
+| var_11           | DOUBLE                   |       15194 | 3842389 |      3885184 | 98.51%      | 99.61%           | MEDIA           |
 | var_12           | DATE                     |       11971 | 1490335 |      3888407 | 38.21%      | 99.69%           | MEDIA           |
 | var_13           | DATE                     |        1614 | 3314097 |      3898764 | 84.97%      | 99.96%           | BAIXA           |
-| flag_instalacao  | BOOLEAN                  |           2 |       0 |      3900376 | 0.0%        | 100.0%           | BAIXA           |
-| fpd              | BOOLEAN                  |           2 | 1203757 |      3900376 | 30.86%      | 100.0%           | BAIXA           |
-| flag_mig2        | VARCHAR                  |           3 | 1266478 |      3900375 | 32.47%      | 100.0%           | BAIXA           |
-| statusrf         | VARCHAR                  |           6 |   15154 |      3900372 | 0.39%       | 100.0%           | BAIXA           |
-| var_10           | VARCHAR                  |        3707 | 3838163 |      3896671 | 98.4%       | 99.9%            | BAIXA           |
+| var_14           | INTEGER                  |          46 | 3533608 |      3900332 | 90.6%       | 100.0%           | BAIXA           |
 | var_15           | VARCHAR                  |          28 | 3315375 |      3900350 | 85.0%       | 100.0%           | BAIXA           |
+| var_16           | INTEGER                  |        1514 | 3315375 |      3898864 | 85.0%       | 99.96%           | BAIXA           |
+| var_17           | INTEGER                  |          20 | 3315375 |      3900358 | 85.0%       | 100.0%           | BAIXA           |
 | var_18           | VARCHAR                  |           1 | 3157126 |      3900377 | 80.94%      | 100.0%           | BAIXA           |
 | var_19           | VARCHAR                  |           1 | 2223690 |      3900377 | 57.01%      | 100.0%           | BAIXA           |
 | var_20           | VARCHAR                  |           1 | 3827574 |      3900377 | 98.13%      | 100.0%           | BAIXA           |
@@ -34,24 +50,8 @@
 | var_23           | VARCHAR                  |           1 | 3315375 |      3900377 | 85.0%       | 100.0%           | BAIXA           |
 | var_24           | VARCHAR                  |           2 | 1490335 |      3900376 | 38.21%      | 100.0%           | BAIXA           |
 | var_25           | VARCHAR                  |          87 |  467469 |      3900291 | 11.99%      | 100.0%           | BAIXA           |
-| cep_3_digitos    | VARCHAR                  |        1093 |  292051 |      3899285 | 7.49%       | 99.97%           | BAIXA           |
-| var_03           | INTEGER                  |          96 |  269970 |      3900282 | 6.92%       | 100.0%           | BAIXA           |
-| var_02           | INTEGER                  |        2231 | 3685278 |      3898147 | 94.49%      | 99.94%           | BAIXA           |
-| var_04           | INTEGER                  |           6 |   15154 |      3900372 | 0.39%       | 100.0%           | BAIXA           |
-| var_05           | INTEGER                  |          11 |  196424 |      3900367 | 5.04%       | 100.0%           | BAIXA           |
-| var_06           | INTEGER                  |           1 | 3157126 |      3900377 | 80.94%      | 100.0%           | BAIXA           |
-| var_07           | DOUBLE                   |      231241 | 3250748 |      3669137 | 83.34%      | 94.07%           | ALTA            |
-| var_08           | INTEGER                  |          51 | 3157325 |      3900327 | 80.95%      | 100.0%           | BAIXA           |
-| var_09           | INTEGER                  |          20 | 2223690 |      3900358 | 57.01%      | 100.0%           | BAIXA           |
-| var_11           | DOUBLE                   |       15194 | 3842389 |      3885184 | 98.51%      | 99.61%           | MEDIA           |
-| var_14           | INTEGER                  |          46 | 3533608 |      3900332 | 90.6%       | 100.0%           | BAIXA           |
-| var_16           | INTEGER                  |        1514 | 3315375 |      3898864 | 85.0%       | 99.96%           | BAIXA           |
-| var_17           | INTEGER                  |          20 | 3315375 |      3900358 | 85.0%       | 100.0%           | BAIXA           |
 | ingestion_ts     | TIMESTAMP WITH TIME ZONE |           1 |       0 |      3900377 | 0.0%        | 100.0%           | BAIXA           |
 | run_id           | VARCHAR                  |           1 |       0 |      3900377 | 0.0%        | 100.0%           | BAIXA           |
-| num_cpf          | VARCHAR                  |     3034069 |       0 |       866309 | 0.0%        | 22.21%           | ALTA            |
-| safra            | VARCHAR                  |           6 |       0 |      3900372 | 0.0%        | 100.0%           | BAIXA           |
-| prod             | VARCHAR                  |           3 |       0 |      3900375 | 0.0%        | 100.0%           | BAIXA           |
 | ano_mes          | BIGINT                   |           6 |       0 |      3900372 | 0.0%        | 100.0%           | BAIXA           |
 
 ---
@@ -59,13 +59,13 @@
 ### 📦 Volumetria: `silver/dados_cadastrais`
 | diretorio      |   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
 |:---------------|---------------:|:------------|----------:|-------------------------:|----------------------------:|
-| ano_mes=202410 |              1 | 653.586     |        36 |                    12.67 |                       18.31 |
-| ano_mes=202411 |              1 | 665.737     |        36 |                    13.08 |                       18.82 |
-| ano_mes=202412 |              1 | 646.037     |        36 |                    12.54 |                       18.11 |
-| ano_mes=202501 |              1 | 667.227     |        36 |                    13.08 |                       18.82 |
-| ano_mes=202502 |              1 | 619.961     |        36 |                    12.45 |                       17.78 |
-| ano_mes=202503 |              1 | 647.830     |        36 |                    12.48 |                       18.06 |
-| TOTAL          |              6 | 3.900.378   |        36 |                    76.31 |                      109.91 |
+| ano_mes=202410 |              1 | 653.586     |        36 |                    12.68 |                       18.31 |
+| ano_mes=202411 |              1 | 665.737     |        36 |                    12.93 |                       18.66 |
+| ano_mes=202412 |              1 | 646.037     |        36 |                    12.56 |                       18.13 |
+| ano_mes=202501 |              1 | 667.227     |        36 |                    13.04 |                       18.82 |
+| ano_mes=202502 |              1 | 619.961     |        36 |                    12.42 |                       17.78 |
+| ano_mes=202503 |              1 | 647.830     |        36 |                    12.64 |                       18.23 |
+| TOTAL          |              6 | 3.900.378   |        36 |                    76.28 |                      109.92 |
 
 ---
 
@@ -96,15 +96,15 @@
 
 ### 🔢 Range de Valores Numéricos: `silver/dados_cadastrais`
 
-#### Coluna: `var_03`
-|   min |   max |   media |
-|------:|------:|--------:|
-|     1 |   100 |   32.78 |
-
 #### Coluna: `var_02`
 |   min |    max |   media |
 |------:|-------:|--------:|
 |     1 | 992225 |  523977 |
+
+#### Coluna: `var_03`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     1 |   100 |   32.78 |
 
 #### Coluna: `var_04`
 |   min |   max |   media |
@@ -161,181 +161,39 @@
 ---
 
 ### 🔟 Distribuição de Valores (Top 10): `silver/dados_cadastrais`
-#### Coluna: `datadenascimento`
+#### Coluna: `num_cpf`
 
-| valor      |   qtd |
-|:-----------|------:|
-| NULL       | 16831 |
-| 1982-05-10 |   355 |
-| 1981-06-10 |   349 |
-| 1981-06-05 |   348 |
-| 1985-09-20 |   346 |
-| 1989-10-12 |   345 |
-| 1988-03-10 |   345 |
-| 1982-06-08 |   344 |
-| 1988-06-06 |   343 |
-| 1981-06-29 |   342 |
+| valor       |   qtd |
+|:------------|------:|
+| XX9Z8T8YUZT |     6 |
+| WXZY8TNZ7XZ |     6 |
+| WW7NWZ9Y8ZW |     6 |
+| U8Z9ZZ8N8XZ |     6 |
+| ZZZZZZZX7T9 |     6 |
+| 7X7NZ79YWU9 |     6 |
+| ZZTZ799U79T |     6 |
+| 888W78UZYYT |     6 |
+| Y77ZYUXU8NW |     6 |
+| ZX77YX8WNWN |     6 |
 
-#### Coluna: `var_12`
+#### Coluna: `safra`
 
-| valor      |     qtd |
-|:-----------|--------:|
-| NULL       | 1490335 |
-| 2019-04-01 |    8950 |
-| 2019-10-01 |    8702 |
-| 2020-02-03 |    8565 |
-| 2019-08-01 |    8511 |
-| 2019-02-01 |    8440 |
-| 2016-03-01 |    7802 |
-| 2019-11-01 |    7800 |
-| 2017-02-01 |    7560 |
-| 2019-07-01 |    7498 |
+| valor      |    qtd |
+|:-----------|-------:|
+| 2025-01-01 | 667227 |
+| 2024-11-01 | 665737 |
+| 2024-10-01 | 653586 |
+| 2025-03-01 | 647830 |
+| 2024-12-01 | 646037 |
+| 2025-02-01 | 619961 |
 
-#### Coluna: `var_13`
-
-| valor      |     qtd |
-|:-----------|--------:|
-| NULL       | 3314097 |
-| 2025-12-01 |    7954 |
-| 2024-12-01 |    7778 |
-| 2025-10-01 |    6431 |
-| 2021-12-31 |    6321 |
-| 2024-10-01 |    6183 |
-| 2025-11-01 |    6147 |
-| 2025-05-01 |    6140 |
-| 2025-08-01 |    6126 |
-| 2024-11-01 |    6124 |
-
-#### Coluna: `flag_instalacao`
+#### Coluna: `prod`
 
 | valor   |     qtd |
 |:--------|--------:|
-| true    | 2696621 |
-| false   | 1203757 |
-
-#### Coluna: `fpd`
-
-| valor   |     qtd |
-|:--------|--------:|
-| false   | 2122991 |
-| NULL    | 1203757 |
-| true    |  573630 |
-
-#### Coluna: `flag_mig2`
-
-| valor     |     qtd |
-|:----------|--------:|
-| Aquisição | 1338888 |
-| PRE       | 1290526 |
-| NULL      | 1266478 |
-| FLEX      |    4486 |
-
-#### Coluna: `statusrf`
-
-| valor                     |     qtd |
-|:--------------------------|--------:|
-| REGULAR                   | 3848697 |
-| PENDENTE DE REGULARIZACAO |   31217 |
-| NULL                      |   15154 |
-| SUSPENSA                  |    2689 |
-| TITULAR FALECIDO          |    2398 |
-| CANCELADA                 |     222 |
-| NULA                      |       1 |
-
-#### Coluna: `var_10`
-
-| valor                            |     qtd |
-|:---------------------------------|--------:|
-| NULL                             | 3838163 |
-| SOLDADORECRUTA                   |    5820 |
-| SOLDADO                          |    2722 |
-| PROFESSOR DO MAGISTERIO SUPERIOR |    1678 |
-| CABO ENGAJADO                    |    1495 |
-| TERCEIROSARGENTO                 |    1452 |
-| PROFESSOR EDUCACAO BASICA II     |    1372 |
-| PROFESSOR                        |    1359 |
-| PROFESSOR EDUCACAO BASICA I      |    1067 |
-| PROFESSOR DE EDUCACAO BASICA     |     997 |
-
-#### Coluna: `var_15`
-
-| valor   |     qtd |
-|:--------|--------:|
-| NULL    | 3315375 |
-| SP      |  105971 |
-| RJ      |   79019 |
-| BA      |   59037 |
-| PE      |   40782 |
-| MG      |   36463 |
-| PA      |   25427 |
-| CE      |   23910 |
-| RS      |   23749 |
-| GO      |   22887 |
-
-#### Coluna: `var_18`
-
-| valor      |     qtd |
-|:-----------|--------:|
-| NULL       | 3157126 |
-| APOSENTADO |  743252 |
-
-#### Coluna: `var_19`
-
-| valor    |     qtd |
-|:---------|--------:|
-| NULL     | 2223690 |
-| AUX_EMRG | 1676688 |
-
-#### Coluna: `var_20`
-
-| valor     |     qtd |
-|:----------|--------:|
-| NULL      | 3827574 |
-| FUNC_PUBL |   72804 |
-
-#### Coluna: `var_21`
-
-| valor        |     qtd |
-|:-------------|--------:|
-| FUNC_PRIVADO | 2410043 |
-| NULL         | 1490335 |
-
-#### Coluna: `var_22`
-
-| valor        |     qtd |
-|:-------------|--------:|
-| NULL         | 3533608 |
-| EMPR/DIRETOR |  366770 |
-
-#### Coluna: `var_23`
-
-| valor         |     qtd |
-|:--------------|--------:|
-| NULL          | 3315375 |
-| BOLSA_FAMILIA |  585003 |
-
-#### Coluna: `var_24`
-
-| valor      |     qtd |
-|:-----------|--------:|
-| ADMITIDO   | 1823762 |
-| NULL       | 1490335 |
-| DISPENSADO |  586281 |
-
-#### Coluna: `var_25`
-
-| valor                               |    qtd |
-|:------------------------------------|-------:|
-| FUNC_PRIVADO                        | 945989 |
-| AUX_EMRG FUNC_PRIVADO               | 535967 |
-| NULL                                | 467469 |
-| AUX_EMRG                            | 371795 |
-| APOSENTADO FUNC_PRIVADO             | 268762 |
-| AUX_EMRG BOLSA_FAMILIA              | 226240 |
-| APOSENTADO                          | 198573 |
-| AUX_EMRG FUNC_PRIVADO BOLSA_FAMILIA | 169432 |
-| FUNC_PRIVADO EMPR/DIRETOR           |  97468 |
-| AUX_EMRG FUNC_PRIVADO EMPR/DIRETOR  |  91963 |
+| CMV     | 3795310 |
+| NET     |   89968 |
+| DTH     |   15100 |
 
 #### Coluna: `cep_3_digitos`
 
@@ -352,20 +210,56 @@
 | 230     |  24723 |
 | 227     |  24184 |
 
-#### Coluna: `var_03`
+#### Coluna: `datadenascimento`
+
+| valor      |   qtd |
+|:-----------|------:|
+| NULL       | 16831 |
+| 1982-05-10 |   355 |
+| 1981-06-10 |   349 |
+| 1981-06-05 |   348 |
+| 1985-09-20 |   346 |
+| 1988-03-10 |   345 |
+| 1989-10-12 |   345 |
+| 1982-06-08 |   344 |
+| 1988-06-06 |   343 |
+| 1983-02-28 |   342 |
+
+#### Coluna: `flag_instalacao`
 
 | valor   |     qtd |
 |:--------|--------:|
-| 33      | 1191647 |
-| NULL    |  269970 |
-| 1       |  262689 |
-| 3       |  166238 |
-| 50      |  106736 |
-| 17      |  101647 |
-| 5       |   95371 |
-| 13      |   91389 |
-| 100     |   86508 |
-| 2       |   78405 |
+| true    | 2696621 |
+| false   | 1203757 |
+
+#### Coluna: `flag_mig2`
+
+| valor     |     qtd |
+|:----------|--------:|
+| Aquisição | 1338888 |
+| PRE       | 1290526 |
+| NULL      | 1266478 |
+| FLEX      |    4486 |
+
+#### Coluna: `fpd`
+
+| valor   |     qtd |
+|:--------|--------:|
+| false   | 2122991 |
+| NULL    | 1203757 |
+| true    |  573630 |
+
+#### Coluna: `statusrf`
+
+| valor                     |     qtd |
+|:--------------------------|--------:|
+| REGULAR                   | 3848697 |
+| PENDENTE DE REGULARIZACAO |   31217 |
+| NULL                      |   15154 |
+| SUSPENSA                  |    2689 |
+| TITULAR FALECIDO          |    2398 |
+| CANCELADA                 |     222 |
+| NULA                      |       1 |
 
 #### Coluna: `var_02`
 
@@ -381,6 +275,21 @@
 | 784205  |    4974 |
 | 715210  |    4010 |
 | 782510  |    3360 |
+
+#### Coluna: `var_03`
+
+| valor   |     qtd |
+|:--------|--------:|
+| 33      | 1191647 |
+| NULL    |  269970 |
+| 1       |  262689 |
+| 3       |  166238 |
+| 50      |  106736 |
+| 17      |  101647 |
+| 5       |   95371 |
+| 13      |   91389 |
+| 100     |   86508 |
+| 2       |   78405 |
 
 #### Coluna: `var_04`
 
@@ -461,6 +370,21 @@
 | 2       |   22189 |
 | 1       |   20892 |
 
+#### Coluna: `var_10`
+
+| valor                            |     qtd |
+|:---------------------------------|--------:|
+| NULL                             | 3838163 |
+| SOLDADORECRUTA                   |    5820 |
+| SOLDADO                          |    2722 |
+| PROFESSOR DO MAGISTERIO SUPERIOR |    1678 |
+| CABO ENGAJADO                    |    1495 |
+| TERCEIROSARGENTO                 |    1452 |
+| PROFESSOR EDUCACAO BASICA II     |    1372 |
+| PROFESSOR                        |    1359 |
+| PROFESSOR EDUCACAO BASICA I      |    1067 |
+| PROFESSOR DE EDUCACAO BASICA     |     997 |
+
 #### Coluna: `var_11`
 
 | valor   |     qtd |
@@ -476,6 +400,36 @@
 | 2546.46 |     450 |
 | 3774.72 |     376 |
 
+#### Coluna: `var_12`
+
+| valor      |     qtd |
+|:-----------|--------:|
+| NULL       | 1490335 |
+| 2019-04-01 |    8950 |
+| 2019-10-01 |    8702 |
+| 2020-02-03 |    8565 |
+| 2019-08-01 |    8511 |
+| 2019-02-01 |    8440 |
+| 2016-03-01 |    7802 |
+| 2019-11-01 |    7800 |
+| 2017-02-01 |    7560 |
+| 2019-07-01 |    7498 |
+
+#### Coluna: `var_13`
+
+| valor      |     qtd |
+|:-----------|--------:|
+| NULL       | 3314097 |
+| 2025-12-01 |    7954 |
+| 2024-12-01 |    7778 |
+| 2025-10-01 |    6431 |
+| 2021-12-31 |    6321 |
+| 2024-10-01 |    6183 |
+| 2025-11-01 |    6147 |
+| 2025-05-01 |    6140 |
+| 2025-08-01 |    6126 |
+| 2024-11-01 |    6124 |
+
 #### Coluna: `var_14`
 
 | valor   |     qtd |
@@ -490,6 +444,21 @@
 | 7       |     268 |
 | 8       |     192 |
 | 9       |      93 |
+
+#### Coluna: `var_15`
+
+| valor   |     qtd |
+|:--------|--------:|
+| NULL    | 3315375 |
+| SP      |  105971 |
+| RJ      |   79019 |
+| BA      |   59037 |
+| PE      |   40782 |
+| MG      |   36463 |
+| PA      |   25427 |
+| CE      |   23910 |
+| RS      |   23749 |
+| GO      |   22887 |
 
 #### Coluna: `var_16`
 
@@ -521,6 +490,71 @@
 | 202107  |    1345 |
 | 202008  |     524 |
 
+#### Coluna: `var_18`
+
+| valor      |     qtd |
+|:-----------|--------:|
+| NULL       | 3157126 |
+| APOSENTADO |  743252 |
+
+#### Coluna: `var_19`
+
+| valor    |     qtd |
+|:---------|--------:|
+| NULL     | 2223690 |
+| AUX_EMRG | 1676688 |
+
+#### Coluna: `var_20`
+
+| valor     |     qtd |
+|:----------|--------:|
+| NULL      | 3827574 |
+| FUNC_PUBL |   72804 |
+
+#### Coluna: `var_21`
+
+| valor        |     qtd |
+|:-------------|--------:|
+| FUNC_PRIVADO | 2410043 |
+| NULL         | 1490335 |
+
+#### Coluna: `var_22`
+
+| valor        |     qtd |
+|:-------------|--------:|
+| NULL         | 3533608 |
+| EMPR/DIRETOR |  366770 |
+
+#### Coluna: `var_23`
+
+| valor         |     qtd |
+|:--------------|--------:|
+| NULL          | 3315375 |
+| BOLSA_FAMILIA |  585003 |
+
+#### Coluna: `var_24`
+
+| valor      |     qtd |
+|:-----------|--------:|
+| ADMITIDO   | 1823762 |
+| NULL       | 1490335 |
+| DISPENSADO |  586281 |
+
+#### Coluna: `var_25`
+
+| valor                               |    qtd |
+|:------------------------------------|-------:|
+| FUNC_PRIVADO                        | 945989 |
+| AUX_EMRG FUNC_PRIVADO               | 535967 |
+| NULL                                | 467469 |
+| AUX_EMRG                            | 371795 |
+| APOSENTADO FUNC_PRIVADO             | 268762 |
+| AUX_EMRG BOLSA_FAMILIA              | 226240 |
+| APOSENTADO                          | 198573 |
+| AUX_EMRG FUNC_PRIVADO BOLSA_FAMILIA | 169432 |
+| FUNC_PRIVADO EMPR/DIRETOR           |  97468 |
+| AUX_EMRG FUNC_PRIVADO EMPR/DIRETOR  |  91963 |
+
 #### Coluna: `ingestion_ts`
 
 | valor                         |     qtd |
@@ -531,41 +565,7 @@
 
 |           valor |     qtd |
 |----------------:|--------:|
-| 20260110_033403 | 3900378 |
-
-#### Coluna: `num_cpf`
-
-| valor       |   qtd |
-|:------------|------:|
-| ZZTZ799U79T |     6 |
-| Y77ZYUXU8NW |     6 |
-| 888W78UZYYT |     6 |
-| ZZZZZZZX7T9 |     6 |
-| 7X7NZ79YWU9 |     6 |
-| WXZY8TNZ7XZ |     6 |
-| WW7NWZ9Y8ZW |     6 |
-| U8Z9ZZ8N8XZ |     6 |
-| XX9Z8T8YUZT |     6 |
-| ZX77YX8WNWN |     6 |
-
-#### Coluna: `safra`
-
-| valor      |    qtd |
-|:-----------|-------:|
-| 2025-01-01 | 667227 |
-| 2024-11-01 | 665737 |
-| 2024-10-01 | 653586 |
-| 2025-03-01 | 647830 |
-| 2024-12-01 | 646037 |
-| 2025-02-01 | 619961 |
-
-#### Coluna: `prod`
-
-| valor   |     qtd |
-|:--------|--------:|
-| CMV     | 3795310 |
-| NET     |   89968 |
-| DTH     |   15100 |
+| 20260110_045042 | 3900378 |
 
 #### Coluna: `ano_mes`
 
