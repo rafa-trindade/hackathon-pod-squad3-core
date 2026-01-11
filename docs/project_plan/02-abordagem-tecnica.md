@@ -14,7 +14,7 @@ Este documento detalha a stack tecnológica e as metodologias aplicadas no proje
 
 ### 2. Armazenamento e Data Lake (MinIO)
 * **Ferramenta:** **MinIO (S3-Compatible)**
-    * **Justificativa:** Implementa a **Arquitetura Medallion** (BRONZE, SILVER, GOLD) em um storage de objetos local. O diferencial é ser *Cloud-Ready*: o código escrito para o MinIO funciona nativamente no AWS S3 caso a PoC avance para nuvem.
+    * **Justificativa:** Implementa a **Arquitetura Medallion** (BRONZE, SILVER, GOLD) em um storage de objetos local. O diferencial é ser *Cloud-Ready*: o código escrito para o MinIO funciona nativamente no AWS S3 caso a PoC avance para nuvem pública.
 
 ### 3. Processamento e Qualidade
 * **Ferramenta:** **DuckDB (Vectorized Query Engine)**
