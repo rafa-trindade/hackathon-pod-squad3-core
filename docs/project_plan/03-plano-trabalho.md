@@ -4,7 +4,7 @@ Este documento detalha a metodologia de gestão do projeto e a distribuição de
 
 ---
 
-## Agilidade e Planejamento
+## ⚡ Agilidade e Planejamento
 
 ### Metodologia Híbrida
 O planejamento do projeto foi estruturado combinando as boas práticas do **PMBOK** (garantindo governança, controle de escopo, riscos e custos) com **Metodologias Ágeis**, priorizando entregas incrementais e adaptação contínua. Esta abordagem permite o controle rigoroso de prazos e recursos em paralelo com a flexibilidade para pivotar estratégias de processamento conforme a análise dos dados.
