@@ -15,7 +15,7 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 - **Riscos e Dependências:** Identificação de pontos críticos e planos de mitigação operacional.
 - **Métricas de Sucesso:** Indicadores de performance para avaliação da qualidade e entrega de valor.
 
-> O projeto segue uma abordagem híbrida, onde o planejamento é regido por diretrizes de governança e a execução diária é gerenciada por ritos ágeis. Toda a documentação é versionada, servindo como suporte para auditorias e futuras migrações para ambiente de **Cloud Pública**..
+> O projeto segue uma abordagem híbrida, onde o planejamento é regido por diretrizes de governança e a execução diária é gerenciada por ritos ágeis. Toda a documentação é versionada, servindo como suporte para auditorias e futuras migrações para ambiente de cloud pública.
 
 ---
 
