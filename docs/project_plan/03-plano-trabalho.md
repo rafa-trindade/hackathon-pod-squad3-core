@@ -41,5 +41,5 @@ A equipe é composta por 10 especialistas, organizados para garantir a fluidez d
 * **Responsabilidades:** Criação de dashboards interativos via **Streamlit**, exploração de dados (EDA) e validação dos modelos lógicos no **PostgreSQL/dbt**.
 
 ### 📝 Documentação e Governança (2 Membros)
-* **Foco:** Manutenção do conhecimento e conformidade.
-* **Responsabilidades:** Mapeamento de Lineage, documentação técnica (Profiling/Data Dictionary), gestão da Wiki do projeto e garantia de que as políticas de governança estão sendo aplicadas via código.
+* **Foco:** Manutenção do conhecimento e conformidade técnica.
+* **Responsabilidades:** Mapeamento de Lineage, documentação técnica (Profiling/Data Dictionary) e garantia de que as políticas de governança estão sendo aplicadas via código.
