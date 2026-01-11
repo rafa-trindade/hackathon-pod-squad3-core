@@ -1,14 +1,23 @@
-## 🏗️ Squad 3 - Data Engineering
+## 🚀 Hackathon Pod Academy - Squad 3
 
-Repositório de desenvolvimento e experimentação de engenharia de dados para o hackathon da Pod Academy - Squad 3 
-
-## 👥 Time de Engenharia
-
-- **Frederico da Costa dos Santos**
-- **Rafael Araujo Trindade**
-- **Ronaldo Theodoro**
+Repositório de desenvolvimento, documentação e implementação da solução integrada de dados para o Hackathon da Pod Academy - Squad 3.
 
 ## 📚 Mapeamento da Documentação
+
+### 📅 Project Plan & Management
+📁 [`docs/project_plan/*`](docs/project_plan/)
+
+**Foco:** Planejamento Estratégico e Execução da PoC.
+- **Entendimento do Problema:** Diagnóstico do desafio de negócio e objetivos centrais da solução.
+- **Abordagem da Solução:** Definição das metodologias e estratégias para a viabilidade técnica da PoC.
+- **Plano de Trabalho:** Distribuição de tarefas e responsabilidades entre os membros da Squad.
+- **Cronograma Interno:** Mapeamento de etapas, marcos e prazos estimados para as entregas.
+- **Riscos e Dependências:** Identificação de pontos críticos e planos de mitigação operacional.
+- **Métricas de Sucesso:** Indicadores de performance para avaliação da qualidade e entrega de valor.
+
+> O projeto segue uma abordagem híbrida, onde o planejamento é regido por diretrizes de governança e a execução diária é gerenciada por ritos ágeis. Toda a documentação é versionada, servindo como suporte para auditorias e futuras migrações para ambiente Cloud.
+
+---
 
 ### 🏗️ Data Architecture
 📄 [`docs/data_architecture/`](docs/data_architecture/README.md)
