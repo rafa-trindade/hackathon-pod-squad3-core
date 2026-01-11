@@ -4,7 +4,7 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 
 ## 📚 Mapeamento de Documentação (*Project Hub*)
 
-### 📅 Project Plan & Management
+### 📅 Plano de Execução e Planejamento do Projeto
 > 📁 [`docs/project_plan/*`](docs/project_plan/)  
 > **Consolida** a visão estratégica e operacional do projeto, integrando o contexto de negócio, objetivos e plano de trabalho da Squad. **Define** o cronograma de entregas, as métricas de sucesso e as responsabilidades de cada frente sob uma abordagem híbrida de governança e agilidade.
 
