@@ -39,6 +39,6 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 > **Executa** o diagnóstico estatístico automatizado para monitoramento da saúde dos dados, cobrindo volumetria, cardinalidade e distribuição de valores. **Gera** evidências versionadas em Markdown para suporte à auditoria e detecção de anomalias.
 
 
-### ✅ Data Quality
-> 📁 [`docs/data_quality/*`](docs/data_quality/)  
-> **Assegura** a governança de contratos e a validação de dados através de verificações estruturais e semânticas nas camadas Raw e Silver. **Implementa** regras de negócio, unicidade e integridade tipológica integradas de forma programática via Pandera.
+### 📑 Relatórios de Auditoria e Qualidade (*Evidências de Observabilidade*)
+> 📁 [`reports/observability/*`](reports/observability/)  
+> **Centraliza** as evidências técnicas e artefatos de saída gerados durante o ciclo de vida dos dados. **Consolida** logs de auditoria de particionamento físico (`partitions`), documentação técnica de linhagem via dbt e relatórios de validação de contratos de dados via Pandera (`quality`), servindo como base para auditorias de conformidade e governança.
