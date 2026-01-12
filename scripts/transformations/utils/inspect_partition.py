@@ -1,6 +1,8 @@
 import sys
+import os
 from pathlib import Path
 from datetime import datetime
+import contextlib
 
 # ------------------------------------------------------------------
 # PATH SETUP
@@ -10,71 +12,136 @@ sys.path.append(str(PROJECT_ROOT))
 
 from config.data_connections import get_duckdb_connection
 
-# --- CONFIGURAÇÃO DE ALVO
-RUN_ID = "20260110_011720" 
-TABLE_NAME = "dados_cadastrais"
-COLUMN_DATE = "safra"
+# ------------------------------------------------------------------
+# CONFIGURAÇÃO DE LOG (MOVEMOS PARA UMA FUNÇÃO)
+# ------------------------------------------------------------------
+LOG_DIR = PROJECT_ROOT / "reports" / "observability" / "audit"
+LOG_DIR.mkdir(parents=True, exist_ok=True)
+LOG_FILE = LOG_DIR / "inspect_partition.log"
 
-# --- CONFIGURAÇÃO DO PARTIÇÕES
-START_PERIOD = "202410"
-END_PERIOD   = "202503"  
+class Logger(object):
+    def __init__(self):
+        self.terminal = sys.stdout
+        self.log = open(LOG_FILE, "a", encoding="utf-8")
+    def write(self, message):
+        self.terminal.write(message)
+        self.log.write(message)
+    def flush(self):
+        self.terminal.flush()
+        self.log.flush()
+
+# ------------------------------------------------------------------
+# CONFIGURAÇÃO INDIVIDUAL POR PASTA
+# ------------------------------------------------------------------
+TABLES_CONFIG = {
+    "atraso": {
+        "col_date": "dat_referencia",
+        "start": "202310",
+        "end": "202503"
+    },
+    "dados_cadastrais": {
+        "col_date": "safra",
+        "start": "202410",
+        "end": "202503"
+    },
+    "pagamento": {
+        "col_date": "dat_status_fatura",
+        "start": "202310",
+        "end": "202503"
+    },
+    "recarga": {
+        "col_date": "dat_insercao_credito",
+        "start": "202310",
+        "end": "202503"
+    },
+    "score_bureau_movel": {
+        "col_date": "safra",
+        "start": "202410",
+        "end": "202503"
+    },
+    "telco": {
+        "col_date": "safra",
+        "start": "202410",
+        "end": "202503"
+    }
+}
 
 def get_month_list(start_str, end_str):
-    """Gera uma lista de strings YYYYMM entre o início e o fim."""
     start_dt = datetime.strptime(start_str, "%Y%m")
     end_dt = datetime.strptime(end_str, "%Y%m")
-    
     months = []
     current_dt = start_dt
     while current_dt <= end_dt:
         months.append(current_dt.strftime("%Y%m"))
-
         m = current_dt.month
         y = current_dt.year
         current_dt = datetime(y + (m // 12), (m % 12) + 1, 1)
     return months
 
+def get_latest_run_id(con, table_name):
+    try:
+        path = f"s3://lake/silver/{table_name}/run_id=*/**/*.parquet"
+        query = f"SELECT MAX(run_id) AS latest_rid FROM read_parquet('{path}', hive_partitioning=1)"
+        res = con.execute(query).fetchone()
+        return res[0] if res else None
+    except:
+        return None
+
 def inspect_all():
-    con = get_duckdb_connection()
-    periodos = get_month_list(START_PERIOD, END_PERIOD)
+    # 1. Silenciamos o terminal para a conexão inicial (evita prints de config)
+    with contextlib.redirect_stdout(None):
+        con = get_duckdb_connection()
+    
+    # 2. Agora sim, ativamos o Logger para o relatório
+    sys.stdout = Logger()
+    
+    timestamp_exec = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    periodos_globais = get_month_list("202310", "202503") # Apenas referência visual
 
-    print(f"🚀 Iniciando Inspeção em Lote: {TABLE_NAME}")
-    print(f"📅 Período: {START_PERIOD} até {END_PERIOD}")
-    print(f"🔑 Chave de conferência: {COLUMN_DATE}")
-    print("=" * 80)
+    print("\n" + "="*80)
+    print(f"🕵️  AUDITORIA DE PARTIÇÕES SILVER - {timestamp_exec}")
+    print(f"📂 Arquivo de Log: {LOG_FILE.relative_to(PROJECT_ROOT)}") 
+    print("="*80)
 
-    for periodo in periodos:
-        path = f"s3://lake/silver/{TABLE_NAME}/run_id={RUN_ID}/ano_mes={periodo}/*.parquet"
+    for table, cfg in TABLES_CONFIG.items():
+        col_date = cfg["col_date"]
+        print(f"\n📊 TABELA: {table.upper()}")
         
-        query = f"""
-            SELECT 
-                COUNT(*) as total,
-                MIN({COLUMN_DATE}::DATE) as dt_min,
-                MAX({COLUMN_DATE}::DATE) as dt_max
-            FROM read_parquet('{path}')
-        """
+        run_id = get_latest_run_id(con, table)
+        if not run_id:
+            print(f"❌ Erro: Nenhuma run_id encontrada para {table}")
+            continue
+            
+        periodos = get_month_list(cfg["start"], cfg["end"])
+        print(f"🆔 Run ID: {run_id} | Coluna: {col_date}")
+        print(f"📅 Janela: {cfg['start']} a {cfg['end']}")
+        print("-" * 60)
 
-        try:
-            res = con.execute(query).df()
-            total = res['total'][0]
+        for periodo in periodos:
+            path = f"s3://lake/silver/{table}/run_id={run_id}/ano_mes={periodo}/*.parquet"
+            query = f"SELECT COUNT(*) as total, MIN({col_date}::DATE) as dt_min, MAX({col_date}::DATE) as dt_max FROM read_parquet('{path}')"
 
-            if total > 0:
-                dt_min = str(res['dt_min'][0])
-                dt_max = str(res['dt_max'][0])
-                
-                expected_prefix = f"{periodo[:4]}-{periodo[4:]}"
-                status = "✅ OK" if dt_min.startswith(expected_prefix) and dt_max.startswith(expected_prefix) else "⚠️ ERRO"
-                
-                print(f"📁 Pasta {periodo}: {total:10,} linhas | Min: {dt_min} | Max: {dt_max} | {status}")
-            else:
-                print(f"📁 Pasta {periodo}: 📭 VAZIA")
+            try:
+                res = con.execute(query).df()
+                total = res['total'][0]
+                if total > 0:
+                    dt_min, dt_max = str(res['dt_min'][0]), str(res['dt_max'][0])
+                    prefix = f"{periodo[:4]}-{periodo[4:]}"
+                    status = "✅ OK" if dt_min.startswith(prefix) and dt_max.startswith(prefix) else "⚠️  DIVERGENTE"
+                    print(f"  📁 {periodo}: {total:10,} linhas | Min: {dt_min} | Max: {dt_max} | {status}")
+                else:
+                    print(f"  📁 {periodo}: 📭 VAZIA")
+            except:
+                print(f"  📁 {periodo}: ❌ Pasta não encontrada")
 
-        except Exception:
+    print("\n" + "="*80)
+    print(f"🏁 Auditoria Finalizada.")
+    print("="*80 + "\n")
 
-            print(f"📁 Pasta {periodo}: ❌ Pasta não encontrada no S3")
-
-    print("=" * 80)
-    print("🏁 Inspeção finalizada.")
+    # Fecha o arquivo de log adequadamente
+    if isinstance(sys.stdout, Logger):
+        sys.stdout.log.close()
+        sys.stdout = sys.stdout.terminal
 
 if __name__ == "__main__":
     inspect_all()
