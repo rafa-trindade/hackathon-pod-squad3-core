@@ -46,7 +46,6 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 > **Centraliza** as evidências técnicas e artefatos de saída gerados durante o ciclo de vida dos dados. **Consolida** logs de auditoria de particionamento físico (`partitions`), documentação técnica de linhagem via dbt e relatórios de validação de contratos de dados via Pandera (`quality`), servindo como base para auditorias de conformidade e governança.
 
 
-
 ### ✅ Data Quality (*Data Contracts*)
 > 📁 [`docs/data_quality/*`](docs/data_quality/)  
 > **Especifica** os contratos de dados e regras de negócio detalhadas para cada tabela nas camadas Bronze e Silver. **Define** critérios de integridade, servindo como a documentação técnica que orienta as validações programáticas via Pandera.
