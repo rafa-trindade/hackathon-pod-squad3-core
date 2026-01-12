@@ -21,12 +21,12 @@ def init_md_report(
 ):
     """
     Inicializa relatório Markdown em:
-    docs/data_profiling/<layer>/<report_filename>
+    reports/observability/profiling/<layer>/<report_filename>
     """
 
     project_root = get_project_root()
 
-    report_dir = project_root / "docs" / "data_profiling" / layer
+    report_dir = project_root / "reports" / "observability" / "profiling" / layer
     report_dir.mkdir(parents=True, exist_ok=True)
 
     md_file = report_dir / report_filename
