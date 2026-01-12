@@ -13,7 +13,7 @@ sys.path.append(str(PROJECT_ROOT))
 from config.data_connections import get_duckdb_connection
 
 # ------------------------------------------------------------------
-# CONFIGURAÇÃO DE LOG (MOVEMOS PARA UMA FUNÇÃO)
+# CONFIGURAÇÃO DE LOG
 # ------------------------------------------------------------------
 LOG_DIR = PROJECT_ROOT / "reports" / "observability" / "audit"
 LOG_DIR.mkdir(parents=True, exist_ok=True)
