@@ -55,7 +55,7 @@ A confiabilidade é garantida pelo **Protocolo de Limpeza Pós-Sucesso**:
 
 A observabilidade é materializada através de artefatos técnicos gerados automaticamente e centralizados para consulta:
 
-- **Integridade de Partições:** [`inspect_partition.log`](../../reports/observability/partitions/inspect_partition.log)
+- **Integridade de Partições:** [`inspect_partition.log`](../../reports/observability/integrity/inspect_partition.log)
 - **Qualidade de Dados (dbt/Pandera):** [`quality/*`](../../reports/observability/quality/)
 
 
