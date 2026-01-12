@@ -33,19 +33,19 @@ A equipe é composta por 10 especialistas, organizados em frentes de trabalho co
 ### ⚙️ Engenharia de Dados (Data Engineering)
 * **Foco:** Construção e manutenção da infraestrutura de dados.
 * **Responsabilidades:** 
-    * Estruturar e manter a arquitetura de dados do projeto.
-    * Implementar e versionar pipelines de ingestão, transformação e saneamento de dados.
-    * Garantir qualidade, consistência e governança dos dados nas camadas Raw, Silver e Gold.
-    * Implementar profiling, validações e observabilidade dos dados.
-    * Assegurar reprocessabilidade e rastreabilidade das execuções.
-    * Definir e manter contratos de dados entre domínios e camadas.
-    * Suportar a construção da **ABT (Analytical Base Table)** e a camada de consumo para modelagem.
+    * Estruturar e manter a arquitetura de dados do projeto
+    * Implementar e versionar pipelines de ingestão, transformação e saneamento de dados
+    * Garantir qualidade, consistência e governança dos dados nas camadas Raw, Silver e Gold
+    * Implementar profiling, validações e observabilidade dos dados
+    * Assegurar reprocessabilidade e rastreabilidade das execuções
+    * Definir e manter contratos de dados entre domínios e camadas
+    * Suportar a construção da **ABT (Analytical Base Table)** e a camada de consumo para modelagem
 * **Entregáveis:** 
-    * Stack de dados executável em ambiente containerizado.
-    * Pipelines versionados para ingestão e transformação de dados.
-    * Evidências de profiling e qualidade de dados.
-    * Contratos de dados e lineage documentados.
-    * Documentação técnica da arquitetura e dos pipelines.
+    * Stack de dados executável em ambiente containerizado
+    * Pipelines versionados para ingestão e transformação de dados
+    * Evidências de profiling e qualidade de dados
+    * Contratos de dados e lineage documentados
+    * Documentação técnica da arquitetura e dos pipelines
 
 ---
 
