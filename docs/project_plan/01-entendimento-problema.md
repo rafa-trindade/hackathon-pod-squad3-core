@@ -3,14 +3,14 @@
 Este documento detalha o desafio estratégico, os objetivos de negócio e o escopo técnico do projeto desenvolvido para o Hackathon PoD Academy Claro, focando na conversão sustentável de clientes da base Pré-paga para o Controle.
 
 
-## 💼 Contexto e Problema de Negócio
+## 1️⃣ Contexto e Problema de Negócio
 
 A Claro busca expandir a base de clientes em planos controle de forma sustentável, equilibrando crescimento e gestão de risco. 
 
 **O Desafio:** Identificar clientes pré-pagos que, caso migrados para o plano controle, apresentem menor probabilidade de inadimplência. Isso permite a priorização de ofertas, redução de risco financeiro e aumento da rentabilidade operacional.
 
 
-## 🚀 Objetivo do Projeto
+## 2️⃣ Objetivo do Projeto
 
 Desenvolver um **Modelo de Behavior** (visão unificada por CPF/cliente) para estimar o risco de inadimplência no contexto de migração **Pré → Controle**, entregando:
 
@@ -26,7 +26,7 @@ Desenvolver um **Modelo de Behavior** (visão unificada por CPF/cliente) para es
 * **Eficiência Operacional:** Decisão padronizada, explicável e baseada em dados, reduzindo o retrabalho manual.
 
 
-## 📝 Escopo e Entregáveis
+## 3️⃣ Escopo e Entregáveis
 
 ### ✅ Em escopo (Mínimo para Bancas) 
 * **Plano de Execução** - Planejamento e entrega imediata.

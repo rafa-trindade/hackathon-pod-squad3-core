@@ -3,7 +3,7 @@
 Este documento detalha os marcos oficiais, o planejamento tático da Sprint 0 e a estratégia de mitigação de riscos para garantir o sucesso da PoC no Hackathon Claro.
 
 
-## 📌 1. Marcos Oficiais do Projeto
+## 1️⃣ Marcos Oficiais do Projeto
 
 | Data | Marco / Entrega |
 | :--- | :--- |
@@ -14,7 +14,7 @@ Este documento detalha os marcos oficiais, o planejamento tático da Sprint 0 e 
 | **05/03/2026** | Banca Final |
 
 
-## ⚡ 2. Sprint 0 - Planejamento Imediato (Até 14/01)
+## 2️⃣ Sprint 0 - Planejamento Imediato (Até 14/01)
 
 Foco em travar escopo, decisões-base e consolidação do Plano de Execução.
 
@@ -26,7 +26,7 @@ Foco em travar escopo, decisões-base e consolidação do Plano de Execução.
 | **D3 (14/01)** | **Squad:** Consolidação final de todas as frentes. | **Entrega Formal:** Plano finalizado com entendimento, cronograma e riscos. |
 
 
-## 🚀 3. Evolução das Entregas
+## 3️⃣ Evolução das Entregas
 
 ### 3.1 Até a Qualificação (15/01 → 03/02)
 * **15/01:** Aprovação de Target/ABT + Baseline encaminhado + Primeiros insights de EDA.
@@ -41,13 +41,13 @@ Foco em travar escopo, decisões-base e consolidação do Plano de Execução.
 * **Engenharia:** Documentação técnica consolidada e Storyline da apresentação final.
 
 
-## 🏛️ 4. Governança e Cerimônias
+## 4️⃣ Governança e Cerimônias
 * **Daily:** Reuniões curtas (10–15 min) para alinhamento de impedimentos.
 * **Checkpoint Interno:** 2x por semana para validação de evidências (EDA, ABT, Modelagem, Books).
 * **Revisão Pré-Banca:** Checklist de consistência entre premissas, números e narrativa.
 
 
-## ⏳ 5. Estado Atual do Projeto
+## 5️⃣ Estado Atual do Projeto
 *Status em 14/01/2026*
 
 O projeto encontra-se com a fundação de dados consolidada, apresentando:

@@ -3,7 +3,7 @@
 Este documento define os indicadores técnicos e de negócio utilizados para validar a eficácia do modelo de propensão e a saúde operacional da plataforma de dados.
 
 
-## ⚙️ Métricas Técnicas (Model Performance)
+## 1️⃣ Métricas Técnicas (Model Performance)
 *Para garantir a capacidade preditiva e a estabilidade do modelo de Inadimplência, monitoramos:
 *
 * **Poder Discriminante** - ROC-AUC e KS/Gini para avaliar a separação entre "bons" e "maus" pagadores.
@@ -12,7 +12,7 @@ Este documento define os indicadores técnicos e de negócio utilizados para val
 
 
 
-## 💼 Métricas de Negócio (Business Impact)
+## 2️⃣ Métricas de Negócio (Business Impact)
 *Indicadores que traduzem a performance técnica em valor para a Claro:*
 
 * **Qualidade de Risco** - Inadimplência esperada por faixa de score.
@@ -21,7 +21,7 @@ Este documento define os indicadores técnicos e de negócio utilizados para val
 
 
 
-## 🛠️ Métricas de Plataforma (Data Health)
+## 3️⃣ Métricas de Plataforma (Data Health)
 *Métricas geradas como subproduto da arquitetura de engenharia, governança e observabilidade:*
 
 * **Observabilidade** - Monitoramento de **Freshness** (atualização), **Volume** e **Schema Drift**.

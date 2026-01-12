@@ -3,7 +3,7 @@
 Este documento detalha a stack tecnológica e as metodologias aplicadas no projeto, justificando as escolhas baseadas no cenário de execução em uma **VPS (Virtual Private Server)** atuando como uma **Prova de Conceito (PoC)** de uma plataforma de dados moderna, ponta a ponta e escalável.
 
 
-## 🏗️ Stack Tecnológica e Justificativas
+## 1️⃣ Stack Tecnológica e Justificativas
 
 ### 1. Infraestrutura e Orquestração
 * **Ferramenta:** **Docker & Docker Compose**
@@ -34,7 +34,7 @@ Este documento detalha a stack tecnológica e as metodologias aplicadas no proje
     * **Justificativa:** Transforma os dados modelados em **Decision Intelligence**, entregando dashboards interativos e aplicações analíticas diretamente para os stakeholders.
 
 
-## ⚙️ Estratégias de Engenharia Aplicadas
+## 2️⃣ Estratégias de Engenharia Aplicadas
 
 ### 1. Escopo e Escalabilidade (Visão de Negócio)
 A arquitetura foi pensada já considerando a **volumetria real da Claro** (capaz de crescer verticalmente independente de onde esteja hospedada). No entanto, a implementação atual e os processamentos estão dimensionados com base em um **dataset de "teste"** (nossa base de amostra).
@@ -64,7 +64,7 @@ Utilitário de limpeza programática que gerencia o ciclo de vida das runs no st
 * **Por que:** Como o MLflow e as camadas do Data Lake geram alto volume de arquivos, a retenção automática evita que o armazenamento da VPS se esgote, mantendo a resiliência operacional.
 
 
-## 🧠 Estratégia de Modelagem
+## 3️⃣ Estratégia de Modelagem
 
 ### 1. Princípios de Solução
 * **Granularidade Única** - Visão consolidada por CPF/Cliente.
@@ -94,5 +94,5 @@ O **Target (Inadimplência)** será formalizado no início da execução (Sprint
 * **Entrega Operacional:** Disponibilização de score contínuo, faixas/decis com taxa de inadimplência por faixa e sugestão de política de corte (*trade-off* risco vs massa).
 
 
-## 🚀 Diferencial da Solução e Escalabilidade
+## 4️⃣ Diferencial da Solução e Escalabilidade
 A arquitetura provada nesta PoC integra o que há de melhor no ecossistema de dados moderno. Embora rode hoje em uma VPS, a separação clara entre **Storage (MinIO)**, **Compute (DuckDB)** e **Modelagem (dbt)** permite que a solução escale horizontalmente para nuvens com esforço de migração próximo de zero, validando a viabilidade técnica e de governança do projeto.

@@ -48,7 +48,7 @@ O projeto foca em **Custo Zero de Licenciamento**, utilizando exclusivamente fer
 
 ---
 
-### 👨‍💻 Recursos Humanos (Squad de Dados)
+### 👥 Recursos Humanos (Squad de Dados)
 A PoC foi executada por uma Squad multidisciplinar de 10 especialistas, operando em regime de dedicação exclusiva durante as Sprints do projeto.
 
 

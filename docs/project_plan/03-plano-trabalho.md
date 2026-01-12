@@ -3,7 +3,7 @@
 Este documento detalha a metodologia de gestão do projeto e a distribuição de responsabilidades entre os membros da Squad, visando garantir agilidade, governança e entregas incrementais na Prova de Conceito (PoC).
 
 
-## ⚡ Agilidade e Planejamento
+## 1️⃣ Agilidade e Planejamento
 
 ### Metodologia Híbrida
 O planejamento do projeto foi estruturado combinando as boas práticas do **PMBOK** (garantindo governança, controle de escopo, riscos e custos) com **Metodologias Ágeis**, priorizando entregas incrementais e adaptação contínua. Esta abordagem permite o controle rigoroso de prazos e recursos em paralelo com a flexibilidade para pivotar estratégias de processamento conforme a análise dos dados.
@@ -26,7 +26,7 @@ O uso desses quadros possibilita:
 ![Quadro GitHub Projects](../images/project.png)
 
 
-## 👥 Organização da Squad e Responsabilidades
+## 2️⃣ Organização da Squad e Responsabilidades
 
 A equipe é composta por 10 especialistas, organizados em frentes de trabalho com entregáveis claros para as bancas de qualificação e final.
 
@@ -69,10 +69,17 @@ A equipe é composta por 10 especialistas, organizados em frentes de trabalho co
 * **Interfaces Críticas:** Apoio na redação técnica e consistência entre o que é processado e o que é documentado.
 
 
-## 🔗 Interfaces e Dependências
+## 3️⃣ Interfaces e Dependências
 Para o sucesso da PoC, estabelecemos protocolos de colaboração entre as frentes:
 
-> **Engenharia ↔️ Documentação:** Sincronização técnica para o mapeamento de metadados, linhagem e políticas de governança. A Engenharia produz sua própria documentação garantindo que a documentação central reflita com precisão o que foi implementado via código.  
-> **Engenharia ↔️ Science/Analytics:** Alinhamento sobre janelas temporais e regras de reprocessamento para garantir que a ABT (Analytical Base Table) reflita a realidade dos dados na camada Silver.  
-> **Science ↔️ Documentação:** Padronização das métricas e lógicas de variáveis nos Books de Variáveis para garantir a auditabilidade dos experimentos e resultados.  
-> **Analytics ↔️ Squad:** Consolidação dos resultados técnicos em uma storyline executiva e visual para a apresentação final estratégica.
+> **Engenharia ↔️ Documentação:** 
+> Sincronização técnica para o mapeamento de metadados, linhagem e políticas de governança. A Engenharia produz sua própria documentação garantindo que a documentação central reflita com precisão o que foi implementado via código.  
+
+> **Engenharia ↔️ Science/Analytics:** 
+> Alinhamento sobre janelas temporais e regras de reprocessamento para garantir que a ABT (Analytical Base Table) reflita a realidade dos dados na camada Silver.  
+
+> **Science ↔️ Documentação:** 
+> Padronização das métricas e lógicas de variáveis nos Books de Variáveis para garantir a auditabilidade dos experimentos e resultados.  
+
+> **Analytics ↔️ Squad:** 
+> Consolidação dos resultados técnicos em uma storyline executiva e visual para a apresentação final estratégica.
