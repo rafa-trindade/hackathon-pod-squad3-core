@@ -28,7 +28,7 @@ Desenvolver um **Modelo de Behavior** (visão unificada por CPF/cliente) para es
 
 ## 3️⃣ Escopo e Entregáveis
 
-### ✅ Em escopo
+### ✅ Em escopo (Mínimo para Bancas) 
 * **Plano de Execução** - Planejamento e entrega imediata.
 * **Estudo de Público-Alvo** - EDA orientada a risco.
 * **Books de Variáveis** - Documentação funcional das variáveis por domínio.
