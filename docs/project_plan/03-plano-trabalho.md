@@ -26,20 +26,46 @@ O uso desses quadros possibilita:
 
 ## 👥 Organização da Squad e Responsabilidades
 
-A equipe é composta por 10 especialistas, organizados para garantir a fluidez do dado desde a origem até o consumo final.
+A equipe é composta por 10 especialistas, organizados em frentes de trabalho com entregáveis claros para as bancas de qualificação e final.
 
-### ⚙️ Engenharia de Dados (3 Membros)
+### ⚙️ Engenharia de Dados (Data Engineering)
 * **Foco:** Construção e manutenção da infraestrutura de dados.
-* **Responsabilidades:** Ingestão de dados no **MinIO**, desenvolvimento de pipelines no **DuckDB**, orquestração via **Airflow** e implementação de políticas de retenção e particionamento.
+* **Responsabilidades:** Ingestão de dados no **MinIO**, desenvolvimento de pipelines com **DuckDB**, orquestração via **Airflow** e implementação de políticas de retenção e particionamento.
+* **Interfaces Críticas:** Garante a consistência de chaves, temporalidade, disponibilidade e estabilidade das tabelas para as frentes de Analytics e Data Science.
 
-### 🧠 Ciência de Dados (3 Membros)
+### 🧠 Ciência de Dados (Data Science)
 * **Foco:** Inteligência de dados e modelagem preditiva.
-* **Responsabilidades:** Feature Engineering na camada Gold, treinamento de modelos, versionamento de experimentos via **MLflow** e entrega de arquivos de produção (`.pkl`).
+* **Responsabilidades:** 
+    * Definição formal do target, janelas (feature/performance) e validação temporal.
+    * Especificação e construção da **ABT (Analytical Base Table)**.
+    * Baseline e evolução até o modelo final (.pkl) com pipeline reprodutível.
+    * Tradução de métricas em decisão operacional (faixas, corte e simulações).
+    * Plano de monitoramento (performance, drift e gatilhos de retraining).
+* **Entregáveis:** Modelo Baseline (Banca de Qualificação), Modelo Final e Plano de Monitoramento (Banca Final).
 
-### 📈 Análise de Dados (2 Membros)
-* **Foco:** Tradução de dados em insights de negócio.
-* **Responsabilidades:** Criação de dashboards interativos via **Streamlit**, exploração de dados (EDA) e validação dos modelos lógicos no **PostgreSQL/dbt**.
+### 📈 Análise de Dados (Analytics)
+* **Foco:** Tradução de dados em insights de negócio e Storytelling.
+* **Responsabilidades:** 
+    * Estudo de Público-Alvo: perfil, segmentações, qualidade, outliers e vieses.
+    * Definição das métricas de sucesso (técnicas e de negócio).
+    * Liderança dos **Books de Variáveis** (significado, regra e interpretação).
+    * Storytelling e consolidação de impacto com insights acionáveis por faixa.
+* **Entregáveis:** Estudo de Público-Alvo (Qualificação), Books de Variáveis (coautoria) e seções de métricas, riscos e governança.
 
-### 📝 Documentação e Governança (2 Membros)
-* **Foco:** Manutenção do conhecimento e conformidade técnica.
-* **Responsabilidades:** Mapeamento de Lineage, documentação técnica (Profiling/Data Dictionary) e garantia de que as políticas de governança estão sendo aplicadas via código.
+### 🏛️ Documentação e Governança
+* **Foco:** Manutenção do conhecimento, conformidade técnica e narrativa.
+* **Responsabilidades:** 
+    * Mapeamento de Lineage e documentação técnica (Profiling/Dicionário).
+    * Garantia da aplicação das políticas de governança via código.
+    * Padronização de narrativa e consistência dos materiais para as bancas.
+* **Interfaces Críticas:** Apoio na redação técnica e consistência entre o que é processado e o que é documentado.
+
+---
+
+## 🔗 Interfaces e Dependências
+Para o sucesso da PoC, estabelecemos protocolos de colaboração entre as frentes:
+
+1. **Engenharia ↔️ Documentação:** Sincronização técnica para o mapeamento de metadados, linhagem e políticas de governança. A Engenharia produz sua própria documentação garantindo que a documentação central reflita com precisão o que foi implementado via código.
+2. **Engenharia ↔️ Science/Analytics:** Alinhamento sobre janelas temporais e regras de reprocessamento para garantir que a ABT (Analytical Base Table) reflita a realidade dos dados na camada Silver.
+3. **Science ↔️ Documentação:** Padronização das métricas e lógicas de variáveis nos Books de Variáveis para garantir a auditabilidade dos experimentos e resultados.
+4. **Analytics ↔️ Squad:** Consolidação dos resultados técnicos em uma storyline executiva e visual para a apresentação final estratégica.

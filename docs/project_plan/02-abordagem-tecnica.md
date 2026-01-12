@@ -61,5 +61,32 @@ Utilitário de limpeza programática que gerencia o ciclo de vida das runs no st
 
 ---
 
+## 🧠 Estratégia de Modelagem
+
+### 1. Princípios de Solução
+* **Granularidade Única** - Visão consolidada por CPF/Cliente.
+* **Temporalidade Controlada** - Features calculadas em janela anterior ao target para evitar vazamento de dados (*leakage*).
+* **Reprocessamento Consistente** - Capacidade de recalcular a ABT por data de referência quando necessário.
+* **Auditabilidade** - Variáveis versionadas e documentadas em Books de Variáveis.
+
+### 2. ABT (Analytical Base Table) - Contrato para Modelagem
+A ABT é construída a partir da camada Silver, agregando sinais por cliente com janelas temporais (ex: 30/60/90 dias).
+**Domínios previstos (Mapeados à Silver):**
+* Atrasos/Delinquência
+* Pagamentos
+* Recargas
+* Uso Telco/Engajamento
+* Bureau Móvel (Score Externo)
+* Cadastro/Estabilidade
+
+### 3. Definição do Target e Modelagem
+
+O **Target (Inadimplência)** será formalizado no início da execução (Sprint 0), contemplando a definição operacional do evento, janela de performance (horizonte para observação), data de referência para features e corte temporal para validação.
+
+* **Modelagem:** Inicia com um **Baseline rápido e reprodutível** para estabelecer referência, evoluindo de forma incremental via *Feature Engineering* e validação temporal.
+* **Entrega Operacional:** Disponibilização de score contínuo, faixas/decis com taxa de inadimplência por faixa e sugestão de política de corte (*trade-off* risco vs massa).
+
+---
+
 ## 🚀 Diferencial da Solução e Escalabilidade
 A arquitetura provada nesta PoC integra o que há de melhor no ecossistema de dados moderno. Embora rode hoje em uma VPS, a separação clara entre **Storage (MinIO)**, **Compute (DuckDB)** e **Modelagem (dbt)** permite que a solução escale horizontalmente para nuvens com esforço de migração próximo de zero, validando a viabilidade técnica e de governança do projeto.
