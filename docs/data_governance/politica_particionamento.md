@@ -2,9 +2,8 @@
 
 **Objetivo:** Documentar o padrão de particionamento e a estratégia de organização temporal adotada na camada Bronze, visando otimizar a performance de leitura, previsibilidade de armazenamento e suporte à modelagem nas camadas posteriores.
 
----
 
-### 1. Visão Geral
+## 1. Visão Geral
 
 Para garantir uma arquitetura escalável e eficiente, foi definido um padrão de particionamento único baseado em colunas temporais explícitas. Este eixo temporal permite a leitura seletiva (Partition Pruning), essencial para o processamento de grandes volumes (ex: base de pagamentos com +20M de registros).
 
@@ -12,9 +11,8 @@ Os dados são classificados em duas categorias de ingestão:
 - **Snapshots Mensais:** Visões estáticas de posição em uma data de corte.
 - **Eventos:** Registros transacionais capturados no momento da ocorrência.
 
----
 
-#### 1.1 Matriz de Particionamento: Camada Bronze
+### 1.1 Matriz de Particionamento: Camada Bronze
 
 | Base | Tipo de Dado | Coluna de Referência (Física) | Coluna Técnica (Partição) | Padrão de Diretório | Exemplo de Caminho |
 |:---|:---|:---|:---|:---|:---|
@@ -27,7 +25,7 @@ Os dados são classificados em duas categorias de ingestão:
 
 ---
 
-#### 1.2 Decisões Técnicas Fundamentais
+### 1.2 Decisões Técnicas Fundamentais
 
 * **Particionamento Virtual (Hive):** A coluna técnica `ano_mes` é utilizada exclusivamente para a criação da estrutura de pastas no S3. Ela é removida do corpo do arquivo Parquet para evitar redundância, sendo "reconstruída" em tempo de execução pelos motores de consulta (DuckDB).
 * **Tipagem Numérica:** A partição `ano_mes` é tratada como `BIGINT` (formato `YYYYMM`). Isso garante ordenação natural e consultas de intervalo (`BETWEEN`) mais performáticas do que strings.
@@ -35,17 +33,25 @@ Os dados são classificados em duas categorias de ingestão:
 
 ---
 
-### 2. Fluxo entre Camadas
+### 1.3 Mecanismo de Auditoria e Integridade
+
+Para garantir o cumprimento desta política, o sistema utiliza um protocolo de **Inspeção de Partições**:
+
+* **Script de Auditoria:** `inspect_partition.py` realiza o *cross-check* entre a estrutura física (`ano_mes=YYYYMM`) e os dados lógicos (colunas de data).
+* **Validação de Conformidade:** O sistema emite um alerta de `⚠️ DIVERGENTE` caso um registro esteja em uma pasta temporal que não corresponda ao seu valor real de data, prevenindo o *data leakage*.
+* **Relatório de Execução:** Os resultados são persistidos em [`reports/observability/partitions/inspect_partition.log`](../../reports/observability/partitions/inspect_partition.log).
+
+
+## 2. Fluxo entre Camadas
 
 * **Bronze:** Dados organizados por `ano_mes`, refletindo a granularidade da fonte. É a "Fonte da Verdade" particionada.
-* **Silver:** Realiza o saneamento e padronização. Respeita o particionamento definido na Bronze para permitir processamentos incrementais eficientes.
+* **Silver:** Realiza o saneamento e padronização. Além de respeitar o particionamento da Bronze, a Silver é o alvo principal da **Auditoria de Integridade**, garantindo que a limpeza dos dados não corrompeu a distribuição temporal das safras.
 * **Gold:** Camada de Feature Store e Modelagem. Os dados são agregados e transformados em vetores para Machine Learning, utilizando as janelas temporais definidas nas partições anteriores.
 
----
 
-### 3. Governança e Retenção
+## 3. Governança e Retenção
 
-Para cada partição `ano_mes`, o sistema mantém um controle de `run_id` (timestamp da execução). A política de retenção padrão é configurada para manter as execuções mais recentes, permitindo o *rollback* imediato em caso de inconsistência nos dados recebidos.
+Para cada partição `ano_mes`, o sistema mantém um controle de `run_id` (timestamp da execução). A política de retenção padrão é configurada para manter as execuções mais recentes, permitindo o *rollback* imediato. A trilha de auditoria dessas execuções é centralizada no diretório de [Observabilidade](../../reports/observability/).
 
 ---
 
