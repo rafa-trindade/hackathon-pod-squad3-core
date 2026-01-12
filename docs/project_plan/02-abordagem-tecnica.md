@@ -6,31 +6,31 @@ Este documento detalha a stack tecnológica e as metodologias aplicadas no proje
 ## 1️⃣ Stack Tecnológica e Justificativas
 
 ### 1.1 Infraestrutura e Orquestração
-* **Ferramenta:** **Docker & Docker Compose**
+* **Ferramenta:** `Docker & Docker Compose`
     * **Justificativa:** Base para o isolamento de serviços em containers. Garante que MinIO, Postgres e Airflow coexistam na VPS sem conflitos de dependências e com portabilidade garantida.
-* **Ferramenta:** **Apache Airflow**
+* **Ferramenta:** `Apache Airflow`
     * **Justificativa:** O "maestro" do projeto. Responsável pelo agendamento e monitoramento dos fluxos (DAGs), garantindo a ordem de execução desde a ingestão até a entrega dos modelos de ML.
 
 ### 1.2 Armazenamento e Data Lake (MinIO)
-* **Ferramenta:** **MinIO (S3-Compatible)**
+* **Ferramenta:** `MinIO (S3-Compatible)`
     * **Justificativa:** Implementa a **Arquitetura Medallion** (BRONZE, SILVER, GOLD) em um storage de objetos local. O diferencial é ser *Cloud-Ready*: o código escrito para o MinIO funciona nativamente no AWS S3 caso a PoC avance para nuvem pública.
 
 ### 1.3 Processamento e Qualidade
-* **Ferramenta:** **DuckDB (Vectorized Query Engine)**
+* **Ferramenta:** `DuckDB (Vectorized Query Engine)`
     * **Justificativa**: O "coração" do processamento. Por ser uma engine *in-process*, ele não requer um cluster pesado (como Spark), sendo extremamente eficiente em ambientes de VPS com recursos limitados de memória e CPU. Oferece performance de nível Spark para arquivos Parquet e CSV com a volumetria do nosso cenário.
-* **Ferramenta:** **Python & Pandas**
+* **Ferramenta:** `Python & Pandas`
     * **Justificativa**: Linguagem base para orquestração, automação de scripts de profiling e integração entre os componentes.
-* **Ferramenta:** **Pandera**
+* **Ferramenta:** `Pandera`
     * **Justificativa**: Utilizado para **Contratos de Dados na Origem**. Garante que o dado que entra na camada Landing/Raw respeite o schema esperado, evitando o "efeito cascata" de erros nas camadas posteriores.
 
 ### 1.4 Transformação e Data Warehouse (Arquitetura Bônus)
-* **Ferramenta:** **dbt (Data Build Tool) & PostgreSQL**
+* **Ferramenta:** `dbt (Data Build Tool) & PostgreSQL`
     * **Justificativa:** O dbt gerencia o ciclo de vida do SQL no PostgreSQL, organizando a transformação em camadas lógicas: `raw_schema`, `dw_staging`, `dw_core` (Star Schema) e `dw_marts`. Garante documentação e testes automatizados.
 
 ### 1.5 Ciência de Dados e Entrega
-* **Ferramenta:** **MLflow**
+* **Ferramenta:** `MLflow`
     * **Justificativa:** Gerencia o ciclo de vida dos modelos de Machine Learning (Produção `.pkl`), permitindo rastrear experimentos, parâmetros e versões dos modelos treinados.
-* **Ferramenta:** **Streamlit (Bônus)**
+* **Ferramenta:** `Streamlit (Bônus)`
     * **Justificativa:** Transforma os dados modelados em **Decision Intelligence**, entregando dashboards interativos e aplicações analíticas diretamente para os stakeholders.
 
 
