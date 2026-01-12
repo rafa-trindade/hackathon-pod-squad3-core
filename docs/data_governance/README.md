@@ -66,7 +66,7 @@ Graças às políticas acima, o projeto herda capacidades operacionais críticas
 
 Para fins de auditoria e conformidade, as evidências de que as políticas acima foram aplicadas estão disponíveis em:
 
-- **Logs de Integridade:** [`reports/observability/partitions/`](../../reports/observability/partitions/) - Comprova o cumprimento da Política de Particionamento.
+- **Logs de Integridade:** [`reports/observability/integrity/`](../../reports/observability/integrity/) - Comprova o cumprimento da Política de Particionamento.
 - **Relatórios de Qualidade:** [`reports/observability/quality/`](../../reports/observability/quality/) - Comprova a aplicação dos Contratos de Dados (Pandera/dbt).
 
 
