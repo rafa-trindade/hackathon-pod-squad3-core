@@ -44,5 +44,5 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 > 📁 [`docs/data_quality/*`](docs/data_quality/)  
 > **Especifica** os contratos de dados e regras de negócio detalhadas para cada tabela nas camadas Bronze e Silver. **Define** critérios de integridade, servindo como a documentação técnica que orienta as validações programáticas via Pandera.
 >
-> * 📑 **Policy:** [`Quality Policy`](docs/data_governance/politica_qualidade.md)
-> * 📁 **Reports:** [`Quality Reports`](reports/observability/quality/)
+> * 📑 **Policy:** [`Quality Policy`](docs/data_governance/politica_qualidade.md) - Diretrizes gerais e dimensões de qualidade.
+> * 📁 **Reports:** [`Quality Reports`](reports/observability/quality/)- - Evidências de validação de contratos e conformidade de schemas.
