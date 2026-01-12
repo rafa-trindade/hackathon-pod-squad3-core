@@ -77,32 +77,33 @@
 
 Para garantir que a estratégia de particionamento no S3 está correta, foi executado um script de inspeção em lote na camada Silver. O objetivo é validar se o conteúdo interno da coluna de data corresponde exatamente à estrutura de pastas `ano_mes=YYYYMM` onde os arquivos Parquet estão armazenados.
 
-**Evidência de Integridade (Run: 20260110_045822):**
+> 🔗 **Acesse o log completo de auditoria:** [inspect_partition.log](../../reports/observability/audit/inspect_partition.log)
+
+**Evidência de Integridade:**
 
 ```text
-🚀 Iniciando Inspeção em Lote: pagamento
-📅 Período: 202310 até 202503
-🔑 Chave de conferência: dat_status_fatura
-==================================================================================================
-📁 Pasta 202310:    860,709 linhas | Min: 2023-10-01 00:00:00 | Max: 2023-10-31 00:00:00 | ✅ OK
-📁 Pasta 202311:    857,488 linhas | Min: 2023-11-01 00:00:00 | Max: 2023-11-30 00:00:00 | ✅ OK
-📁 Pasta 202312:    915,069 linhas | Min: 2023-12-01 00:00:00 | Max: 2023-12-31 00:00:00 | ✅ OK
-📁 Pasta 202401:    910,266 linhas | Min: 2024-01-01 00:00:00 | Max: 2024-01-31 00:00:00 | ✅ OK
-📁 Pasta 202402:    918,337 linhas | Min: 2024-02-01 00:00:00 | Max: 2024-02-29 00:00:00 | ✅ OK
-📁 Pasta 202403:    965,748 linhas | Min: 2024-03-01 00:00:00 | Max: 2024-03-31 00:00:00 | ✅ OK
-📁 Pasta 202404:    988,416 linhas | Min: 2024-04-01 00:00:00 | Max: 2024-04-30 00:00:00 | ✅ OK
-📁 Pasta 202405:  1,030,601 linhas | Min: 2024-05-01 00:00:00 | Max: 2024-05-31 00:00:00 | ✅ OK
-📁 Pasta 202406:  1,001,018 linhas | Min: 2024-06-01 00:00:00 | Max: 2024-06-30 00:00:00 | ✅ OK
-📁 Pasta 202407:  1,054,187 linhas | Min: 2024-07-01 00:00:00 | Max: 2024-07-31 00:00:00 | ✅ OK
-📁 Pasta 202408:  1,064,673 linhas | Min: 2024-08-01 00:00:00 | Max: 2024-08-31 00:00:00 | ✅ OK
-📁 Pasta 202409:  1,040,268 linhas | Min: 2024-09-01 00:00:00 | Max: 2024-09-30 00:00:00 | ✅ OK
-📁 Pasta 202410:  1,094,424 linhas | Min: 2024-10-01 00:00:00 | Max: 2024-10-31 00:00:00 | ✅ OK
-📁 Pasta 202411:  1,179,528 linhas | Min: 2024-11-01 00:00:00 | Max: 2024-11-30 00:00:00 | ✅ OK
-📁 Pasta 202412:  1,486,365 linhas | Min: 2024-12-01 00:00:00 | Max: 2024-12-31 00:00:00 | ✅ OK
-📁 Pasta 202501:  1,760,516 linhas | Min: 2025-01-01 00:00:00 | Max: 2025-01-31 00:00:00 | ✅ OK
-📁 Pasta 202502:  1,996,711 linhas | Min: 2025-02-01 00:00:00 | Max: 2025-02-28 00:00:00 | ✅ OK
-📁 Pasta 202503:  2,443,290 linhas | Min: 2025-03-01 00:00:00 | Max: 2025-03-31 00:00:00 | ✅ OK
-==================================================================================================
+📊 TABELA: PAGAMENTO
+🆔 Run ID: 20260110_150652 | Coluna: dat_status_fatura
+📅 Janela: 202310 a 202503
+------------------------------------------------------------
+  📁 202310:    857,209 linhas | Min: 2023-10-01 00:00:00 | Max: 2023-10-31 00:00:00 | ✅ OK
+  📁 202311:    857,908 linhas | Min: 2023-11-01 00:00:00 | Max: 2023-11-30 00:00:00 | ✅ OK
+  📁 202312:    916,573 linhas | Min: 2023-12-01 00:00:00 | Max: 2023-12-31 00:00:00 | ✅ OK
+  📁 202401:    912,618 linhas | Min: 2024-01-01 00:00:00 | Max: 2024-01-31 00:00:00 | ✅ OK
+  📁 202402:    912,381 linhas | Min: 2024-02-01 00:00:00 | Max: 2024-02-29 00:00:00 | ✅ OK
+  📁 202403:    967,967 linhas | Min: 2024-03-01 00:00:00 | Max: 2024-03-31 00:00:00 | ✅ OK
+  📁 202404:    991,859 linhas | Min: 2024-04-01 00:00:00 | Max: 2024-04-30 00:00:00 | ✅ OK
+  📁 202405:  1,029,769 linhas | Min: 2024-05-01 00:00:00 | Max: 2024-05-31 00:00:00 | ✅ OK
+  📁 202406:    998,124 linhas | Min: 2024-06-01 00:00:00 | Max: 2024-06-30 00:00:00 | ✅ OK
+  📁 202407:  1,057,102 linhas | Min: 2024-07-01 00:00:00 | Max: 2024-07-31 00:00:00 | ✅ OK
+  📁 202408:  1,062,456 linhas | Min: 2024-08-01 00:00:00 | Max: 2024-08-31 00:00:00 | ✅ OK
+  📁 202409:  1,039,259 linhas | Min: 2024-09-01 00:00:00 | Max: 2024-09-30 00:00:00 | ✅ OK
+  📁 202410:  1,097,942 linhas | Min: 2024-10-01 00:00:00 | Max: 2024-10-31 00:00:00 | ✅ OK
+  📁 202411:  1,177,502 linhas | Min: 2024-11-01 00:00:00 | Max: 2024-11-30 00:00:00 | ✅ OK
+  📁 202412:  1,489,889 linhas | Min: 2024-12-01 00:00:00 | Max: 2024-12-31 00:00:00 | ✅ OK
+  📁 202501:  1,755,588 linhas | Min: 2025-01-01 00:00:00 | Max: 2025-01-31 00:00:00 | ✅ OK
+  📁 202502:  2,001,239 linhas | Min: 2025-02-01 00:00:00 | Max: 2025-02-28 00:00:00 | ✅ OK
+  📁 202503:  2,442,229 linhas | Min: 2025-03-01 00:00:00 | Max: 2025-03-31 00:00:00 | ✅ OK
 ```
 
 **Principais Observações Técnicas:**

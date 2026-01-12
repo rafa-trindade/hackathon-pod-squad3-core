@@ -77,20 +77,21 @@
 
 Para garantir que a estratégia de particionamento no S3 está correta, foi executado um script de inspeção em lote na camada Silver. O objetivo é validar se o conteúdo interno da coluna de data corresponde exatamente à estrutura de pastas `ano_mes=YYYYMM` onde os arquivos Parquet estão armazenados.
 
-**Evidência de Integridade (Run: 20260110_052507):**
+> 🔗 **Acesse o log completo de auditoria:** [inspect_partition.log](../../reports/observability/audit/inspect_partition.log)
+
+**Evidência de Integridade:**
 
 ```text
-🚀 Iniciando Inspeção em Lote: telco
-📅 Período: 202410 até 202503
-🔑 Chave de conferência: safra
-==================================================================================================
-📁 Pasta 202410:    219,860 linhas | Min: 2024-10-01 00:00:00 | Max: 2024-10-01 00:00:00 | ✅ OK
-📁 Pasta 202411:    240,520 linhas | Min: 2024-11-01 00:00:00 | Max: 2024-11-01 00:00:00 | ✅ OK
-📁 Pasta 202412:    241,453 linhas | Min: 2024-12-01 00:00:00 | Max: 2024-12-01 00:00:00 | ✅ OK
-📁 Pasta 202501:    233,710 linhas | Min: 2025-01-01 00:00:00 | Max: 2025-01-01 00:00:00 | ✅ OK
-📁 Pasta 202502:    214,665 linhas | Min: 2025-02-01 00:00:00 | Max: 2025-02-01 00:00:00 | ✅ OK
-📁 Pasta 202503:    216,896 linhas | Min: 2025-03-01 00:00:00 | Max: 2025-03-01 00:00:00 | ✅ OK
-==================================================================================================
+📊 TABELA: TELCO
+🆔 Run ID: 20260110_154715 | Coluna: safra
+📅 Janela: 202410 a 202503
+------------------------------------------------------------
+  📁 202410:    219,860 linhas | Min: 2024-10-01 00:00:00 | Max: 2024-10-01 00:00:00 | ✅ OK
+  📁 202411:    240,520 linhas | Min: 2024-11-01 00:00:00 | Max: 2024-11-01 00:00:00 | ✅ OK
+  📁 202412:    241,453 linhas | Min: 2024-12-01 00:00:00 | Max: 2024-12-01 00:00:00 | ✅ OK
+  📁 202501:    233,710 linhas | Min: 2025-01-01 00:00:00 | Max: 2025-01-01 00:00:00 | ✅ OK
+  📁 202502:    214,665 linhas | Min: 2025-02-01 00:00:00 | Max: 2025-02-01 00:00:00 | ✅ OK
+  📁 202503:    216,896 linhas | Min: 2025-03-01 00:00:00 | Max: 2025-03-01 00:00:00 | ✅ OK
 ```
 
 **Principais Observações Técnicas:**
