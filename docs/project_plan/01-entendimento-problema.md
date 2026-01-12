@@ -18,7 +18,6 @@ Desenvolver um **Modelo de Behavior** (visão unificada por CPF/cliente) para es
 * **Faixas de Risco:** Divisão em decis/bins para suporte à decisão operacional.
 * **Recomendação de Política Inicial:** Definição de cortes e análise de *trade-offs* entre risco vs. massa de clientes.
 
----
 
 ### 📈 Valor para o Negócio
 
