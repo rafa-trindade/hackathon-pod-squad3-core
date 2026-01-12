@@ -48,7 +48,7 @@ Foco em travar escopo, decisões-base e consolidação do Plano de Execução.
 
 
 ## 5️⃣ Estado Atual do Projeto
-*Status em 14/01/2026*
+> *Status em 14/01/2026*
 
 O projeto encontra-se com a fundação de dados consolidada, apresentando:
 * **Infraestrutura:** Repositório versionado com profiling e EDA inicial.
