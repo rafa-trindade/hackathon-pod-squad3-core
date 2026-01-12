@@ -88,15 +88,13 @@ def get_latest_run_id(con, table_name):
         return None
 
 def inspect_all():
-    # 1. Silenciamos o terminal para a conexão inicial (evita prints de config)
     with contextlib.redirect_stdout(None):
         con = get_duckdb_connection()
     
-    # 2. Agora sim, ativamos o Logger para o relatório
     sys.stdout = Logger()
     
     timestamp_exec = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    periodos_globais = get_month_list("202310", "202503") # Apenas referência visual
+    periodos_globais = get_month_list("202310", "202503")
 
     print("\n" + "="*80)
     print(f"🕵️  AUDITORIA DE PARTIÇÕES SILVER - {timestamp_exec}")
@@ -138,7 +136,6 @@ def inspect_all():
     print(f"🏁 Auditoria Finalizada.")
     print("="*80 + "\n")
 
-    # Fecha o arquivo de log adequadamente
     if isinstance(sys.stdout, Logger):
         sys.stdout.log.close()
         sys.stdout = sys.stdout.terminal
