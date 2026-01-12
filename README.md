@@ -33,12 +33,11 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 > 📄 [`docs/data_observability/`](docs/data_observability/README.md)  
 > **Gerencia** a saúde dos dados através do monitoramento nativo de Freshness, Volume e Schema Drift. **Utiliza** metadados técnicos para auditoria, garantindo resiliência operacional com protocolos de rollback e diagnósticos preventivos de anomalias estatísticas.  
 >
-> 📁 **Reports:** [`reports/observability/*`](reports/observability/) - Centraliza as evidências técnicas de auditoria física (`partitions`) e relatórios de execução de contratos de dados (`quality`).
-
-
-### 📊 Data Profiling
-> 📁 [`docs/data_profiling/*`](docs/data_profiling/)  
-> **Executa** o diagnóstico estatístico automatizado para monitoramento da saúde dos dados, cobrindo volumetria, cardinalidade e distribuição de valores. **Gera** evidências versionadas em Markdown para suporte à auditoria e detecção de anomalias.
+### 🔍 Data Observability
+> 📄 [`docs/data_observability/`](docs/data_observability/README.md)  
+> **Gerencia** a saúde dos dados através do monitoramento nativo de Freshness, Volume e Schema Drift. **Utiliza** metadados técnicos para auditoria, garantindo resiliência operacional com protocolos de rollback e diagnósticos preventivos de anomalias estatísticas. 
+>
+> * 📁 **Reports:** [`reports/observability/*`](reports/observability/) - Centraliza evidências de auditoria física (`partitions`), diagnósticos estatísticos (`profiling`) e relatórios de contratos de dados (`quality`).
 
 
 ### ✅ Data Quality (*Data Contracts*)
