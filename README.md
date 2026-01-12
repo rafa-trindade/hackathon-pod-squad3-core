@@ -22,6 +22,8 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 ### 🧬 Data Lineage
 > 📁 [`docs/data_lineage/*`](docs/data_lineage/)  
 > **Mapeia** a jornada do dado entre as camadas Medallion, garantindo padronização, tipagem forte e integridade técnica na camada Silver. **Foca** na rastreabilidade ponta a ponta e na otimização de performance através de particionamento físico e saneamento de metadados.
+>
+> * 📑 **Reports:** [`inspect_partition.log`](reports/observability/integrity/inspect_partition.log) - Validação física do particionamento e integridade dos caminhos de dados na camada Silver.
 
 
 ### 🧠 Feature Store & Book de Variáveis
@@ -39,3 +41,5 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 ### ✅ Data Quality (*Data Contracts*)
 > 📁 [`docs/data_quality/*`](docs/data_quality/)  
 > **Especifica** os contratos de dados e regras de negócio detalhadas para cada tabela nas camadas Bronze e Silver. **Define** critérios de integridade, servindo como a documentação técnica que orienta as validações programáticas via Pandera.
+>
+> * 📁 **Reports:** [`reports/observability/quality/*`](reports/observability/quality/) - Evidências de validação de contratos e conformidade de schemas.
