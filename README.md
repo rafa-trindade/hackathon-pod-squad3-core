@@ -24,7 +24,7 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 > **Mapeia** a jornada do dado entre as camadas Medallion, garantindo padronização, tipagem forte e integridade técnica na camada Silver. **Foca** na rastreabilidade ponta a ponta e na otimização de performance através de particionamento físico e saneamento de metadados.
 >
 > * 📑 **Integrity Report:** [`inspect_partition.log`](reports/observability/integrity/inspect_partition.log) - Validação física do particionamento e caminhos de dados na Silver.
-> * 📁 **Profiling Reports:** [`profiling/*`](reports/observability/profiling/) - Diagnóstico estatístico, volumetria e saúde das distribuições dos dados.
+> * 📁 **Profiling Report:** [`profiling/*`](reports/observability/profiling/) - Diagnóstico estatístico, volumetria e saúde das distribuições dos dados.
 
 
 ### 🧠 Feature Store & Book de Variáveis
