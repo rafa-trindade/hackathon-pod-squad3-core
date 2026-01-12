@@ -2,7 +2,6 @@
 
 Este documento detalha a stack tecnológica e as metodologias aplicadas no projeto, justificando as escolhas baseadas no cenário de execução em uma **VPS (Virtual Private Server)** atuando como uma **Prova de Conceito (PoC)** de uma plataforma de dados moderna, ponta a ponta e escalável.
 
----
 
 ## 🏗️ Stack Tecnológica e Justificativas
 
@@ -34,11 +33,10 @@ Este documento detalha a stack tecnológica e as metodologias aplicadas no proje
 * **Ferramenta:** **Streamlit (Bônus)**
     * **Justificativa:** Transforma os dados modelados em **Decision Intelligence**, entregando dashboards interativos e aplicações analíticas diretamente para os stakeholders.
 
----
 
-## 📈 Estratégias de Engenharia Aplicadas
+## ⚙️ Estratégias de Engenharia Aplicadas
 
-### 🎯 Escopo e Escalabilidade (Visão de Negócio)
+### 1. Escopo e Escalabilidade (Visão de Negócio)
 A arquitetura foi pensada já considerando a **volumetria real da Claro** (capaz de crescer verticalmente independente de onde esteja hospedada). No entanto, a implementação atual e os processamentos estão dimensionados com base em um **dataset de "teste"** (nossa base de amostra).
 
 Esta abordagem foi adotada para:
@@ -46,20 +44,25 @@ Esta abordagem foi adotada para:
 - Manter a simplicidade e agilidade durante o ciclo de desenvolvimento.
 - Validar a lógica de governança antes do scale-up para o ambiente produtivo final.
 
-### 🧊 Arquitetura Medallion & Star Schema
+---
+
+### 2. Arquitetura Medallion & Star Schema
 Organizamos o dado para dois propósitos distintos:
 1. **No Lake (MinIO):** Foco em armazenamento eficiente, imutabilidade e histórico transacional.
 2. **No DW (Postgres) (Bônus):** Modelagem dimensional (Fatos e Dimensões) otimizada para performance de BI e consumo por aplicações.
 
-### 🗂️ Estratégia de Particionamento & Run_ID
+---
+
+### 3. Estratégia de Particionamento & Run_ID
 Adotamos o particionamento físico por `ano_mes=YYYYMM` associado ao metadado técnico `run_id`.
 * **Benefício:** Permite o *Partition Pruning* no DuckDB (lê apenas o necessário) e isola execuções. Se um processo falha, o Airflow pode re-executar apenas aquela run específica sem afetar o histórico estável.
 
-### 🧹 Política de Retenção Ativa
+---
+
+### 4. Política de Retenção Ativa
 Utilitário de limpeza programática que gerencia o ciclo de vida das runs no storage.
 * **Por que:** Como o MLflow e as camadas do Data Lake geram alto volume de arquivos, a retenção automática evita que o armazenamento da VPS se esgote, mantendo a resiliência operacional.
 
----
 
 ## 🧠 Estratégia de Modelagem
 
@@ -68,6 +71,8 @@ Utilitário de limpeza programática que gerencia o ciclo de vida das runs no st
 * **Temporalidade Controlada** - Features calculadas em janela anterior ao target para evitar vazamento de dados (*leakage*).
 * **Reprocessamento Consistente** - Capacidade de recalcular a ABT por data de referência quando necessário.
 * **Auditabilidade** - Variáveis versionadas e documentadas em Books de Variáveis.
+
+---
 
 ### 2. ABT (Analytical Base Table) - Contrato para Modelagem
 A ABT é construída a partir da camada Silver, agregando sinais por cliente com janelas temporais (ex: 30/60/90 dias).
@@ -79,6 +84,8 @@ A ABT é construída a partir da camada Silver, agregando sinais por cliente com
 * Bureau Móvel (Score Externo)
 * Cadastro/Estabilidade
 
+---
+
 ### 3. Definição do Target e Modelagem
 
 O **Target (Inadimplência)** será formalizado no início da execução (Sprint 0), contemplando a definição operacional do evento, janela de performance (horizonte para observação), data de referência para features e corte temporal para validação.
@@ -86,7 +93,6 @@ O **Target (Inadimplência)** será formalizado no início da execução (Sprint
 * **Modelagem:** Inicia com um **Baseline rápido e reprodutível** para estabelecer referência, evoluindo de forma incremental via *Feature Engineering* e validação temporal.
 * **Entrega Operacional:** Disponibilização de score contínuo, faixas/decis com taxa de inadimplência por faixa e sugestão de política de corte (*trade-off* risco vs massa).
 
----
 
 ## 🚀 Diferencial da Solução e Escalabilidade
 A arquitetura provada nesta PoC integra o que há de melhor no ecossistema de dados moderno. Embora rode hoje em uma VPS, a separação clara entre **Storage (MinIO)**, **Compute (DuckDB)** e **Modelagem (dbt)** permite que a solução escale horizontalmente para nuvens com esforço de migração próximo de zero, validando a viabilidade técnica e de governança do projeto.

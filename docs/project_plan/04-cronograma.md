@@ -2,7 +2,6 @@
 
 Este documento detalha os marcos oficiais, o planejamento tático da Sprint 0 e a estratégia de mitigação de riscos para garantir o sucesso da PoC no Hackathon Claro.
 
----
 
 ## 📌 1. Marcos Oficiais do Projeto
 
@@ -14,7 +13,6 @@ Este documento detalha os marcos oficiais, o planejamento tático da Sprint 0 e 
 | **03/02/2026** | Banca de Qualificação |
 | **05/03/2026** | Banca Final |
 
----
 
 ## ⚡ 2. Sprint 0 - Planejamento Imediato (Até 14/01)
 
@@ -22,12 +20,11 @@ Foco em travar escopo, decisões-base e consolidação do Plano de Execução.
 
 | Dia | Frentes de Trabalho | Saída Esperada (DoD) |
 | :--- | :--- | :--- |
-| **D0 (11/01)** | **Analytics:** Métricas de sucesso, estrutura do Estudo de Público-Alvo e checklist de qualidade nas Silvers.<br>**DS:** Definição do target, granularidade CPF e proposta de janelas; desenho da ABT. | **1-pager:** Objetivos, rascunho do target, granularidade, janelas e entregáveis. |
-| **D1 (12/01)** | **Analytics:** Relatório de qualidade/cobertura (CPF, duplicidade, missing críticos, ranges).<br>**DS:** Estratégia de validação (split temporal), baseline planejado e features por domínio. | **Plano preenchido:** Seções de abordagem, métricas, dependências e riscos. |
-| **D2 (13/01)** | **Analytics:** Backlog com épicos/histórias, owners e cadência de comunicação.<br>**DS:** Lista priorizada de features, critérios de aceite (baseline/final) e plano de evidências. | **Versão Review:** Plano disponível para o time de documentação adequar. |
+| **D0 (11/01)** | **Analytics:** Métricas de sucesso, estrutura do Estudo de Público-Alvo e checklist de qualidade nas Silvers.<br><br>**DS:** Definição do target, granularidade CPF e proposta de janelas; desenho da ABT. | **Pager:** Objetivos, rascunho do target, granularidade, janelas e entregáveis. |
+| **D1 (12/01)** | **Analytics:** Relatório de qualidade/cobertura (CPF, duplicidade, missing críticos, ranges).<br><br>**DS:** Estratégia de validação (split temporal), baseline planejado e features por domínio. | **Plano preenchido:** Seções de abordagem, métricas, dependências e riscos. |
+| **D2 (13/01)** | **Analytics:** Backlog com épicos/histórias, owners e cadência de comunicação.<br><br>**DS:** Lista priorizada de features, critérios de aceite (baseline/final) e plano de evidências. | **Versão Review:** Plano disponível para o time de documentação adequar. |
 | **D3 (14/01)** | **Squad:** Consolidação final de todas as frentes. | **Entrega Formal:** Plano finalizado com entendimento, cronograma e riscos. |
 
----
 
 ## 🚀 3. Evolução das Entregas
 
@@ -36,14 +33,25 @@ Foco em travar escopo, decisões-base e consolidação do Plano de Execução.
 * **20/01:** Validação do contrato **Silver → ABT** e definição da estratégia de reprocessamento.
 * **03/02:** **Entrega Final da Fase:** Estudo de Público-Alvo + Books + Baseline + Documentação inicial + Arquitetura.
 
+---
+
 ### 3.2 Até a Banca Final (04/02 → 05/03)
 * **Modelagem:** Modelo final (.pkl), faixas de risco e recomendação de política inicial.
 * **Observabilidade:** Plano de monitoramento completo.
 * **Engenharia:** Documentação técnica consolidada e Storyline da apresentação final.
 
----
 
 ## 🏛️ 4. Governança e Cerimônias
 * **Daily:** Reuniões curtas (10–15 min) para alinhamento de impedimentos.
 * **Checkpoint Interno:** 2x por semana para validação de evidências (EDA, ABT, Modelagem, Books).
 * **Revisão Pré-Banca:** Checklist de consistência entre premissas, números e narrativa.
+
+
+## ⏳ 5. Estado Atual do Projeto
+*Status em 14/01/2026*
+
+O projeto encontra-se com a fundação de dados consolidada, apresentando:
+* **Infraestrutura:** Repositório versionado com profiling e EDA inicial.
+* **Engenharia:** Ingestão via MinIO + DuckDB com suporte a S3.
+* **Arquitetura Medallion:** Camadas **Raw**, **Bronze** e **Silver** estruturadas.
+* **Domínios Processados:** Scripts Silver finalizados para os domínios de Atrasos, Pagamentos, Recargas, Telco, Score Bureau Móvel e Dados Cadastrais.
