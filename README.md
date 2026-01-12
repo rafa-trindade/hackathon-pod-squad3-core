@@ -25,7 +25,7 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 > 📁 [`docs/data_lineage/*`](docs/data_lineage/)  
 > **Mapeia** a jornada do dado entre as camadas Medallion, garantindo padronização, tipagem forte e integridade técnica na camada Silver. **Foca** na rastreabilidade ponta a ponta e na otimização de performance através de particionamento físico e saneamento de metadados.
 >
-> * 📑 **Integrity Report:** [`inspect_partition.log`](reports/observability/integrity/inspect_partition.log) - Validação física do particionamento e caminhos de dados na Silver.
+> * 📑 **Integrity Report:** [`inspect_partition.log`](reports/observability/integrity/inspect_partition.log) - Validação física do particionamento na camada Silver.
 > * 📁 **Profiling Report:** [`profiling/*`](reports/observability/profiling/) - Diagnóstico estatístico, volumetria e saúde das distribuições dos dados.
 
 
@@ -38,7 +38,7 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 > 📄 [`docs/data_observability/`](docs/data_observability/README.md)  
 > **Gerencia** a saúde dos dados através do monitoramento nativo de Freshness, Volume e Schema Drift. **Utiliza** metadados técnicos para auditoria, garantindo resiliência operacional com protocolos de rollback e diagnósticos preventivos de anomalias estatísticas. 
 >
-> * 📁 **Reports:** [`reports/observability/*`](reports/observability/) - Centraliza as evidências de integridade física (`integrity`), diagnósticos estatísticos (`profiling`) e relatórios de contratos de dados (`quality`).
+> * 📁 **Reports:** [`reports/observability/*`](reports/observability/) - Centraliza as evidências de integridade física ([`integrity`](reports/observability/integrity/inspect_partition.log)), diagnósticos estatísticos ([`profiling`](reports/observability/profiling/)) e relatórios de contratos de dados ([`quality`](reports/observability/integrity/)).
 
 
 ### ✅ Data Quality (*Data Contracts*)
