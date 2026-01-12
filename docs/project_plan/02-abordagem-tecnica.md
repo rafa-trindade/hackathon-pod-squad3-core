@@ -7,8 +7,7 @@ Este documento detalha a stack tecnológica e as metodologias aplicadas no proje
 
 ### 1.1 Infraestrutura e Orquestração
 * **Ferramenta:** **Docker & Docker Compose**
-    * **Justificativa:** Base para o isolamento de serviços em containers. Garante que MinIO, Postgres e Airflow coexistam na VPS sem conflitos de dependências e com portabilidade garantida. 
-
+    * **Justificativa:** Base para o isolamento de serviços em containers. Garante que MinIO, Postgres e Airflow coexistam na VPS sem conflitos de dependências e com portabilidade garantida.
 * **Ferramenta:** **Apache Airflow**
     * **Justificativa:** O "maestro" do projeto. Responsável pelo agendamento e monitoramento dos fluxos (DAGs), garantindo a ordem de execução desde a ingestão até a entrega dos modelos de ML.
 
@@ -18,11 +17,9 @@ Este documento detalha a stack tecnológica e as metodologias aplicadas no proje
 
 ### 1.3 Processamento e Qualidade
 * **Ferramenta:** **DuckDB (Vectorized Query Engine)**
-    * **Justificativa**: O "coração" do processamento. Por ser uma engine *in-process*, ele não requer um cluster pesado (como Spark), sendo extremamente eficiente em ambientes de VPS com recursos limitados de memória e CPU. Oferece performance de nível Spark para arquivos Parquet e CSV com a volumetria do nosso cenário. 
-
+    * **Justificativa**: O "coração" do processamento. Por ser uma engine *in-process*, ele não requer um cluster pesado (como Spark), sendo extremamente eficiente em ambientes de VPS com recursos limitados de memória e CPU. Oferece performance de nível Spark para arquivos Parquet e CSV com a volumetria do nosso cenário.
 * **Ferramenta:** **Python & Pandas**
-    * **Justificativa**: Linguagem base para orquestração, automação de scripts de profiling e integração entre os componentes. 
-
+    * **Justificativa**: Linguagem base para orquestração, automação de scripts de profiling e integração entre os componentes.
 * **Ferramenta:** **Pandera**
     * **Justificativa**: Utilizado para **Contratos de Dados na Origem**. Garante que o dado que entra na camada Landing/Raw respeite o schema esperado, evitando o "efeito cascata" de erros nas camadas posteriores.
 
@@ -32,8 +29,7 @@ Este documento detalha a stack tecnológica e as metodologias aplicadas no proje
 
 ### 1.5 Ciência de Dados e Entrega
 * **Ferramenta:** **MLflow**
-    * **Justificativa:** Gerencia o ciclo de vida dos modelos de Machine Learning (Produção `.pkl`), permitindo rastrear experimentos, parâmetros e versões dos modelos treinados. 
-    
+    * **Justificativa:** Gerencia o ciclo de vida dos modelos de Machine Learning (Produção `.pkl`), permitindo rastrear experimentos, parâmetros e versões dos modelos treinados.
 * **Ferramenta:** **Streamlit (Bônus)**
     * **Justificativa:** Transforma os dados modelados em **Decision Intelligence**, entregando dashboards interativos e aplicações analíticas diretamente para os stakeholders.
 
