@@ -31,10 +31,6 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 
 ### 🔍 Data Observability
 > 📄 [`docs/data_observability/`](docs/data_observability/README.md)  
-> **Gerencia** a saúde dos dados através do monitoramento nativo de Freshness, Volume e Schema Drift. **Utiliza** metadados técnicos para auditoria, garantindo resiliência operacional com protocolos de rollback e diagnósticos preventivos de anomalias estatísticas.  
->
-### 🔍 Data Observability
-> 📄 [`docs/data_observability/`](docs/data_observability/README.md)  
 > **Gerencia** a saúde dos dados através do monitoramento nativo de Freshness, Volume e Schema Drift. **Utiliza** metadados técnicos para auditoria, garantindo resiliência operacional com protocolos de rollback e diagnósticos preventivos de anomalias estatísticas. 
 >
 > * 📁 **Reports:** [`reports/observability/*`](reports/observability/) - Centraliza as evidências de integridade física (`integrity`), diagnósticos estatísticos (`profiling`) e relatórios de contratos de dados (`quality`).
