@@ -57,7 +57,10 @@ A equipe é composta por 10 especialistas, organizados em frentes de trabalho co
     * Baseline e evolução até o modelo final (.pkl) com pipeline reprodutível.
     * Tradução de métricas em decisão operacional (faixas, corte e simulações).
     * Plano de monitoramento (performance, drift e gatilhos de retraining).
-* **Entregáveis:** Modelo Baseline (Banca de Qualificação), Modelo Final e Plano de Monitoramento (Banca Final).
+* **Entregáveis:** 
+    * Modelo Baseline (Banca de Qualificação) 
+    * Modelo Final .pkl (Banca Final)
+    * Plano de Monitoramento (Banca Final)
 
 ---
 
@@ -68,7 +71,10 @@ A equipe é composta por 10 especialistas, organizados em frentes de trabalho co
     * Definição das métricas de sucesso (técnicas e de negócio).
     * Liderança dos **Books de Variáveis** (significado, regra e interpretação).
     * Storytelling e consolidação de impacto com insights acionáveis por faixa.
-* **Entregáveis:** Estudo de Público-Alvo (Qualificação), Books de Variáveis (coautoria) e seções de métricas, riscos e governança.
+* **Entregáveis:** 
+    * Estudo de Público-Alvo (Banca de Qualificação) 
+    * Books de Variáveis (Coautoria)
+    * Seções do Plano: entendimento do problema, métricas, riscos e governança
 
 ---
 
