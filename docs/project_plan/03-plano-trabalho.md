@@ -28,14 +28,14 @@ O uso desses quadros possibilita:
 
 ## 2️⃣ Organização da Squad e Responsabilidades
 
-A equipe é composta por 10 especialistas, organizados em frentes de trabalho com entregáveis claros para as bancas de qualificação e final.
+A equipe é composta por 10 especialistas, organizados em frentes de trabalho com entregáveis claros para as bancas de qualificação.
 
 ### ⚙️ Engenharia de Dados (Data Engineering)
 * **Foco:** Construção e manutenção da infraestrutura de dados.
 * **Responsabilidades:** 
     * Estruturar e manter a arquitetura de dados do projeto.
     * Implementar e versionar pipelines de ingestão, transformação e saneamento de dados.
-    * Garantir qualidade, consistência e governança dos dados nas camadas Raw, Silver e Gold.
+    * Garantir qualidade, consistência e governança dos dados nas camadas Raw, Bronze, Silver e Gold.
     * Implementar profiling, validações e observabilidade dos dados.
     * Assegurar reprocessabilidade e rastreabilidade das execuções.
     * Definir e manter contratos de dados entre domínios e camadas.
