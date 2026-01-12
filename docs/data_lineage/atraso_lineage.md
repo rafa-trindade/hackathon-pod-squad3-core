@@ -81,14 +81,14 @@
 
 Para garantir que a estratégia de particionamento no S3 está correta, foi executado um script de inspeção em lote na camada Silver. O objetivo é validar se o conteúdo interno da coluna de data corresponde exatamente à estrutura de pastas `ano_mes=YYYYMM` onde os arquivos Parquet estão armazenados.
 
-> 🔗 **Acesse o log completo de auditoria:** [inspect_partition.log](../../reports/observability/audit/inspect_partition.log)
+> 🔗 **Acesse o log completo de auditoria:** [inspect_partition.log](../../reports/observability/partitions/inspect_partition.log)
 
 **Evidência de Integridade:**
 
 ```text
 ================================================================================
 🕵️  AUDITORIA DE PARTIÇÕES SILVER - 2026-01-12 13:13:29
-📂 Arquivo de Log: reports/observability/audit/inspect_partition.log
+📂 Arquivo de Log: reports/observability/partitions/inspect_partition.log
 ================================================================================
 
 📊 TABELA: ATRASO
