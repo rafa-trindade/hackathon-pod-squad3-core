@@ -25,8 +25,7 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 > 📁 [`docs/data_lineage/*`](docs/data_lineage/)  
 > **Mapeia** a jornada do dado entre as camadas Medallion, garantindo padronização, tipagem forte e integridade técnica na camada Silver. **Foca** na rastreabilidade ponta a ponta e na otimização de performance através de particionamento físico e saneamento de metadados.
 >
-> * 📑 **Integrity Report:** [`inspect_partition.log`](reports/observability/integrity/inspect_partition.log) - Validação física do particionamento na camada Silver.
-> * 📁 **Profiling Report:** [`profiling/*`](reports/observability/profiling/) - Diagnóstico estatístico, volumetria e saúde das distribuições dos dados.
+> * 📑 **Reports:** [`Integrity`](reports/observability/integrity/inspect_partition.log) | [`Profiling`](reports/observability/profiling/)
 
 
 ### 🧠 Feature Store & Book de Variáveis
@@ -45,5 +44,5 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 > 📁 [`docs/data_quality/*`](docs/data_quality/)  
 > **Especifica** os contratos de dados e regras de negócio detalhadas para cada tabela nas camadas Bronze e Silver. **Define** critérios de integridade, servindo como a documentação técnica que orienta as validações programáticas via Pandera.
 >
-> * 📄 **Policy:** [`politica_qualidade.md`](docs/data_governance/politica_qualidade.md) - Diretrizes gerais e dimensões de qualidade.
-> * 📁 **Reports:** [`quality/*`](reports/observability/quality/) - Evidências de validação de contratos e conformidade de schemas.
+> * 📑 **Policy:** [`Quality Policy`](docs/data_governance/politica_qualidade.md)
+> * 📁 **Reports:** [`Quality Reports`](reports/observability/quality/)
