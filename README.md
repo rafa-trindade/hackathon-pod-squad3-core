@@ -10,11 +10,13 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 >
 > * 📑 **Documents:** [`Entendimento`](docs/project_plan/01-entendimento-problema.md) | [`Abordagem`](docs/project_plan/02-abordagem-tecnica.md) | [`Plano de Trabalho`](docs/project_plan/03-plano-trabalho.md) | [`Cronograma`](docs/project_plan/04-cronograma.md) | [`Riscos`](docs/project_plan/05-riscos-dependencias.md) | [`Métricas`](docs/project_plan/06-metricas-sucesso.md)
 
+---
 
 ### 🏗️ Data Architecture
 > 📄 [`docs/data_architecture/`](docs/data_architecture/README.md)  
 > **Define** a stack operada em VPS, utilizando Docker e Airflow para orquestração. **Combina** MinIO para storage Medallion (Cloud-Ready), DuckDB para processamento vetorial e PostgreSQL para o Data Warehouse, integrando modelagem via dbt, gestão de modelos com MLflow e entrega via Streamlit.
 
+---
 
 ### 🏛️ Data Governance
 > 📄 [`docs/data_governance/`](docs/data_governance/README.md)  
@@ -22,6 +24,7 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 >
 > * 📑 **Policies:** [`Retention`](docs/data_governance/politica_retencao.md) | [`Partitioning`](docs/data_governance/politica_particionamento.md) | [`Quality`](docs/data_governance/politica_qualidade.md)
 
+---
 
 ### 🧬 Data Lineage
 > 📁 [`docs/data_lineage/*`](docs/data_lineage/)  
@@ -29,11 +32,13 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 >
 > * 📑 **Reports:** [`Integrity`](reports/observability/integrity/inspect_partition.log) | [`Profiling`](reports/observability/profiling/)
 
+---
 
 ### 🧠 Feature Store & Book de Variáveis
 > 📁 [`docs/data_modelling/*`](docs/data_modelling/)  
 > **Apresenta** a documentação técnica da Camada Gold com foco em inteligência de dados e Machine Learning. **Consolida** o Book de Variáveis com definições de negócio e lógicas de agregação, além do registro de Feature Engineering para treinamento de modelos.
 
+---
 
 ### 🔍 Data Observability
 > 📄 [`docs/data_observability/`](docs/data_observability/README.md)  
@@ -41,6 +46,7 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 >
 > * 📁 **Reports:** [`reports/observability/*`](reports/observability/) - Centraliza as evidências de integridade física (`integrity`), diagnósticos estatísticos (`profiling`) e relatórios de contratos de dados (`quality`).
 
+---
 
 ### ✅ Data Quality (*Data Contracts*)
 > 📁 [`docs/data_quality/*`](docs/data_quality/)  
