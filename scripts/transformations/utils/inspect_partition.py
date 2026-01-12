@@ -15,7 +15,7 @@ from config.data_connections import get_duckdb_connection
 # ------------------------------------------------------------------
 # CONFIGURAÇÃO DE LOG
 # ------------------------------------------------------------------
-LOG_DIR = PROJECT_ROOT / "reports" / "observability" / "audit"
+LOG_DIR = PROJECT_ROOT / "reports" / "observability" / "partitions"
 LOG_DIR.mkdir(parents=True, exist_ok=True)
 LOG_FILE = LOG_DIR / "inspect_partition.log"
 
