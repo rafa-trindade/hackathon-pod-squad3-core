@@ -47,7 +47,27 @@ Foco em travar escopo, decisões-base e consolidação do Plano de Execução.
 * **Revisão Pré-Banca:** Checklist de consistência entre premissas, números e narrativa.
 
 
-## 5️⃣ Estado Atual do Projeto
+## 5️⃣ Escopo e Entregáveis
+
+### ✅ Em escopo (Mínimo para Bancas) 
+* **Plano de Execução** - Planejamento e entrega imediata.
+* **Estudo de Público-Alvo** - EDA orientada a risco.
+* **Books de Variáveis** - Documentação funcional das variáveis por domínio.
+* **Modelo Baseline** - Métricas e primeira versão reprodutível.
+* **Modelo Final (.pkl)** - Pipeline completo de treino e validação.
+* **Plano de Monitoramento** - Métricas, drift, rotina e alertas.
+* **Documentação de Engenharia** - Arquitetura, Lineage, Governança e Observabilidade.
+* **Apresentação Final** - Storyline executiva e evidências técnicas.
+
+---
+
+### ❌ Fora de escopo
+* **Ativação Produtiva** - Foco exclusivo em recomendação estratégica e prototipagem.
+* **Dados Externos** - Enriquecimentos além dos dados de amostragem (tratados como *nice to have*).
+* **Implementação de MLOps** - Foco limitado ao desenho técnico e plano de monitoramento.
+
+
+## 6️⃣ Estado Atual do Projeto
 > *Status em 14/01/2026*
 
 O projeto encontra-se com a fundação de dados consolidada, apresentando:

@@ -24,23 +24,3 @@ Desenvolver um **Modelo de Behavior** (visão unificada por CPF/cliente) para es
 * **Aumento de Faturamento:** Melhor direcionamento da oferta de migração para perfis com maior sustentabilidade e maior LTV (*Lifetime Value*) esperado.
 * **Redução de Custos:** Mitigação da inadimplência e menor desperdício de recursos em campanhas para perfis de alto risco.
 * **Eficiência Operacional:** Decisão padronizada, explicável e baseada em dados, reduzindo o retrabalho manual.
-
-
-## 3️⃣ Escopo e Entregáveis
-
-### ✅ Em escopo (Mínimo para Bancas) 
-* **Plano de Execução** - Planejamento e entrega imediata.
-* **Estudo de Público-Alvo** - EDA orientada a risco.
-* **Books de Variáveis** - Documentação funcional das variáveis por domínio.
-* **Modelo Baseline** - Métricas e primeira versão reprodutível.
-* **Modelo Final (.pkl)** - Pipeline completo de treino e validação.
-* **Plano de Monitoramento** - Métricas, drift, rotina e alertas.
-* **Documentação de Engenharia** - Arquitetura, Lineage, Governança e Observabilidade.
-* **Apresentação Final** - Storyline executiva e evidências técnicas.
-
----
-
-### ❌ Fora de escopo
-* **Ativação Produtiva** - Foco exclusivo em recomendação estratégica e prototipagem.
-* **Dados Externos** - Enriquecimentos além dos dados de amostragem (tratados como *nice to have*).
-* **Implementação de MLOps** - Foco limitado ao desenho técnico e plano de monitoramento.
