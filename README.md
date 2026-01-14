@@ -22,7 +22,7 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 > 📄 [`docs/data_governance/`](docs/data_governance/README.md)  
 > **Define** as políticas e diretrizes estruturais que garantem um Data Lake confiável e de baixo custo operacional. **Aplica** o conceito de *Policy as Code* para assegurar a reprocessabilidade total através de imutabilidade por execução (`run_id`) e eficiência via particionamento otimizado.
 >
-> * 📑 **Policies:** [`Retention`](docs/data_governance/politica_retencao.md) | [`Partitioning`](docs/data_governance/politica_particionamento.md) | [`Quality`](docs/data_governance/politica_qualidade.md)
+> * 📑 **Policies:** [`Retention`](docs/data_governance/politica-retencao.md) | [`Partitioning`](docs/data_governance/politica-particionamento.md) | [`Quality`](docs/data_governance/politica-qualidade.md)
 
 ---
 
@@ -52,5 +52,5 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 > 📁 [`docs/data_quality/*`](docs/data_quality/)  
 > **Especifica** os contratos de dados e regras de negócio detalhadas para cada tabela nas camadas Bronze e Silver. **Define** critérios de integridade, servindo como a documentação técnica que orienta as validações programáticas via Pandera.
 >
-> * 📑 [`Quality Policy`](docs/data_governance/politica_qualidade.md) - Diretrizes gerais e dimensões de qualidade.
+> * 📑 [`Quality Policy`](docs/data_governance/politica-qualidade.md) - Diretrizes gerais e dimensões de qualidade.
 > * 📁 [`Quality Reports`](reports/observability/quality/) - Evidências de validação de contratos e conformidade de schemas.
