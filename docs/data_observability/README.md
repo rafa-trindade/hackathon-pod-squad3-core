@@ -38,9 +38,8 @@ Diferente da observabilidade de software (logs, métricas, traces), a observabil
 
 ### 5️⃣ Lineage & Rastreabilidade
 **Como é atendido:**
-- **Mapeamento de Dependências:** Documentação explícita de como cada campo da RAW se transforma no campo da BRONZE e dai por diante.
-- **Isolamento de Erros:** A estrutura de `run_id` permite que o Lineage seja "versionado" - sabemos exatamente qual código gerou qual dado.
-
+- **Mapeamento de Dependências:** Documentação explícita da jornada do dado entre as camadas do Lake. Disponível em: [`docs/data_lineage`](../data_lineage/).
+- **Isolamento de Erros:** A estrutura de `run_id` permite que o Lineage seja "versionado" - sabemos exatamente qual versão do código gerou qual versão do dado.
 
 
 ## 🛠️ Implementação da Confiabilidade (Reliability)
@@ -53,10 +52,11 @@ A confiabilidade é garantida pelo **Protocolo de Limpeza Pós-Sucesso**:
 
 ## 📂 Evidências de Auditoria (Observability Reports)
 
-A observabilidade é materializada através de artefatos técnicos gerados automaticamente e centralizados para consulta:
+A observabilidade é materializada através de artefatos técnicos gerados automaticamente:
 
-- **Integridade de Partições:** [`inspect_partition.log`](../../reports/observability/integrity/inspect_partition.log)
-- **Qualidade de Dados (dbt/Pandera):** [`quality/*`](../../reports/observability/quality/)
+- **Integridade de Partições:** [`inspect_partition.log`](../../reports/observability/integrity/inspect_partition.log) - Validação física do Lake.
+- **Diagnósticos Estatísticos:** [`profiling/*`](../../reports/observability/profiling/) - Saúde estatística e distribuição (Data Discovery).
+- **Qualidade de Dados:** [`quality/*`](../../reports/observability/quality/) - Validação de contratos e regras de negócio.
 
 
 ## 🧠 Conclusão: Observabilidade como Resultado
