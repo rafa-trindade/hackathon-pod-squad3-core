@@ -25,7 +25,7 @@ Este diretório centraliza as definições políticas e arquiteturais que regem 
 ## 📄 Políticas e Documentos Centrais
 
 ### 🧹 Política de Retenção de Dados
-📄 [`politica_retencao.md`](politica_retencao.md)
+📄 [`politica-retencao.md`](politica-retencao.md)
 **Foco:** Gestão do ciclo de vida e custos.
 - Define a estratégia de **Imutabilidade por Execução** (`run_id`).
 - Estabelece o protocolo de limpeza *post-write* para evitar perda de dados em falhas.
@@ -34,7 +34,7 @@ Este diretório centraliza as definições políticas e arquiteturais que regem 
 ---
 
 ### 🧭 Política de Particionamento
-📄 [`politica_particionamento.md`](politica_particionamento.md)
+📄 [`politica-particionamento.md`](politica-particionamento.md)
 **Foco:** Performance e padronização de consumo.
 - Padroniza a partição única `ano_mes=YYYYMM` (BIGINT) para todos os datasets.
 - Habilita o *Partition Pruning* no DuckDB/S3 para acelerar consultas em até 90%.
@@ -43,7 +43,7 @@ Este diretório centraliza as definições políticas e arquiteturais que regem 
 ---
 
 ### ✅ Política de Qualidade de Dados
-📄 [`politica_qualidade.md`](politica_qualidade.md)
+📄 [`politica-qualidade.md`](politica-qualidade.md)
 **Foco:** Contratos de dados e integridade.
 - Define as validações estruturais (Raw) e semânticas (Silver).
 - Estabelece regras de unicidade e obrigatoriedade de campos.
