@@ -37,7 +37,12 @@ Este documento detalha a stack tecnológica e as metodologias aplicadas no proje
 ## 2️⃣ Estratégias de Engenharia Aplicadas
 
 ### 2.1. Escopo e Escalabilidade (Visão de Negócio)
-A arquitetura foi pensada já considerando a **volumetria real da Claro** (capaz de crescer verticalmente independente de onde esteja hospedada). No entanto, a implementação atual e os processamentos estão dimensionados com base em um **dataset de "teste"** (nossa base de amostra).
+
+A  implementação  atual  está  dimensionada  com  **base  nos  dados  amostrais**.  No 
+entanto,  a  arquitetura  concebida  considerando  a  **volumetria  real  da  Claro**,  com 
+possibilidade de escalonamento vertical de recursos, independente do ambiente de 
+hospedagem. 
+
 
 Esta abordagem foi adotada para:
 - Garantir a viabilidade técnica dentro dos recursos da VPS.
