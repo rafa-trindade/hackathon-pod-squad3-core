@@ -4,21 +4,12 @@ Este diretório concentra as **políticas, diretrizes e decisões estruturais** 
 
 A governança neste projeto é **pragmática**, orientada a engenharia e aplicada diretamente via código (*Policy as Code*).
 
-
 ## 📌 Escopo e Princípios
 
 A governança atua de forma transversal para garantir:
 - **Reprocessabilidade:** Capacidade de reconstruir qualquer estado anterior.
 - **Eficiência:** Uso de formatos (Parquet) e partições (ano_mes) que reduzem custo de Cloud.
 - **Transparência:** Documentação viva refletindo exatamente o que está implementado nos scripts.
-
-
-
-## 📄 Documentos Disponíveis
-
-🏛️ Governança de Dados - Squad 3
-
-Este diretório centraliza as definições políticas e arquiteturais que regem a organização, o ciclo de vida e a qualidade dos dados no Data Lake.
 
 
 
@@ -47,18 +38,7 @@ Este diretório centraliza as definições políticas e arquiteturais que regem 
 **Foco:** Contratos de dados e integridade.
 - Define as validações estruturais (Raw) e semânticas (Silver).
 - Estabelece regras de unicidade e obrigatoriedade de campos.
-- **Ferramental:** Integração  com `Pandera` e validações nativas SQL.
-
-
-
-## ⚙️ Operação e Troubleshooting
-
-Graças às políticas acima, o projeto herda capacidades operacionais críticas:
-
-1. **Rollback Imediato:** Como mantemos as `MAX_RUNS` anteriores, voltar uma versão de um dataset é apenas uma alteração de ponteiro ou leitura da run anterior.
-2. **Isolamento de Erros:** Uma falha na ingestão da `run_id` atual não corrompe os dados já existentes.
-3. **Auditoria Simplificada:** Cada partição e cada run carregam consigo o metadado de tempo (`ingestion_ts`), permitindo rastrear a origem de qualquer inconsistência. 
-4. **Verificação de Integridade:** O uso da auditoria de partições permite validar, em segundos, se uma carga massiva de dados foi distribuída corretamente nas pastas temporais, evitando "data drift" físico.
+- **Ferramental:** Integração com `Pandera` e validações nativas SQL.
 
 
 
@@ -66,18 +46,31 @@ Graças às políticas acima, o projeto herda capacidades operacionais críticas
 
 Para fins de auditoria e conformidade, as evidências de que as políticas acima foram aplicadas estão disponíveis em:
 
-- **Logs de Integridade:** [`reports/observability/integrity/`](../../reports/observability/integrity/) - Comprova o cumprimento da Política de Particionamento.
-- **Relatórios de Qualidade:** [`reports/observability/quality/`](../../reports/observability/quality/) - Comprova a aplicação dos Contratos de Dados (Pandera/dbt).
+- **Logs de Integridade:** [`reports/observability/integrity/`](../../reports/observability/integrity/) - Cumprimento da Política de Particionamento.
+- **Diagnósticos Estatísticos (Profiling):** [`reports/observability/profiling/`](../../reports/observability/profiling/) - Transparência e saúde estatística dos dados (Data Discovery).
+- **Relatórios de Qualidade:** [`reports/observability/quality/`](../../reports/observability/quality/) - Aplicação dos Contratos de Dados (Pandera).
+
+
+
+## ⚙️ Operação e Troubleshooting
+
+Graças às políticas acima, o projeto herda capacidades operacionais críticas:
+
+1. **Rollback Imediato:** Como mantemos as `MAX_RUNS` anteriores, voltar uma versão de um dataset é apenas uma alteração de ponteiro.
+2. **Isolamento de Erros:** Uma falha na ingestão da `run_id` atual não corrompe os dados já existentes.
+3. **Auditoria Simplificada:** Cada partição e run carregam o metadado de tempo (`ingestion_ts`), rastreando a origem de qualquer inconsistência. 
+4. **Verificação de Integridade:** O uso da auditoria de partições permite validar se uma carga foi distribuída corretamente, evitando "data drift" físico.
+
 
 
 ## 🔗 Integração com Outros Domínios
 
-A governança atua como uma camada transversal, garantindo que as definições estratégicas se tornem realidade operacional através da integração com:
+A governança atua como uma camada transversal, garantindo que as definições estratégicas se tornem realidade operacional:
 
-- **Data Architecture:** define o desenho físico e lógico do lake
-- **Data Lineage:** permite rastreabilidade ponta a ponta
-- **Data Quality:** garante confiabilidade semântica
-- **Data Observability:** monitora saúde e comportamento dos dados
+- **Data Architecture:** Define o desenho físico e lógico do lake.
+- **Data Lineage:** Permite rastreabilidade ponta a ponta.
+- **Data Quality:** Garante confiabilidade semântica.
+- **Data Observability:** Monitora saúde e comportamento dos dados.
 
 Governança, neste contexto, **não é um silo**, mas uma camada transversal.
 
