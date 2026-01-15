@@ -54,7 +54,7 @@ A confiabilidade é garantida pelo **Protocolo de Limpeza Pós-Sucesso**:
 
 A observabilidade é materializada através de artefatos técnicos gerados automaticamente:
 
-- **Integridade de Partições:** [`inspect_partition.log`](../../reports/observability/integrity/inspect_partition.log) - Validação física do Lake.
+- **Integridade de Partições:** [`inspect_partition_*.log`](../../reports/observability/integrity/) - Validação física do Lake.
 - **Diagnósticos Estatísticos:** [`profiling/*`](../../reports/observability/profiling/) - Saúde estatística e distribuição (Data Discovery).
 - **Qualidade de Dados:** [`quality/*`](../../reports/observability/quality/) - Validação de contratos e regras de negócio.
 
