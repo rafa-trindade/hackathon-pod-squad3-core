@@ -29,7 +29,7 @@ A governança atua de forma transversal para garantir:
 **Foco:** Performance e padronização de consumo.
 - Padroniza a partição única `ano_mes=YYYYMM` (BIGINT) para todos os datasets.
 - Habilita o *Partition Pruning* no DuckDB/S3 para acelerar consultas em até 90%.
-- **Auditoria:** Auditado pelo script `inspect_partition.py`, que garante a conformidade física do particionamento Hive.
+- **Auditoria:** Auditado pelo script `inspect_partition_*.py`, que garante a conformidade física do particionamento Hive.
 
 ---
 
