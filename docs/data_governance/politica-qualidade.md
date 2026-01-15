@@ -14,10 +14,11 @@ A qualidade de dados é aplicada de forma integrada ao pipeline de transformaç�
 | Dimensão | O que validamos | Ferramenta |
 | :--- | :--- | :--- |
 | **Integridade de Schema** | Tipagem correta e presença de colunas obrigatórias. | Pandera |
-| **Unicidade** | Garantia de registros únicos por chave natural através de validações no dataframe. | Pandera / DuckDB |
-| **Conformidade** | Valores dentro de intervalos lógicos (ex: score entre 0 e 1000). | Pandera |
-| **Completude** | Monitoramento de volumetria e percentual de campos nulos (`null_count`). | Data Profiling |
-| **Consistência de Domínio** | Validação de categorias permitidas para campos de status e classificação. | Pandera |
+| **Unicidade** | Garantia de registros únicos por chave natural (Grão). | Pandera / DuckDB |
+| **Conformidade** | Valores dentro de intervalos lógicos (ex: score 0-1000). | Pandera |
+| **Completude** | Monitoramento de nulos e volumetria de carga. | Profiling / Gold Pipeline |
+| **Saúde de Safra** | Representatividade volumétrica por período (regra 10%-90%). | Gold Pipeline Audit |
+| **Overlap (Riqueza)** | Match de chaves entre camadas para garantir base "ML-Ready". | Gold Pipeline Audit |
 
 ## 3. Implementação Prática
 
@@ -29,6 +30,13 @@ Nesta fase, o foco é a **estabilidade**. Validamos se o arquivo recebido não s
 
 * **Controle de Nulos:** Definição estrita de quais colunas possuem obrigatoriedade de preenchimento (campo `nullable=False`).
 * **Tipagem Forte:** Garantia de que colunas críticas (IDs, Datas, Valores) possuem o tipo primitivo correto para evitar erros em modelos de Machine Learning.
+
+### 3.3 Camada Silver -> Gold (Auditoria de Pipeline)
+Nesta fase, o foco é a **qualidade para modelagem**. Diferente das camadas anteriores, a validação aqui é macroscópica e estatística, garantindo que o dataset final seja robusto para treino e teste:
+
+* **Audit de Overlap:** Validação programática do percentual de encontro de chaves (CPFs) entre a tabela âncora (Gold) e as fontes de features (Silver). É o critério que garante que o modelo terá informação suficiente para predizer o target.
+* **Health Check de Safra:** Monitoramento da distribuição temporal para evitar safras "vazias" ou "viciadas" que possam enviesar o aprendizado do modelo.
+* **Unicidade no Grão Final:** Última trava de segurança para garantir que não houve explosão de linhas nos cruzamentos (Joins).
 
 
 ## 4. Gestão de Falhas
@@ -43,8 +51,8 @@ Quando um teste de qualidade falha, o protocolo de governança define:
 
 Os resultados das validações de qualidade são exportados e centralizados para transparência total da Squad e Stakeholders:
 
-* **Relatórios Pandera:** [`reports/observability/quality/pandera/`](../../reports/observability/quality/pandera/)
-* **Documentação e Testes dbt:** [`reports/observability/quality/dbt/`](../../reports/observability/quality/dbt/)
+* **Relatórios Pandera (Schema):** [`reports/observability/quality/pandera/`](../../reports/observability/quality/pandera/)
+* **Auditoria de Pipeline (Safra/Overlap):** [`reports/observability/quality/pipeline/`](../../reports/observability/quality/pipeline/)
 
 ---
 
