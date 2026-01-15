@@ -37,9 +37,9 @@ Os dados são classificados em duas categorias de ingestão:
 
 Para garantir o cumprimento desta política, o sistema utiliza um protocolo de **Inspeção de Partições**:
 
-* **Script de Auditoria:** `inspect_partition.py` realiza o *cross-check* entre a estrutura física (`ano_mes=YYYYMM`) e os dados lógicos (colunas de data).
+* **Script de Auditoria:** `inspect_partition_*.py` realiza o *cross-check* entre a estrutura física (`ano_mes=YYYYMM`) e os dados lógicos (colunas de data).
 * **Validação de Conformidade:** O sistema emite um alerta de `⚠️ DIVERGENTE` caso um registro esteja em uma pasta temporal que não corresponda ao seu valor real de data, prevenindo o *data leakage*.
-* **Relatório de Execução:** Os resultados são persistidos em [`reports/observability/integrity/inspect_partition.log`](../../reports/observability/integrity/inspect_partition.log).
+* **Relatório de Execução:** Os resultados são persistidos em [`reports/observability/integrity/*.log`](../../reports/observability/integrity/).
 
 
 ## 2. Fluxo entre Camadas
