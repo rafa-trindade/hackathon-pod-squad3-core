@@ -35,19 +35,22 @@ Os dados são classificados em duas categorias de ingestão:
 
 ### 1.3 Mecanismo de Auditoria e Integridade
 
-Para garantir o cumprimento desta política, o sistema utiliza um protocolo de **Inspeção de Partições**:
+Para garantir o cumprimento desta política e a saúde dos dados para modelagem, o sistema utiliza um protocolo híbrido de **Inspeção e Observabilidade**:
 
-* **Script de Auditoria:** `inspect_partition_*.py` realiza o *cross-check* entre a estrutura física (`ano_mes=YYYYMM`) e os dados lógicos (colunas de data).
-* **Validação de Conformidade:** O sistema emite um alerta de `⚠️ DIVERGENTE` caso um registro esteja em uma pasta temporal que não corresponda ao seu valor real de data, prevenindo o *data leakage*.
-* **Relatório de Execução:** Os resultados são persistidos em [`reports/observability/integrity/*.log`](../../reports/observability/integrity/).
-
+* **Auditoria Técnica de Partição:** Script `inspect_partition_*.py` que realiza o *cross-check* entre a estrutura física (`ano_mes=YYYYMM`) e os dados lógicos, emitindo alerta de `⚠️ DIVERGENTE` em caso de *data leakage*.
+* **Observabilidade de Pipeline (Quality Report):** Auditoria automática executada no processamento da Gold, validando:
+    * **Integridade no Grão:** Unicidade e tratamento de missings.
+    * **Saúde de Safra:** Representatividade volumétrica (regra 10%-90%).
+    * **Overlap de Camadas:** Percentual de match entre Gold e as tabelas Silver (âncora de modelagem).
+* **Relatórios de Execução:** 
+    * Detalhes técnicos de integridade: [`reports/observability/integrity/`](../../reports/observability/integrity/).
+    * Auditoria de safra e overlap (Quality Report): [`reports/observability/quality/pipeline/`](../../reports/observability/quality/pipeline/).
 
 ## 2. Fluxo entre Camadas
 
 * **Bronze:** Dados organizados por `ano_mes`, refletindo a granularidade da fonte. É a "Fonte da Verdade" particionada.
 * **Silver:** Realiza o saneamento e padronização. Além de respeitar o particionamento da Bronze, a Silver é o alvo principal da **Auditoria de Integridade**, garantindo que a limpeza dos dados não corrompeu a distribuição temporal das safras.
-* **Gold:** Camada de Feature Store e Modelagem. Os dados são agregados e transformados em vetores para Machine Learning, utilizando as janelas temporais definidas nas partições anteriores.
-
+* **Gold (Labels & Features):** Camada final de modelagem. Além de respeitar o particionamento, a Gold executa o **Audit de Overlap**, garantindo a riqueza de informação entre as janelas temporais da Silver e os targets selecionados.
 
 ## 3. Governança e Retenção
 
