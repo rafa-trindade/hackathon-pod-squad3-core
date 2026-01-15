@@ -42,7 +42,7 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 
 ### 🔍 Data Observability
 > 📄 [`docs/data_observability/`](docs/data_observability/README.md)  
-> **Gerencia** a saúde dos fluxos de dados através do monitoramento nativo de *Freshness*, *Volume* e *Schema Drift*. **Utiliza** metadados técnicos para auditoria, garantindo resiliência operacional com protocolos de *rollback* e diagnósticos preventivos de anomalias estatísticas.
+> **Gerencia** a saúde dos fluxos de dados através do monitoramento de *Freshness*, *Volume* e *Distribution*. **Garante** resiliência operacional através de protocolos de *Health Check* de safras e auditoria de *Overlap* para assegurar a riqueza de informação para Machine Learning.
 >
 > * 📁 [`Observability Reports`](reports/observability/) - Centraliza as evidências de integridade física (`integrity`), diagnósticos estatísticos (`profiling`) e relatórios de contratos de dados (`quality`).
 
@@ -53,4 +53,4 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 > **Especifica** os contratos de dados e regras de negócio detalhadas para cada tabela nas camadas Bronze e Silver. **Define** critérios de integridade, servindo como a documentação técnica que orienta as validações programáticas via Pandera.
 >
 > * 📑 [`Quality Policy`](docs/data_governance/politica-qualidade.md) - Diretrizes gerais e dimensões de qualidade.
-> * 📁 [`Quality Reports`](reports/observability/quality/) - Evidências de validação de contratos e conformidade de schemas.
+> * 📁 [`Quality Reports`](reports/observability/quality/) - Evidências de conformidade de schemas e logs de auditoria das pipelines.
