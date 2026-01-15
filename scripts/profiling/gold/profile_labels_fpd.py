@@ -286,6 +286,59 @@ print_and_save_md(md, md_file)
 
 
 # %%  
+# CAMPOS DATE/TIME ###############################
+##################################################
+md = "### 📅 Range de Datas: `gold/labels_fpd`\n"
+
+date_cols = df_schema_info[
+    df_schema_info["column_type"].str.contains("DATE|TIMESTAMP", case=False, na=False)
+]["column_name"].tolist()
+
+if not date_cols:
+    md += "> ⚠️ Nenhuma coluna de data real encontrada.\n\n"
+else:
+    for col in date_cols:
+        md += f"#### Coluna: `{col}`\n"
+        res = con.execute(f'SELECT MIN("{col}") as min, MAX("{col}") as max FROM read_parquet("{path_parquet}", hive_partitioning=1)').df()
+        md += res.to_markdown(index=False) + "\n\n"
+
+print_and_save_md(md, md_file)
+
+
+
+# %%  
+# CAMPOS NUMÉRICOS (MIN/MAX) #####################
+##################################################
+md = "### 🔢 Range de Valores Numéricos: `gold/labels_fpd`\n\n"
+
+num_cols = df_schema_info[
+    df_schema_info["column_type"].str.contains("INT|DOUBLE|FLOAT|DECIMAL|REAL", case=False, na=False)
+]["column_name"].tolist()
+
+cols_to_ignore = ['num_cpf', 'run_id', 'ano_mes']
+num_cols = [c for c in num_cols if c not in cols_to_ignore]
+
+if not num_cols:
+    md += "> ⚠️ Nenhuma coluna numérica relevante encontrada.\n\n"
+else:
+    for col in num_cols:
+        md += f"#### Coluna: `{col}`\n"
+        try:
+            res = con.execute(f"""
+                SELECT 
+                    MIN("{col}") as min, 
+                    MAX("{col}") as max,
+                    ROUND(AVG("{col}"), 2) as media 
+                FROM read_parquet("{path_parquet}", hive_partitioning=1)
+            """).df()
+            md += res.to_markdown(index=False) + "\n\n"
+        except Exception as e:
+            md += f"> ⚠️ Erro ao calcular range para `{col}`: {e}\n\n"
+
+print_and_save_md(md, md_file)
+
+
+# %%  
 # DISTRIBUIÇÃO POR VALORES (TOP 10) ##############
 ##################################################
 md = "### 🔟 Distribuição de Valores (Top 10): `gold/labels_fpd`\n"
