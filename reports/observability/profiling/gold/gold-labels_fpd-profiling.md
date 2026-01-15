@@ -41,21 +41,47 @@
 
 ---
 
+### 📅 Range de Datas: `gold/labels_fpd`
+#### Coluna: `safra`
+| min                        | max                        |
+|:---------------------------|:---------------------------|
+| 2024-10-01T00:00:00.000000 | 2025-03-01T00:00:00.000000 |
+
+#### Coluna: `ingestion_ts`
+| min                              | max                              |
+|:---------------------------------|:---------------------------------|
+| 2026-01-15 11:02:41.369506-03:00 | 2026-01-15 11:02:41.369506-03:00 |
+
+
+
+---
+
+### 🔢 Range de Valores Numéricos: `gold/labels_fpd`
+
+#### Coluna: `fpd`
+|   min |   max |   media |
+|------:|------:|--------:|
+|     0 |     1 |    0.24 |
+
+
+
+---
+
 ### 🔟 Distribuição de Valores (Top 10): `gold/labels_fpd`
 #### Coluna: `num_cpf`
 
 | valor       |   qtd |
 |:------------|------:|
-| Y97YZZX88TY |     5 |
-| XYTY9ZX879Z |     5 |
-| XYUZ8ZXUUZ9 |     5 |
-| YTWN99NY8ZU |     5 |
-| T9ZYTXZ7WYZ |     5 |
 | ZTZTWZXTYZX |     5 |
 | ZWZT9ZZUZU8 |     5 |
+| XYTY9ZX879Z |     5 |
+| T9ZYTXZ7WYZ |     5 |
+| Y97YZZX88TY |     5 |
 | ZW9TYZXTWTZ |     5 |
-| XZZTNY8ZN88 |     4 |
-| W9ZN9ZXN88T |     4 |
+| YTWN99NY8ZU |     5 |
+| XYUZ8ZXUUZ9 |     5 |
+| XXWXUNN8UTT |     4 |
+| U89WNW7TWWU |     4 |
 
 #### Coluna: `safra`
 
