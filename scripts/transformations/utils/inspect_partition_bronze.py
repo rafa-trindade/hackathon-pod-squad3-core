@@ -17,7 +17,7 @@ from config.data_connections import get_duckdb_connection
 # ------------------------------------------------------------------
 LOG_DIR = PROJECT_ROOT / "reports" / "observability" / "integrity"
 LOG_DIR.mkdir(parents=True, exist_ok=True)
-LOG_FILE = LOG_DIR / "inspect_partition.log"
+LOG_FILE = LOG_DIR / "inspect_partition-bronze.log"
 
 class Logger(object):
     def __init__(self):
@@ -80,7 +80,7 @@ def get_month_list(start_str, end_str):
 
 def get_latest_run_id(con, table_name):
     try:
-        path = f"s3://lake/silver/{table_name}/run_id=*/**/*.parquet"
+        path = f"s3://lake/bronze/{table_name}/run_id=*/**/*.parquet"
         query = f"SELECT MAX(run_id) AS latest_rid FROM read_parquet('{path}', hive_partitioning=1)"
         res = con.execute(query).fetchone()
         return res[0] if res else None
@@ -97,7 +97,7 @@ def inspect_all():
     periodos_globais = get_month_list("202310", "202503")
 
     print("\n" + "="*80)
-    print(f"🕵️  AUDITORIA DE PARTIÇÕES SILVER - {timestamp_exec}")
+    print(f"🕵️  AUDITORIA DE PARTIÇÕES BRONZE - {timestamp_exec}")
     print(f"📂 Arquivo de Log: {LOG_FILE.relative_to(PROJECT_ROOT)}") 
     print("="*80)
 
@@ -116,7 +116,7 @@ def inspect_all():
         print("-" * 60)
 
         for periodo in periodos:
-            path = f"s3://lake/silver/{table}/run_id={run_id}/ano_mes={periodo}/*.parquet"
+            path = f"s3://lake/bronze/{table}/run_id={run_id}/ano_mes={periodo}/*.parquet"
             query = f"SELECT COUNT(*) as total, MIN({col_date}::DATE) as dt_min, MAX({col_date}::DATE) as dt_max FROM read_parquet('{path}')"
 
             try:
