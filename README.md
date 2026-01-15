@@ -30,7 +30,7 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 > 📁 [`docs/data_lineage/*`](docs/data_lineage/)  
 > **Mapeia** a jornada do dado entre as camadas Medallion, garantindo padronização, tipagem forte e integridade técnica na camada Silver. **Foca** na rastreabilidade ponta a ponta e na otimização de performance através de particionamento físico e saneamento de metadados.
 >
-> * 📑 **Reports:** [`Integrity`](reports/observability/integrity/inspect_partition.log) | [`Profiling`](reports/observability/profiling/)
+> * 📑 **Reports:** [`Integrity`](reports/observability/integrity/) | [`Profiling`](reports/observability/profiling/)
 
 ---
 
