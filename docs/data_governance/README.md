@@ -36,9 +36,9 @@ A governança atua de forma transversal para garantir:
 ### ✅ Política de Qualidade de Dados
 📄 [`politica-qualidade.md`](politica-qualidade.md)
 **Foco:** Contratos de dados e integridade.
-- Define as validações estruturais (Raw) e semânticas (Silver).
-- Estabelece regras de unicidade e obrigatoriedade de campos.
-- **Ferramental:** Integração com `Pandera` e validações nativas SQL.
+- Define as validações estruturais (Bronze/Silver) e auditorias de pipeline (Gold).
+- Estabelece regras de **saúde de safra** (volumetria 10%-90%) e **audit de overlap** (âncora de modelagem).
+- **Ferramental:** Integração com `Pandera` e validações programáticas customizadas na Gold Pipeline.
 
 
 
