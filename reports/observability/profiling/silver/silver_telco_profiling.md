@@ -1,7 +1,7 @@
 # Relatório de Profiling: `silver/telco` - `20260110_154715`
 
 ### 🔑 Garantia de Unicidade: `silver/telco`
-- **Chave Técnica:** `num_cpf, safra, prod, flag_instalacao`
+- **Chave Técnica:** `num_cpf, safra, prod`
 - **Tipo:** `COMPOSTA`
 
 | coluna        |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
@@ -352,15 +352,15 @@
 | valor       |   qtd |
 |:------------|------:|
 | 888W78UZYYT |     6 |
-| 8T9NWWT8TUZ |     5 |
-| T9ZYTXZ7WYZ |     5 |
-| YY7ZZNNN8TY |     5 |
-| ZXNUU77UYZ8 |     5 |
-| ZYWUTZXXTU8 |     5 |
 | ZY9NYT7NXWW |     5 |
-| XYTY9ZX879Z |     5 |
-| Y97YZZX88TY |     5 |
-| ZW9TYZXTWTZ |     5 |
+| 78YYWZT9TN8 |     5 |
+| ZUZUZZX7X88 |     5 |
+| UZTWX7NU8UY |     5 |
+| 8NYZZZUWTYW |     5 |
+| XYN7XZZU788 |     5 |
+| YY7ZZNNN8TY |     5 |
+| WN7WWZXW8X9 |     5 |
+| YW99TTN98UN |     5 |
 
 #### Coluna: `safra`
 
