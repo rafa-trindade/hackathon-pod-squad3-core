@@ -1,4 +1,4 @@
-# Relatório de Profiling: `silver/telco` - `20260110_154715`
+# Relatório de Profiling: `silver/telco` - `20260116_133149`
 
 ### 🔑 Garantia de Unicidade: `silver/telco`
 - **Chave Técnica:** `num_cpf, safra, prod`
@@ -100,13 +100,13 @@
 ### 📦 Volumetria: `silver/telco`
 | diretorio      |   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
 |:---------------|---------------:|:------------|----------:|-------------------------:|----------------------------:|
-| ano_mes=202410 |              1 | 219.860     |        77 |                    14.35 |                       20.15 |
-| ano_mes=202411 |              1 | 240.520     |        77 |                    15.99 |                       23.42 |
-| ano_mes=202412 |              1 | 241.453     |        77 |                    16.15 |                       23.44 |
-| ano_mes=202501 |              1 | 233.710     |        77 |                    15.8  |                       22.63 |
-| ano_mes=202502 |              1 | 214.665     |        77 |                    14.08 |                       19.78 |
-| ano_mes=202503 |              1 | 216.896     |        77 |                    14.48 |                       20.99 |
-| TOTAL          |              6 | 1.367.104   |        77 |                    90.86 |                      130.41 |
+| ano_mes=202410 |              1 | 219.860     |        77 |                    14.4  |                       20.18 |
+| ano_mes=202411 |              1 | 240.520     |        77 |                    15.99 |                       23.15 |
+| ano_mes=202412 |              1 | 241.453     |        77 |                    16.13 |                       23.48 |
+| ano_mes=202501 |              1 | 233.710     |        77 |                    15.79 |                       22.63 |
+| ano_mes=202502 |              1 | 214.665     |        77 |                    14.03 |                       19.76 |
+| ano_mes=202503 |              1 | 216.896     |        77 |                    14.49 |                       20.99 |
+| TOTAL          |              6 | 1.367.104   |        77 |                    90.83 |                      130.18 |
 
 ---
 
@@ -352,15 +352,15 @@
 | valor       |   qtd |
 |:------------|------:|
 | 888W78UZYYT |     6 |
-| ZY9NYT7NXWW |     5 |
-| 78YYWZT9TN8 |     5 |
-| ZUZUZZX7X88 |     5 |
-| UZTWX7NU8UY |     5 |
-| 8NYZZZUWTYW |     5 |
 | XYN7XZZU788 |     5 |
-| YY7ZZNNN8TY |     5 |
-| WN7WWZXW8X9 |     5 |
 | YW99TTN98UN |     5 |
+| Y97YZZX88TY |     5 |
+| ZZUNWZYXXTZ |     5 |
+| ZTZTWZXTYZX |     5 |
+| T9ZYTXZ7WYZ |     5 |
+| ZYNYYUWWTZN |     5 |
+| 8T9NWWT8TUZ |     5 |
+| 78YYWZT9TN8 |     5 |
 
 #### Coluna: `safra`
 
@@ -1433,7 +1433,7 @@
 
 |           valor |     qtd |
 |----------------:|--------:|
-| 20260110_154715 | 1367104 |
+| 20260116_133149 | 1367104 |
 
 #### Coluna: `ano_mes`
 
