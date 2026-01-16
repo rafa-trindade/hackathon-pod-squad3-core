@@ -28,15 +28,18 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 
 ### 🧬 Data Lineage
 > 📁 [`docs/data_lineage/*`](docs/data_lineage/)  
-> **Mapeia** a jornada do dado entre as camadas Medallion, garantindo padronização, tipagem forte e integridade técnica na camada Silver. **Foca** na rastreabilidade ponta a ponta e na otimização de performance através de particionamento físico e saneamento de metadados.
+> **Mapeia** a jornada do dado entre as camadas Medallion. **Garante** a rastreabilidade ponta a ponta, desde a ingestão técnica até a homologação das tabelas âncoras para modelagem na camada Gold.
 >
+> * 📑 **Lineage:** [`Raw -> Silver`](docs/data_lineage/) | [`Gold (Target & Features)`](docs/data_lineage/gold/)
 > * 📑 **Reports:** [`Integrity`](reports/observability/integrity/) | [`Profiling`](reports/observability/profiling/)
 
 ---
 
 ### 🧠 Feature Store & Book de Variáveis
 > 📁 [`docs/data_modelling/*`](docs/data_modelling/)  
-> **Apresenta** a documentação técnica da Camada Gold com foco em inteligência de dados e Machine Learning. **Consolida** o Book de Variáveis com definições de negócio e lógicas de agregação, além do registro de Feature Engineering para treinamento de modelos.
+> **Apresenta** a documentação técnica da Camada Gold. **Consolida** os dicionários de dados organizados por domínios, servindo como o guia oficial para o treinamento e consumo de modelos de Machine Learning.
+>
+> * 📑 **Books:** [`Target (Labels)`](docs/data_modelling/target/) | [`Feature Dictionary`](docs/data_modelling/features/)
 
 ---
 
