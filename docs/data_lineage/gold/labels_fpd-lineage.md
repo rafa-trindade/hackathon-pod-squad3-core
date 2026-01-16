@@ -57,11 +57,9 @@ A escolha do melhor Target depende do que a Squad prioriza: Volume Total (Alcanc
 
 ---
 
-### 📊 Estudo de Overlap de Ecossistema: Silver Layer
-
 ![Comparativo de Cobertura de Ecossistema](../../images/comparativo_cobertura_ecossistema.png)
 
-
+---
 
 ## ✅ Data Lineage - `labels_fpd`
 
