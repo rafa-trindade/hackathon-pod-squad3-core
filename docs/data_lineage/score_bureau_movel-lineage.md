@@ -1,7 +1,7 @@
 ## 🛡️ Visão Geral - `score_bureau_movel`
 
 - **Entidade Principal:** Risco de Crédito do Cliente (`NUM_CPF` + `FPD`)
-- **Grão da Tabela (Unicidade):** `NUM_CPF, SAFRA, FPD`
+- **Grão da Tabela (Unicidade):** `NUM_CPF, SAFRA, PROD`
 - **Sugestão Chave de Relacionamento (Gold):** `NUM_CPF` (Identificador Único), `SAFRA` (Eixo Temporal)
 - **Chave de Particionamento:** `SAFRA` (Formato YYYYMM)
 
