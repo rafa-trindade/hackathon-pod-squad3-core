@@ -38,10 +38,10 @@ keys_to_clean = {
         'default': '1900-01-01'
     },
 
-    'fpd': {
+    'prod': {
         'replace': [], 
-        'default': 'false'
-    },
+        'default': '0'
+    }
 
 }
 
