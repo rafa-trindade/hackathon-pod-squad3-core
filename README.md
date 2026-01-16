@@ -30,7 +30,7 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 > 📁 [`docs/data_lineage/*`](docs/data_lineage/)  
 > **Mapeia** a jornada do dado entre as camadas Medallion. **Garante** a rastreabilidade ponta a ponta, desde a ingestão técnica até a homologação das tabelas âncoras para modelagem na camada Gold.
 >
-> * 📑 **Lineage:** [`Raw -> Silver`](docs/data_lineage/) | [`Gold (Target & Features)`](docs/data_lineage/gold/)
+> * 📑 **Lineage:** [`Raw → Silver`](docs/data_lineage/) | [`Gold (Target & Features)`](docs/data_lineage/gold/)
 > * 📑 **Reports:** [`Integrity`](reports/observability/integrity/) | [`Profiling`](reports/observability/profiling/)
 
 ---
