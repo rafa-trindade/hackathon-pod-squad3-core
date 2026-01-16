@@ -110,7 +110,7 @@ Overlap recarga               | PASS       | 99.78% de match
 Saneamento (Missing)          | INFO       | Descartados 45,936 registros (3.36%)
 ----------------------------------------------------------------------------------
 ```
-> 🔗 **Acesse o log de auditoria:** [gold-labels_fpd-quality.log](../../reports/observability/quality/pipeline/gold-labels_fpd-quality.log)
+> 🔗 **Acesse o log de auditoria:** [gold-labels_fpd-quality.log](../../../reports/observability/quality/pipeline/gold-labels_fpd-quality.log)
 
 ---
 
