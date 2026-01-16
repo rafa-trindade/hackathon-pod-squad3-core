@@ -1,39 +1,5 @@
 
 ================================================================================
-🕵️  AUDITORIA DE PARTIÇÕES SILVER - 2026-01-15 11:38:53
-📂 Arquivo de Log: reports/observability/integrity/inspect_partition-gold.log
-================================================================================
-
-📊 TABELA: LABELS_FPD
-❌ Erro: Nenhuma run_id encontrada para labels_fpd
-
-================================================================================
-🏁 Auditoria Finalizada.
-================================================================================
-
-
-================================================================================
-🕵️  AUDITORIA DE PARTIÇÕES SILVER - 2026-01-15 11:39:32
-📂 Arquivo de Log: reports/observability/integrity/inspect_partition-gold.log
-================================================================================
-
-📊 TABELA: LABELS_FPD
-🆔 Run ID: 20260115_140241 | Coluna: safra
-📅 Janela: 202410 a 202503
-------------------------------------------------------------
-  📁 202410: ❌ Pasta não encontrada
-  📁 202411: ❌ Pasta não encontrada
-  📁 202412: ❌ Pasta não encontrada
-  📁 202501: ❌ Pasta não encontrada
-  📁 202502: ❌ Pasta não encontrada
-  📁 202503: ❌ Pasta não encontrada
-
-================================================================================
-🏁 Auditoria Finalizada.
-================================================================================
-
-
-================================================================================
 🕵️  AUDITORIA DE PARTIÇÕES GOLD - 2026-01-15 11:40:43
 📂 Arquivo de Log: reports/observability/integrity/inspect_partition-gold.log
 ================================================================================
