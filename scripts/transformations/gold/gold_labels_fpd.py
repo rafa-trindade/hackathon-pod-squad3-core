@@ -65,8 +65,8 @@ def run():
             num_cpf,
             safra,
             prod,
-            CASE WHEN fpd THEN 1 ELSE 0 END AS fpd,
-            flag_instalacao AS flag_instalacao_resolvida,
+            fpd,
+            flag_instalacao,
             ano_mes,
             '{RUN_ID}' AS run_id,
             now() AS ingestion_ts
