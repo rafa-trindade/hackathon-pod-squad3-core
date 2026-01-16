@@ -55,7 +55,7 @@ md_file = init_md_report(
 # %% 
 # GARANTIA DE UNICIDADE E QUALIDADE #################
 #####################################################
-chave_tecnica_cols = ["num_cpf", "safra", "fpd"]
+chave_tecnica_cols = ["num_cpf", "safra", "prod"]
 
 md = "### 🔑 Garantia de Unicidade: `bronze/score_bureau_movel`\n"
 md += f"- **Chave Técnica:** `{', '.join(chave_tecnica_cols)}`\n"
