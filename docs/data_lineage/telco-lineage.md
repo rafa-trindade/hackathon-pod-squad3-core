@@ -1,7 +1,7 @@
 ## 📡 Visão Geral - `telco`
 
 - **Entidade Principal:** Consumo do Cliente (`NUM_CPF` + `PROD`)
-- **Grão da Tabela (Unicidade):** `NUM_CPF, SAFRA, PROD, FLAG_INSTALACAO`
+- **Grão da Tabela (Unicidade):** `NUM_CPF, SAFRA, PROD`
 - **Sugestão Chave de Relacionamento (Gold):** `NUM_CPF` (Identificador Único), `SAFRA` (Eixo Temporal)
 - **Chave de Particionamento:** `SAFRA` (Formato YYYYMM)
 
