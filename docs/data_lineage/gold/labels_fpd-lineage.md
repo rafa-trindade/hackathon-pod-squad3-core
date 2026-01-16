@@ -55,7 +55,6 @@ A escolha do melhor Target depende do que a Squad prioriza: Volume Total (Alcanc
 | **Densidade de Features** | **Alta** (Foco em sinal de rede/uso) | **Baixa** (65% sem dados Telco) |
 | **Risco de "Missings"** | Mínimo | Alto (Base "fantasma" para features) |
 
-#### 📉 Visualização de Cobertura (Ecossistema Silver)
 ![Comparativo de Cobertura de Ecossistema](../../images/comparativo_cobertura_ecossistema.png)
 
 
