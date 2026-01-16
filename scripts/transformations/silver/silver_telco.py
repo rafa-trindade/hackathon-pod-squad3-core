@@ -41,11 +41,6 @@ keys_to_clean = {
     'prod': {
         'replace': [], 
         'default': '0'
-    },
-
-        'flag_instalacao': {
-        'replace': [], 
-        'default': 'false'
     }
 
 }
