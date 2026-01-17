@@ -4,9 +4,13 @@ Este documento descreve a **arquitetura técnica do projeto em execução**,
 detalhando como os componentes se integram para viabilizar os processos de
 ingestão, transformação e armazenamento de dados.
 
-## 🛠️ Arquitetura Local
+## 🛠️ Arquitetura Macro
 
-![Arquitetura Local](../images/arquitetura_local.png)
+![Arquitetura Macro](../images/arquitetura_macro.png)
+
+## 🛠️ Arquitetura Micro (Rascunho)
+
+![Arquitetura Micro](../images/arquitetura_micro.png)
 
 ## 🧱 Componentes da Arquitetura
 
