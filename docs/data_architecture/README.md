@@ -6,11 +6,11 @@ ingestão, transformação e armazenamento de dados.
 
 ## 🛠️ Arquitetura Macro
 
-![Arquitetura Macro](../images/arquitetura_macro.png)
+![Arquitetura Macro](../images/data_architecture/arquitetura_macro.png)
 
 ## 🛠️ Arquitetura Micro (Rascunho)
 
-![Arquitetura Micro](../images/arquitetura_micro.png)
+![Arquitetura Micro](../images/data_architecture/arquitetura_micro.png)
 
 ## 🧱 Componentes da Arquitetura
 
