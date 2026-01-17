@@ -23,7 +23,7 @@ O uso desses quadros possibilita:
 
 ---
 
-![Quadro GitHub Projects](../images/project.png)
+![Quadro GitHub Projects](../images/project_plan/project.png)
 
 
 ## 2️⃣ Organização da Squad e Responsabilidades
