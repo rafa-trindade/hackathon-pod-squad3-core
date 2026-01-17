@@ -8,7 +8,7 @@ ingestão, transformação e armazenamento de dados.
 
 ![Arquitetura Macro](../images/data_architecture/arquitetura_macro.png)
 
-## 🛠️ Arquitetura Micro (Rascunho)
+## 🛠️ Arquitetura Micro
 
 ![Arquitetura Micro](../images/data_architecture/arquitetura_micro.png)
 
