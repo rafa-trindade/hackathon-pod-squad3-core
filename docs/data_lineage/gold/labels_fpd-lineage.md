@@ -57,7 +57,7 @@ A escolha do melhor Target depende do que a Squad prioriza: Volume Total (Alcanc
 
 ---
 
-![Comparativo de Cobertura de Ecossistema](../../images/comparativo_cobertura_ecossistema.png)
+![Comparativo de Cobertura de Ecossistema](../../images/data_lineage/comparativo_cobertura_ecossistema.png)
 
 ---
 
