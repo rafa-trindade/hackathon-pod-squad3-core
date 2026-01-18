@@ -1,4 +1,4 @@
-# 🏗️ Data Architecture - Mapeamento de Arquitetura do Projeto
+![header](../images/data_architecture/header_architecture.png)
 
 Este documento detalha a arquitetura técnica da plataforma de dados, justificando a escolha das ferramentas para um cenário de execução em **Virtual Private Server (VPS)**. A solução foi desenhada como uma PoC de alta fidelidade, garantindo escalabilidade, governança pragmática e observabilidade nativa.
 
