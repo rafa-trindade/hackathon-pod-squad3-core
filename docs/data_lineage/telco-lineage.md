@@ -28,7 +28,7 @@
 | Versionamento   | `run_id` (Isolamento de Execução)     |
 | Particionamento | `ano_mes` (Coluna Técnica)            |
 
-![bucket](../images/data_lineage/bucket_score_bureau.png)
+![bucket](../images/data_lineage/bucket_telco.png)
 
 ---
 
