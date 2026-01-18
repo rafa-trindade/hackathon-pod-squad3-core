@@ -63,7 +63,18 @@ A escolha do melhor Target depende do que a Squad prioriza: Volume Total (Alcanc
 
 ## ✅ Data Lineage - `labels_fpd`
 
-### 1. Fluxo de Transformação: SILVER → GOLD
+### 1. Visão Geral
+
+| Item            | Valor                                 |
+|-----------------|---------------------------------------|
+| Origem          | `silver/telco`                        |
+| Versionamento   | `run_id` (Isolamento de Execução)     |
+| Particionamento | `ano_mes` (Coluna Técnica)            |
+
+![bucket](../../images/data_lineage/bucket_labels_fpd.png)
+
+
+### 2. Fluxo de Transformação: SILVER → GOLD
 
 **Origem:** `s3://lake/silver/telco/**/*.parquet`  
 **Destino:** `s3://lake/gold/labels_fpd/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
@@ -75,11 +86,9 @@ A escolha do melhor Target depende do que a Squad prioriza: Volume Total (Alcanc
 | 3 | **Cálculo de Partição** | Organização Temporal | Derivação da coluna técnica `ano_mes` a partir da coluna `safra`. |
 | 4 | **Auditoria de Overlap** | Health Check de Ecossistema | Cruzamento em tempo real com as tabelas de `atraso`, `pagamento`, `recarga`, `cadastral` e `bureau` para emissão do Quality Report. |
 
-![bucket](../../images/data_lineage/bucket_labels_fpd.png)
-
 ---
 
-### 2. Protocolo de Observabilidade e Qualidade (Data Quality)
+### 3. Protocolo de Observabilidade e Qualidade (Data Quality)
 
 O pipeline de geração da camada Gold executa uma bateria automática de testes antes da persistência final. Os resultados são centralizados no log de qualidade, que serve como evidência de conformidade para a Squad e Stakeholders.
 
@@ -120,7 +129,7 @@ Saneamento (Missing)          | INFO       | Descartados 45,936 registros (3.36%
 
 ---
 
-### 3. Observações Técnicas
+### 4. Observações Técnicas
 
 - **Idempotência:** O uso de `OVERWRITE_OR_IGNORE` combinado com o particionamento por `ano_mes` garante que reprocessamentos de uma safra específica sejam limpos e consistentes.
 - **Isolamento via Run_ID:** Cada execução gera um novo diretório físico, permitindo auditoria histórica e *rollbacks* rápidos através da Política de Retenção.
