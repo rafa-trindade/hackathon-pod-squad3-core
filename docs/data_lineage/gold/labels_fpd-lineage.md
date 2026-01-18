@@ -75,6 +75,8 @@ A escolha do melhor Target depende do que a Squad prioriza: Volume Total (Alcanc
 | 3 | **Cálculo de Partição** | Organização Temporal | Derivação da coluna técnica `ano_mes` a partir da coluna `safra`. |
 | 4 | **Auditoria de Overlap** | Health Check de Ecossistema | Cruzamento em tempo real com as tabelas de `atraso`, `pagamento`, `recarga`, `cadastral` e `bureau` para emissão do Quality Report. |
 
+![bucket](../../images/data_lineage/bucket_labels_fpd.png)
+
 ---
 
 ### 2. Protocolo de Observabilidade e Qualidade (Data Quality)
