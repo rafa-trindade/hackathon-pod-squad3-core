@@ -25,8 +25,10 @@
 | Origem          | `raw/telco`                           |
 | Destino Bronze  | `bronze/telco`                        |
 | Destino Silver  | `silver/telco`                        |
-| Particionamento | `ano_mes` (Coluna Técnica)            |
 | Versionamento   | `run_id` (Isolamento de Execução)     |
+| Particionamento | `ano_mes` (Coluna Técnica)            |
+
+![bucket](../images/data_lineage/bucket_score_bureau.png)
 
 ---
 
@@ -61,7 +63,7 @@
 
 #### 2.2.1 🔍 Auditoria e Saneamento
 
-**Grãos em Conformidade:** `num_cpf`, `safra`, `prod`, `flag_instalacao`
+**Grãos em Conformidade:** `num_cpf`, `safra`, `prod`
 
 **Estatísticas de Processamento:**
 * 📥 **Registros Iniciais (Bronze):** `1.367.104`

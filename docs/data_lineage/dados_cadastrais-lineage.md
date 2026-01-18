@@ -25,8 +25,10 @@
 | Origem          | `raw/dados_cadastrais`                |
 | Destino Bronze  | `bronze/dados_cadastrais`             |
 | Destino Silver  | `silver/dados_cadastrais`             |
-| Particionamento | `ano_mes` (Coluna Técnica)            |
 | Versionamento   | `run_id` (Isolamento de Execução)     |
+| Particionamento | `ano_mes` (Coluna Técnica)            |
+
+![bucket](../images/data_lineage/bucket_dados_cadastrais.png)
 
 ---
 

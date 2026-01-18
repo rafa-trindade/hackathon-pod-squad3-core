@@ -22,11 +22,14 @@
 
 | Item            | Valor                                 |
 |-----------------|---------------------------------------|
-| Origem          | `raw/atraso`                |
-| Destino Bronze  | `bronze/atraso`             |
-| Destino Silver  | `silver/atraso`             |
-| Particionamento | `ano_mes` (Coluna Técnica)            |
+| Origem          | `raw/atraso`                          |
+| Destino Bronze  | `bronze/atraso`                       |
+| Destino Silver  | `silver/atraso`                       |
 | Versionamento   | `run_id` (Isolamento de Execução)     |
+| Particionamento | `ano_mes` (Coluna Técnica)            |
+
+
+![bucket](../images/data_lineage/bucket_atraso.png)
 
 ---
 

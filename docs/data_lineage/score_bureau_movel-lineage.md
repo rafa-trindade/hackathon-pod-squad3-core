@@ -25,8 +25,10 @@
 | Origem          | `raw/score_bureau_movel`              |
 | Destino Bronze  | `bronze/score_bureau_movel`           |
 | Destino Silver  | `silver/score_bureau_movel`           |
-| Particionamento | `ano_mes` (Coluna Técnica)            |
 | Versionamento   | `run_id` (Isolamento de Execução)     |
+| Particionamento | `ano_mes` (Coluna Técnica)            |
+
+![bucket](../images/data_lineage/bucket_score_bureau.png)
 
 ---
 
@@ -61,7 +63,7 @@
 
 #### 2.2.1 🔍 Auditoria e Saneamento
 
-**Grãos em Conformidade:** `num_cpf`, `safra`, `fpd`
+**Grãos em Conformidade:** `num_cpf`, `safra`, `prod`
 
 **Estatísticas de Processamento:**
 * 📥 **Registros Iniciais (Bronze):** `1.290.526`

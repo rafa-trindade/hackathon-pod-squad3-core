@@ -22,11 +22,13 @@
 
 | Item            | Valor                                 |
 |-----------------|---------------------------------------|
-| Origem          | `raw/recarga`                |
-| Destino Bronze  | `bronze/recarga`             |
-| Destino Silver  | `silver/recarga`             |
-| Particionamento | `ano_mes` (Coluna Técnica)            |
+| Origem          | `raw/recarga`                         |
+| Destino Bronze  | `bronze/recarga`                      |
+| Destino Silver  | `silver/recarga`                      |
 | Versionamento   | `run_id` (Isolamento de Execução)     |
+| Particionamento | `ano_mes` (Coluna Técnica)            |
+
+![bucket](../images/data_lineage/bucket_recarga.png)
 
 ---
 

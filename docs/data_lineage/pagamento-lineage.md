@@ -25,8 +25,10 @@
 | Origem          | `raw/pagamento`                       |
 | Destino Bronze  | `bronze/pagamento`                    |
 | Destino Silver  | `silver/pagamento`                    |
-| Particionamento | `ano_mes` (Coluna Técnica)    |
 | Versionamento   | `run_id` (Isolamento de Execução)     |
+| Particionamento | `ano_mes` (Coluna Técnica)            |
+
+![bucket](../images/data_lineage/bucket_pagamento.png)
 
 ---
 
