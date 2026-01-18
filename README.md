@@ -2,9 +2,6 @@
 
 Repositório de desenvolvimento, documentação e implementação da solução integrada de dados para o Hackathon da Pod Academy - Squad 3.
 
-![Arquitetura Macro](docs/images/data_architecture/arquitetura_macro.png)
-
-
 ## 📚 Mapeamento de Documentação (*Project Hub*)
 
 ### 📅 Gestão e Planejamento do Projeto
@@ -16,13 +13,13 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 ---
 
 ### 🏗️ Data Architecture
-> 📄 [`docs/data_architecture/`](docs/data_architecture/README.md)  
+> 📁 [`docs/data_architecture/`](docs/data_architecture/)  
 > **Define** a stack operada em VPS, utilizando Docker e Airflow para orquestração. **Implementa** MinIO para storage Medallion compatível com **S3-API**, DuckDB para processamento vetorial e PostgreSQL para o Data Warehouse, integrando modelagem via dbt, gestão de modelos com MLflow e entrega via Streamlit (Bônus).
 
 ---
 
 ### 🏛️ Data Governance
-> 📄 [`docs/data_governance/`](docs/data_governance/README.md)  
+> 📁 [`docs/data_governance/`](docs/data_governance/)  
 > **Define** as políticas estruturais para um Data Lake confiável. **Aplica** *Policy as Code* para assegurar a reprocessabilidade total via imutabilidade por execução (`run_id`) e eficiência através de particionamento físico otimizado (`ano_mes`).
 >
 > * 📑 **Policies:** [`Retention`](docs/data_governance/politica-retencao.md) | [`Partitioning`](docs/data_governance/politica-particionamento.md) | [`Quality`](docs/data_governance/politica-qualidade.md)
@@ -47,7 +44,7 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 ---
 
 ### 🔍 Data Observability
-> 📄 [`docs/data_observability/`](docs/data_observability/README.md)  
+> 📁 [`docs/data_observability/`](docs/data_observability/)  
 > **Monitora** a saúde do ecossistema através de métricas de *Freshness*, *Volume*, *Distribution* e *Schema*. **Garante** resiliência operacional através de protocolos de *Health Check* de safras e auditoria de densidade para assegurar a riqueza de informação para Machine Learning.
 >
 > * 📁 [`Observability Reports`](reports/observability/) - Centraliza as evidências de integridade física (`integrity`), diagnósticos estatísticos (`profiling`) e relatórios de contratos de dados (`quality`).
