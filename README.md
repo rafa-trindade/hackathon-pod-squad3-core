@@ -2,6 +2,9 @@
 
 Repositório de desenvolvimento, documentação e implementação da solução integrada de dados para o Hackathon da Pod Academy - Squad 3.
 
+![Arquitetura Macro](docs/images/data_architecture/arquitetura_macro.png)
+
+
 ## 📚 Mapeamento de Documentação (*Project Hub*)
 
 ### 📅 Gestão e Planejamento do Projeto
