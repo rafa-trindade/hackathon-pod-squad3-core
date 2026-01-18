@@ -14,13 +14,13 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 
 ### 🏗️ Data Architecture
 > 📄 [`docs/data_architecture/`](docs/data_architecture/README.md)  
-> **Define** a stack operada em VPS, utilizando Docker e Airflow para orquestração. **Combina** MinIO para storage Medallion (Cloud-Ready), DuckDB para processamento vetorial e PostgreSQL para o Data Warehouse, integrando modelagem via dbt, gestão de modelos com MLflow e entrega via Streamlit.
+> **Define** a stack operada em VPS, utilizando Docker e Airflow para orquestração. **Implementa** MinIO para storage Medallion compatível com **S3-API**, DuckDB para processamento vetorial e PostgreSQL para o Data Warehouse, integrando modelagem via dbt, gestão de modelos com MLflow e entrega via Streamlit (Bônus).
 
 ---
 
 ### 🏛️ Data Governance
 > 📄 [`docs/data_governance/`](docs/data_governance/README.md)  
-> **Define** as políticas e diretrizes estruturais que garantem um Data Lake confiável e de baixo custo operacional. **Aplica** o conceito de *Policy as Code* para assegurar a reprocessabilidade total através de imutabilidade por execução (`run_id`) e eficiência via particionamento otimizado.
+> **Define** as políticas estruturais para um Data Lake confiável. **Aplica** *Policy as Code* para assegurar a reprocessabilidade total via imutabilidade por execução (`run_id`) e eficiência através de particionamento físico otimizado (`ano_mes`).
 >
 > * 📑 **Policies:** [`Retention`](docs/data_governance/politica-retencao.md) | [`Partitioning`](docs/data_governance/politica-particionamento.md) | [`Quality`](docs/data_governance/politica-qualidade.md)
 
@@ -28,7 +28,7 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 
 ### 🧬 Data Lineage
 > 📁 [`docs/data_lineage/*`](docs/data_lineage/)  
-> **Mapeia** a jornada do dado entre as camadas Medallion. **Garante** a rastreabilidade ponta a ponta, desde a ingestão técnica até a homologação das tabelas âncoras para modelagem na camada Gold.
+> **Mapeia** a jornada do dado entre as camadas Medallion. **Garante** a rastreabilidade ponta a ponta, desde a ingestão técnica até a homologação das tabelas âncoras através de Auditoria de Overlap e densidade de dados na camada Gold.
 >
 > * 📑 **Lineage:** [`Raw → Silver`](docs/data_lineage/) | [`Gold (Target & Features)`](docs/data_lineage/gold/)
 > * 📑 **Reports:** [`Integrity`](reports/observability/integrity/) | [`Profiling`](reports/observability/profiling/)
@@ -45,7 +45,7 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 
 ### 🔍 Data Observability
 > 📄 [`docs/data_observability/`](docs/data_observability/README.md)  
-> **Gerencia** a saúde dos fluxos de dados através do monitoramento de *Freshness*, *Volume* e *Distribution*. **Garante** resiliência operacional através de protocolos de *Health Check* de safras e auditoria de *Overlap* para assegurar a riqueza de informação para Machine Learning.
+> **Monitora** a saúde do ecossistema através de métricas de *Freshness*, *Volume*, *Distribution* e *Schema*. **Garante** resiliência operacional através de protocolos de *Health Check* de safras e auditoria de densidade para assegurar a riqueza de informação para Machine Learning.
 >
 > * 📁 [`Observability Reports`](reports/observability/) - Centraliza as evidências de integridade física (`integrity`), diagnósticos estatísticos (`profiling`) e relatórios de contratos de dados (`quality`).
 
