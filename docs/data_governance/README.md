@@ -1,4 +1,4 @@
-# 🏛️ Data Governance - Mapeamento Prático do Projeto
+![header](../images/data_governance/header_governance.png)
 
 Este diretório concentra as **políticas, diretrizes e decisões estruturais** relacionadas à governança de dados da Squad 3. Nosso foco é garantir que o Data Lake seja uma fonte confiável, escalável e de baixo custo operacional.
 
