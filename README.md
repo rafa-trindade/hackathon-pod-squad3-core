@@ -1,5 +1,4 @@
 ![header](docs/images/main/header_main.png)
-## 📚 Mapeamento de Documentação (*Project Hub*)
 
 ### 📅 Gestão e Planejamento do Projeto
 > 📁 [`docs/project_plan/*`](docs/project_plan/)  
