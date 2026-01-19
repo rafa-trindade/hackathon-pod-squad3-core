@@ -1,4 +1,4 @@
-![header](../images/data_observability/header_observability.png)
+![header](docs/images/main/header_main.png)
 Repositório de desenvolvimento, documentação e implementação da solução integrada de dados para o Hackathon da Pod Academy - Squad 3.
 
 ## 📚 Mapeamento de Documentação (*Project Hub*)
