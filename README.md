@@ -1,5 +1,4 @@
-## 🚀 Hackathon Pod Academy - Squad 3
-
+![header](../images/data_observability/header_observability.png)
 Repositório de desenvolvimento, documentação e implementação da solução integrada de dados para o Hackathon da Pod Academy - Squad 3.
 
 ## 📚 Mapeamento de Documentação (*Project Hub*)
