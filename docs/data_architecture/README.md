@@ -13,7 +13,7 @@ A arquitetura macro ilustra o fluxo end-to-end do dado, evidenciando como polít
 * **Data Processing (Medallion):** Implementação das camadas **Bronze, Silver e Gold** no MinIO (S3-Compatible). 
 * **Engine de Processamento:** O **DuckDB** executa transformações SQL vetorizadas com alta eficiência em recursos limitados.
 * **Data Observability:** Monitoramento automático de *Freshness*, Volumetria e Distribuição Estatística através de auditorias programáticas e logs de integridade.
-* **Deliverables:** Entrega de modelo **.pkl** e dashboard analítico em **Streamlit** (escopo opcional).
+* **Deliverables:** Entrega de modelo **.pkl**, relatórios de análise de público e dashboard analítico em **Streamlit** (escopo opcional).
 
 ## 🛠️ Arquitetura Micro (Visão de Componentes)
 
@@ -27,8 +27,9 @@ A arquitetura micro detalha os componentes da plataforma e seus mecanismos opera
 * **Data Lake (MinIO - S3 Compatible):** Camada de armazenamento central baseada no padrão Medallion (Bronze, Silver e Gold), com dados imutáveis por `run_id`, suportando reprocessamento, auditoria e observabilidade nativa.
 * **Data Warehouse (PostgreSQL + dbt):** Modelagem dimensional (Star Schema) para consumo analítico, com governança de transformações via dbt.
 * **Camada Analítica & ML:**
-  * **Jupyter Notebook:** Executado em ambiente isolado, consome dados da camada Gold para exploração, treino e validação de modelos, gerando artefatos versionados (.pkl).
-  * **Streamlit:** Camada de visualização analítica para exploração de KPIs e métricas a partir dos **Data Marts do Data Warehouse** (escopo opcional).
+  * **Jupyter Notebook:** Executado em ambiente isolado, consome dados da camada Gold para exploração, treino e validação de modelos, gerando artefatos analíticos e modelos versionados (.pkl).
+  * **Streamlit:** Camada de visualização para consumo de KPIs e métricas a partir dos **Data Marts do Data Warehouse** (escopo opcional).
+
 
 
 
@@ -43,7 +44,7 @@ A matriz abaixo destaca apenas os componentes que representam decisões arquitet
 | **dbt Core** | **Modelagem Analítica** | Governança de transformações com testes e linhagem automática. | **Documentação Viva:** Reflete o estado real do Warehouse no PostgreSQL. |
 | **Pandera** | **Data Quality** | Validação de schema na ingestão (Data Contracts). | **Prevenção de Erros:** Bloqueia inconsistências na entrada do pipeline. |
 | **Jupyter Notebook** | **Experimentação & ML** | Treinamento interativo de modelos e feature engineering com baixo overhead operacional. | **Reprodutibilidade:** Notebooks versionados, seeds fixas e datasets imutáveis por `run_id`. |
-| **Streamlit** | **Camada de Apresentação** | Exposição rápida de KPIs e métricas analíticas para stakeholders. | **Consumo Governado:** Acesso somente a Data Marts do Data Warehouse e artefatos de modelo versionados. |
+| **Streamlit** | **Camada de Apresentação** | Exposição opcional de KPIs e métricas analíticas para stakeholders. | **Consumo Governado:** Acesso somente a Data Marts do Data Warehouse e artefatos de modelo versionados. |
 
 
 ## 🚀 Estratégias de Engenharia e Confiabilidade
