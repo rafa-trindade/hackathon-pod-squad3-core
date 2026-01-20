@@ -11,8 +11,10 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 ---
 
 ### 🏗️ Data Architecture
-> 📁 [`docs/data_architecture/`](docs/data_architecture/)  
-> **Define** a stack operada em VPS, utilizando Docker e Airflow para orquestração. **Implementa** MinIO para storage Medallion compatível com **S3-API**, DuckDB para processamento vetorial e PostgreSQL para o Data Warehouse, integrando modelagem via dbt, gestão de modelos com MLflow e entrega via Streamlit (Bônus).
+> 📁 [`docs/data_architecture/*`](docs/data_architecture/)  
+> **Define** uma stack **Cloud-Ready** operada em VPS através de **Docker** e **Airflow**. **Implementa** MinIO para storage Medallion (S3-API), DuckDB para processamento vetorial e PostgreSQL para o Data Warehouse com dbt. **Garante** a entrega de valor via **Model (.pkl)** versionados e relatórios analíticos, com suporte a **DataViz (Streamlit)** como escopo opcional e plano de migração para **OCI**.
+>
+> * 📑 **Documents:** [`Arquitetura Técnica (Macro & Micro)`](docs/data_architecture/README.md) | [`Estratégia de Migração (VPS → OCI)`](docs/data_architecture/migration_oci.md)
 
 ---
 
