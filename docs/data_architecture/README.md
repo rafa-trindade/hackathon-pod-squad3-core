@@ -13,8 +13,7 @@ A arquitetura macro ilustra o fluxo end-to-end do dado, evidenciando como polít
 * **Data Processing (Medallion):** Implementação das camadas **Bronze, Silver e Gold** no MinIO (S3-Compatible). 
 * **Engine de Processamento:** O **DuckDB** executa transformações SQL vetorizadas com alta eficiência em recursos limitados.
 * **Data Observability:** Monitoramento automático de *Freshness*, Volumetria e Distribuição Estatística através de auditorias programáticas e logs de integridade.
-* **Deliverables:** Entrega de modelo **.pkl** e dashboard analítico em **Streamlit**.
-
+* **Deliverables:** Entrega de modelo **.pkl** e dashboard analítico em **Streamlit** (escopo opcional).
 
 ## 🛠️ Arquitetura Micro (Visão de Componentes)
 
@@ -27,8 +26,7 @@ A arquitetura micro detalha os componentes da plataforma e seus mecanismos opera
 * **Data Warehouse (PostgreSQL + dbt):** Modelagem dimensional (Star Schema) para consumo analítico, com governança de transformações via dbt.
 * **Camada Analítica & ML:**
   * **Jupyter Notebook:** Executado em ambiente isolado, consome dados da camada Gold para exploração, treino e validação de modelos, gerando artefatos versionados (.pkl).
-  * **Streamlit:** Aplicação desacoplada do pipeline, responsável apenas pelo consumo de dados e modelos certificados, sem realizar transformações ou escrita em camadas analíticas.
-
+  * **Streamlit:** Camada de visualização analítica para exploração de KPIs e métricas a partir dos **Data Marts do Data Warehouse** (escopo opcional).
 
 
 ## 🧱 Matriz de Componentes e Diferenciais Estratégicos
@@ -61,5 +59,4 @@ Esta PoC implementa pilares de **Data Reliability** que garantem a resiliência 
    * **Isolamento de Erros:** Como cada execução é encapsulada por um timestamp ISO, falhas na run atual não corrompem dados históricos estáveis.
 
    > A arquitetura demonstra que observabilidade e governança não são camadas adicionais, mas propriedades emergentes de decisões corretas de engenharia.
-   > **A arquitetura demonstra que observabilidade e governança não são camadas adicionais, mas propriedades emergentes de decisões corretas de engenharia.**
 
