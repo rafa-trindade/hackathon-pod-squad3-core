@@ -4,7 +4,7 @@ Este documento detalha a arquitetura técnica da plataforma de dados, justifican
 
 ## 🛠️ Arquitetura Macro (Visão de Fluxo)
 
-A arquitetura macro ilustra o fluxo end-to-end do dado, evidenciando como políticas de governança e mecanismos de observabilidade são aplicados ao longo das etapas de ingestão, processamento e consumo.
+A arquitetura macro ilustra o fluxo end-to-end do dado, evidenciando como políticas de governança e mecanismos de observabilidade se materializam ao longo das etapas de ingestão, processamento e consumo.
 
 ![Arquitetura Macro](../images/data_architecture/arquitetura_macro.png)
 
@@ -17,19 +17,24 @@ A arquitetura macro ilustra o fluxo end-to-end do dado, evidenciando como polít
 
 ## 🛠️ Arquitetura Micro (Visão de Componentes)
 
-A arquitetura micro detalha os componentes da plataforma e seus mecanismos operacionais, evidenciando como isolamento, orquestração e controle de execução sustentam as políticas de governança, confiabilidade e reprodutibilidade.
+A arquitetura micro detalha os componentes da plataforma e seus mecanismos operacionais, evidenciando como armazenamento, isolamento, orquestração e controle de execução sustentam as políticas de governança, confiabilidade e reprodutibilidade.
+
 
 ![Arquitetura Micro](../images/data_architecture/arquitetura_micro.png)
 
 * **Orquestração (Apache Airflow):** Maestro responsável por garantir a idempotência e a ordem de execução das DAGs.
 * **Isolamento (Docker):** Coexistência de serviços (MinIO, Postgres, Airflow) em containers, facilitando o setup e a portabilidade.
+* **Data Lake (MinIO - S3 Compatible):** Camada de armazenamento central baseada no padrão Medallion (Bronze, Silver e Gold), com dados imutáveis por `run_id`, suportando reprocessamento, auditoria e observabilidade nativa.
 * **Data Warehouse (PostgreSQL + dbt):** Modelagem dimensional (Star Schema) para consumo analítico, com governança de transformações via dbt.
 * **Camada Analítica & ML:**
   * **Jupyter Notebook:** Executado em ambiente isolado, consome dados da camada Gold para exploração, treino e validação de modelos, gerando artefatos versionados (.pkl).
   * **Streamlit:** Camada de visualização analítica para exploração de KPIs e métricas a partir dos **Data Marts do Data Warehouse** (escopo opcional).
 
 
+
 ## 🧱 Matriz de Componentes e Diferenciais Estratégicos
+
+A matriz abaixo destaca apenas os componentes que representam decisões arquiteturais estratégicas da PoC, com impacto direto em governança, confiabilidade e observabilidade. Componentes de infraestrutura e orquestração são detalhados na Arquitetura Micro.
 
 | Componente | Papel na Arquitetura | Diferencial Estratégico (PoC) | Governança Aplicada |
 |:---|:---|:---|:---|
@@ -38,7 +43,7 @@ A arquitetura micro detalha os componentes da plataforma e seus mecanismos opera
 | **dbt Core** | **Modelagem Analítica** | Governança de transformações com testes e linhagem automática. | **Documentação Viva:** Reflete o estado real do Warehouse no PostgreSQL. |
 | **Pandera** | **Data Quality** | Validação de schema na ingestão (Data Contracts). | **Prevenção de Erros:** Bloqueia inconsistências na entrada do pipeline. |
 | **Jupyter Notebook** | **Experimentação & ML** | Treinamento interativo de modelos e feature engineering com baixo overhead operacional. | **Reprodutibilidade:** Notebooks versionados, seeds fixas e datasets imutáveis por `run_id`. |
-| **Streamlit** | **Camada de Apresentação** | Exposição rápida de KPIs, métricas e inferências para stakeholders. | **Consumo Governado:** Acesso somente a dados Gold e artefatos de modelo versionados. |
+| **Streamlit** | **Camada de Apresentação** | Exposição rápida de KPIs e métricas analíticas para stakeholders. | **Consumo Governado:** Acesso somente a Data Marts do Data Warehouse e artefatos de modelo versionados. |
 
 
 ## 🚀 Estratégias de Engenharia e Confiabilidade
