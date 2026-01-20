@@ -12,7 +12,7 @@ A arquitetura macro ilustra o fluxo end-to-end do dado, evidenciando como polít
 * **Ingestion & External Data:** Captura de fontes com validação via **Contratos de Dados (Pandera)**, garantindo conformidade antes da persistência na camada Raw/Landing.
 * **Data Processing (Medallion):** Implementação das camadas **Bronze, Silver e Gold** no MinIO (S3-Compatible). 
 * **Engine de Processamento:** O **DuckDB** executa transformações SQL vetorizadas com alta eficiência em recursos limitados.
-* **Data Observability:** Monitoramento automático de *Freshness*, Volumetria e Distribuição Estatística através de auditorias programáticas e logs de integridade.
+* **Data Observability:** Monitoramento automático de *Freshness*, Volumetria e Distribuição Estatística por meio de auditorias programáticas e logs de integridade.
 * **Deliverables:** Entrega de modelo **.pkl**, relatórios de análise de público e dashboard analítico em **Streamlit** (escopo opcional).
 
 ## 🛠️ Arquitetura Micro (Visão de Componentes)
@@ -64,7 +64,21 @@ Esta PoC implementa pilares de **Data Reliability** que garantem a resiliência 
    * **Idempotência:** O reprocessamento de um mesmo mês não gera duplicidade; a nova `run_id` substitui logicamente a anterior.
    * **Isolamento de Erros:** Como cada execução é encapsulada por um timestamp ISO, falhas na run atual não corrompem dados históricos estáveis.
 
----
+<br>
 
 > A arquitetura demonstra que observabilidade e governança não são camadas adicionais, mas propriedades emergentes de decisões corretas de engenharia.
+
+
+## 📚 Documentação Complementar
+
+### 🏛️ Data Governance
+📑 **[Manual de Governança](../data_governance/README.md)**  
+Diretrizes formais de governança aplicadas ao projeto.
+
+---
+
+### 🔍 Data Observability
+📑 **[Manual de Observabilidade](../data_observability/README.md)**  
+Referência das práticas de monitoramento e saúde do pipeline.
+
 
