@@ -62,7 +62,7 @@ Diferente das tabelas '''Fato''', as dimensões são tabelas de referência téc
 | **Saneamento de Strings** | Aplicação de `TRIM` e `LOWER` (exceto em chaves técnicas). | Garante que descrições fiquem padronizadas para visualização. |
 | **Auditoria de Integridade** | Validação contra a ''Fato'' já na camada Bronze. | **O log da Bronze é um alerta de cadastro faltando**: identifica IDs na ''Fato'' sem par na dimensão. |
 
-![bucket](../images/data_lineage/bucket_atraso_dim.png)
+![bucket](../images/data_lineage/bucket_recarga_dim.png)
 
 ---
 
