@@ -40,7 +40,7 @@ md_file = init_md_report(
 # %% 
 # 🛠️ BLOCO 1: SUMÁRIO TÉCNICO DO DATASET ###################
 #############################################################
-md = "## ⚙️ Sumário Técnico do Dataset\n\n"
+md = "### ⚙️ Sumário Técnico do Dataset: `abt_base_prod`\n\n"
 
 metrics = con.execute(f"""
     SELECT 
@@ -59,7 +59,7 @@ md += f"- **Grão Definido:** `num_cpf, safra, prod`\n\n"
 # %% 
 # 🎯 BLOCO 2: ANÁLISE DO TARGET (FPD RATE) ##########
 #############################################################
-md += "## 🎯 Distribuição da Variável Alvo (Target)\n\n"
+md += "### 🎯 Distribuição da Variável Alvo (Target): `abt_base_prod`\n\n"
 
 df_target = con.execute(f"""
     SELECT 
@@ -78,7 +78,7 @@ md += "\n\n"
 # 🔑 VALIDAÇÃO DE UNICIDADE (PRIMARY KEY) ###########
 ####################################################
 chave_tecnica_cols = ["num_cpf", "safra", "prod"]
-md += "### 🔑 Verificação de Chave Técnica\n"
+md += "### 🔑 Verificação de Chave Técnica: `abt_base_prod`\n"
 
 concat_expression = " || '-' || ".join([f"COALESCE({c}::VARCHAR, 'NULL')" for c in chave_tecnica_cols])
 
@@ -101,7 +101,7 @@ md += "\n\n"
 # %% 
 # 🔍 BLOCO 3: PERFIL DE MISSINGS                   ##########
 #############################################################
-md += "## 🔍 Perfil de Missings por Feature\n\n"
+md += "### 🔍 Perfil de Missings por Feature: `abt_base_prod`\n\n"
 
 df_order = con.execute(f"DESCRIBE SELECT * FROM read_parquet('{path_parquet}')").df()[['column_name', 'column_type']]
 
@@ -119,7 +119,7 @@ md += "\n\n"
 # %% 
 # 🚩 BLOCO 4: DETECÇÃO DE OUTLIERS (3 SIGMA) ###############
 #############################################################
-md += "## 🚩 Detecção de Anomalias Financeiras (Outliers > 3σ)\n\n"
+md += "### 🚩 Detecção de Anomalias Financeiras (Outliers > 3σ): `abt_base_prod`\n\n"
 
 outliers_data = []
 # Filtro para analisar apenas colunas de comportamento transacional
@@ -148,37 +148,113 @@ else:
 
 md += "\n\n"
 
-# %% 
-# 📦 BLOCO 5: VOLUMETRIA E PARTICIONAMENTO ##################
-#############################################################
-md += "## 📦 Volumetria de Armazenamento por Partição (Safra)\n\n"
+# %%
+# VOLUMETRIA #####################################
+##################################################
+md = "### 📦 Volumetria: `abt_base_prod`\n"
 
-df_vol = con.execute(f"""
-    WITH size_meta AS (
-        SELECT 
-            regexp_extract(file_name, 'ano_mes=([0-9]+)', 1) as am,
-            SUM(total_compressed_size) as bytes
-        FROM parquet_metadata('{path_parquet}')
-        GROUP BY 1
-    ),
-    row_meta AS (
-        SELECT 
-            CAST(ano_mes AS VARCHAR) as am,
-            COUNT(*) as rows
-        FROM read_parquet('{path_parquet}', hive_partitioning=1)
-        GROUP BY 1
+try:
+    df_files = con.execute(f"""
+        WITH meta AS (
+            SELECT
+                file_name,
+                total_compressed_size,
+                total_uncompressed_size
+            FROM parquet_metadata('{path_parquet}')
+        ),
+        enriched AS (
+            SELECT
+                regexp_extract(
+                    file_name,
+                    'ano_mes=[^/]+'
+                ) AS ano_mes_dir,
+                file_name,
+                total_compressed_size,
+                total_uncompressed_size
+            FROM meta
+        ),
+        base AS (
+            SELECT
+                ano_mes_dir AS diretorio,
+                COUNT(DISTINCT file_name) AS qtd_arquivos,
+                SUM(total_compressed_size) AS tamanho_comprimido_bytes,
+                SUM(total_uncompressed_size) AS tamanho_descomprimido_bytes
+            FROM enriched
+            GROUP BY ano_mes_dir
+        ),
+        registros AS (
+            SELECT
+                ano_mes,
+                COUNT(*) AS qtd_registros
+            FROM read_parquet(
+                '{path_parquet}',
+                hive_partitioning=1
+            )
+            GROUP BY ano_mes
+        ),
+        colunas AS (
+            SELECT COUNT(*) AS qtd_colunas
+            FROM (
+                DESCRIBE
+                SELECT *
+                FROM read_parquet('{path_parquet}', hive_partitioning=1)
+            )
+        ),
+        joined AS (
+            SELECT
+                b.diretorio,
+                b.qtd_arquivos,
+                r.qtd_registros,
+                c.qtd_colunas,
+                b.tamanho_comprimido_bytes,
+                b.tamanho_descomprimido_bytes,
+                0 AS ordem
+            FROM base b
+            LEFT JOIN registros r
+                ON b.diretorio = 'ano_mes=' || CAST(r.ano_mes AS VARCHAR)
+            CROSS JOIN colunas c
+
+            UNION ALL
+
+            SELECT
+                'TOTAL' AS diretorio,
+                SUM(qtd_arquivos),
+                SUM(qtd_registros),
+                MAX(qtd_colunas),
+                SUM(tamanho_comprimido_bytes),
+                SUM(tamanho_descomprimido_bytes),
+                1 AS ordem
+            FROM base b
+            LEFT JOIN registros r
+                ON b.diretorio = 'ano_mes=' || CAST(r.ano_mes AS VARCHAR)
+            CROSS JOIN colunas c
+        )
+        SELECT
+            diretorio,
+            qtd_arquivos,
+            qtd_registros AS registros,
+            qtd_colunas AS colunas,
+            ROUND(tamanho_comprimido_bytes / 1024.0 / 1024.0, 2) AS tamanho_comprimido_mib,
+            ROUND(tamanho_descomprimido_bytes / 1024.0 / 1024.0, 2) AS tamanho_descomprimido_mib
+        FROM joined
+        ORDER BY
+            ordem,
+            diretorio
+    """).df()
+
+    df_files["registros"] = (
+        df_files["registros"]
+        .fillna(0)
+        .astype("int64")
+        .apply(lambda x: f"{x:,}".replace(",", "."))
     )
-    SELECT 
-        'ano_mes=' || r.am AS partition_dir,
-        r.rows AS row_count,
-        ROUND(s.bytes / 1024.0 / 1024.0, 2) AS compressed_mib
-    FROM row_meta r
-    LEFT JOIN size_meta s ON r.am = s.am
-    ORDER BY r.am
-""").df()
 
-df_vol["row_count"] = df_vol["row_count"].apply(lambda x: f"{x:,}".replace(",", "."))
-md += df_vol.to_markdown(index=False)
+    md += df_files.to_markdown(index=False)
+
+except Exception as e:
+    md += f"> ⚠️ Erro ao calcular volumetria física: `{e}`"
+
+print_and_save_md(md, md_file)
 
 # %% 
 # FINALIZAÇÃO ####################################
