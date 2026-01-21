@@ -21,14 +21,14 @@ A âncora é o "ponto de observação" que separa o passado (features) do futuro
 ---
 
 ### 2. Janelas de Lookback e Agregações Históricas
-Diferente de modelos limitados, esta ABT utiliza uma abordagem de **Mesa Farta**, explorando os 18 meses de histórico das tabelas transacionais (`silver/recarga`, `silver/pagamento`, `silver/atraso`). 
-
-As features são agregadas de forma exaustiva (Min, Max, Avg, Sum) conforme a semântica de cada fonte:
+Esta ABT utiliza uma abordagem de **Mesa Farta**. Para cada métrica estatística (Soma, Média, Mínimo, Máximo e Contagem), geramos colunas específicas para quatro horizontes temporais distintos, permitindo ao modelo identificar variações de comportamento (tendência e velocidade).
 
 | Janela | Escopo Técnico | Objetivo |
 | :--- | :--- | :--- |
-| **L30D, L60D, L90D** | Janelas móveis pré-safra. | Capturar volatilidade e tendências de curtíssimo prazo. |
-| **Total Histórico** | Todo o período disponível ($T < safra$). | Capturar o *Lifetime Value* e comportamento acumulado do cliente (até 18 meses). |
+| **L30D** | $T >= Safra - 30$ | Comportamento imediato e volatilidade de curtíssimo prazo. |
+| **L60D** | $T >= Safra - 60$ | Estabilidade de consumo e detecção de tendências recentes. |
+| **L90D** | $T >= Safra - 90$ | Visão consolidada do último trimestre (Padrão de Crédito). |
+| **Geral** | Todo o período ($T < Safra$) | Perfil acumulado e *Lifetime Value* (até 18 meses). |
 
 **Campos de Referência para Filtro Temporal:**
 * **Recarga:** `dat_insercao_credito`
@@ -44,7 +44,7 @@ As features são agregadas de forma exaustiva (Min, Max, Avg, Sum) conforme a se
 | Item | Valor |
 | :--- | :--- |
 | **Origem Primária** | `gold/labels_fpd` (Âncora de Target) |
-| **Fontes de Features** | `silver/telco`, `silver/dados_cadastrais`, `silver/score_bureau_movel`, `silver/recarga`, `silver/pagamento`, `silver/atraso` |
+| **Fontes de Features** | `silver/score_bureau_movel`, `silver/dados_cadastrais`, `silver/telco`, `silver/recarga`, `silver/pagamento`, `silver/atraso` |
 | **Versionamento** | `run_id` (Isolamento de Execução) |
 | **Particionamento** | `ano_mes` (Coluna Técnica) |
 
@@ -56,27 +56,25 @@ As features são agregadas de forma exaustiva (Min, Max, Avg, Sum) conforme a se
 | Etapa | Processo | Descrição | Ações / Regras |
 |------:|:---------|:----------|:---------------|
 | 1 | **Fixação da Âncora** | Leitura da `labels_fpd` | Define os CPFs e as Safras que devem ser processadas (Target persistente). |
-| 2 | **Agregação Transacional** | Lookback de 18 meses | Processamento de Recarga, Pagamento e Atraso aplicando a regra $T < Safra$. |
-| 3 | **Join Point-in-Time** | Enriquecimento Snapshot | Cruzamento com Cadastral, Telco e Bureau garantindo a foto exata do momento da safra. |
-| 4 | **Prefixagem de Features** | Rastreabilidade e DNA | Aplicação de prefixos técnicos (`cad_`, `tel_`, `bur_`, `rec_`, `pag_`, `atr_`) para identificar origem das colunas. |
-| 5 | **Auditoria Técnica** | Profiling Exaustivo | Geração de diagnóstico com volumetria, cardinalidade de CPF, missings e detecção de outliers (3 Sigma). |
+| 2 | **Agregação Transacional** | Multi-Window Stats | Processamento de Recarga, Pagamento e Atraso com janelas 30, 60, 90 e Geral. |
+| 3 | **Join Point-in-Time** | Enriquecimento Snapshot | Cruzamento na ordem **Bureau > Cadastro > Telco** garantindo a foto exata da safra. |
+| 4 | **Prefixagem de Features** | Rastreabilidade e DNA | Aplicação de prefixos técnicos (`bur_`, `cad_`, `tel_`, `rec_`, `pag_`, `atr_`). |
+| 5 | **Auditoria Técnica** | Profiling Exaustivo | Geração de diagnóstico com volumetria, cardinalidade, missings e outliers (3 Sigma). |
 
 ---
 
 ### 3. Governança de Features (Permissões de Entrada)
 
-Para maximizar o poder preditivo, a ABT traz **todas as colunas** das fontes originais (Mesa Farta), respeitando as restrições de segurança:
+Para maximizar o poder preditivo, a ABT traz **todas as colunas** das fontes originais, respeitando as restrições de segurança:
 
 #### ✅ O que ENTRA (Features Permitidas)
-* **Prefixos `cad_`:** Atributos de `silver/dados_cadastrais` (ex: `cad_idade_cli`).
-* **Prefixos `tel_`:** Atributos de `silver/telco` (ex: `tel_var_28`).
-* **Prefixos `bur_`:** Atributos de `silver/score_bureau_movel` (ex: `bur_score_01`).
-* **Prefixos `rec_`, `pag_`, `atr_`:** Métricas agregadas (Soma, Média, Máximo, Mínimo) do transacional.
+* **Prefixos `bur_`, `cad_`, `tel_`:** Atributos brutos capturados no snapshot da safra.
+* **Prefixos `rec_`, `pag_`, `atr_`:** Matriz completa de estatísticas replicada para cada janela temporal (`_l30d`, `_l60d`, `_l90d` e `_geral`).
 
 #### ❌ O que NÃO PODE entrar (Vazamento / Leakage)
-* **Target:** A coluna `fpd` (First Payment Default) é a variável resposta e nunca deve ser usada como entrada.
-* **Eventos Contemporâneos:** Qualquer recarga ou pagamento ocorrido no mesmo dia ou após a data da `safra`.
-* **Metadados:** Colunas como `ingestion_ts` ou `run_id` (devem ser ignoradas pelo modelo para evitar viés de infraestrutura).
+* **Target:** A coluna `fpd` é a variável resposta e nunca deve ser usada como entrada do modelo.
+* **Eventos Contemporâneos:** Qualquer evento ocorrido no mesmo dia ou após a data da `safra`.
+* **Metadados:** Colunas de infraestrutura (`ingestion_ts`, `run_id`) devem ser ignoradas no treino.
 
 ---
 
@@ -84,8 +82,7 @@ Para maximizar o poder preditivo, a ABT traz **todas as colunas** das fontes ori
 
 O grão da ABT é definido pela chave composta: **`num_cpf` + `safra` + `prod`**.
 
-* **Reuso de CPF:** Um mesmo `num_cpf` pode aparecer em safras diferentes ou produtos diferentes.
-* **Isolamento Temporal:** Devido às regras de *Point-in-Time*, a linha de um CPF na `safra_202501` terá features diferentes da linha do mesmo CPF na `safra_202410`, pois o histórico acumulado disponível em cada janela de tempo é distinto.
+
 
 ```text
 📋 RESUMO TÉCNICO ABT - abt_base_prod | ÚLTIMA EXECUÇÃO
@@ -108,11 +105,14 @@ Unicidade (PK)                | SUCESSO
 
 ### 💡 Notas de Auditoria Técnica
 
-1. **Estratégia de Dados Completos:** Nenhuma informação foi descartada durante a criação desta tabela. Decidimos entregar todas as colunas disponíveis para que o modelo identifique sozinho quais são as informações mais importantes para prever o comportamento do cliente.
+1. **Estratégia de Dados Completos:** Nenhuma informação foi descartada durante a criação desta tabela. Decidimos entregar todas as colunas disponíveis para que o modelo identifique sozinho quais são as informações mais importantes para prever o comportamento do cliente (Abordagem *Mesa Farta*).
    
-2. **Qualidade da Base:** Todos os clientes listados nesta tabela possuem informações de cadastro e de crédito (Bureau) preenchidas. Isso garante que não existam registros fantasmas, permitindo que o modelo analise o perfil completo de cada CPF.
+2. **Qualidade da Base:** Todos os clientes listados nesta tabela possuem informações de cadastro e de crédito (Bureau) preenchidas. Isso garante que não existam registros "fantasmas", permitindo que o modelo analise o perfil completo de cada CPF.
 
-3. **Monitoramento de Valores Extremos:** O sistema identifica automaticamente valores muito fora do comum (ex: rendas ou gastos desproporcionais). Esse alerta serve para que a equipe de análise decida se deve ajustar ou limitar esses valores antes de iniciar o treinamento do modelo, evitando distorções nos resultados.
+3. **Monitoramento de Valores Extremos:** O sistema identifica automaticamente valores muito fora do comum (Outliers) através do método de 3 Sigmas ($\mu \pm 3\sigma$). Esse alerta serve para que a equipe de modelagem decida por ajustes de *Capping* antes de iniciar o treinamento, evitando distorções.
 
-4. **Garantia de Não Repetição:** Validamos que não existem linhas duplicadas para o mesmo cliente, no mesmo mês e para o mesmo produto. Isso confirma que cada linha da tabela representa um evento único e confiável para análise.
+4. **Garantia de Não Repetição:** Validamos que não existem linhas duplicadas para o mesmo cliente, na mesma safra e para o mesmo produto. Isso confirma que cada linha da tabela representa um evento único e confiável.
 
+5. **Densidade Temporal (Multi-Window):** Esta ABT entrega a "velocidade" do cliente. Ao comparar janelas curtas (30d, 60d, 90d) com o histórico longo (_geral), o modelo consegue identificar automaticamente sinais de melhora ou deterioração financeira antes da ocorrência do default.
+
+6. **Organização de Colunas:** A estrutura visual do arquivo Parquet foi otimizada para facilitar o consumo, seguindo a ordem lógica: `GRÃO/TARGET` > `ESTATÍSTICAS AGG` > `BUREAU` > `CADASTRO` > `TELCO` > `METADADOS`.
