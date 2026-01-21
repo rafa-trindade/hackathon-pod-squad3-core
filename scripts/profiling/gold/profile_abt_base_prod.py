@@ -21,7 +21,7 @@ from scripts.profiling.utils.profiling_utils import init_md_report, print_and_sa
 
 GOLD_BASE_PATH = "s3://lake/gold/abt_base_prod"
 
-con = get_duckdb_connection(memory_limit="10GB", threads=8)
+con = get_duckdb_connection(memory_limit="6GB", threads=5)
 
 # Captura a última run_id
 latest_run_id = con.execute(f"""
@@ -57,6 +57,24 @@ md += f"- **Cardinalidade (CPF):** {unique_cpfs:,}\n".replace(",", ".")
 md += f"- **Grão Definido:** `num_cpf, safra, prod`\n\n"
 
 # %% 
+# 🎯 BLOCO 2: ANÁLISE DO TARGET (FPD RATE) ##########
+#############################################################
+md += "## 🎯 Distribuição da Variável Alvo (Target)\n\n"
+
+df_target = con.execute(f"""
+    SELECT 
+        fpd,
+        COUNT(*) as frequencia,
+        ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER(), 2) || '%' as percentual
+    FROM read_parquet('{path_parquet}')
+    GROUP BY 1
+    ORDER BY 1
+""").df()
+
+md += df_target.to_markdown(index=False)
+md += "\n\n"
+
+# %% 
 # 🔑 VALIDAÇÃO DE UNICIDADE (PRIMARY KEY) ###########
 ####################################################
 chave_tecnica_cols = ["num_cpf", "safra", "prod"]
@@ -81,35 +99,34 @@ md += df_unicidade.to_markdown(index=False)
 md += "\n\n"
 
 # %% 
-# 🔍 BLOCO 2: ANÁLISE DE PREENCHIBILIDADE (MISSINGS) #######
+# 🔍 BLOCO 3: PERFIL DE MISSINGS                   ##########
 #############################################################
-# CORREÇÃO: Mantendo a ordem física das colunas definida na ABT
-md += "## 🔍 Perfil de Missings por Feature (Ordem da Tabela)\n\n"
+md += "## 🔍 Perfil de Missings por Feature (Ordem Oficial do Banco)\n\n"
 
-# 1. Captura a ordem oficial das colunas
 df_order = con.execute(f"DESCRIBE SELECT * FROM read_parquet('{path_parquet}')").df()[['column_name', 'column_type']]
 
-# 2. Captura as estatísticas
 df_stats_raw = con.execute(f"SUMMARIZE SELECT * FROM read_parquet('{path_parquet}')").df()
 
-# 3. Join para garantir que a ordem do DESCRIBE prevaleça sobre o SUMMARIZE
 df_stats = pd.merge(df_order, df_stats_raw, on='column_name', how='left')
 
 col_nulo = 'null_percentage' if 'null_percentage' in df_stats.columns else 'null_ratio'
 df_stats['pct_missing_val'] = df_stats[col_nulo] * (100.0 if col_nulo == 'null_ratio' else 1.0)
 df_stats['pct_missing'] = df_stats['pct_missing_val'].round(2).astype(str) + '%'
 
-# Exibe na ordem original da tabela (Grão -> Comportamento -> Bruto)
 md += df_stats[['column_name', 'column_type_x', 'pct_missing']].rename(columns={'column_type_x': 'column_type'}).to_markdown(index=False)
 md += "\n\n"
 
 # %% 
-# 🚩 BLOCO 3: ANÁLISE ESTATÍSTICA DE OUTLIERS (3 SIGMA) ######
+# 🚩 BLOCO 4: DETECÇÃO DE OUTLIERS (3 SIGMA) ###############
 #############################################################
-md += "## 🚩 Detecção de Anomalias (Outliers)\n\n"
+md += "## 🚩 Detecção de Anomalias Financeiras (Outliers > 3σ)\n\n"
 
 outliers_data = []
-numeric_summary = df_stats[df_stats['std'].notnull()].copy()
+# Filtro para analisar apenas colunas de comportamento transacional
+numeric_summary = df_stats[
+    (df_stats['std'].notnull()) & 
+    (df_stats['column_name'].str.startswith(('rec_', 'pag_', 'atr_')))
+].copy()
 
 for _, row in numeric_summary.iterrows():
     try:
@@ -127,14 +144,14 @@ for _, row in numeric_summary.iterrows():
 if outliers_data:
     md += pd.DataFrame(outliers_data).to_markdown(index=False)
 else:
-    md += "* ✅ Nenhuma anomalia crítica detectada via distribuição gaussiana."
+    md += "* ✅ Nenhuma anomalia crítica detectada nas variáveis comportamentais."
 
 md += "\n\n"
 
 # %% 
-# 📦 BLOCO 4: VOLUMETRIA CORRIGIDA ##########################
+# 📦 BLOCO 5: VOLUMETRIA E PARTICIONAMENTO ##################
 #############################################################
-md += "## 📦 Volumetria de Armazenamento e Particionamento\n\n"
+md += "## 📦 Volumetria de Armazenamento por Partição (Safra)\n\n"
 
 df_vol = con.execute(f"""
     WITH size_meta AS (
@@ -167,4 +184,4 @@ md += df_vol.to_markdown(index=False)
 # FINALIZAÇÃO ####################################
 ##################################################
 print_and_save_md(md, md_file)
-print(f"✅ Profiling técnico finalizado com sucesso (Ordenação Preservada)!")
+print(f"✅ Profiling técnico finalizado!")
