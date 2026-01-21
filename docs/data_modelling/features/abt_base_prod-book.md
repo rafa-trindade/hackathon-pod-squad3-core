@@ -67,8 +67,8 @@ As variáveis transacionais são processadas para capturar a **velocidade** e a 
 ### 3. Perfil de Atraso e Risco (`atr_`)
 | Sufixo da Variável | Janelas Disponíveis | Descrição |
 | :--- | :--- | :--- |
-| `_vlr_max_...` | l30d, l60d, l90d, **hist_geral** | Maior saldo em aberto registrado no período. |
-| `_vlr_acumulado_...` | l30d, l60d, l90d, **hist_geral** | Soma de valores que entraram em atraso no período. |
+| `_vlr_max_...` | l30d, l60d, l90d, **geral** | Maior saldo em aberto registrado no período. |
+| `_vlr_acumulado_...` | l30d, l60d, l90d, **geral** | Soma de valores que entraram em atraso no período. |
 | `_qtd_faturas_atr_...`| l30d, l60d, l90d, **geral** | Quantidade de faturas inadimplentes no período. |
 | `_dat_ultima_ref` | Histórico Total | Data da última ocorrência de atraso registrada. |
 
