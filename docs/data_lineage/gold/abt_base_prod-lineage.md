@@ -50,7 +50,7 @@ Esta ABT utiliza uma abordagem de **Mesa Farta**. Para cada métrica estatístic
 
 ### 2. Fluxo de Transformação: MULTI-SILVER → GOLD (ABT)
 
-**Origem:** `s3://lake/silver/**/*` & `s3://lake/gold/labels_fpd/**/*`  
+**Origem:** `s3://lake/silver/**/*` e `s3://lake/gold/labels_fpd/**/*`  
 **Destino:** `s3://lake/gold/abt_base_prod/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
 
 | Etapa | Processo | Descrição | Ações / Regras |
