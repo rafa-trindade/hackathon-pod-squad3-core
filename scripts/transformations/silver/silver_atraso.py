@@ -18,11 +18,13 @@ from scripts.transformations.utils.lake_retention import cleanup_old_runs
 TABLE_NAME = "atraso"
 
 BRONZE_PATH = f"s3://lake/bronze/{TABLE_NAME}/**/*.parquet"
+BRONZE_DIM_PATH = "s3://lake/bronze/atraso_dim/"
 RUN_ID = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
 SILVER_BASE_PATH = f"silver/{TABLE_NAME}/"
 SILVER_PATH = f"s3://lake/{SILVER_BASE_PATH}run_id={RUN_ID}/"
 
 MAX_SILVER_RUNS = int(os.getenv("SILVER_MAX_RUNS", 1))
+QUALITY_REPORT_PATH = PROJECT_ROOT / "reports" / "observability" / "quality" / "pipeline" / f"silver-{TABLE_NAME}_agg-quality.log"
 
 # ------------------------------------------------------------------
 # CONFIGURAÇÃO DE SANEAMENTO
@@ -73,54 +75,41 @@ def run():
     print(f"📥 Registros carregados da Bronze: {initial_count:,}".replace(",", "."))
 
     # ------------------------------------------------------------------
-    # ETAPA 1: Normalização de Chaves (Saneamento Prévio)
+    # ETAPA 1: Normalização de Chaves
     # ------------------------------------------------------------------
     print("--------------------------------------------------")
     print("🔑 Etapa 1: Saneando identificadores e colunas do grão...")
     
-    if keys_to_clean:
-        sql_transform = []
-        diff_conditions = []
+    col_types_df = con.execute(f"DESCRIBE SELECT * FROM read_parquet('{BRONZE_PATH}')").df()
+    col_types = dict(zip(col_types_df['column_name'], col_types_df['column_type']))
 
-        col_types_df = con.execute(f"DESCRIBE SELECT * FROM read_parquet('{BRONZE_PATH}')").df()
-        col_types = dict(zip(col_types_df['column_name'], col_types_df['column_type']))
+    sql_transform = []
+    diff_conditions = []
 
-        for col, config in keys_to_clean.items():
-            val_default = config['default']
-            target_type = col_types.get(col, 'VARCHAR') 
+    for col, config in keys_to_clean.items():
+        val_default = config['default']
+        target_type = col_types.get(col, 'VARCHAR') 
+        blacklist = config['replace'] + ['', 'nan', 'NULL']
+        formatted_blacklist = ", ".join([f"'{x}'" for x in blacklist])
 
-            blacklist = config['replace'] + ['', 'nan', 'NULL']
-            formatted_blacklist = ", ".join([f"'{x}'" for x in blacklist])
+        transform_expr = f"""
+            (CASE 
+                WHEN TRIM({col}::VARCHAR) IN ({formatted_blacklist}) OR {col} IS NULL 
+                THEN '{val_default}' 
+                ELSE {col}::VARCHAR 
+            END)::{target_type}
+        """
+        sql_transform.append(f"{transform_expr} AS {col}")
+        diff_conditions.append(f"SUM(CASE WHEN {col}::VARCHAR IS DISTINCT FROM ({transform_expr})::VARCHAR THEN 1 ELSE 0 END) AS diff_{col}")
 
-            transform_expr = f"""
-                (CASE 
-                    WHEN TRIM({col}::VARCHAR) IN ({formatted_blacklist}) OR {col} IS NULL 
-                    THEN '{val_default}' 
-                    ELSE {col}::VARCHAR 
-                END)::{target_type}
-            """
-            sql_transform.append(f"{transform_expr} AS {col}")
-
-            diff_conditions.append(f"SUM(CASE WHEN {col}::VARCHAR IS DISTINCT FROM ({transform_expr})::VARCHAR THEN 1 ELSE 0 END) AS diff_{col}")
-
-        stats_query = f"SELECT {', '.join(diff_conditions)} FROM read_parquet('{BRONZE_PATH}')"
-        stats_result = con.execute(stats_query).fetchone()
-
-        con.execute(f"""
-            CREATE TABLE work_db.silver_{TABLE_NAME}_step1 AS
-            SELECT 
-                * EXCLUDE({', '.join(keys_to_clean.keys())}),
-                {', '.join(sql_transform)}
-            FROM read_parquet('{BRONZE_PATH}')
-        """)
-        con.execute("CHECKPOINT work_db")
-
-        for i, col in enumerate(keys_to_clean.keys()):
-            diff_count = stats_result[i]
-            if diff_count > 0:
-                print(f"✨ Coluna '{col}': {diff_count:,} registros normalizados para '{keys_to_clean[col]['default']}'.".replace(",", "."))
-            else:
-                print(f"✨ Coluna '{col}': Já estava em conformidade.")
+    con.execute(f"""
+        CREATE TABLE work_db.silver_{TABLE_NAME}_step1 AS
+        SELECT 
+            * EXCLUDE({', '.join(keys_to_clean.keys())}),
+            {', '.join(sql_transform)}
+        FROM read_parquet('{BRONZE_PATH}')
+    """)
+    con.execute("CHECKPOINT work_db")
 
     # ------------------------------------------------------------------
     # ETAPA 2: Deduplicação
@@ -132,100 +121,114 @@ def run():
     chave_tecnica_cols = list(keys_to_clean.keys())
     chave_cols_str = ", ".join(chave_tecnica_cols)
 
-    check_duplicados = con.execute(f"""
-        SELECT 
-            COUNT(*) as total,
-            COUNT(DISTINCT ({chave_cols_str})) as distintos
-        FROM {step1_table}
-    """).fetchone()
-
-    total_linhas = check_duplicados[0]
-    total_distintos = check_duplicados[1]
-    qtd_duplicados = total_linhas - total_distintos
+    check_duplicados = con.execute(f"SELECT COUNT(*) as total, COUNT(DISTINCT ({chave_cols_str})) as distintos FROM {step1_table}").fetchone()
+    qtd_duplicados = check_duplicados[0] - check_duplicados[1]
 
     if qtd_duplicados > 0:
-        print(f"⚠️ Detectados {qtd_duplicados:,} registros duplicados. Iniciando deduplicação...".replace(",", "."))
-        
-        con.execute(f"""
-            CREATE TABLE work_db.chaves_duplicadas AS 
-            SELECT {chave_cols_str} FROM {step1_table} 
-            GROUP BY {chave_cols_str} HAVING COUNT(*) > 1
-        """)
-
+        print(f"⚠️ Detectados {qtd_duplicados:,} duplicados. Deduplicando...".replace(",", "."))
+        con.execute(f"CREATE TABLE work_db.chaves_duplicadas AS SELECT {chave_cols_str} FROM {step1_table} GROUP BY {chave_cols_str} HAVING COUNT(*) > 1")
         con.execute(f"""
             CREATE TABLE work_db.silver_{TABLE_NAME}_step2 AS
-            SELECT * FROM {step1_table} t
-            WHERE NOT EXISTS (
-                SELECT 1 FROM work_db.chaves_duplicadas d 
-                WHERE {' AND '.join([f't.{c} = d.{c}' for c in chave_tecnica_cols])}
-            )
+            SELECT * FROM {step1_table} t WHERE NOT EXISTS (SELECT 1 FROM work_db.chaves_duplicadas d WHERE {' AND '.join([f't.{c} = d.{c}' for c in chave_tecnica_cols])})
             UNION ALL
             SELECT * EXCLUDE(row_num) FROM (
-                SELECT t.*, 
-                       ROW_NUMBER() OVER(PARTITION BY {", ".join([f"t.{c}" for c in chave_tecnica_cols])} ORDER BY ingestion_ts DESC) as row_num
-                FROM {step1_table} t
-                JOIN work_db.chaves_duplicadas d ON {' AND '.join([f't.{c} = d.{c}' for c in chave_tecnica_cols])}
+                SELECT t.*, ROW_NUMBER() OVER(PARTITION BY {", ".join([f"t.{c}" for c in chave_tecnica_cols])} ORDER BY ingestion_ts DESC) as row_num
+                FROM {step1_table} t JOIN work_db.chaves_duplicadas d ON {' AND '.join([f't.{c} = d.{c}' for c in chave_tecnica_cols])}
             ) WHERE row_num = 1
         """)
         con.execute("CHECKPOINT work_db")
-        
-        step2_table = f"work_db.silver_{TABLE_NAME}_step2"
-        final_count = con.execute(f"SELECT COUNT(*) FROM {step2_table}").fetchone()[0]
-        print(f"✨ Unicidade garantida: {final_count:,} registros mantidos.".replace(",", "."))
     else:
-        print("✅ Nenhuma duplicata detectada. Ignorando etapa de deduplicação.")
+        print("✅ Nenhuma duplicata detectada.")
         con.execute(f"CREATE VIEW work_db.silver_{TABLE_NAME}_step2 AS SELECT * FROM {step1_table}")
-        final_count = total_linhas
 
     # ------------------------------------------------------------------
-    # ETAPA 3: Limpeza de Colunas
+    # ETAPA 3: Agregação de Dimensões (Enriquecimento)
     # ------------------------------------------------------------------
     print("--------------------------------------------------")
-    print("🧹 Etapa 3: Analisando colunas e reordenando schema...")
+    print("🧩 Etapa 3: Agregando dimensões (Enriquecimento)...")
+
+    con.execute(f"""
+        CREATE TABLE work_db.silver_{TABLE_NAME}_step3 AS
+        SELECT 
+            f.*,
+            COALESCE(d1.dsc_tipo_faturamento, 'não informado') as dsc_tipo_faturamento
+        FROM work_db.silver_{TABLE_NAME}_step2 f
+        LEFT JOIN read_parquet('{BRONZE_DIM_PATH}tipo_faturamento.parquet') d1 ON f.dw_tipo_faturamento = d1.dw_tipo_faturamento
+    """)
+
+    # ------------------------------------------------------------------
+    # GERAÇÃO DO LOG DE QUALIDADE
+    # ------------------------------------------------------------------
+    pair_map = {
+        'dw_tipo_faturamento': 'dsc_tipo_faturamento'
+    }
+
+    now_str = datetime.now().strftime('%Y%m%d_%H%M%S')
+    log_content = f"📋 QUALITY REPORT - {TABLE_NAME}_aggregation | RUN: {now_str}\n"
+    log_content += "-" * 82 + "\n"
+    log_content += f"{'PAREAMENTO (CHAVE -> DESC)':<45} | {'STATUS':<9} | {'NÃO INFORMADOS':<15}\n"
+    log_content += "-" * 82 + "\n"
+
+    for key, desc in pair_map.items():
+        missing_count = con.execute(f"SELECT COUNT(*) FROM work_db.silver_{TABLE_NAME}_step3 WHERE {desc} = 'não informado'").fetchone()[0]
+        status = "WARN" if missing_count > 0 else "PASS"
+        log_content += f"{f'{key} -> {desc}':<45} | {status:<9} | {missing_count:,}\n".replace(",", ".")
+
+    log_content += "-" * 82 + "\n"
+    log_content += f"Total de Colunas Adicionadas: {len(pair_map)}\n"
+    log_content += "-" * 82 + "\n"
+
+    os.makedirs(QUALITY_REPORT_PATH.parent, exist_ok=True)
+    with open(QUALITY_REPORT_PATH, "w") as f:
+        f.write(log_content)
+    print(log_content)
+
+    # ------------------------------------------------------------------
+    # ETAPA 4: Reordenação Chave/Descrição (Pareamento)
+    # ------------------------------------------------------------------
+    print("--------------------------------------------------")
+    print("🧹 Etapa 4: Pareando chaves com descrições e limpando schema...")
     
-    step2_table = f"work_db.silver_{TABLE_NAME}_step2"
+    step3_table = f"work_db.silver_{TABLE_NAME}_step3"
+    all_cols = con.execute(f"DESCRIBE {step3_table}").df()['column_name'].tolist()
     
-    all_columns = con.execute(f"DESCRIBE {step2_table}").df()['column_name'].tolist()
-    
-    null_counts = con.execute(f"SELECT {', '.join([f'COUNT({c}) AS {c}' for c in all_columns])} FROM {step2_table}").df()
+    null_counts = con.execute(f"SELECT {', '.join([f'COUNT({c}) AS {c}' for c in all_cols])} FROM {step3_table}").df()
     cols_to_drop = [col for col in null_counts.columns if null_counts[col][0] == 0]
+    cols_remaining = [c for c in all_cols if c not in cols_to_drop]
+
+    ordered_cols = []
+    grain_keys = list(keys_to_clean.keys())
+    for gk in grain_keys:
+        if gk in cols_remaining: ordered_cols.append(gk)
     
-    cols_remaining = [c for c in all_columns if c not in cols_to_drop]
-    
-    metadata_cols = ['ingestion_ts', 'run_id', 'ano_mes']
-    business_keys = list(keys_to_clean.keys())
-    
-    other_cols = sorted([c for c in cols_remaining if c not in business_keys and c not in metadata_cols])
-    
-    ordered_cols = business_keys + other_cols + [c for c in metadata_cols if c in cols_remaining]
+    for key, desc in pair_map.items():
+        if key in cols_remaining:
+            ordered_cols.append(key)
+            if desc in cols_remaining:
+                ordered_cols.append(desc)
+
+    metadata = ['ingestion_ts', 'run_id', 'ano_mes']
+    others = sorted([c for c in cols_remaining if c not in ordered_cols and c not in metadata])
+    final_ordered_list = ordered_cols + others + [m for m in metadata if m in cols_remaining]
 
     final_table = f"work_db.silver_{TABLE_NAME}_final"
-    con.execute(f"CREATE TABLE {final_table} AS SELECT {', '.join(ordered_cols)} FROM {step2_table}")
+    con.execute(f"CREATE TABLE {final_table} AS SELECT {', '.join(final_ordered_list)} FROM {step3_table}")
 
-    if cols_to_drop:
-        print(f"✂️ Colunas 100% nulas excluídas: {cols_to_drop}")
-    else:
-        print("✨ Nenhuma coluna 100% nula encontrada.")
-    print(f"🔄 Schema reordenado: {len(ordered_cols)} colunas processadas.")
+    final_count = con.execute(f"SELECT COUNT(*) FROM {final_table}").fetchone()[0]
+    print(f"🔄 Schema reordenado com sucesso ({len(final_ordered_list)} colunas).")
 
     # ------------------------------------------------------------------
     # Gravação Parquet (S3)
     # ------------------------------------------------------------------
     print("--------------------------------------------------")
-    print(f"💾 Gravando dados na camada Silver (Run: {RUN_ID})...")
+    print(f"💾 Gravando Silver (Run: {RUN_ID})...")
+    # Nota: A fato atraso geralmente é particionada por dat_referencia ou ano_mes. Mantendo ano_mes como padrão.
     con.execute(f"COPY (SELECT * FROM {final_table} ORDER BY ano_mes) TO '{SILVER_PATH}' (FORMAT PARQUET, PARTITION_BY (ano_mes), OVERWRITE_OR_IGNORE 1)")
     
-    # ------------------------------------------------------------------
-    # Limpeza Final
-    # ------------------------------------------------------------------
     con.execute("DETACH work_db")
     if os.path.exists(WORK_DB_PATH): os.remove(WORK_DB_PATH)
 
-    print("--------------------------------------------------")
-    print("🧹 Aplicando política de retenção na Silver...")
     cleanup_old_runs(bucket="lake", base_path=SILVER_BASE_PATH, max_runs=MAX_SILVER_RUNS, protect_run_id=RUN_ID)
-
-    print("--------------------------------------------------")
     print(f"🏁 Pipeline {TABLE_NAME} Silver finalizado! Registros: {final_count:,}".replace(",", "."))
 
 if __name__ == "__main__":
