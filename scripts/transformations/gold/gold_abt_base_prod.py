@@ -77,7 +77,60 @@ def run():
             -- DATAS E CANAIS
             MIN(r.dat_insercao_credito) as rec_dat_primeira,
             MAX(r.dat_insercao_credito) as rec_dat_ultima,
-            COUNT(DISTINCT r.cod_canal_aquisicao) as rec_qtd_canais_distintos
+            COUNT(DISTINCT r.cod_canal_aquisicao) as rec_qtd_canais_distintos,
+
+            -- RECENCIA
+            DATE_DIFF('day', MAX(r.dat_insercao_credito), b.safra) as rec_dias_desde_ultima,
+            DATE_DIFF('day', MIN(r.dat_insercao_credito), b.safra) as rec_dias_desde_primeira,
+
+            -- VLR STD
+            STDDEV(r.val_credito_inserido) FILTER (WHERE r.dat_insercao_credito >= b.safra - 30) as rec_vlr_std_l30d,
+            STDDEV(r.val_credito_inserido) FILTER (WHERE r.dat_insercao_credito >= b.safra - 60) as rec_vlr_std_l60d,
+            STDDEV(r.val_credito_inserido) FILTER (WHERE r.dat_insercao_credito >= b.safra - 90) as rec_vlr_std_l90d,
+            STDDEV(r.val_credito_inserido) as rec_vlr_std_geral,
+
+            -- VLR COEF VAR
+            STDDEV(r.val_credito_inserido) FILTER (WHERE r.dat_insercao_credito >= b.safra - 30)
+            / NULLIF(AVG(r.val_credito_inserido) FILTER (WHERE r.dat_insercao_credito >= b.safra - 30), 0)
+            as rec_vlr_coef_var_l30d,
+
+            STDDEV(r.val_credito_inserido) FILTER (WHERE r.dat_insercao_credito >= b.safra - 60)
+            / NULLIF(AVG(r.val_credito_inserido) FILTER (WHERE r.dat_insercao_credito >= b.safra - 60), 0)
+            as rec_vlr_coef_var_l60d,
+
+            STDDEV(r.val_credito_inserido) FILTER (WHERE r.dat_insercao_credito >= b.safra - 90)
+            / NULLIF(AVG(r.val_credito_inserido) FILTER (WHERE r.dat_insercao_credito >= b.safra - 90), 0)
+            as rec_vlr_coef_var_l90d,
+
+            -- RAZOES QTD
+            COUNT(r.val_credito_inserido) FILTER (WHERE r.dat_insercao_credito >= b.safra - 30)
+            / NULLIF(COUNT(r.val_credito_inserido) FILTER (WHERE r.dat_insercao_credito >= b.safra - 60), 0)
+            as rec_ratio_qtd_l30d_l60d,
+
+            COUNT(r.val_credito_inserido) FILTER (WHERE r.dat_insercao_credito >= b.safra - 60)
+            / NULLIF(COUNT(r.val_credito_inserido) FILTER (WHERE r.dat_insercao_credito >= b.safra - 90), 0)
+            as rec_ratio_qtd_l60d_l90d,
+
+            -- RAZOES VLR
+            SUM(r.val_credito_inserido) FILTER (WHERE r.dat_insercao_credito >= b.safra - 30)
+            / NULLIF(SUM(r.val_credito_inserido) FILTER (WHERE r.dat_insercao_credito >= b.safra - 60), 0)
+            as rec_ratio_vlr_l30d_l60d,
+
+            SUM(r.val_credito_inserido) FILTER (WHERE r.dat_insercao_credito >= b.safra - 60)
+            / NULLIF(SUM(r.val_credito_inserido) FILTER (WHERE r.dat_insercao_credito >= b.safra - 90), 0)
+            as rec_ratio_vlr_l60d_l90d,
+
+            -- FLAGS
+            CASE WHEN COUNT(r.val_credito_inserido) FILTER (WHERE r.dat_insercao_credito >= b.safra - 30) = 0
+                THEN 1 ELSE 0 END as rec_flag_sem_recarga_l30d,
+
+            CASE WHEN COUNT(r.val_credito_inserido) FILTER (WHERE r.dat_insercao_credito >= b.safra - 60) = 0
+                THEN 1 ELSE 0 END as rec_flag_sem_recarga_l60d,
+
+            CASE WHEN COUNT(r.val_credito_inserido) FILTER (WHERE r.dat_insercao_credito >= b.safra - 90) = 0
+                THEN 1 ELSE 0 END as rec_flag_sem_recarga_l90d
+
+
         FROM base_anchor b
         LEFT JOIN read_parquet('s3://lake/silver/recarga/**/*.parquet') r 
             ON b.num_cpf = r.num_cpf AND r.dat_insercao_credito < b.safra
@@ -115,7 +168,67 @@ def run():
             COUNT(DISTINCT p.seq_fatura) FILTER (WHERE p.dat_status_fatura >= b.safra - 60) as pag_qtd_faturas_l60d,
             COUNT(DISTINCT p.seq_fatura) FILTER (WHERE p.dat_status_fatura >= b.safra - 90) as pag_qtd_faturas_l90d,
             COUNT(DISTINCT p.seq_fatura) as pag_qtd_faturas_geral,
-            COUNT(p.val_juros_multas_item) FILTER (WHERE p.val_juros_multas_item > 0) as pag_qtd_vezes_com_juros
+            COUNT(p.val_juros_multas_item) FILTER (WHERE p.val_juros_multas_item > 0) as pag_qtd_vezes_com_juros,
+                
+            -- RECENCIA
+            DATE_DIFF('day', MAX(p.dat_status_fatura), b.safra) as pag_dias_desde_ultimo_pagamento,
+
+            -- TICKET MEDIO
+            SUM(p.val_pagamento_fatura) FILTER (WHERE p.dat_status_fatura >= b.safra - 30)
+            / NULLIF(COUNT(DISTINCT p.seq_fatura) FILTER (WHERE p.dat_status_fatura >= b.safra - 30), 0)
+            as pag_ticket_medio_l30d,
+
+            SUM(p.val_pagamento_fatura) FILTER (WHERE p.dat_status_fatura >= b.safra - 60)
+            / NULLIF(COUNT(DISTINCT p.seq_fatura) FILTER (WHERE p.dat_status_fatura >= b.safra - 60), 0)
+            as pag_ticket_medio_l60d,
+
+            SUM(p.val_pagamento_fatura) FILTER (WHERE p.dat_status_fatura >= b.safra - 90)
+            / NULLIF(COUNT(DISTINCT p.seq_fatura) FILTER (WHERE p.dat_status_fatura >= b.safra - 90), 0)
+            as pag_ticket_medio_l90d,
+
+            SUM(p.val_pagamento_fatura)
+            / NULLIF(COUNT(DISTINCT p.seq_fatura), 0)
+            as pag_ticket_medio_geral,
+
+            -- SHARE JUROS
+            COUNT(p.val_juros_multas_item) FILTER (
+                WHERE p.val_juros_multas_item > 0
+                AND p.dat_status_fatura >= b.safra - 30
+            ) / NULLIF(COUNT(DISTINCT p.seq_fatura) FILTER (WHERE p.dat_status_fatura >= b.safra - 30), 0)
+            as pag_share_faturas_com_juros_l30d,
+
+            COUNT(p.val_juros_multas_item) FILTER (
+                WHERE p.val_juros_multas_item > 0
+                AND p.dat_status_fatura >= b.safra - 60
+            ) / NULLIF(COUNT(DISTINCT p.seq_fatura) FILTER (WHERE p.dat_status_fatura >= b.safra - 60), 0)
+            as pag_share_faturas_com_juros_l60d,
+
+            COUNT(p.val_juros_multas_item) FILTER (
+                WHERE p.val_juros_multas_item > 0
+                AND p.dat_status_fatura >= b.safra - 90
+            ) / NULLIF(COUNT(DISTINCT p.seq_fatura) FILTER (WHERE p.dat_status_fatura >= b.safra - 90), 0)
+            as pag_share_faturas_com_juros_l90d,
+
+            COUNT(p.val_juros_multas_item) FILTER (WHERE p.val_juros_multas_item > 0)
+            / NULLIF(COUNT(DISTINCT p.seq_fatura), 0)
+            as pag_share_faturas_com_juros_geral,
+
+            -- VLR STD
+            STDDEV(p.val_pagamento_fatura) FILTER (WHERE p.dat_status_fatura >= b.safra - 30) as pag_vlr_std_l30d,
+            STDDEV(p.val_pagamento_fatura) FILTER (WHERE p.dat_status_fatura >= b.safra - 60) as pag_vlr_std_l60d,
+            STDDEV(p.val_pagamento_fatura) FILTER (WHERE p.dat_status_fatura >= b.safra - 90) as pag_vlr_std_l90d,
+
+            -- FLAGS
+            CASE WHEN COUNT(DISTINCT p.seq_fatura) FILTER (WHERE p.dat_status_fatura >= b.safra - 30) = 0
+                THEN 1 ELSE 0 END as pag_flag_sem_pagamento_l30d,
+
+            CASE WHEN COUNT(DISTINCT p.seq_fatura) FILTER (WHERE p.dat_status_fatura >= b.safra - 60) = 0
+                THEN 1 ELSE 0 END as pag_flag_sem_pagamento_l60d,
+
+            CASE WHEN COUNT(DISTINCT p.seq_fatura) FILTER (WHERE p.dat_status_fatura >= b.safra - 90) = 0
+                THEN 1 ELSE 0 END as pag_flag_sem_pagamento_l90d
+
+
         FROM base_anchor b
         LEFT JOIN read_parquet('s3://lake/silver/pagamento/**/*.parquet') p 
             ON b.num_cpf = p.num_cpf AND p.dat_status_fatura < b.safra
@@ -143,7 +256,49 @@ def run():
             COUNT(DISTINCT a.num_fatura_hash) FILTER (WHERE a.dat_referencia >= b.safra - 60) as atr_qtd_faturas_atrasadas_l60d,
             COUNT(DISTINCT a.num_fatura_hash) FILTER (WHERE a.dat_referencia >= b.safra - 90) as atr_qtd_faturas_atrasadas_l90d,
             COUNT(DISTINCT a.num_fatura_hash) as atr_qtd_faturas_atrasadas_geral,
-            MAX(a.dat_referencia) as atr_dat_ultima_ref
+            MAX(a.dat_referencia) as atr_dat_ultima_ref,
+
+            -- RECENCIA
+            DATE_DIFF('day', MAX(a.dat_referencia), b.safra) as atr_dias_desde_ultimo_atraso,
+
+            -- TICKET MEDIO
+            SUM(a.val_fat_aberto) FILTER (WHERE a.dat_referencia >= b.safra - 30)
+            / NULLIF(COUNT(DISTINCT a.num_fatura_hash) FILTER (WHERE a.dat_referencia >= b.safra - 30), 0)
+            as atr_ticket_medio_l30d,
+
+            SUM(a.val_fat_aberto) FILTER (WHERE a.dat_referencia >= b.safra - 60)
+            / NULLIF(COUNT(DISTINCT a.num_fatura_hash) FILTER (WHERE a.dat_referencia >= b.safra - 60), 0)
+            as atr_ticket_medio_l60d,
+
+            SUM(a.val_fat_aberto) FILTER (WHERE a.dat_referencia >= b.safra - 90)
+            / NULLIF(COUNT(DISTINCT a.num_fatura_hash) FILTER (WHERE a.dat_referencia >= b.safra - 90), 0)
+            as atr_ticket_medio_l90d,
+
+            SUM(a.val_fat_aberto)
+            / NULLIF(COUNT(DISTINCT a.num_fatura_hash), 0)
+            as atr_ticket_medio_geral,
+
+            -- PERSISTENCIA
+            CASE WHEN COUNT(DISTINCT a.num_fatura_hash) FILTER (WHERE a.dat_referencia >= b.safra - 30) >= 2
+                THEN 1 ELSE 0 END as atr_flag_recorrente_l30d,
+
+            CASE WHEN COUNT(DISTINCT a.num_fatura_hash) FILTER (WHERE a.dat_referencia >= b.safra - 60) >= 2
+                THEN 1 ELSE 0 END as atr_flag_recorrente_l60d,
+
+            CASE WHEN COUNT(DISTINCT a.num_fatura_hash) FILTER (WHERE a.dat_referencia >= b.safra - 90) >= 2
+                THEN 1 ELSE 0 END as atr_flag_recorrente_l90d,
+
+            -- FLAGS
+            CASE WHEN COUNT(DISTINCT a.num_fatura_hash) FILTER (WHERE a.dat_referencia >= b.safra - 30) > 0
+                THEN 1 ELSE 0 END as atr_flag_atraso_l30d,
+
+            CASE WHEN COUNT(DISTINCT a.num_fatura_hash) FILTER (WHERE a.dat_referencia >= b.safra - 60) > 0
+                THEN 1 ELSE 0 END as atr_flag_atraso_l60d,
+
+            CASE WHEN COUNT(DISTINCT a.num_fatura_hash) FILTER (WHERE a.dat_referencia >= b.safra - 90) > 0
+                THEN 1 ELSE 0 END as atr_flag_atraso_l90d
+
+                
         FROM base_anchor b
         LEFT JOIN read_parquet('s3://lake/silver/atraso/**/*.parquet') a 
             ON b.num_cpf = a.num_cpf AND a.dat_referencia < b.safra
