@@ -1,9 +1,9 @@
 
-📋 RELATÓRIO TÉCNICO ABT - abt_base_prod | RUN: 20260120_213851
+📋 RELATÓRIO TÉCNICO ABT - abt_base_prod | RUN: 20260121_021557
 =================================================================
 ✅ Status:              ABT Gerada com Sucesso
-📈 Volumetria:          1,321,168 linhas
+📊 Variáveis:           164 colunas
+📈 Volumetria:          1,321,168 registros
 👤 Cardinalidade:       1,272,095 CPFs únicos
-📊 Total de Variáveis:  125 colunas
 📌 Grão da Tabela:      CPF + SAFRA + PROD
 =================================================================
