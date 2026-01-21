@@ -54,12 +54,14 @@ unique_cpfs = metrics['unique_cpfs'].iloc[0]
 
 md += f"- **Volume de Registros (N):** {total_rows:,}\n".replace(",", ".")
 md += f"- **Cardinalidade (CPF):** {unique_cpfs:,}\n".replace(",", ".")
-md += f"- **Grão Definido:** `num_cpf, safra, prod`\n\n"
+md += f"- **Grão Definido:** `num_cpf, safra, prod`"
+
+print_and_save_md(md, md_file)
 
 # %% 
 # 🎯 BLOCO 2: ANÁLISE DO TARGET (FPD RATE) ##########
 #############################################################
-md += "### 🎯 Distribuição da Variável Alvo (Target): `abt_base_prod`\n\n"
+md = "### 🎯 Distribuição da Variável Alvo (Target): `abt_base_prod`\n\n"
 
 df_target = con.execute(f"""
     SELECT 
@@ -72,13 +74,15 @@ df_target = con.execute(f"""
 """).df()
 
 md += df_target.to_markdown(index=False)
-md += "\n\n"
+
+
+print_and_save_md(md, md_file)
 
 # %% 
 # 🔑 VALIDAÇÃO DE UNICIDADE (PRIMARY KEY) ###########
 ####################################################
 chave_tecnica_cols = ["num_cpf", "safra", "prod"]
-md += "### 🔑 Verificação de Chave Técnica: `abt_base_prod`\n"
+md = "### 🔑 Verificação de Chave Técnica: `abt_base_prod`\n"
 
 concat_expression = " || '-' || ".join([f"COALESCE({c}::VARCHAR, 'NULL')" for c in chave_tecnica_cols])
 
@@ -96,12 +100,13 @@ df_unicidade = con.execute(f"""
 """).df()
 
 md += df_unicidade.to_markdown(index=False)
-md += "\n\n"
+
+print_and_save_md(md, md_file)
 
 # %% 
 # 🔍 BLOCO 3: PERFIL DE MISSINGS                   ##########
 #############################################################
-md += "### 🔍 Perfil de Missings por Feature: `abt_base_prod`\n\n"
+md = "### 🔍 Perfil de Missings por Feature: `abt_base_prod`\n\n"
 
 df_order = con.execute(f"DESCRIBE SELECT * FROM read_parquet('{path_parquet}')").df()[['column_name', 'column_type']]
 
@@ -114,12 +119,13 @@ df_stats['pct_missing_val'] = df_stats[col_nulo] * (100.0 if col_nulo == 'null_r
 df_stats['pct_missing'] = df_stats['pct_missing_val'].round(2).astype(str) + '%'
 
 md += df_stats[['column_name', 'column_type_x', 'pct_missing']].rename(columns={'column_type_x': 'column_type'}).to_markdown(index=False)
-md += "\n\n"
+
+print_and_save_md(md, md_file)
 
 # %% 
 # 🚩 BLOCO 4: DETECÇÃO DE OUTLIERS (3 SIGMA) ###############
 #############################################################
-md += "### 🚩 Detecção de Anomalias Financeiras (Outliers > 3σ): `abt_base_prod`\n\n"
+md = "### 🚩 Detecção de Anomalias Financeiras (Outliers > 3σ): `abt_base_prod`\n\n"
 
 outliers_data = []
 # Filtro para analisar apenas colunas de comportamento transacional
@@ -146,7 +152,8 @@ if outliers_data:
 else:
     md += "* ✅ Nenhuma anomalia crítica detectada nas variáveis comportamentais."
 
-md += "\n\n"
+
+print_and_save_md(md, md_file)
 
 # %%
 # VOLUMETRIA #####################################
@@ -259,5 +266,5 @@ print_and_save_md(md, md_file)
 # %% 
 # FINALIZAÇÃO ####################################
 ##################################################
-print_and_save_md(md, md_file)
+
 print(f"✅ Profiling técnico finalizado!")
