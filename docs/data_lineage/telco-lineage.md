@@ -28,8 +28,6 @@
 | Versionamento   | `run_id` (Isolamento de Execução)     |
 | Particionamento | `ano_mes` (Coluna Técnica)            |
 
-![bucket](../images/data_lineage/bucket_telco.png)
-
 ---
 
 ### 2. Lineage por Camada
@@ -58,6 +56,8 @@
 | 1 | **Deduplicação** | Garantia de unicidade no lote de carga | Aplicação da regra de grão sobre os novos registros. | Dados reprocessados com unicidade absoluta. |
 | 2 | **Normalização de Chaves** | Saneamento de identificadores | Conversão de *hashes* padrão ou valores fixos (vazios) para um padrão explícito de nulidade (`NULL`). | Chaves de relacionamento íntegras para operações de cruzamento (*JOIN*). |
 | 3 | **Limpeza de Colunas** | Otimização do esquema (*Schema*) | Remoção de colunas 100% nulas ou sem valor analítico identificadas no diagnóstico de dados. | Base de dados mais leve, com redução de custos de leitura e armazenamento. |
+
+![bucket](../images/data_lineage/bucket_telco.png)
 
 ---
 

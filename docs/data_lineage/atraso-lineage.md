@@ -28,9 +28,6 @@
 | Versionamento   | `run_id` (Isolamento de Execução)     |
 | Particionamento | `ano_mes` (Coluna Técnica)            |
 
-
-![bucket](../images/data_lineage/bucket_atraso.png)
-
 ---
 
 ### 2. Lineage por Camada
@@ -77,6 +74,8 @@ Diferente das tabelas 'Fato', a dimensão de atraso é um snapshot técnico est�
 | 2 | **Normalização de Chaves** | Saneamento de identificadores | Conversão de hashes vazios e saneamento de IDs técnicos. | Chaves íntegras para operações de cruzamento. |
 | 3 | **Enriquecimento (JOIN)** | Agregação da descrição de faturamento | Cruzamento com `atraso_dim` para inclusão da coluna `dsc_tipo_faturamento`. | Dataset legível com a natureza da fatura identificada. |
 | 4 | **Limpeza e Reordenação** | Otimização do esquema (*Schema*) | Remoção de colunas nulas e posicionamento da descrição após a chave `dw_tipo_faturamento`. | Base de dados organizada e otimizada para análise. |
+
+![bucket](../images/data_lineage/bucket_atraso.png)
 
 ---
 

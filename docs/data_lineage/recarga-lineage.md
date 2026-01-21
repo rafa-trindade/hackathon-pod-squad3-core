@@ -28,8 +28,6 @@
 | Versionamento   | `run_id` (Isolamento de Execução)     |
 | Particionamento | `ano_mes` (Coluna Técnica)            |
 
-![bucket](../images/data_lineage/bucket_recarga.png)
-
 ---
 
 ### 2. Lineage por Camada
@@ -77,6 +75,8 @@ Diferente das tabelas '''Fato''', as dimensões são tabelas de referência téc
 | 2 | **Normalização de Chaves** | Saneamento de identificadores | Conversão de campos do grão para padrões técnicos. | Chaves íntegras para operações de cruzamento. |
 | 3 | **Enriquecimento (JOINs)** | Agregação das 11 dimensões técnicas | Cruzamento com `recarga_dim` tratando códigos de sistema (-1) e garantindo match via cast. | Dataset legível com descrições de negócio integradas. |
 | 4 | **Limpeza e Reordenação** | Otimização do esquema (*Schema*) | Remoção de colunas 100% nulas e posicionamento das descrições após suas respectivas chaves. | Base de dados organizada e otimizada para consumo analítico. |
+
+![bucket](../images/data_lineage/bucket_recarga.png)
 
 ---
 
