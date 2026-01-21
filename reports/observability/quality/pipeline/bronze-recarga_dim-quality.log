@@ -1,0 +1,132 @@
+
+📋 QUALITY REPORT - canal_aquisicao_credito | RUN: 20260121_164307
+----------------------------------------------------------------------------------
+TESTE                          | STATUS    | OBSERVAÇÃO          
+----------------------------------------------------------------------------------
+Volumetria Dimensão            | INFO      | 5899 registros
+Chave Técnica                  | INFO      | cod_canal_aquisicao
+Match de Tipagem Chave Técnica | PASS      | Fato: VARCHAR - Dim: VARCHAR
+Integridade de Chave (Fato)    | PASS      | 0 registros órfãos
+----------------------------------------------------------------------------------
+Resultado Final: SUCCESS
+----------------------------------------------------------------------------------
+
+📋 QUALITY REPORT - forma_pagamento | RUN: 20260121_164307
+----------------------------------------------------------------------------------
+TESTE                          | STATUS    | OBSERVAÇÃO          
+----------------------------------------------------------------------------------
+Volumetria Dimensão            | INFO      | 9 registros
+Chave Técnica                  | INFO      | dw_forma_pagamento
+Match de Tipagem Chave Técnica | PASS      | Fato: VARCHAR - Dim: VARCHAR
+Integridade de Chave (Fato)    | PASS      | 0 registros órfãos
+----------------------------------------------------------------------------------
+Resultado Final: SUCCESS
+----------------------------------------------------------------------------------
+
+📋 QUALITY REPORT - instituicao | RUN: 20260121_164307
+----------------------------------------------------------------------------------
+TESTE                          | STATUS    | OBSERVAÇÃO          
+----------------------------------------------------------------------------------
+Volumetria Dimensão            | INFO      | 550 registros
+Chave Técnica                  | INFO      | dw_instituicao
+Match de Tipagem Chave Técnica | PASS      | Fato: VARCHAR - Dim: VARCHAR
+Integridade de Chave (Fato)    | WARN      | 4 registros órfãos
+----------------------------------------------------------------------------------
+Resultado Final: CHECK_REQUIRED
+----------------------------------------------------------------------------------
+
+📋 QUALITY REPORT - plano_preco | RUN: 20260121_164307
+----------------------------------------------------------------------------------
+TESTE                          | STATUS    | OBSERVAÇÃO          
+----------------------------------------------------------------------------------
+Volumetria Dimensão            | INFO      | 293743 registros
+Chave Técnica                  | INFO      | dw_plano_tarifacao
+Match de Tipagem Chave Técnica | PASS      | Fato: VARCHAR - Dim: VARCHAR
+Integridade de Chave (Fato)    | PASS      | 0 registros órfãos
+----------------------------------------------------------------------------------
+Resultado Final: SUCCESS
+----------------------------------------------------------------------------------
+
+📋 QUALITY REPORT - plataforma | RUN: 20260121_164307
+----------------------------------------------------------------------------------
+TESTE                          | STATUS    | OBSERVAÇÃO          
+----------------------------------------------------------------------------------
+Volumetria Dimensão            | INFO      | 28 registros
+Chave Técnica                  | INFO      | cod_plataforma_atu
+Match de Tipagem Chave Técnica | PASS      | Fato: VARCHAR - Dim: VARCHAR
+Integridade de Chave (Fato)    | PASS      | 0 registros órfãos
+----------------------------------------------------------------------------------
+Resultado Final: SUCCESS
+----------------------------------------------------------------------------------
+
+📋 QUALITY REPORT - promocao_credito | RUN: 20260121_164307
+----------------------------------------------------------------------------------
+TESTE                          | STATUS    | OBSERVAÇÃO          
+----------------------------------------------------------------------------------
+Volumetria Dimensão            | INFO      | 15 registros
+Chave Técnica                  | INFO      | cod_promocao
+Match de Tipagem Chave Técnica | PASS      | Fato: VARCHAR - Dim: VARCHAR
+Integridade de Chave (Fato)    | WARN      | 1 registros órfãos
+----------------------------------------------------------------------------------
+Resultado Final: CHECK_REQUIRED
+----------------------------------------------------------------------------------
+
+📋 QUALITY REPORT - status_plataforma | RUN: 20260121_164307
+----------------------------------------------------------------------------------
+TESTE                          | STATUS    | OBSERVAÇÃO          
+----------------------------------------------------------------------------------
+Volumetria Dimensão            | INFO      | 25 registros
+Chave Técnica                  | INFO      | cod_status_plataforma
+Match de Tipagem Chave Técnica | PASS      | Fato: VARCHAR - Dim: VARCHAR
+Integridade de Chave (Fato)    | WARN      | 8 registros órfãos
+----------------------------------------------------------------------------------
+Resultado Final: CHECK_REQUIRED
+----------------------------------------------------------------------------------
+
+📋 QUALITY REPORT - tecnologia | RUN: 20260121_164307
+----------------------------------------------------------------------------------
+TESTE                          | STATUS    | OBSERVAÇÃO          
+----------------------------------------------------------------------------------
+Volumetria Dimensão            | INFO      | 10 registros
+Chave Técnica                  | INFO      | cod_tecnologia_dw
+Match de Tipagem Chave Técnica | PASS      | Fato: VARCHAR - Dim: VARCHAR
+Integridade de Chave (Fato)    | PASS      | 0 registros órfãos
+----------------------------------------------------------------------------------
+Resultado Final: SUCCESS
+----------------------------------------------------------------------------------
+
+📋 QUALITY REPORT - tipo_credito | RUN: 20260121_164307
+----------------------------------------------------------------------------------
+TESTE                          | STATUS    | OBSERVAÇÃO          
+----------------------------------------------------------------------------------
+Volumetria Dimensão            | INFO      | 12 registros
+Chave Técnica                  | INFO      | cod_tipo_credito
+Match de Tipagem Chave Técnica | PASS      | Fato: VARCHAR - Dim: VARCHAR
+Integridade de Chave (Fato)    | PASS      | 0 registros órfãos
+----------------------------------------------------------------------------------
+Resultado Final: SUCCESS
+----------------------------------------------------------------------------------
+
+📋 QUALITY REPORT - tipo_insercao | RUN: 20260121_164307
+----------------------------------------------------------------------------------
+TESTE                          | STATUS    | OBSERVAÇÃO          
+----------------------------------------------------------------------------------
+Volumetria Dimensão            | INFO      | 22 registros
+Chave Técnica                  | INFO      | dw_tipo_insercao
+Match de Tipagem Chave Técnica | PASS      | Fato: VARCHAR - Dim: VARCHAR
+Integridade de Chave (Fato)    | WARN      | 3 registros órfãos
+----------------------------------------------------------------------------------
+Resultado Final: CHECK_REQUIRED
+----------------------------------------------------------------------------------
+
+📋 QUALITY REPORT - tipo_recarga | RUN: 20260121_164307
+----------------------------------------------------------------------------------
+TESTE                          | STATUS    | OBSERVAÇÃO          
+----------------------------------------------------------------------------------
+Volumetria Dimensão            | INFO      | 5 registros
+Chave Técnica                  | INFO      | dw_tipo_recarga
+Match de Tipagem Chave Técnica | PASS      | Fato: VARCHAR - Dim: VARCHAR
+Integridade de Chave (Fato)    | PASS      | 0 registros órfãos
+----------------------------------------------------------------------------------
+Resultado Final: SUCCESS
+----------------------------------------------------------------------------------

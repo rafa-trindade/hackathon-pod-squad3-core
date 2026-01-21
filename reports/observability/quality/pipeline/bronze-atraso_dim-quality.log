@@ -1,0 +1,12 @@
+
+📋 QUALITY REPORT - tipo_faturamento | RUN: 20260121_172520
+----------------------------------------------------------------------------------
+TESTE                         | STATUS    | OBSERVAÇÃO
+----------------------------------------------------------------------------------
+Volumetria Dimensão            | INFO      | 72 registros
+Chave Técnica                  | INFO      | dw_tipo_faturamento
+Match de Tipagem Chave Técnica | PASS      | Fato: VARCHAR - Dim: VARCHAR
+Integridade de Chave (Fato)    | PASS      | 0 registros órfãos
+----------------------------------------------------------------------------------
+Resultado Final: SUCCESS
+----------------------------------------------------------------------------------
