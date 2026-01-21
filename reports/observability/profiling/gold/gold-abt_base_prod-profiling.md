@@ -18,7 +18,7 @@
 |---------------:|-------------------:|:------------------|
 |        1321168 |                  0 | 0.0%              |
 
-## 🔍 Perfil de Missings por Feature (Ordem Oficial do Banco)
+## 🔍 Perfil de Missings por Feature
 
 | column_name                     | column_type              | pct_missing   |
 |:--------------------------------|:-------------------------|:--------------|
