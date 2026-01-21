@@ -127,6 +127,8 @@ Saneamento (Missing)          | INFO       | Descartados 45,936 registros (3.36%
 ```
 > 🔗 **Acesse o log de auditoria:** [gold-labels_fpd-quality.log](../../../reports/observability/quality/pipeline/gold-labels_fpd-quality.log)
 
+> 🔗 **Acesse o Profiling Detalhado:** [gold-labels_fpd-profiling.md](../../../reports/observability/profiling/gold/gold-labels_fpd-profiling.md)
+
 ---
 
 ### 4. Observações Técnicas

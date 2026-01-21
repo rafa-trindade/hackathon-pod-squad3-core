@@ -97,3 +97,22 @@ Cardinalidade (CPF)           | 1.272.095
 Grão Definido                 | CPF + SAFRA + PROD
 Unicidade (PK)                | SUCESSO
 ----------------------------------------------------------------------------------
+```
+
+> 🔗 **Acesse o log de auditoria:** [gold-abt_base_prod-quality.log](../../../reports/observability/quality/pipeline/gold-abt_base_prod-quality.log)
+
+> 🔗 **Acesse o Profiling Detalhado:** [gold-labels_fpd-quality.md](../../../reports/observability/profiling/gold/gold-abt_base_prod-profiling.md)
+
+
+---
+
+### 💡 Notas de Auditoria Técnica
+
+1. **Estratégia de Dados Completos:** Nenhuma informação foi descartada durante a criação desta tabela. Decidimos entregar todas as colunas disponíveis para que o modelo identifique sozinho quais são as informações mais importantes para prever o comportamento do cliente.
+   
+2. **Qualidade da Base:** Todos os clientes listados nesta tabela possuem informações de cadastro e de crédito (Bureau) preenchidas. Isso garante que não existam registros fantasmas, permitindo que o modelo analise o perfil completo de cada CPF.
+
+3. **Monitoramento de Valores Extremos:** O sistema identifica automaticamente valores muito fora do comum (ex: rendas ou gastos desproporcionais). Esse alerta serve para que a equipe de análise decida se deve ajustar ou limitar esses valores antes de iniciar o treinamento do modelo, evitando distorções nos resultados.
+
+4. **Garantia de Não Repetição:** Validamos que não existem linhas duplicadas para o mesmo cliente, no mesmo mês e para o mesmo produto. Isso confirma que cada linha da tabela representa um evento único e confiável para análise.
+
