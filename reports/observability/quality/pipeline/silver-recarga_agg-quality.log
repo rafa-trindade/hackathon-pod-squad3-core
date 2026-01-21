@@ -1,0 +1,18 @@
+📋 QUALITY REPORT - recarga_aggregation | RUN: 20260121_175800
+----------------------------------------------------------------------------------
+PAREAMENTO (CHAVE -> DESC)                         | STATUS    | NÃO INFORMADOS 
+----------------------------------------------------------------------------------
+cod_canal_aquisicao -> dsc_canal_aquisicao         | PASS      | 0
+dw_forma_pagamento -> dsc_forma_pagamento          | PASS      | 0
+dw_instituicao -> dsc_instituicao                  | WARN      | 6.848.294
+dw_plano_tarifacao -> dsc_plano_tarifacao          | WARN      | 2.105.707
+cod_plataforma_atu -> dsc_plataforma_atu           | PASS      | 0
+cod_promocao -> dsc_promocao                       | WARN      | 2.105.707
+cod_status_plataforma -> dsc_status_plataforma     | WARN      | 878
+cod_tecnologia_dw -> dsc_tecnologia                | PASS      | 0
+cod_tipo_credito -> dsc_tipo_credito               | PASS      | 0
+dw_tipo_insercao -> dsc_tipo_insercao              | WARN      | 3.266.594
+dw_tipo_recarga -> dsc_tipo_recarga                | WARN      | 2.105.707
+----------------------------------------------------------------------------------
+Total de Colunas Adicionadas: 11
+----------------------------------------------------------------------------------
