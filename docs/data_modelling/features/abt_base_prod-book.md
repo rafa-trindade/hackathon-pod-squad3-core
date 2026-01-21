@@ -45,32 +45,56 @@ As variáveis transacionais são processadas para capturar a **velocidade** e a 
 
 
 ### 1. Comportamento de Recarga (`rec_`)
-| Sufixo da Variável | Janelas Disponíveis | Descrição |
-| :--- | :--- | :--- |
-| `_qtd_...` | l30d, l60d, l90d, **geral** | Quantidade de recargas no período. |
-| `_vlr_total_...` | l30d, l60d, l90d, **geral** | Soma financeira total das recargas no período. |
-| `_vlr_avg_...` | l30d, l60d, l90d, **geral** | Ticket médio das recargas no período. |
-| `_vlr_min_...` | l30d, l60d, l90d, **geral** | Valor da menor recarga identificada no período. |
-| `_vlr_max_...` | l30d, l60d, l90d, **geral** | Valor da maior recarga identificada no período. |
-| `_dat_primeira/ultima`| Histórico Total | Datas dos eventos extremos (Antiguidade e Recência). |
-| `_qtd_canais_distintos`| Histórico Total | Diversidade de canais de recarga utilizados. |
+| Sufixo da Variável | Janelas Disponíveis | Tipo | Descrição |
+| :--- | :--- | :--- | :--- |
+| `_qtd_...` | l30d, l60d, l90d, **geral** | INTEGER | Quantidade de recargas no período. |
+| `_vlr_total_...` | l30d, l60d, l90d, **geral** | DOUBLE | Soma financeira total das recargas no período. |
+| `_vlr_avg_...` | l30d, l60d, l90d, **geral** | DOUBLE | Ticket médio das recargas no período. |
+| `_vlr_min_...` | l30d, l60d, l90d, **geral** | DOUBLE | Valor da menor recarga identificada no período. |
+| `_vlr_max_...` | l30d, l60d, l90d, **geral** | DOUBLE | Valor da maior recarga identificada no período. |
+| `_vlr_std_...` | l30d, l60d, l90d, **geral** | DOUBLE | Desvio padrão dos valores de recarga no período (volatilidade). |
+| `_vlr_coef_var_...` | l30d, l60d, l90d | DOUBLE | Coeficiente de variação dos valores de recarga no período. |
+| `_ratio_qtd_l30d_l60d` | Comparativo | DOUBLE | Razão entre a quantidade de recargas nos últimos 30d vs 60d. |
+| `_ratio_qtd_l60d_l90d` | Comparativo | DOUBLE | Razão entre a quantidade de recargas nos últimos 60d vs 90d. |
+| `_ratio_vlr_l30d_l60d` | Comparativo | DOUBLE | Razão entre o valor total recarregado nos últimos 30d vs 60d. |
+| `_ratio_vlr_l60d_l90d` | Comparativo | DOUBLE | Razão entre o valor total recarregado nos últimos 60d vs 90d. |
+| `_flag_sem_recarga_...` | l30d, l60d, l90d | BOOLEAN | Indicador binário de ausência de recargas no período. |
+| `_dat_primeira` | Histórico Total | DATE | Data da primeira recarga registrada (antiguidade). |
+| `_dat_ultima` | Histórico Total | DATE | Data da última recarga registrada (recência). |
+| `_dias_desde_primeira` | Histórico Total | INTEGER | Dias entre a primeira recarga e a data de referência. |
+| `_dias_desde_ultima` | Histórico Total | INTEGER | Dias entre a última recarga e a data de referência. |
+| `_qtd_canais_distintos` | Histórico Total | INTEGER | Diversidade de canais de recarga utilizados. |
+
+
 
 ### 2. Comportamento de Pagamento (`pag_`)
-| Sufixo da Variável | Janelas Disponíveis | Descrição |
-| :--- | :--- | :--- |
-| `_vlr_total_...` | l30d, l60d, l90d, **geral** | Volume total pago em faturas no período. |
-| `_vlr_avg_...` | l30d, l60d, l90d, **geral** | Média dos pagamentos realizados no período. |
-| `_vlr_min/max_...` | l30d, l60d, l90d, **geral** | Extremos de valores pagos no período. |
-| `_qtd_faturas_...` | l30d, l60d, l90d, **geral** | Total de faturas liquidadas no período. |
-| `_qtd_vezes_com_juros`| Histórico Total | Frequência de pagamentos com encargos por atraso. |
+| Sufixo da Variável | Janelas Disponíveis | Tipo | Descrição |
+| :--- | :--- | :--- | :--- |
+| `_vlr_total_...` | l30d, l60d, l90d, **geral** | DOUBLE | Volume total pago em faturas no período. |
+| `_vlr_avg_...` | l30d, l60d, l90d, **geral** | DOUBLE | Média dos pagamentos realizados no período. |
+| `_vlr_min_...` | l30d, l60d, l90d, **geral** | DOUBLE | Menor valor pago em fatura no período. |
+| `_vlr_max_...` | l30d, l60d, l90d, **geral** | DOUBLE | Maior valor pago em fatura no período. |
+| `_vlr_std_...` | l30d, l60d, l90d | DOUBLE | Desvio padrão dos valores pagos no período. |
+| `_qtd_faturas_...` | l30d, l60d, l90d, **geral** | INTEGER | Total de faturas liquidadas no período. |
+| `_ticket_medio_...` | l30d, l60d, l90d, **geral** | DOUBLE | Valor médio pago por fatura no período. |
+| `_share_faturas_com_juros_...` | l30d, l60d, l90d, **geral** | DOUBLE | Proporção de faturas pagas com juros ou multas no período. |
+| `_flag_sem_pagamento_...` | l30d, l60d, l90d | BOOLEAN | Indicador binário de ausência de pagamentos no período. |
+| `_qtd_vezes_com_juros` | Histórico Total | INTEGER | Frequência absoluta de pagamentos com encargos por atraso. |
+| `_dias_desde_ultimo_pagamento` | Histórico Total | INTEGER | Dias desde o último pagamento registrado. |
+
+
 
 ### 3. Perfil de Atraso e Risco (`atr_`)
-| Sufixo da Variável | Janelas Disponíveis | Descrição |
-| :--- | :--- | :--- |
-| `_vlr_max_...` | l30d, l60d, l90d, **geral** | Maior saldo em aberto registrado no período. |
-| `_vlr_acumulado_...` | l30d, l60d, l90d, **geral** | Soma de valores que entraram em atraso no período. |
-| `_qtd_faturas_atr_...`| l30d, l60d, l90d, **geral** | Quantidade de faturas inadimplentes no período. |
-| `_dat_ultima_ref` | Histórico Total | Data da última ocorrência de atraso registrada. |
+| Sufixo da Variável | Janelas Disponíveis | Tipo | Descrição |
+| :--- | :--- | :--- | :--- |
+| `_vlr_max_...` | l30d, l60d, l90d, **geral** | DOUBLE | Maior saldo em aberto registrado no período. |
+| `_vlr_acumulado_...` | l30d, l60d, l90d, **geral** | DOUBLE | Soma de valores que entraram em atraso no período. |
+| `_qtd_faturas_atrasadas_...` | l30d, l60d, l90d, **geral** | INTEGER | Quantidade de faturas inadimplentes no período. |
+| `_ticket_medio_...` | l30d, l60d, l90d, **geral** | DOUBLE | Valor médio por fatura em atraso no período. |
+| `_flag_atraso_...` | l30d, l60d, l90d | BOOLEAN | Indicador binário de ocorrência de atraso no período. |
+| `_flag_recorrente_...` | l30d, l60d, l90d | BOOLEAN | Indicador de reincidência de atraso no período. |
+| `_dat_ultima_ref` | Histórico Total | DATE | Data da última ocorrência de atraso registrada. |
+| `_dias_desde_ultimo_atraso` | Histórico Total | INTEGER | Dias desde o último evento de atraso registrado. |
 
 ---
 
@@ -85,4 +109,4 @@ As variáveis transacionais são processadas para capturar a **velocidade** e a 
 > O padrão seguido é: `{prefixo}_{métrica}_{janela/tipo}`.
 > - **`rec_vlr_avg_l60d`**: Valor médio de recarga nos últimos 60 dias pré-safra.
 > - **`pag_vlr_total_geral`**: Soma total de pagamentos em todo o histórico (18 meses).
-> - **`atr_vlr_max_hist_geral`**: Maior valor de atraso registrado em todo o histórico disponível.
+> - **`atr_vlr_max_geral`**: Maior valor de atraso registrado em todo o histórico disponível.
