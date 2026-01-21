@@ -62,6 +62,8 @@ Diferente das tabelas 'Fato', a dimensão de atraso é um snapshot técnico est�
 | **Preservação de Case** | Manutenção do registro original (Case Sensitive). | Evita falhas de match em chaves complexas na camada Silver. |
 | **Auditoria Bronze** | Validação de integridade referencial contra a 'Fato'. | Garante que todos os códigos de faturamento da 'Fato' existam no cadastro. |
 
+![bucket](../images/data_lineage/bucket_atraso_dim.png)
+
 ---
 
 #### 2.2 BRONZE → SILVER 
