@@ -101,7 +101,7 @@ md += "\n\n"
 # %% 
 # 🔍 BLOCO 3: PERFIL DE MISSINGS                   ##########
 #############################################################
-md += "## 🔍 Perfil de Missings por Feature (Ordem Oficial do Banco)\n\n"
+md += "## 🔍 Perfil de Missings por Feature\n\n"
 
 df_order = con.execute(f"DESCRIBE SELECT * FROM read_parquet('{path_parquet}')").df()[['column_name', 'column_type']]
 
