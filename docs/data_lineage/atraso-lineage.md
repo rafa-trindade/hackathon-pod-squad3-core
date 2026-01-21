@@ -49,6 +49,21 @@
 
 ---
 
+#### 2.1.1 🧩 Suporte: Processamento de Dimensões (`atraso_dim`)
+
+Diferente das tabelas 'Fato', a dimensão de atraso é um snapshot técnico estável de tipos de faturamento:
+
+**Origem:** `s3://lake/raw/atraso_dim/BI_DIM_TIPO_FATURAMENTO.csv`  
+**Destino:** `s3://lake/bronze/atraso_dim/tipo_faturamento.parquet`
+
+| Regra Técnica | Descrição | Justificativa |
+|:---|:---|:---|
+| **Flat Structure** | Armazenamento em arquivo único e sem particionamento. | Facilita o Join lateral e simplifica a manutenção do cadastro. |
+| **Preservação de Case** | Manutenção do registro original (Case Sensitive). | Evita falhas de match em chaves complexas na camada Silver. |
+| **Auditoria Bronze** | Validação de integridade referencial contra a 'Fato'. | Garante que todos os códigos de faturamento da 'Fato' existam no cadastro. |
+
+---
+
 #### 2.2 BRONZE → SILVER 
 
 **Origem:** `s3://lake/bronze/atraso/*.parquet`  
@@ -56,9 +71,10 @@
 
 | Etapa | Processo | Descrição | Ações / Regras | Resultado Esperado |
 |------:|:---------|:----------|:---------------|:-------------------|
-| 1 | **Deduplicação** | Garantia de unicidade no lote de carga | Aplicação da regra de grão sobre os novos registros. | Dados reprocessados com unicidade absoluta. |
-| 2 | **Normalização de Chaves** | Saneamento de identificadores | Conversão de *hashes* padrão ou valores fixos (vazios) para um padrão explícito de nulidade (`NULL`). | Chaves de relacionamento íntegras para operações de cruzamento (*JOIN*). |
-| 3 | **Limpeza de Colunas** | Otimização do esquema (*Schema*) | Remoção de colunas 100% nulas ou sem valor analítico identificadas no diagnóstico de dados. | Base de dados mais leve, com redução de custos de leitura e armazenamento. |
+| 1 | **Deduplicação** | Garantia de unicidade | Aplicação da regra de grão (`num_cpf`, `contrato`, `data`, `hash`, `seq`). | Dados reprocessados com unicidade absoluta. |
+| 2 | **Normalização de Chaves** | Saneamento de identificadores | Conversão de hashes vazios e saneamento de IDs técnicos. | Chaves íntegras para operações de cruzamento. |
+| 3 | **Enriquecimento (JOIN)** | Agregação da descrição de faturamento | Cruzamento com `atraso_dim` para inclusão da coluna `dsc_tipo_faturamento`. | Dataset legível com a natureza da fatura identificada. |
+| 4 | **Limpeza e Reordenação** | Otimização do esquema (*Schema*) | Remoção de colunas nulas e posicionamento da descrição após a chave `dw_tipo_faturamento`. | Base de dados organizada e otimizada para análise. |
 
 ---
 
@@ -71,7 +87,8 @@
 * 💎 **Registros Mantidos (Silver):** `31.611.219`
 * ⚠️ **Registros Removidos (Duplicados):** `97` (**< 0.01%**)
 
-**Otimização de Schema (Colunas Excluídas):**
+**Otimização de Schema:**
+* ✨ **Enriquecimento:** O dataset agora conta com **53 colunas** após a agregação da dimensão.
 * ✂️ **Colunas 100% Nulas Removidas:** `dat_cancelamento_fat`.
 
 **Notas de Saneamento:**
@@ -122,6 +139,18 @@ Para garantir que a estratégia de particionamento no S3 está correta, foi exec
 - **Consistência Temporal:** Confirmado que 100% dos registros possuem a coluna `dat_referencia` estritamente igual ao diretório de destino.
 - **Volume Global:** O total processado e validado nesta run é de **31.611.219** registros.
 - **Grão de Snapshot:** A base mantém a integridade de fotos mensais com data de referência sempre no dia 01, mantendo a integridade do particionamento mensal.
+
+---
+
+#### 2.2.3 📋 Logs de Qualidade e Observabilidade
+
+O pipeline utiliza logs técnicos para monitorar a saúde dos cruzamentos de dados entre camadas.
+
+> 🔗 **Acesse os logs:** [bronze-atraso_dim-quality.log](../../reports/observability/quality/pipeline/bronze-atraso_dim-quality.log) | [silver-atraso_agg-quality.log](../../reports/observability/quality/pipeline/silver-atraso_agg-quality.log)
+
+**Evidência de Qualidade (Run 20260121_202656):**
+* ✅ **Integridade Referencial:** O log da Bronze confirmou 0 registros órfãos, validando que 100% dos tipos de faturamento da 'Fato' estão cadastrados na dimensão.
+* ✅ **Sucesso de Enriquecimento:** Diferente da Recarga, a 'Fato' Atraso apresentou **0 registros não informados**, resultando em cobertura total de descrições sem necessidade de tratamentos manuais.
 
 ---
 

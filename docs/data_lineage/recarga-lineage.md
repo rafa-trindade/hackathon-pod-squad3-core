@@ -48,6 +48,22 @@
 
 ---
 
+#### 2.1.1 🧩 Suporte: Processamento de Dimensões (`recarga_dim`)
+
+Diferente das tabelas '''Fato''', as dimensões são tabelas de referência técnica com baixo volume e alta estabilidade. Por isso, seguem um fluxo de carga simplificado:
+
+**Origem:** `s3://lake/raw/recarga_dim/*.csv`  
+**Destino:** `s3://lake/bronze/recarga_dim/*.parquet`
+
+| Regra Técnica | Descrição | Justificativa |
+|:---|:---|:---|
+| **Overwrite Total** | Os arquivos Parquet são sobrescritos a cada carga. | Dimensões são snapshots do estado atual do cadastro. |
+| **Flat Structure** | Armazenamento em arquivos únicos (sem run_id/ano_mes). | Facilita o Join e reduz a complexidade de leitura na camada Silver. |
+| **Saneamento de Strings** | Aplicação de `TRIM` e `LOWER` (exceto em chaves técnicas). | Garante que descrições fiquem padronizadas para visualização. |
+| **Auditoria de Integridade** | Validação contra a ''Fato'' já na camada Bronze. | **O log da Bronze é um alerta de cadastro faltando**: identifica IDs na ''Fato'' sem par na dimensão. |
+
+---
+
 #### 2.2 BRONZE → SILVER 
 
 **Origem:** `s3://lake/bronze/recarga/*.parquet`  
@@ -55,9 +71,10 @@
 
 | Etapa | Processo | Descrição | Ações / Regras | Resultado Esperado |
 |------:|:---------|:----------|:---------------|:-------------------|
-| 1 | **Deduplicação** | Garantia de unicidade no lote de carga | Aplicação da regra de grão sobre os novos registros. | Dados reprocessados com unicidade absoluta. |
-| 2 | **Normalização de Chaves** | Saneamento de identificadores | Conversão de *hashes* padrão ou valores fixos (vazios) para um padrão explícito de nulidade (`NULL`). | Chaves de relacionamento íntegras para operações de cruzamento (*JOIN*). |
-| 3 | **Limpeza de Colunas** | Otimização do esquema (*Schema*) | Remoção de colunas 100% nulas ou sem valor analítico identificadas no diagnóstico de dados. | Base de dados mais leve, com redução de custos de leitura e armazenamento. |
+| 1 | **Deduplicação** | Garantia de unicidade | Aplicação da regra de grão (`num_cpf`, `data`, `hora`). | Dados reprocessados com unicidade absoluta. |
+| 2 | **Normalização de Chaves** | Saneamento de identificadores | Conversão de campos do grão para padrões técnicos. | Chaves íntegras para operações de cruzamento. |
+| 3 | **Enriquecimento (JOINs)** | Agregação das 11 dimensões técnicas | Cruzamento com `recarga_dim` tratando códigos de sistema (-1) e garantindo match via cast. | Dataset legível com descrições de negócio integradas. |
+| 4 | **Limpeza e Reordenação** | Otimização do esquema (*Schema*) | Remoção de colunas 100% nulas e posicionamento das descrições após suas respectivas chaves. | Base de dados organizada e otimizada para consumo analítico. |
 
 ---
 
@@ -70,8 +87,9 @@
 * 💎 **Registros Mantidos (Silver):** `95.386.289`
 * ⚠️ **Registros Removidos (Duplicados):** `4.827.362` (**4.82%**)
 
-**Otimização de Schema (Colunas Excluídas):**
-* ✨ **Nenhuma coluna 100% nula encontrada:** Todas as colunas originais continham dados e foram preservadas.
+**Otimização de Schema:**
+* ✨ **Expansão de Atributos:** O dataset saltou de **27 para 38 colunas** após a agregação de dimensões.
+* ✨ **Nenhuma coluna 100% nula encontrada:** Todas as colunas originais e agregadas foram preservadas.
 
 ---
 
@@ -112,6 +130,22 @@ Para garantir que a estratégia de particionamento no S3 está correta, foi exec
 - **Consistência Temporal:** Confirmado que 100% dos registros possuem a coluna `dat_insercao_credito` estritamente dentro do intervalo do diretório de destino.
 - **Volume Global:** O total processado e validado nesta run é de **95.386.289** registros.
 - **Grão de Transação:** Esta tabela reflete a volumetria de transações diárias (com Min/Max cobrindo o mês completo), garantindo a correta agregação física por partição mensal.
+
+---
+
+#### 2.2.3 📋 Logs de Qualidade e Observabilidade
+
+O pipeline implementa uma estratégia de validação em duas etapas, diferenciando a integridade referencial (cadastro) da cobertura analítica (enriquecimento).
+
+> 🔗 **Acesse os logs:** [bronze-recarga_dim-quality.log](../../reports/observability/quality/pipeline/bronze-recarga_dim-quality.log) | [silver-recarga_agg-quality.log](../../reports/observability/quality/pipeline/silver-recarga_agg-quality.log)
+
+**Diferenciação de Responsabilidades:**
+* **Log da Bronze (Dimensões):** Atua como um **alerta de cadastro faltando**. Valida se a origem (CSV) possui todos os códigos que a transação ('Fato') está gerando.
+* **Log da Silver (Agregação):** Atua como um **alerta de cobertura de dados**. Valida se o processo de Join conseguiu preencher as descrições ou se existem "gaps" de informação analítica.
+
+**Evidência de Sucesso (Run 20260121_175800):**
+* ✅ **Tratamento de Órfãos:** O código `-1` foi mapeado para "não mapeado (código -1)", reduzindo as falhas de cobertura em **98%** nas colunas de Promoção e Instituição.
+* ✅ **Tipagem Forte:** O uso de `::VARCHAR` no Join de Status e Inserção garantiu 100% de match para códigos negativos que existiam no CSV.
 
 ---
 
