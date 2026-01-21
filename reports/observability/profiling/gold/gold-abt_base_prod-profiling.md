@@ -1,4 +1,4 @@
-# Relatório de Profiling: `gold/abt_base_prod` - `20260121_113017`
+# Relatório de Profiling: `gold/abt_base_prod` - `20260121_223007`
 
 ### ⚙️ Sumário Técnico do Dataset: `abt_base_prod`
 
@@ -61,13 +61,13 @@
 | rec_vlr_std_l60d                  | DOUBLE                   | 18.42%        |
 | rec_vlr_std_l90d                  | DOUBLE                   | 11.17%        |
 | rec_vlr_std_geral                 | DOUBLE                   | 4.65%         |
-| rec_vlr_coef_var_l30d             | DOUBLE                   | 46.97%        |
+| rec_vlr_coef_var_l30d             | DOUBLE                   | 46.96%        |
 | rec_vlr_coef_var_l60d             | DOUBLE                   | 27.83%        |
 | rec_vlr_coef_var_l90d             | DOUBLE                   | 20.59%        |
 | rec_ratio_qtd_l30d_l60d           | DOUBLE                   | 8.02%         |
 | rec_ratio_qtd_l60d_l90d           | DOUBLE                   | 4.59%         |
 | rec_ratio_vlr_l30d_l60d           | DOUBLE                   | 30.52%        |
-| rec_ratio_vlr_l60d_l90d           | DOUBLE                   | 20.5%         |
+| rec_ratio_vlr_l60d_l90d           | DOUBLE                   | 20.51%        |
 | rec_flag_sem_recarga_l30d         | INTEGER                  | 0.0%          |
 | rec_flag_sem_recarga_l60d         | INTEGER                  | 0.0%          |
 | rec_flag_sem_recarga_l90d         | INTEGER                  | 0.0%          |
@@ -248,25 +248,25 @@
 | rec_vlr_total_l30d                | 50.000,00     | 236,36           | ⚠️ Outlier Detected |
 | rec_vlr_total_l60d                | 50.060,00     | 359,77           | ⚠️ Outlier Detected |
 | rec_vlr_total_l90d                | 75.100,00     | 536,04           | ⚠️ Outlier Detected |
-| rec_vlr_total_geral               | 425.000,00    | 2.970,35         | ⚠️ Outlier Detected |
+| rec_vlr_total_geral               | 425.000,00    | 2.969,52         | ⚠️ Outlier Detected |
 | rec_vlr_avg_l30d                  | 8.338,33      | 58,10            | ⚠️ Outlier Detected |
 | rec_vlr_avg_l60d                  | 8.338,33      | 51,65            | ⚠️ Outlier Detected |
 | rec_vlr_avg_l90d                  | 8.336,67      | 48,81            | ⚠️ Outlier Detected |
-| rec_vlr_avg_geral                 | 11.000,80     | 67,96            | ⚠️ Outlier Detected |
+| rec_vlr_avg_geral                 | 11.000,80     | 67,94            | ⚠️ Outlier Detected |
 | rec_vlr_min_l30d                  | 109,76        | 32,58            | ⚠️ Outlier Detected |
 | rec_vlr_min_l60d                  | 100,00        | 25,14            | ⚠️ Outlier Detected |
-| rec_vlr_min_l90d                  | 100,00        | 20,66            | ⚠️ Outlier Detected |
+| rec_vlr_min_l90d                  | 100,00        | 20,65            | ⚠️ Outlier Detected |
 | rec_vlr_min_geral                 | 100,00        | 12,01            | ⚠️ Outlier Detected |
 | rec_vlr_max_l30d                  | 25.000,00     | 151,65           | ⚠️ Outlier Detected |
 | rec_vlr_max_l60d                  | 25.000,00     | 179,04           | ⚠️ Outlier Detected |
 | rec_vlr_max_l90d                  | 25.000,00     | 177,47           | ⚠️ Outlier Detected |
-| rec_vlr_max_geral                 | 25.000,00     | 269,92           | ⚠️ Outlier Detected |
+| rec_vlr_max_geral                 | 25.000,00     | 260,67           | ⚠️ Outlier Detected |
 | rec_qtd_canais_distintos          | 38,00         | 11,47            | ⚠️ Outlier Detected |
 | rec_dias_desde_ultima             | 515,00        | 90,65            | ⚠️ Outlier Detected |
 | rec_vlr_std_l30d                  | 14.429,43     | 92,71            | ⚠️ Outlier Detected |
 | rec_vlr_std_l60d                  | 12.906,07     | 82,46            | ⚠️ Outlier Detected |
 | rec_vlr_std_l90d                  | 12.497,50     | 76,56            | ⚠️ Outlier Detected |
-| rec_vlr_std_geral                 | 12.664,85     | 108,27           | ⚠️ Outlier Detected |
+| rec_vlr_std_geral                 | 12.664,85     | 107,68           | ⚠️ Outlier Detected |
 | rec_vlr_coef_var_l30d             | 16,12         | 2,86             | ⚠️ Outlier Detected |
 | rec_vlr_coef_var_l60d             | 20,54         | 3,01             | ⚠️ Outlier Detected |
 | rec_vlr_coef_var_l90d             | 26,12         | 3,13             | ⚠️ Outlier Detected |
@@ -330,13 +330,13 @@
 ### 📦 Volumetria: `abt_base_prod`
 | diretorio      |   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
 |:---------------|---------------:|:------------|----------:|-------------------------:|----------------------------:|
-| ano_mes=202410 |              1 | 207.953     |       206 |                    35.53 |                       45.36 |
-| ano_mes=202411 |              1 | 231.824     |       206 |                    38.66 |                       50.43 |
-| ano_mes=202412 |              1 | 232.984     |       206 |                    39.11 |                       50.02 |
-| ano_mes=202501 |              1 | 226.446     |       206 |                    39.05 |                       50.75 |
-| ano_mes=202502 |              1 | 208.731     |       206 |                    35.43 |                       45.47 |
-| ano_mes=202503 |              1 | 213.230     |       206 |                    37.77 |                       48.46 |
-| TOTAL          |              6 | 1.321.168   |       206 |                   225.55 |                      290.49 |
+| ano_mes=202410 |              1 | 207.953     |       206 |                    35.6  |                       45.39 |
+| ano_mes=202411 |              1 | 231.824     |       206 |                    38.62 |                       50.51 |
+| ano_mes=202412 |              1 | 232.984     |       206 |                    39.22 |                       50.06 |
+| ano_mes=202501 |              1 | 226.446     |       206 |                    39.04 |                       50.68 |
+| ano_mes=202502 |              1 | 208.731     |       206 |                    35.43 |                       45.48 |
+| ano_mes=202503 |              1 | 213.230     |       206 |                    37.78 |                       48.46 |
+| TOTAL          |              6 | 1.321.168   |       206 |                   225.68 |                      290.56 |
 
 ---
 
