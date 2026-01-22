@@ -183,6 +183,8 @@ Este documento consolida a **visão oficial de processamento do Lake**, servindo
 
 A camada **GOLD** representa a **materialização semântica final** do Lakehouse, sendo responsável pela entrega de **ativos analíticos exclusivamente destinados à construção e validação de modelos de Machine Learning**.
 
+>---------------aguardando validação para detalhar
+
 > ⚠️ **Escopo desta documentação**  
 > Este documento **não detalha a lógica interna da camada GOLD**, pois seu objetivo é consolidar a **visão global de processamento Medallion**.  
 >  
