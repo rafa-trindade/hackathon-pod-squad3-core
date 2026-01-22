@@ -127,7 +127,7 @@ Apesar do fluxo base ser comum, algumas entidades possuem **processamentos adici
 
 ---
 
-#### B) Saneamento e Higienização (Todas as Entidades)
+#### B) Saneamento e Higienização *(Todas as Entidades)*
 
 - Normalização de hashes técnicos associados a valores nulos
 - Padronização de identificadores inválidos
