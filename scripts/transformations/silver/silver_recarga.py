@@ -208,7 +208,7 @@ def run():
     log_content += "-" * 82 + "\n"
 
     for key, desc in pair_map.items():
-        # O log agora conta apenas o que o seu CASE e o seu JOIN não alcançaram
+
         missing_count = con.execute(f"""
             SELECT COUNT(*) 
             FROM work_db.silver_{TABLE_NAME}_step3 

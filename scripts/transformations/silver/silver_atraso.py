@@ -222,7 +222,7 @@ def run():
     # ------------------------------------------------------------------
     print("--------------------------------------------------")
     print(f"💾 Gravando Silver (Run: {RUN_ID})...")
-    # Nota: A fato atraso geralmente é particionada por dat_referencia ou ano_mes. Mantendo ano_mes como padrão.
+
     con.execute(f"COPY (SELECT * FROM {final_table} ORDER BY ano_mes) TO '{SILVER_PATH}' (FORMAT PARQUET, PARTITION_BY (ano_mes), OVERWRITE_OR_IGNORE 1)")
     
     con.execute("DETACH work_db")
