@@ -292,12 +292,13 @@ Diretrizes formais de governança aplicadas ao projeto.
 Referência das práticas de monitoramento e saúde do pipeline.
 
 
-# FIM
+# FIM da Documentação de Data Lineage & Processamento de Dados
+
+<br><br><br>
 
 
-----
 
-# Aqui entra a parte que a documentação pede "**estruturação do modelo baseline**" que ja temos disponivel
+# Aqui entra a parte que a documentação pede "**estruturação do modelo baseline**" que ja temos documentado
 
 # 🧪 Estruturação do Modelo Baseline: Governança Temporal
 
