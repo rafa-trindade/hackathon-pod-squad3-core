@@ -60,10 +60,7 @@ Garantir a **preservação integral** dos dados recebidos das fontes, sem qualqu
 
 ## 🥉 4. Camada BRONZE - Padronização Técnica
 
-Este estágio é comum a todas as entidades e foca na padronização técnica.
-
-**Origem:** `s3://lake/raw/{entidade}/*.parquet`  
-**Destino:** `s3://lake/bronze/{entidade}/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
+Este estágio é **comum a todas as entidades de negócio** e tem como objetivo a **padronização técnica**, mantendo a imutabilidade dos dados.
 
 ---
 
@@ -71,30 +68,38 @@ Este estágio é comum a todas as entidades e foca na padronização técnica.
 
 **Entidades:** `atraso`, `pagamento`, `recarga`, `dados_cadastrais`, `score_bureau_movel`, `telco`  
 
+**Origem:** `s3://lake/raw/{entidade}/*.parquet`  
+**Destino:** `s3://lake/bronze/{entidade}/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
+
 | Etapa | Processo | Descrição |
 |----:|---------|-----------|
-| 1 | **Normalization (Lowercase)** | Conversão de nomes de colunas para minúsculo. |
+| 1 | **Normalization (Lowercase)** | Conversão de todos os nomes de colunas para minúsculo, eliminando ambiguidades de *case-sensitivity*. |
 | 2 | **Tipagem Forte** | Aplicação de `CAST` explícito baseada no profiling da origem. |
-| 3 | **Metadados Técnicos** | Inclusão de `ingestion_ts` e `run_id`. |
-| 4 | **Particionamento Técnico** | Criação da coluna `ano_mes = YYYYMM` para organização física. |
+| 3 | **Metadados Técnicos** | Inclusão de colunas técnicas (`ingestion_ts`, `run_id`) para rastreabilidade e auditoria. |
+| 4 | **Particionamento Técnico** | Criação da coluna técnica `ano_mes = YYYYMM`, derivada da data de referência principal da entidade. |
 
 ---
 
 ### 4.2 🧩 Tratamento Diferenciado - Dimensões Técnicas
 
-**Entidades:** `atraso_dim`, `recarga_dim`
+As tabelas dimensionais possuem comportamento distinto das tabelas 'Fato', pois representam **cadastros estáveis e de baixo volume**.
+
+**Entidades:** `atraso_dim` `recarga_dim`
+
+**Origens:** `s3://lake/raw/{dimensao}/*.csv`  
+**Destinos:** `s3://lake/bronze/{dimensao}/*.parquet`
 
 | Regra | Descrição | Justificativa |
 |---|---|---|
-| **Estrutura Flat** | Arquivo único, sem particionamento. | Simplifica JOINs laterais. |
-| **Preservação de Case** | Mantém formato original das chaves. | Evita falhas de correspondência. |
-| **Snapshot Técnico** | Representam o estado completo do cadastro. | Não versionadas por execução. |
+| **Estrutura Flat** | Arquivo único, sem particionamento por data ou `run_id`. | Simplifica manutenção e JOINs laterais. |
+| **Preservação de Case** | Manutenção do formato original das chaves. | Evita falhas de correspondência. |
+| **Snapshot Técnico** | Representam o estado completo do cadastro. | Dimensões não são versionadas por execução. |
 
 ---
 
 ## 🥈 5. Camada SILVER - Qualidade e Enriquecimento
 
-Na camada Silver, os dados atendem requisitos de unicidade e semântica analítica.
+Na camada Silver, os dados são refinados para atender aos **requisitos de qualidade, unicidade e semântica analítica**, respeitando o grão técnico de cada entidade. A estrutura de particionamento físico por `ano_mes` é herdada da camada Bronze, garantindo a consistência organizacional do Lakehouse.
 
 **Origem:** `s3://lake/bronze/{entidade}/**/*.parquet`  
 **Destino:** `s3://lake/silver/{entidade}/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
@@ -116,15 +121,23 @@ Na camada Silver, os dados atendem requisitos de unicidade e semântica analíti
 
 ### 5.2 🔀 Regras de Transformação Específicas
 
-#### A) Enriquecimento via Dimensões (Atraso e Recarga)
-- JOIN com tabelas dimensionais técnicas.
-- Inclusão de descrições legíveis ao negócio.
-- Mapeamento de códigos inexistentes para valores padrão (ex: *"Não Mapeado"*).
+Apesar do fluxo base ser comum, algumas entidades possuem **processamentos adicionais**.
 
-#### B) Saneamento e Higienização (Todas as Entidades)
-- Normalização de hashes técnicos associados a valores nulos.
-- Remoção de colunas sem valor analítico (100% nulas).
-- Reordenação lógica do schema para consumo.
+#### A) Enriquecimento via Dimensões *(Aplicável a Atraso e Recarga)*
+
+- JOIN com tabelas dimensionais técnicas
+- Inclusão de descrições legíveis ao negócio
+- Mapeamento de códigos inexistentes para valores padrão (ex: *"Não Mapeado"*)
+- Preservação do grão original da 'Fato' (entidades de domínio com comportamento factual)
+
+---
+
+#### B) Saneamento e Higienização *(Todas as Entidades)*
+
+- Normalização de hashes técnicos associados a valores nulos
+- Padronização de identificadores inválidos
+- Remoção de colunas sem valor analítico (100% nulas ou obsoletas)
+- Reordenação lógica do schema para consumo analítico
 
 ---
 
@@ -195,14 +208,13 @@ Gold (Labels e ABTs ML-Ready)
 
 ---
 
-> ⚠️ **Nota de Escopo:** Este documento não detalha a lógica interna de *Point-in-Time* ou janelas de *lookback* da Gold; tais definições constam na documentação de estruturação do modelo baseline.
+> ⚠️ **Nota de Escopo:** Este documento não detalha a lógica interna de construção dos ativos Gold, tais como estratégias de **Point-in-Time Join**, definição de **janelas de lookback**, regras de **anti-data leakage**, governança de features e métricas estatísticas. Essas especificações constam na documentação dedicada de **estruturação do modelo baseline**, onde cada ativo é descrito com suas decisões estatísticas e justificativas técnicas.
 
 ---
 
 ## 🧱 7. Estrutura Física de Armazenamento (Padrão Hive)
 
 A organização física segue o padrão Hive para compatibilidade e performance:
-
 
 ```bash
 s3://lake/
