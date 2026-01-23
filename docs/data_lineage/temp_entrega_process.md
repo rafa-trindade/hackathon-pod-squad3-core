@@ -3,8 +3,20 @@
 
 Este documento consolida, em uma **visão única**, as **etapas de processamento de dados** aplicadas no Lakehouse, considerando tanto os **fluxos comuns** quanto as **variações específicas por entidade**, conforme definido na documentação técnica individual de cada domínio, disponível no repositório oficial de lineage.
 
-> **Escopo:** transformação, organização e enriquecimento de dados  
+> **Escopo do documento:** transformação, organização e enriquecimento de dados  
 > **Fora de escopo:** logs técnicos, métricas de execução e evidências operacionais detalhadas
+
+---
+
+### 🧭 Nota de Escopo - Maturidade da Solução (PoC)
+
+Nesta fase, a solução é apresentada como uma **Prova de Conceito (PoC)** com **execução linear**, cujo objetivo é evidenciar o fluxo lógico, a governança aplicada e a reprodutibilidade dos dados.
+
+A **orquestração do pipeline já está definida conceitualmente** e será **migrada para o Apache Airflow na entrega final**, sem necessidade de alteração nos scripts de processamento.
+
+Os **artefatos de observabilidade**, atualmente armazenados de forma local, **serão persistidos no Data Lake na etapa final**, integrando governança e auditoria.
+
+---
 
 ## 🏗️ 1. Visão Global do Fluxo de Dados
 
