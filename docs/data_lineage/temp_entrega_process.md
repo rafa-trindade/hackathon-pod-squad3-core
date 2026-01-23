@@ -176,7 +176,7 @@ A camada **GOLD** materializa os dados para Machine Learning, entregando ativos 
 |:-----|:-----|:-----------|
 | `labels_fpd` | Target | Variável resposta oficial (First Payment Default) |
 
-🔗 **[Estudo de seleção e estruturação do Target](../data_lineage/gold/labels_fpd-lineage.md)**
+🔗 **[Estudo de Seleção e Estruturação do Target](../data_lineage/gold/labels_fpd-lineage.md)**
 
 ---
 
