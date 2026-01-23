@@ -356,8 +356,6 @@ A variável `rec_vlr_avg_l60d` refere-se ao **valor médio de recarga** nos **ú
 
 ## 📖 Apêndice: Glossário Geral da Documentação
 
-Para facilitar a interpretação técnica deste documento, seguem as definições dos conceitos-chave aplicados:
-
 - **ABT (Analytical Base Table):** Tabela consolidada com variáveis (features) pronta para o treinamento de modelos de Machine Learning.
 - **Data Leakage (Vazamento de Dados):** Erro onde informações do futuro são usadas indevidamente no treino. Nossa governança elimina esse risco via **Point-in-Time Join**.
 - **Drift (Desvio):** Mudança no comportamento ou na distribuição dos dados ao longo do tempo, que pode degradar a performance do modelo.
