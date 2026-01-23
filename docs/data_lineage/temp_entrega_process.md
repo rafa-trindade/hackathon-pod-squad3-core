@@ -19,7 +19,7 @@ Esta visão representa o **fluxo lógico comum** do Lakehouse, independentemente
 | **RAW** | Persistência do dado original, sem transformação |
 | **BRONZE** | Padronização técnica e organização física |
 | **SILVER** | Qualidade, unicidade e enriquecimento |
-| **GOLD** | Camada semântica para modelagem (ABTs, Labels e Features ML-ready) |
+| **GOLD** | Camada semântica para modelagem (ABTs e Labels ML-ready) |
 
 Entidades contempladas neste fluxo:
 - `atraso`
@@ -177,24 +177,92 @@ Ao final do processamento na camada Silver, todas as entidades apresentam:
 
 Este documento consolida a **visão oficial de processamento do Lake**, servindo como **referência única** para engenharia, governança e evolução contínua da arquitetura.
 
+> 📌 **Contrato com a Camada GOLD**  
+> As entidades na camada Silver representam a **fonte única e confiável** para a construção dos ativos analíticos da camada Gold.  
+>  
+> Nenhuma lógica de correção, enriquecimento temporal ou reinterpretação semântica é aplicada após este ponto.  
+> Toda a inteligência estatística e analítica ocorre **exclusivamente na camada GOLD**, garantindo separação clara de responsabilidades.
+
 ---
 
-## 🥇 7. Camada GOLD - Consumo para Modelagem
+## 🥇 7. Camada GOLD - Consumo Analítico e Modelagem
 
-A camada **GOLD** representa a **materialização semântica final** do Lakehouse, sendo responsável pela entrega de **ativos analíticos exclusivamente destinados à construção e validação de modelos de Machine Learning**.
+A camada **GOLD** representa a **materialização final dos dados para consumo analítico e Machine Learning**, sendo responsável por entregar **ativos semânticos, estatisticamente consistentes, versionados e auditáveis**, prontos para uso pela Squad de Modelagem.
 
->---------------aguardando validação para detalhar  
+Esta camada **não contém lógica de negócio transacional**, mas sim **estruturas analíticas consolidadas**, construídas a partir das entidades Silver, respeitando rigorosamente princípios de **governança temporal, integridade estatística e reprodutibilidade**.
 
-| Regra | Descrição | Justificativa |
-|---|---|---|
-|---|---|---|
-|---|---|---|
+📌 **Os ativos Gold são determinísticos por `run_id`, permitindo a reprodução exata de qualquer experimento histórico de Machine Learning.**
+
+---
+
+### 🎯 Objetivos da Camada GOLD
+- Centralizar **targets oficiais** de modelagem
+- Disponibilizar **Analytical Base Tables (ABTs)** padronizadas
+- Garantir **consistência e comparabilidade entre experimentos de Machine Learning**
+- Servir como **contrato único** entre Engenharia de Dados e Ciência de Dados
+
+---
+
+### 📦 Ativos GOLD Disponíveis
+
+> -------- valta validar
+
+| Ativo | Tipo | Finalidade |
+|:-----|:-----|:-----------|
+| `labels_fpd` | Target | Variável resposta oficial (First Payment Default) |
+| `abt_base_prod` | ABT | Base analítica para treinamento e validação de modelos |
+
+
+
+📘 **Dicionário de Variáveis (Feature Book)**  
+A descrição detalhada das variáveis, incluindo definição semântica, domínio, regra de cálculo, janela temporal e origem Silver, está documentada em:
+
+➡️ **[Book de Variáveis – `abt_base_prod`](../data_modelling/features/abt_base_prod-book.md)**
+
+---
+
+### 🧬 Princípios Técnicos Aplicados
+
+Todos os ativos da camada GOLD obedecem aos seguintes princípios:
+
+- **Grão analítico explícito e imutável**
+- **Isolamento por execução (`run_id`)**
+- **Particionamento temporal (`ano_mes`)**
+- **Auditoria automática de qualidade**
+- **Rastreabilidade completa até a Silver**
+- **Prevenção ativa de Data Leakage**
+
+---
+
+### 🔀 Fluxo Lógico: SILVER → GOLD
+
+```text
+Silver (Entidades de Domínio)
+        ↓
+Definição de Âncora (Target)
+        ↓
+Governança Temporal (Point-in-Time)
+        ↓
+Agregações Históricas (Lookbacks)
+        ↓
+Join Controlado Multi-Silver
+        ↓
+Gold (Labels e ABTs ML-Ready)
+```
 
 > ⚠️ **Escopo desta documentação**  
-> Este documento **não detalha a lógica interna da camada GOLD**, pois seu objetivo é consolidar a **visão global de processamento Medallion**.  
->  
-> A especificação completa de cada ativo Gold - incluindo **grão analítico**, **estratégias de *Point-in-Time Join***, **janelas temporais (lookbacks)**, **regras anti-*data leakage*** e **auditorias de qualidade e observabilidade** - está documentada de forma dedicada na seção de **estruturação do modelo baseline**.
+> Este documento não detalha a lógica interna de construção dos ativos Gold, tais como:
+>
+> - Estratégias de Point-in-Time Join
+> - Definição de janelas de lookback
+> - Regras de anti-data leakage
+> - Governança de features
+> - Métricas estatísticas geradas
+> - Auditorias específicas por ativo
+>
+>📌 Essas definições fazem parte da documentação dedicada de estruturação do modelo baseline, onde cada ativo Gold é descrito de forma aprofundada, incluindo decisões estatísticas e justificativas técnicas.
 
+---
 
 ## 📚 Documentação Complementar
 
