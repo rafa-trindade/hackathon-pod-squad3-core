@@ -219,7 +219,7 @@ Esta estratégia permite:
 - **Auditoria de Drift:** Comparação histórica entre diferentes versões da mesma ABT para identificar se a queda de performance de um modelo se deve a mudanças no comportamento dos dados.
 - **Backtesting e Rollback:** Capacidade de revalidar modelos antigos ou reverter para a base exata de um experimento anterior com total determinismo.
 
---
+---
 
 > ⚠️ **Nota de Escopo:** Este documento não detalha a lógica interna de construção dos ativos Gold, tais como estratégias de **Point-in-Time Join**, definição de **janelas de lookback**, regras de **anti-data leakage**, governança de features e métricas estatísticas. Essas especificações constam na documentação dedicada de **estruturação do modelo baseline**, onde cada ativo é descrito com suas decisões estatísticas e justificativas técnicas.
 
