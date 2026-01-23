@@ -215,7 +215,7 @@ Esta camada **não contém lógica de negócio transacional**, mas sim **estrutu
 📘 **Dicionário de Variáveis (Feature Book)**  
 A descrição detalhada das variáveis, incluindo definição semântica, domínio, regra de cálculo, janela temporal e origem Silver, está documentada em:
 
-➡️ **[Book de Variáveis – `abt_base_prod`](../data_modelling/features/abt_base_prod-book.md)**
+➡️ **[Book de Variáveis - `abt_base_prod`](../data_modelling/features/abt_base_prod-book.md)**
 
 ---
 
