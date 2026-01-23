@@ -343,6 +343,8 @@ Para garantir que o modelo baseline tenha uma visão 360º e interprete corretam
 | `pag_` | `silver/pagamento` | Agregações estatísticas sobre liquidação de faturas. |
 | `atr_` | `silver/atraso` | Agregações estatísticas sobre histórico de inadimplência. |
 
+🔗 **[Book de Variáveis - ABT](../data_modelling/features/abt_base_prod-book.md)**
+
 ### 3.2 Padrão de Nomenclatura
 O padrão seguido para as features é: `{prefixo}_{métrica}_{janela/tipo}`. 
 
