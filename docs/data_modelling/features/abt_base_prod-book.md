@@ -1,10 +1,15 @@
 # 📖 Book de Variáveis ABT - Camada Gold (`abt_base_prod`)
 
-Este documento contém o dicionário completo de variáveis da Analytical Base Table (ABT). A estrutura segue o princípio de **Mesa Farta**, disponibilizando todas as features disponíveis nas camadas Silver com prefixos de origem e tratamento de janela temporal (Point-in-Time).
+Este documento é o dicionário de referência da Analytical Base Table (ABT). A estrutura segue o princípio de **Mesa Farta**, disponibilizando todas as features das camadas Silver prefixadas por origem e janela temporal.
 
-> 🔁 **Versionamento e Reprodutibilidade**  
-> A ABT `abt_base_prod` é versionada por `run_id`, garantindo determinismo e reprodução exata de qualquer experimento histórico.
+---
 
+## 🛡️ Protocolo de Uso e Anti-Leakage
+
+* **Features Permitidas:** Prefixos `bur_`, `cad_`, `tel_`, `rec_`, `pag_`, `atr_`.
+* **Target (Proibido no Treino):** Coluna `fpd`.
+* **Identificadores (Chaves):** `num_cpf`, `safra`, `prod`, `ano_mes`.
+* **Metadados (Ignorar):** `run_id`, `ingestion_ts`.
 
 ---
 
@@ -45,6 +50,9 @@ As colunas com prefixos `bur_`, `cad_` e `tel_` representam a totalidade das col
 ## 📊 Dicionário de Features Agregadas (Transacionais)
 
 As variáveis transacionais são processadas para capturar a **velocidade** e a **tendência** do comportamento do cliente através de múltiplas janelas de observação (30, 60 e 90 dias) e o acumulado geral.
+
+> 💡 **Legenda de Nomenclatura:** `{prefixo}_{métrica}_{janela}`
+> * **`rec_vlr_avg_l60d`**: Valor médio de recarga nos últimos 60 dias pré-safra.
 
 ### 1. Comportamento de Recarga (`rec_`)
 | Sufixo da Variável | Janelas Disponíveis | Tipo | Descrição |
@@ -101,18 +109,3 @@ As variáveis transacionais são processadas para capturar a **velocidade** e a 
 > 📐 **Nota Estatística**  
 > As métricas de desvio padrão e coeficiente de variação são calculadas sobre a população observada em cada janela, sem aplicação de inferência estatística.
 
----
-
-## ⏳ Governança de Janelas (Lookback)
-
-* **Regra de Ouro:** Todas as variáveis transacionais respeitam a condição `Data do Evento < Safra`.
-* **Maturidade:** A base âncora é capturada em **D+4** para garantir a estabilidade dos dados transacionais da camada Silver antes da consolidação na Gold.
-* **Geral:** período histórico disponível na camada Silver, limitado a até 18 meses anteriores à data de safra.
-
-
-
-> 💡 **Como interpretar a nomenclatura das variáveis:**
-> O padrão seguido é: `{prefixo}_{métrica}_{janela/tipo}`.
-> - **`rec_vlr_avg_l60d`**: Valor médio de recarga nos últimos 60 dias pré-safra.
-> - **`pag_vlr_total_geral`**: Soma total de pagamentos em todo o histórico (18 meses).
-> - **`atr_vlr_max_geral`**: Maior valor de atraso registrado em todo o histórico disponível.
