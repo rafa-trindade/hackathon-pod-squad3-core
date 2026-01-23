@@ -349,7 +349,7 @@ Para garantir que o modelo baseline tenha uma visão 360º e interprete corretam
 O padrão seguido para as features é: `{prefixo}_{métrica}_{janela/tipo}`. 
 
 **Exemplo de interpretação:**
-A variável `rec_vlr_avg_l60d` refere-se ao **valor médio de recarga** nos **últimos 60 dias** anteriores à safra. Esse padrão garante que o modelo baseline receba dados autoexplicativos, facilitando a análise de importância de variáveis (*feature importance*).
+A variável `rec_vlr_avg_l60d` refere-se ao **valor médio de recarga** nos **últimos 60 dias** anteriores à safra. Esse padrão garante que o modelo baseline receba dados autoexplicativos, facilitando a análise de importância de variáveis.
 
 <br><br><br>
 
