@@ -32,76 +32,76 @@ Entidades contempladas neste fluxo:
 
 ---
 
-## 📥 2. Camada RAW - Ingestão
+## 🧬 2. Princípios Técnicos Aplicados
+
+Para garantir a reprodutibilidade e a confiabilidade, o Lakehouse adota os seguintes princípios em todas as etapas de processamento:
+
+- **Isolamento por Execução (`run_id`):** Todas as transformações são versionadas, permitindo rastreabilidade completa e isolamento de falhas.
+- **Particionamento Temporal (`ano_mes`):** Organização física em padrão Hive que habilita o **Partition Pruning**, garantindo que as consultas leiam apenas as pastas necessárias, otimizando drasticamente a performance e o custo de processamento.
+- **Grão Analítico Imutável:** Definição rigorosa da unicidade por entidade para evitar duplicação e perda de integridade.
+- **Prevenção de Data Leakage:** Governança temporal rigorosa na transição para a camada final via *Point-in-Time Join*.
+- **Auditoria Automática:** Validação de integridade e cobertura em cada salto de camada.
+
+---
+
+## 📥 3. Camada RAW - Ingestão
 
 ### Objetivo
 Garantir a **preservação integral** dos dados recebidos das fontes, sem qualquer modificação estrutural ou semântica.
 
 ### Características
 - Arquivos no formato original (`parquet` ou `csv`)
-- Nenhuma deduplicação
-- Nenhuma alteração de schema
 - Fonte oficial para reprocessamentos
 
 **Estrutura:**
-```bash
-s3://lake/raw/{entidade}/*
-```
+`s3://lake/raw/{entidade}/*`
 
 ---
 
-## 🥉 3. Processamento Global - RAW → BRONZE
+## 🥉 4. Camada BRONZE - Padronização Técnica
 
-Este estágio é **comum a todas as entidades de negócio** e tem como objetivo a **padronização técnica**, mantendo a imutabilidade dos dados.
+Este estágio é comum a todas as entidades e foca na padronização técnica.
 
 **Origem:** `s3://lake/raw/{entidade}/*.parquet`  
 **Destino:** `s3://lake/bronze/{entidade}/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
 
 ---
 
-### 3.1 🔁 Etapas Comuns de Processamento (Todas as Entidades)
+### 4.1 🔁 Etapas Comuns de Processamento
+
+**Entidades:** `atraso`, `pagamento`, `recarga`, `dados_cadastrais`, `score_bureau_movel`, `telco`  
 
 | Etapa | Processo | Descrição |
 |----:|---------|-----------|
-| 1 | **Normalization (Lowercase)** | Conversão de todos os nomes de colunas para minúsculo, eliminando ambiguidades de *case-sensitivity*. |
-| 2 | **Tipagem Forte** | Aplicação de `CAST` explícito para tipos primitivos (`DATE`, `INTEGER`, `DOUBLE`, `BOOLEAN`) com base no profiling da origem. |
-| 3 | **Metadados Técnicos** | Inclusão de colunas técnicas (`ingestion_ts`, `run_id`) para rastreabilidade e auditoria. |
-| 4 | **Particionamento Técnico Global** | Criação da coluna técnica `ano_mes = YYYYMM`, derivada da data de referência principal da entidade, padronizando a organização física no Data Lake. |
-
+| 1 | **Normalization (Lowercase)** | Conversão de nomes de colunas para minúsculo. |
+| 2 | **Tipagem Forte** | Aplicação de `CAST` explícito baseada no profiling da origem. |
+| 3 | **Metadados Técnicos** | Inclusão de `ingestion_ts` e `run_id`. |
+| 4 | **Particionamento Técnico** | Criação da coluna `ano_mes = YYYYMM` para organização física. |
 
 ---
 
-### 3.2 🧩 Tratamento Diferenciado - Dimensões Técnicas
+### 4.2 🧩 Tratamento Diferenciado - Dimensões Técnicas
 
-As tabelas dimensionais possuem comportamento distinto das tabelas 'Fato', pois representam **cadastros estáveis e de baixo volume**.
-
-**Entidades:** `atraso_dim` `recarga_dim`
-
-**Origens:** `s3://lake/raw/{dimensao}/*.csv`  
-**Destinos:** `s3://lake/bronze/{dimensao}/*.parquet`
+**Entidades:** `atraso_dim`, `recarga_dim`
 
 | Regra | Descrição | Justificativa |
 |---|---|---|
-| **Estrutura Flat** | Arquivo único, sem particionamento por data ou `run_id`. | Simplifica manutenção e JOINs laterais. |
-| **Preservação de Case** | Manutenção do formato original das chaves. | Evita falhas de correspondência na Silver. |
-| **Snapshot Técnico** | Representam o estado completo do cadastro. | Dimensões não são versionadas por execução. |
+| **Estrutura Flat** | Arquivo único, sem particionamento. | Simplifica JOINs laterais. |
+| **Preservação de Case** | Mantém formato original das chaves. | Evita falhas de correspondência. |
+| **Snapshot Técnico** | Representam o estado completo do cadastro. | Não versionadas por execução. |
 
 ---
 
-## 🥈 4. Processamento por Entidade - BRONZE → SILVER
+## 🥈 5. Camada SILVER - Qualidade e Enriquecimento
 
-Na camada Silver, os dados passam a atender **requisitos de qualidade, unicidade e semântica analítica**, respeitando o grão específico de cada entidade.
+Na camada Silver, os dados atendem requisitos de unicidade e semântica analítica.
 
 **Origem:** `s3://lake/bronze/{entidade}/**/*.parquet`  
 **Destino:** `s3://lake/silver/{entidade}/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
 
 ---
 
-### 4.1 🎯 Estratégia de Grão e Unicidade por Entidade
-
-
-A deduplicação é aplicada **por lote de carga (`run_id`)**, com base no **grão lógico de negócio** definido por entidade.  
-O particionamento físico por `ano_mes` é herdado da camada Bronze.
+### 5.1 🎯 Estratégia de Grão e Unicidade por Entidade
 
 | Entidade | Grão Técnico (Unicidade) |
 |---|---|
@@ -114,31 +114,95 @@ O particionamento físico por `ano_mes` é herdado da camada Bronze.
 
 ---
 
-### 4.2 🔀 Regras de Transformação Específicas
+### 5.2 🔀 Regras de Transformação Específicas
 
-Apesar do fluxo base ser comum, algumas entidades possuem **processamentos adicionais**.
+#### A) Enriquecimento via Dimensões (Atraso e Recarga)
+- JOIN com tabelas dimensionais técnicas.
+- Inclusão de descrições legíveis ao negócio.
+- Mapeamento de códigos inexistentes para valores padrão (ex: *"Não Mapeado"*).
 
-#### A) Enriquecimento via Dimensões *(Aplicável a Atraso e Recarga)*
-
-- JOIN com tabelas dimensionais técnicas
-- Inclusão de descrições legíveis ao negócio
-- Mapeamento de códigos inexistentes para valores padrão (ex: *"Não Mapeado"*)
-- Preservação do grão original da 'Fato' (entidades de domínio com comportamento factual)
-
----
-
-#### B) Saneamento e Higienização *(Todas as Entidades)*
-
-- Normalização de hashes técnicos associados a valores nulos
-- Padronização de identificadores inválidos
-- Remoção de colunas sem valor analítico (100% nulas ou obsoletas)
-- Reordenação lógica do schema para consumo analítico
+#### B) Saneamento e Higienização (Todas as Entidades)
+- Normalização de hashes técnicos associados a valores nulos.
+- Remoção de colunas sem valor analítico (100% nulas).
+- Reordenação lógica do schema para consumo.
 
 ---
 
-## 🧱 5. Estrutura Física de Armazenamento (Padrão Hive)
+### 5.3 🏁 Resultado da Camada SILVER
 
-A organização física segue o padrão Hive para garantir *partition pruning* e compatibilidade com motores analíticos:
+Ao final do processamento na camada Silver, todas as entidades apresentam:
+
+- Grão técnico garantido
+- Unicidade validada
+- Chaves normalizadas
+- Schema otimizado
+- Dados prontos para análises exploratórias, agregações controladas e estruturação de ativos na camada GOLD
+
+---
+
+## 🥇 6. Camada GOLD - Consumo Analítico e Modelagem
+
+A camada **GOLD** materializa os dados para Machine Learning, entregando ativos semânticos, versionados e auditáveis. A arquitetura garante **reprodutibilidade científica**: qualquer versão histórica de um modelo de ML pode ser auditada reconstruindo-se a base de dados exata através do vínculo entre os `run_id` das camadas Silver e Gold.
+
+---
+
+### 6.1 🎯 Objetivos da Camada GOLD
+- Centralizar **targets oficiais** de modelagem.
+- Disponibilizar **Analytical Base Tables (ABTs)** padronizadas.
+- Servir como **contrato único** entre Engenharia e Ciência de Dados.
+
+---
+
+### 6.2 📦 Ativos GOLD Disponíveis
+
+#### A) Labels de Target (`labels_fpd`)
+**Origem:** `s3://lake/silver/telco/**/*.parquet`  
+**Destino:** `s3://lake/gold/labels_fpd/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
+
+| Ativo | Tipo | Finalidade |
+|:-----|:-----|:-----------|
+| `labels_fpd` | Target | Variável resposta oficial (First Payment Default) |
+
+---
+
+#### B) Tabela Base Analítica (`abt_base_prod`)
+**Origem:** `s3://lake/silver/**/*` e `s3://lake/gold/labels_fpd/**/*`  
+**Destino:** `s3://lake/gold/abt_base_prod/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
+
+| Ativo | Tipo | Finalidade |
+|:-----|:-----|:-----------|
+| `abt_base_prod` | ABT | Base analítica para treinamento e validação |
+
+🔗 **[Book de Variáveis - `abt_base_prod`](../data_modelling/features/abt_base_prod-book.md)**
+
+---
+
+### 6.3 🔀 Fluxo Lógico: SILVER → GOLD
+
+```text
+Silver (Entidades de Domínio)
+        ↓
+Definição de Âncora (Target)
+        ↓
+Governança Temporal (Point-in-Time)
+        ↓
+Agregações Históricas (Lookbacks)
+        ↓
+Join Controlado Multi-Silver
+        ↓
+Gold (Labels e ABTs ML-Ready)
+```
+
+---
+
+> ⚠️ **Nota de Escopo:** Este documento não detalha a lógica interna de *Point-in-Time* ou janelas de *lookback* da Gold; tais definições constam na documentação de estruturação do modelo baseline.
+
+---
+
+## 🧱 7. Estrutura Física de Armazenamento (Padrão Hive)
+
+A organização física segue o padrão Hive para compatibilidade e performance:
+
 
 ```bash
 s3://lake/
@@ -165,100 +229,16 @@ s3://lake/
 
 ---
 
-## 🏁 6. Resultado da Camada SILVER
+## 📖 Apêndice: Glossário de Termos Técnicos
 
-Ao final do processamento na camada Silver, todas as entidades apresentam:
+Para facilitar a interpretação técnica deste documento, seguem as definições dos conceitos-chave aplicados:
 
-- **Grão técnico garantido**
-- **Unicidade validada**
-- **Chaves normalizadas**
-- **Schema otimizado**
-- **Dados prontos para análises exploratórias, agregações controladas e estruturação de ativos na camada GOLD**
-
-Este documento consolida a **visão oficial de processamento do Lake**, servindo como **referência única** para engenharia, governança e evolução contínua da arquitetura.
-
-> 📌 **Contrato com a Camada GOLD**  
-> As entidades na camada Silver representam a **fonte única e confiável** para a construção dos ativos analíticos da camada Gold.  
->  
-> Nenhuma lógica de correção, enriquecimento temporal ou reinterpretação semântica é aplicada após este ponto.  
-> Toda a inteligência estatística e analítica ocorre **exclusivamente na camada GOLD**, garantindo separação clara de responsabilidades.
-
----
-
-## 🥇 7. Camada GOLD - Consumo Analítico e Modelagem
-
-A camada **GOLD** representa a **materialização final dos dados para consumo analítico e Machine Learning**, sendo responsável por entregar **ativos semânticos, estatisticamente consistentes, versionados e auditáveis**, prontos para uso pela Squad de Modelagem.
-
-Esta camada **não contém lógica de negócio transacional**, mas sim **estruturas analíticas consolidadas**, construídas a partir das entidades Silver, respeitando rigorosamente princípios de **governança temporal, integridade estatística e reprodutibilidade**.
-
-📌 **Os ativos Gold são determinísticos por `run_id`, permitindo a reprodução exata de qualquer experimento histórico de Machine Learning.**
-
----
-
-### 7.1 🎯 Objetivos da Camada GOLD
-- Centralizar **targets oficiais** de modelagem
-- Disponibilizar **Analytical Base Tables (ABTs)** padronizadas
-- Garantir **consistência e comparabilidade entre experimentos de Machine Learning**
-- Servir como **contrato único** entre Engenharia de Dados e Ciência de Dados
-
----
-
-### 7.2 📦 Ativos GOLD Disponíveis
-
-> -------- falta validar
-
-| Ativo | Tipo | Finalidade |
-|:-----|:-----|:-----------|
-| `labels_fpd` | Target | Variável resposta oficial (First Payment Default) |
-| `abt_base_prod` | ABT | Base analítica para treinamento e validação de modelos |
-
-📘 **Dicionário de Variáveis (Feature Book)**  
-A descrição detalhada das variáveis, incluindo definição semântica, domínio, regra de cálculo, janela temporal e origem Silver, está documentada em:
-
-➡️ **[Book de Variáveis - `abt_base_prod`](../data_modelling/features/abt_base_prod-book.md)**
-
----
-
-### 7.3 🧬 Princípios Técnicos Aplicados
-
-Todos os ativos da camada GOLD obedecem aos seguintes princípios:
-
-- **Grão analítico explícito e imutável**
-- **Isolamento por execução (`run_id`)**
-- **Particionamento temporal (`ano_mes`)**
-- **Auditoria automática de qualidade**
-- **Rastreabilidade completa até a Silver**
-- **Prevenção ativa de Data Leakage**
-
----
-
-### 7.4 🔀 Fluxo Lógico: SILVER → GOLD
-
-```text
-Silver (Entidades de Domínio)
-        ↓
-Definição de Âncora (Target)
-        ↓
-Governança Temporal (Point-in-Time)
-        ↓
-Agregações Históricas (Lookbacks)
-        ↓
-Join Controlado Multi-Silver
-        ↓
-Gold (Labels e ABTs ML-Ready)
-```
-
-> ⚠️ **Escopo desta documentação**  
-> Este documento não detalha a lógica interna de construção dos ativos Gold, tais como:
->
-> - Estratégias de Point-in-Time Join
-> - Definição de janelas de lookback
-> - Regras de anti-data leakage
-> - Governança de features
-> - Métricas estatísticas geradas
-> - Auditorias específicas por ativo
->
->📌 Essas definições fazem parte da documentação dedicada de estruturação do modelo baseline, onde cada ativo Gold é descrito de forma aprofundada, incluindo decisões estatísticas e justificativas técnicas.
+- **Grão:** Menor unidade de informação que define a unicidade de uma linha na tabela (ex: uma transação específica).
+- **Run ID:** Identificador único de uma execução do pipeline, garantindo o isolamento e a rastreabilidade histórica das cargas.
+- **Partition Pruning:** Otimização que permite ler apenas as pastas (partições) necessárias no S3, reduzindo tempo e custo de processamento.
+- **ABT (Analytical Base Table):** Tabela consolidada com variáveis (features) pronta para o treinamento de modelos de Machine Learning.
+- **Target / Labels:** A variável resposta (o fenômeno) que o modelo tenta prever (ex: inadimplência).
+- **Point-in-Time Join:** Cruzamento de dados que respeita a linha do tempo, garantindo que o modelo use apenas dados disponíveis no momento exato do evento, evitando o vazamento de dados do futuro (*Data Leakage*).
 
 ---
 
