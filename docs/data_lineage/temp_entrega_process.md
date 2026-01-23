@@ -219,18 +219,6 @@ A descrição detalhada das variáveis, incluindo definição semântica, domín
 
 ---
 
-#### 🔗 Mapeamento Físico (Origem → Destino)
-
-**Ativo:** `labels_fpd`  
-**Origem:** `s3://lake/silver/telco/**/*.parquet`  
-**Destino:** `s3://lake/gold/labels_fpd/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
-
-**Ativo:** `abt_base_prod`  
-**Origem:** `s3://lake/silver/**/*` e `s3://lake/gold/labels_fpd/**/*`  
-**Destino:** `s3://lake/gold/abt_base_prod/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
-
----
-
 ### 7.3 🧬 Princípios Técnicos Aplicados
 
 Todos os ativos da camada GOLD obedecem aos seguintes princípios:
