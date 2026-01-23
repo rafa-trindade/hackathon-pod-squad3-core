@@ -176,6 +176,8 @@ A camada **GOLD** materializa os dados para Machine Learning, entregando ativos 
 |:-----|:-----|:-----------|
 | `labels_fpd` | Target | Variável resposta oficial (First Payment Default) |
 
+🔗 **[Estudo de seleção e estruturação do Target](../data_lineage/gold/labels_fpd-lineage.md)**
+
 ---
 
 #### B) Tabela Base Analítica (`abt_base_prod`)
@@ -186,7 +188,7 @@ A camada **GOLD** materializa os dados para Machine Learning, entregando ativos 
 |:-----|:-----|:-----------|
 | `abt_base_prod` | ABT | Base analítica para treinamento e validação |
 
-🔗 **[Book de Variáveis - `abt_base_prod`](../data_modelling/features/abt_base_prod-book.md)**
+🔗 **[Book de Variáveis ABT](../data_modelling/features/abt_base_prod-book.md)**
 
 ---
 
