@@ -2,6 +2,10 @@
 
 Este documento contém o dicionário completo de variáveis da Analytical Base Table (ABT). A estrutura segue o princípio de **Mesa Farta**, disponibilizando todas as features disponíveis nas camadas Silver com prefixos de origem e tratamento de janela temporal (Point-in-Time).
 
+> 🔁 **Versionamento e Reprodutibilidade**  
+> A ABT `abt_base_prod` é versionada por `run_id`, garantindo determinismo e reprodução exata de qualquer experimento histórico.
+
+
 ---
 
 ## 🛠️ Chaves Primárias e Identificadores (Grão)
@@ -41,8 +45,6 @@ As colunas com prefixos `bur_`, `cad_` e `tel_` representam a totalidade das col
 ## 📊 Dicionário de Features Agregadas (Transacionais)
 
 As variáveis transacionais são processadas para capturar a **velocidade** e a **tendência** do comportamento do cliente através de múltiplas janelas de observação (30, 60 e 90 dias) e o acumulado geral.
-
-
 
 ### 1. Comportamento de Recarga (`rec_`)
 | Sufixo da Variável | Janelas Disponíveis | Tipo | Descrição |
@@ -96,12 +98,16 @@ As variáveis transacionais são processadas para capturar a **velocidade** e a 
 | `_dat_ultima_ref` | Histórico Total | DATE | Data da última ocorrência de atraso registrada. |
 | `_dias_desde_ultimo_atraso` | Histórico Total | INTEGER | Dias desde o último evento de atraso registrado. |
 
+> 📐 **Nota Estatística**  
+> As métricas de desvio padrão e coeficiente de variação são calculadas sobre a população observada em cada janela, sem aplicação de inferência estatística.
+
 ---
 
 ## ⏳ Governança de Janelas (Lookback)
 
 * **Regra de Ouro:** Todas as variáveis transacionais respeitam a condição `Data do Evento < Safra`.
 * **Maturidade:** A base âncora é capturada em **D+4** para garantir a estabilidade dos dados transacionais da camada Silver antes da consolidação na Gold.
+* **Geral:** período histórico disponível na camada Silver, limitado a até 18 meses anteriores à data de safra.
 
 
 
