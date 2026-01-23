@@ -195,7 +195,7 @@ Esta camada **não contém lógica de negócio transacional**, mas sim **estrutu
 
 ---
 
-### 🎯 Objetivos da Camada GOLD
+### 7.1 🎯 Objetivos da Camada GOLD
 - Centralizar **targets oficiais** de modelagem
 - Disponibilizar **Analytical Base Tables (ABTs)** padronizadas
 - Garantir **consistência e comparabilidade entre experimentos de Machine Learning**
@@ -203,7 +203,7 @@ Esta camada **não contém lógica de negócio transacional**, mas sim **estrutu
 
 ---
 
-### 📦 Ativos GOLD Disponíveis
+### 7.2 📦 Ativos GOLD Disponíveis
 
 > -------- falta validar
 
@@ -212,8 +212,6 @@ Esta camada **não contém lógica de negócio transacional**, mas sim **estrutu
 | `labels_fpd` | Target | Variável resposta oficial (First Payment Default) |
 | `abt_base_prod` | ABT | Base analítica para treinamento e validação de modelos |
 
-
-
 📘 **Dicionário de Variáveis (Feature Book)**  
 A descrição detalhada das variáveis, incluindo definição semântica, domínio, regra de cálculo, janela temporal e origem Silver, está documentada em:
 
@@ -221,7 +219,19 @@ A descrição detalhada das variáveis, incluindo definição semântica, domín
 
 ---
 
-### 🧬 Princípios Técnicos Aplicados
+#### 🔗 Mapeamento Físico (Origem → Destino)
+
+**Ativo:** `labels_fpd`  
+**Origem:** `s3://lake/silver/telco/**/*.parquet`  
+**Destino:** `s3://lake/gold/labels_fpd/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
+
+**Ativo:** `abt_base_prod`  
+**Origem:** `s3://lake/silver/**/*` e `s3://lake/gold/labels_fpd/**/*`  
+**Destino:** `s3://lake/gold/abt_base_prod/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
+
+---
+
+### 7.3 🧬 Princípios Técnicos Aplicados
 
 Todos os ativos da camada GOLD obedecem aos seguintes princípios:
 
@@ -234,7 +244,7 @@ Todos os ativos da camada GOLD obedecem aos seguintes princípios:
 
 ---
 
-### 🔀 Fluxo Lógico: SILVER → GOLD
+### 7.4 🔀 Fluxo Lógico: SILVER → GOLD
 
 ```text
 Silver (Entidades de Domínio)
