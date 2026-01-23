@@ -188,7 +188,7 @@ A camada **GOLD** materializa os dados para Machine Learning, entregando ativos 
 |:-----|:-----|:-----------|
 | `abt_base_prod` | ABT | Base analítica para treinamento e validação |
 
-🔗 **[Book de Variáveis ABT](../data_modelling/features/abt_base_prod-book.md)**
+🔗 **[Book de Variáveis - ABT](../data_modelling/features/abt_base_prod-book.md)**
 
 ---
 
