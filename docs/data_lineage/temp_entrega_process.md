@@ -301,7 +301,9 @@ Referência das práticas de monitoramento e saúde do pipeline.
 
 # 🧪 Estruturação do Modelo Baseline: Governança Temporal
 
-Este documento define as diretrizes para a construção da Analytical Base Table (ABT) `abt_base_prod`. O foco é garantir a integridade estatística através do **Point-in-Time Join**, permitindo o uso de todo o histórico disponível nas camadas Silver sem causar **Data Leakage**.
+> **Nota Conceitual:** A **ABT** (Analytical Base Table) é a nossa tabela final de consumo físico. Já a **estruturação do baseline** é o conjunto de premissas técnicas (como a Governança Temporal e as janelas de 30/60/90 dias) que aplicamos na construção dessa ABT para garantir que o primeiro modelo do projeto seja treinado com **total confiabilidade**, sem viés ou vazamento de dados (*data leakage*).
+
+---
 
 ## ⏳ 1. Definição da Âncora Temporal (Safra)
 A âncora é o "ponto de observação" que separa o passado (features) do futuro (target).
@@ -317,9 +319,9 @@ Esta ABT utiliza uma abordagem de **Mesa Farta**. Para cada métrica estatístic
 
 | Janela | Escopo Técnico | Objetivo |
 | :--- | :--- | :--- |
-| **L30D** | $T >= Safra - 30$ | Comportamento imediato e volatilidade de curtíssimo prazo. |
-| **L60D** | $T >= Safra - 60$ | Estabilidade de consumo e detecção de tendências recentes. |
-| **L90D** | $T >= Safra - 90$ | Visão consolidada do último trimestre (Padrão de Crédito). |
+| **L30D** | $T \geq Safra - 30$ | Comportamento imediato e volatilidade de curtíssimo prazo. |
+| **L60D** | $T \geq Safra - 60$ | Estabilidade de consumo e detecção de tendências recentes. |
+| **L90D** | $T \geq Safra - 90$ | Visão consolidada do último trimestre (Padrão de Crédito). |
 | **Geral** | Todo o período ($T < Safra$) | Perfil acumulado e *Lifetime Value* (até 18 meses). |
 
 **Campos de Referência para Filtro Temporal:**
