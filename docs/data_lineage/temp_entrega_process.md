@@ -212,7 +212,7 @@ Gold (Labels e ABTs ML-Ready)
 
 ### 6.4 🛡️ Governança de Histórico e Versionamento (`run_id`)
 
-A utilização do **run_id** como chave de particionamento na camada Gold transcende a organização técnica, atuando como o pilar de **Imutabilidade dos Experimentos**. Cada execução do pipeline gera um snapshot completo da ABT, preservando o estado exato das features e janelas temporais naquele instante. 
+A utilização do **run_id** como chave de particionamento na camada Gold transcende a organização técnica, atuando como o pilar de **Imutabilidade dos Experimentos**. Cada execução do pipeline gera um snapshot completo da ABT, preservando o estado exato das features e das Janelas de Lookback naquele instante. 
 
 Esta estratégia permite:
 - **Comparação A/B de Versões:** Permite confrontar a performance de diferentes versões de modelos (ex: v1 vs v2) sobre a mesma base histórica imutável.
@@ -254,19 +254,6 @@ s3://lake/
 
 ---
 
-## 📖 Apêndice: Glossário de Termos Técnicos
-
-Para facilitar a interpretação técnica deste documento, seguem as definições dos conceitos-chave aplicados:
-
-- **Grão:** Menor unidade de informação que define a unicidade de uma linha na tabela (ex: uma transação específica).
-- **Run ID:** Identificador único de uma execução do pipeline, garantindo o isolamento e a rastreabilidade histórica das cargas.
-- **Partition Pruning:** Otimização que permite ler apenas as pastas (partições) necessárias no S3, reduzindo tempo e custo de processamento.
-- **ABT (Analytical Base Table):** Tabela consolidada com variáveis (features) pronta para o treinamento de modelos de Machine Learning.
-- **Target / Labels:** A variável resposta (o fenômeno) que o modelo tenta prever (ex: inadimplência).
-- **Point-in-Time Join:** Cruzamento de dados que respeita a linha do tempo, garantindo que o modelo use apenas dados disponíveis no momento exato do evento, evitando o vazamento de dados do futuro (*Data Leakage*).
-
----
-
 ## 📚 Documentação Complementar
 
 ### 🏗️ Data Architecture
@@ -302,16 +289,25 @@ Referência das práticas de monitoramento e saúde do pipeline.
 
 # 🧪 Estruturação do Modelo Baseline: Governança Temporal
 
-> **Nota Conceitual:** A **ABT** (Analytical Base Table) é a nossa tabela final de consumo físico. Já a **estruturação do baseline** é o conjunto de premissas técnicas (como a Governança Temporal e as janelas de 30/60/90 dias) que aplicamos na construção dessa ABT para garantir que o primeiro modelo do projeto seja treinado com **total confiabilidade**, sem viés ou vazamento de dados (*data leakage*).
+> **Nota Conceitual:** A **ABT** (Analytical Base Table) é a nossa tabela final de consumo físico. Já a **estruturação do baseline** é o conjunto de premissas técnicas (como a Governança Temporal e as janelas de 30/60/90 dias) que aplicamos na construção dessa ABT para garantir que o primeiro modelo do projeto seja treinado com **total confiabilidade**, sem viés ou *data leakage* (vazamento de dados).
+
+---
+
+## 📉 Visão Geral
+
+- **Entidade Principal:** Analytical Base Table (ABT) para Modelagem.
+- **Grão da Tabela (Unicidade):** `num_cpf, safra, prod`
+- **Âncora de Seleção:** `gold/labels_fpd` (Ponto de Observação D+4)
+- **Chave de Particionamento:** `ano_mes` (Derivado da `safra`)
 
 ---
 
 ## ⏳ 1. Definição da Âncora Temporal (Safra)
 A âncora é o "ponto de observação" que separa o passado (features) do futuro (target).
 
-* **Ref_Date (Safra):** Definida pelo campo `safra`. Representa o primeiro dia do mês de ativação ou evento do cliente.
-* **Ponto de Corte (Cutoff):** Para cada registro, o sistema isola o universo de dados. Apenas eventos com data **estritamente inferior** à `safra` são elegíveis para a criação de features.
-* **Maturidade de Ingestão (D+4):** A captura da base âncora é realizada em **D+4** após o fechamento da safra. Isso garante que os dados transacionais das camadas Silver estejam estabilizados e completos antes da consolidação na Gold.
+* **Safra:** Representa o primeiro dia do mês de ativação ou evento do cliente. É a referência temporal absoluta para o grão da ABT.
+* **Ponto de Corte (Cutoff):** Para cada registro, o sistema isola o universo de dados. Apenas eventos com data **estritamente inferior** à **Safra** são elegíveis para a criação de features.
+* **Maturidade de Ingestão (D+4):** A captura da **Safra** é realizada em **D+4** após o fechamento do mês. Isso garante que os dados transacionais das camadas Silver estejam estabilizados e completos antes da consolidação na Gold.
 * **Objetivo:** Garantir que o modelo seja treinado exatamente com as informações que estariam disponíveis no momento da decisão de crédito.
 
 ---
@@ -352,3 +348,24 @@ O padrão seguido para as features é: `{prefixo}_{métrica}_{janela/tipo}`.
 
 **Exemplo de interpretação:**
 A variável `rec_vlr_avg_l60d` refere-se ao **valor médio de recarga** nos **últimos 60 dias** anteriores à safra. Esse padrão garante que o modelo baseline receba dados autoexplicativos, facilitando a análise de importância de variáveis (*feature importance*).
+
+<br><br><br>
+
+## Nota para Documentação:
+## No final geral da documento add o glossario
+
+## 📖 Apêndice: Glossário Geral da Documentação
+
+Para facilitar a interpretação técnica deste documento, seguem as definições dos conceitos-chave aplicados:
+
+- **ABT (Analytical Base Table):** Tabela consolidada com variáveis (features) pronta para o treinamento de modelos de Machine Learning.
+- **Data Leakage (Vazamento de Dados):** Erro onde informações do futuro são usadas indevidamente no treino. Nossa governança elimina esse risco via **Point-in-Time Join**.
+- **Drift (Desvio):** Mudança no comportamento ou na distribuição dos dados ao longo do tempo, que pode degradar a performance do modelo.
+- **Lookback Window (Janela de Retrocesso):** O período de tempo (30, 60, 90 dias) que o modelo "olha para trás" a partir da **Safra** para calcular comportamentos.
+- **Maturidade (D+4):** Tempo de espera técnica necessário para garantir que todos os eventos do mês anterior foram devidamente consolidados no Lake antes da geração da Gold.
+- **Mesa Farta:** Abordagem de *Feature Engineering* que consiste em gerar o máximo de variáveis e combinações temporais para que o algoritmo identifique as melhores correlações.
+- **Partition Pruning:** Otimização que permite ler apenas as partições necessárias no S3, reduzindo drasticamente o tempo e o custo de processamento.
+- **Point-in-Time Join:** Técnica de cruzamento de dados que respeita a linha do tempo, garantindo que o modelo use apenas dados disponíveis no momento exato do evento.
+- **Run ID:** Identificador único de uma execução do pipeline, garantindo o isolamento e a reprodutibilidade histórica das cargas.
+- **Safra (Observação):** O ponto fixo no tempo (mês/ano) que define o grão temporal da tabela e separa o passado (features) do futuro (target).
+- **Target (Alvo):** A variável resposta (o fenômeno) que o modelo tenta prever (neste caso, o `fpd` - *First Payment Default*).
