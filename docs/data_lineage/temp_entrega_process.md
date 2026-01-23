@@ -205,7 +205,7 @@ Esta camada **não contém lógica de negócio transacional**, mas sim **estrutu
 
 ### 📦 Ativos GOLD Disponíveis
 
-> -------- valta validar
+> -------- falta validar
 
 | Ativo | Tipo | Finalidade |
 |:-----|:-----|:-----------|
