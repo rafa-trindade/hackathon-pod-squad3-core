@@ -221,7 +221,7 @@ Esta estratégia permite:
 
 ---
 
-> ⚠️ **Nota de Escopo:** Este documento não detalha a lógica interna de construção dos ativos Gold, tais como estratégias de **Point-in-Time Join**, definição de **janelas de lookback**, regras de **anti-data leakage**, governança de features e métricas estatísticas. Essas especificações constam na documentação dedicada de **estruturação do modelo baseline**, onde cada ativo é descrito com suas decisões estatísticas e justificativas técnicas.
+> ⚠️ **Nota de Escopo:** Este documento não detalha a lógica interna de construção dos ativos Gold, tais como estratégias de **Point-in-Time Join**, definição de **janelas de lookback** e regras de **anti-data leakage**. Essas especificações constam na documentação dedicada de **estruturação do modelo baseline**, onde cada ativo é descrito com suas decisões estatísticas e justificativas técnicas.
 
 ---
 
@@ -290,3 +290,39 @@ Diretrizes formais de governança aplicadas ao projeto.
 ### 🔍 Data Observability
 📑 **[Manual de Observabilidade](../data_observability/README.md)**  
 Referência das práticas de monitoramento e saúde do pipeline.
+
+
+# FIM
+
+
+----
+
+# Aqui entra a parte que a documentação pede "**estruturação do modelo baseline**" que ja temos disponivel
+
+# 🧪 Estruturação do Modelo Baseline: Governança Temporal
+
+Este documento define as diretrizes para a construção da Analytical Base Table (ABT) `abt_base_prod`. O foco é garantir a integridade estatística através do **Point-in-Time Join**, permitindo o uso de todo o histórico disponível nas camadas Silver sem causar **Data Leakage**.
+
+## ⏳ 1. Definição da Âncora Temporal (Safra)
+A âncora é o "ponto de observação" que separa o passado (features) do futuro (target).
+
+* **Ref_Date (Safra):** Definida pelo campo `safra`. Representa o primeiro dia do mês de ativação ou evento do cliente.
+* **Ponto de Corte (Cutoff):** Para cada registro, o sistema isola o universo de dados. Apenas eventos com data **estritamente inferior** à `safra` são elegíveis para a criação de features.
+* **Objetivo:** Garantir que o modelo seja treinado exatamente com as informações que estariam disponíveis no momento da decisão de crédito.
+
+---
+
+## 📊 2. Janelas de Lookback e Agregações Históricas
+Esta ABT utiliza uma abordagem de **Mesa Farta**. Para cada métrica estatística (Soma, Média, Mínimo, Máximo e Contagem), geramos colunas específicas para quatro horizontes temporais distintos, permitindo ao modelo identificar variações de comportamento (tendência e velocidade).
+
+| Janela | Escopo Técnico | Objetivo |
+| :--- | :--- | :--- |
+| **L30D** | $T >= Safra - 30$ | Comportamento imediato e volatilidade de curtíssimo prazo. |
+| **L60D** | $T >= Safra - 60$ | Estabilidade de consumo e detecção de tendências recentes. |
+| **L90D** | $T >= Safra - 90$ | Visão consolidada do último trimestre (Padrão de Crédito). |
+| **Geral** | Todo o período ($T < Safra$) | Perfil acumulado e *Lifetime Value* (até 18 meses). |
+
+**Campos de Referência para Filtro Temporal:**
+* **Recarga:** `dat_insercao_credito`
+* **Pagamento:** `dat_status_fatura`
+* **Atraso:** `dat_referencia`
