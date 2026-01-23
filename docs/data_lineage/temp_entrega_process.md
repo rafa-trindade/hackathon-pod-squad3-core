@@ -210,6 +210,17 @@ Gold (Labels e ABTs ML-Ready)
 
 ---
 
+### 6.4 🛡️ Governança de Histórico e Versionamento (`run_id`)
+
+A utilização do **run_id** como chave de particionamento na camada Gold transcende a organização técnica, atuando como o pilar de **Imutabilidade dos Experimentos**. Cada execução do pipeline gera um snapshot completo da ABT, preservando o estado exato das features e janelas temporais naquele instante. 
+
+Esta estratégia permite:
+- **Comparação A/B de Versões:** Permite confrontar a performance de diferentes versões de modelos (ex: v1 vs v2) sobre a mesma base histórica imutável.
+- **Auditoria de Drift:** Comparação histórica entre diferentes versões da mesma ABT para identificar se a queda de performance de um modelo se deve a mudanças no comportamento dos dados.
+- **Backtesting e Rollback:** Capacidade de revalidar modelos antigos ou reverter para a base exata de um experimento anterior com total determinismo.
+
+--
+
 > ⚠️ **Nota de Escopo:** Este documento não detalha a lógica interna de construção dos ativos Gold, tais como estratégias de **Point-in-Time Join**, definição de **janelas de lookback**, regras de **anti-data leakage**, governança de features e métricas estatísticas. Essas especificações constam na documentação dedicada de **estruturação do modelo baseline**, onde cada ativo é descrito com suas decisões estatísticas e justificativas técnicas.
 
 ---
