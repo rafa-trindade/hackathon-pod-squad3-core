@@ -291,14 +291,14 @@ Diretrizes formais de governança aplicadas ao projeto.
 📑 **[Manual de Observabilidade](../data_observability/README.md)**  
 Referência das práticas de monitoramento e saúde do pipeline.
 
-
-# FIM da Documentação de Data Lineage & Processamento de Dados
+## Nota para Documentação:
+## FIM da Documentação de Data Lineage & Processamento de Dados
 
 <br><br><br>
 
 
-
-# Aqui entra a parte que a documentação pede "**estruturação do modelo baseline**" que ja temos documentado
+## Nota para Documentação:
+## Aqui entra a parte que a documentação pede "**estruturação do modelo baseline**" que ja temos documentado
 
 # 🧪 Estruturação do Modelo Baseline: Governança Temporal
 
@@ -311,6 +311,7 @@ A âncora é o "ponto de observação" que separa o passado (features) do futuro
 
 * **Ref_Date (Safra):** Definida pelo campo `safra`. Representa o primeiro dia do mês de ativação ou evento do cliente.
 * **Ponto de Corte (Cutoff):** Para cada registro, o sistema isola o universo de dados. Apenas eventos com data **estritamente inferior** à `safra` são elegíveis para a criação de features.
+* **Maturidade de Ingestão (D+4):** A captura da base âncora é realizada em **D+4** após o fechamento da safra. Isso garante que os dados transacionais das camadas Silver estejam estabilizados e completos antes da consolidação na Gold.
 * **Objetivo:** Garantir que o modelo seja treinado exatamente com as informações que estariam disponíveis no momento da decisão de crédito.
 
 ---
@@ -329,3 +330,25 @@ Esta ABT utiliza uma abordagem de **Mesa Farta**. Para cada métrica estatístic
 * **Recarga:** `dat_insercao_credito`
 * **Pagamento:** `dat_status_fatura`
 * **Atraso:** `dat_referencia`
+
+---
+
+## 🧬 3. Composição e Nomenclatura dos Ativos
+
+Para garantir que o modelo baseline tenha uma visão 360º e interprete corretamente a origem de cada sinal, aplicamos um mapeamento rigoroso de prefixos e padrões de nomes:
+
+### 3.1 Mapeamento de Prefixos (Origens Silver)
+| Prefixo | Tabela Origem | Estratégia de Captura |
+| :--- | :--- | :--- |
+| `bur_` | `silver/score_bureau_movel` | Snapshot completo de scores externos. |
+| `cad_` | `silver/dados_cadastrais` | Atributos demográficos e cadastrais. |
+| `tel_` | `silver/telco` | Variáveis de rede e consumo móvel. |
+| `rec_` | `silver/recarga` | Agregações de histórico de créditos. |
+| `pag_` | `silver/pagamento` | Agregações de liquidação de faturas. |
+| `atr_` | `silver/atraso` | Histórico de inadimplência e risco. |
+
+### 3.2 Padrão de Nomenclatura
+O padrão seguido para as features é: `{prefixo}_{métrica}_{janela/tipo}`. 
+
+**Exemplo de interpretação:**
+A variável `rec_vlr_avg_l60d` refere-se ao **valor médio de recarga** nos **últimos 60 dias** anteriores à safra. Esse padrão garante que o modelo baseline receba dados autoexplicativos, facilitando a análise de importância de variáveis (*feature importance*).
