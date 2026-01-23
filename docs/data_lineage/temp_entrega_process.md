@@ -334,14 +334,14 @@ Esta ABT utiliza uma abordagem de **Mesa Farta**. Para cada métrica estatístic
 Para garantir que o modelo baseline tenha uma visão 360º e interprete corretamente a origem de cada sinal, aplicamos um mapeamento rigoroso de prefixos e padrões de nomes:
 
 ### 3.1 Mapeamento de Prefixos (Origens Silver)
-| Prefixo | Tabela Origem | Estratégia de Captura |
+| Prefixo | Tabela Origem (Silver) | Estratégia de Captura |
 | :--- | :--- | :--- |
-| `bur_` | `silver/score_bureau_movel` | Snapshot completo de scores externos. |
-| `cad_` | `silver/dados_cadastrais` | Atributos demográficos e cadastrais. |
-| `tel_` | `silver/telco` | Variáveis de rede e consumo móvel. |
-| `rec_` | `silver/recarga` | Agregações de histórico de créditos. |
-| `pag_` | `silver/pagamento` | Agregações de liquidação de faturas. |
-| `atr_` | `silver/atraso` | Histórico de inadimplência e risco. |
+| `bur_` | `silver/score_bureau_movel` | Snapshot completo de scores e bureaus externos. |
+| `cad_` | `silver/dados_cadastrais` | Snapshot completo de atributos demográficos e cadastrais. |
+| `tel_` | `silver/telco` | Snapshot completo de variáveis de rede e consumo móvel. |
+| `rec_` | `silver/recarga` | Agregações estatísticas sobre histórico de créditos. |
+| `pag_` | `silver/pagamento` | Agregações estatísticas sobre liquidação de faturas. |
+| `atr_` | `silver/atraso` | Agregações estatísticas sobre histórico de inadimplência. |
 
 ### 3.2 Padrão de Nomenclatura
 O padrão seguido para as features é: `{prefixo}_{métrica}_{janela/tipo}`. 
