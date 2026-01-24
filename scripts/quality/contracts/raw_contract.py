@@ -7,6 +7,11 @@ from pathlib import Path
 from datetime import datetime
 from typing import Optional
 from pandera.typing import Series
+import warnings
+
+
+os.environ["DISABLE_PANDERA_IMPORT_WARNING"] = "True"
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 # ------------------------------------------------------------------
 # PATH SETUP & CONNECTIONS
