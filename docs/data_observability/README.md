@@ -40,7 +40,7 @@ A observabilidade de dados garante a transparência e a saúde do fluxo de infor
 ### 5️⃣ Lineage & Rastreabilidade
 **Como é atendido:**
 * **Mapeamento de Dependências:** Documentação explícita da jornada do dado entre as camadas do Lake disponível em `docs/data_lineage`.
-* **Isolamento de Erros:** A estrutura de `run_id` permite que o Lineage seja "versionado" — sabemos exatamente qual versão do código gerou qual versão do dado.
+* **Isolamento de Erros:** A estrutura de `run_id` permite que o Lineage seja "versionado" - sabemos exatamente qual versão do código gerou qual versão do dado.
 * **Evidência Persistente:** O vínculo entre código e dado é selado pela persistência do log de execução original junto aos dados no Data Lake, garantindo que o rastro técnico nunca se perca.
 
 
