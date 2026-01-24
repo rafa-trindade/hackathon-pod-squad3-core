@@ -27,9 +27,9 @@ Os dados são classificados em duas categorias de ingestão:
 
 ### 1.2 Decisões Técnicas Fundamentais
 
-* **Particionamento Virtual (Hive):** A coluna técnica `ano_mes` é utilizada exclusivamente para a criação da estrutura de pastas no S3. Ela é removida do corpo do arquivo Parquet para evitar redundância, sendo "reconstruída" em tempo de execução pelos motores de consulta (DuckDB).
-* **Tipagem Numérica:** A partição `ano_mes` é tratada como `BIGINT` (formato `YYYYMM`). Isso garante ordenação natural e consultas de intervalo (`BETWEEN`) mais performáticas do que strings.
-* **Preservação da Data Real:** A coluna de referência original (ex: `dat_status_fatura`) é sempre mantida dentro do arquivo Parquet com tipagem `DATE` ou `TIMESTAMP`, garantindo a precisão do evento.
+* **Particionamento Virtual (Hive):** A coluna técnica `ano_mes` organiza a estrutura física no S3. Ao carregar para o banco (DuckDB/Postgres), essa coluna é persistida para permitir índices e filtros eficientes.
+* **Tipagem Numérica (BIGINT):** Armazenar `ano_mes` como `YYYYMM` (Ex: 202501) em vez de String ou Date no banco de dados reduz o consumo de memória e acelera operações de comparação e ordenação.
+* **Preservação da Data Real:** A coluna original (ex: `dat_referencia`) permanece intacta com tipo `DATE`. Isso permite que o analista use funções de data (MONTH, YEAR) sem perder o benefício de performance do filtro pela coluna de partição numérica.
 
 ---
 
@@ -46,8 +46,6 @@ Para garantir o cumprimento desta política e a saúde dos dados para modelagem,
     * Detalhes técnicos de integridade: [`reports/observability/integrity/`](../../reports/observability/integrity/).
     * Auditoria de safra e overlap (Quality Report): [`reports/observability/quality/pipeline/`](../../reports/observability/quality/pipeline/).
 
-Para auditar uma execução específica, a estrutura no S3 deve ser consultada:
-`s3://lake/observability/reports/run_id=YYYYMMDD_HHMMSS/`
 
 ## 2. Fluxo entre Camadas
 
