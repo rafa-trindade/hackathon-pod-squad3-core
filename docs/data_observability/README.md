@@ -41,6 +41,8 @@ A observabilidade de dados garante a transparência e a saúde do fluxo de infor
 **Como é atendido:**
 * **Mapeamento de Dependências:** Documentação explícita da jornada do dado entre as camadas do Lake disponível em `docs/data_lineage`.
 * **Isolamento de Erros:** A estrutura de `run_id` permite que o Lineage seja "versionado" — sabemos exatamente qual versão do código gerou qual versão do dado.
+* **Evidência Persistente:** O vínculo entre código e dado é selado pela persistência do log de execução original junto aos dados no Data Lake, garantindo que o rastro técnico nunca se perca.
+
 
 
 ## 🛠️ Implementação da Confiabilidade (Reliability)
@@ -50,15 +52,24 @@ A confiabilidade é sustentada pelo **Protocolo de Execução Segura**:
 1. **Idempotência:** O reprocessamento de um mesmo mês (`ano_mes`) não gera duplicidade, pois a nova `run_id` substitui logicamente a anterior.
 2. **Capacidade de Rollback:** A Política de Retenção mantendo `MAX_RUNS > 1` é o nosso mecanismo de "Undo", permitindo reverter o Lake para um estado estável em segundos caso o pilar de Quality falhe.
 
-
 ## 📂 Evidências de Auditoria (Observability Reports)
 
-A observabilidade é materializada através de artefatos técnicos gerados automaticamente:
+A observabilidade é materializada através de artefatos gerados em tempo de execução. Para garantir a governança, estes arquivos são mantidos em última versão local e **historicamente no Data Lake** em `s3://lake/observability/reports/run_id={id}/`:
 
-- **Integridade de Partições:** [`reports/observability/integrity/`](../../reports/observability/integrity/) - Validação física e cross-check cronológico do Lake.
-- **Qualidade de Pipeline (Safra/Overlap):** [`reports/observability/quality/pipeline/`](../../reports/observability/quality/pipeline/) - Auditoria de volumetria e match de chaves para modelagem.
+- **Master Pipeline Log:** [Disponível no S3] - Registro sequencial técnico (caixa-preta) de todas as etapas do pipeline.
+- **Integridade de Partições:** [`reports/observability/integrity/`](../../reports/observability/integrity/) - Validação física e cross-check cronológico.
+- **Qualidade de Pipeline (Safra/Overlap):** [`reports/observability/quality/pipeline/`](../../reports/observability/quality/pipeline/) - Auditoria de volumetria e match de chaves.
 - **Diagnósticos Estatísticos:** [`reports/observability/profiling/`](../../reports/observability/profiling/) - Saúde estatística e distribuição (Data Discovery).
-- **Contratos de Dados (Pandera):** [`reports/observability/quality/pandera/`](../../reports/observability/quality/pandera/) - Validação de schemas e regras de negócio.
+- **Contratos de Dados (Pandera):** [`reports/observability/quality/pandera/`](../../reports/observability/quality/pandera/) - Validação de schemas e regras.
+
+## 🧭 Navegação de Observabilidade no Data Lake
+
+Para auditar uma execução específica, a estrutura no S3 deve ser consultada seguindo o padrão:
+`s3://lake/observability/reports/run_id=YYYYMMDD_HHMMSS/`
+
+1. **Raiz da Pasta:** Contém o arquivo `.log` consolidado da execução do pipeline.
+2. **Subpastas:** Contêm os relatórios detalhados em `.md` (Profiling) e logs de integridade/qualidade.
+
 
 
 ## 🧠 Conclusão: Observabilidade como Resultado
