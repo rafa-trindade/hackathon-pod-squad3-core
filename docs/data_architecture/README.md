@@ -25,11 +25,12 @@ A arquitetura micro detalha os componentes da plataforma e seus mecanismos opera
 * **Orquestração (Apache Airflow):** Maestro responsável por garantir a idempotência e a ordem de execução das DAGs.
 * **Isolamento (Docker):** Coexistência de serviços (MinIO, Postgres, Airflow) em containers, facilitando o setup e a portabilidade.
 * **Data Lake (MinIO - S3 Compatible):** Camada de armazenamento central baseada no padrão Medallion (Bronze, Silver e Gold), com dados imutáveis por `run_id`, suportando reprocessamento, auditoria e observabilidade nativa.
+  * **Fluxo de Evidências Técnicas:** Conforme ilustrado, o `run_id` atua como a chave mestra que vincula o processamento do dado aos buckets dedicados de **OBSERVABILITY** e **REPORTS**.
+  * **Isolamento de Metadados:** Logs e profilings de qualidade são persistidos em diretórios apartados das camadas de negócio, garantindo que o rastro de auditoria sobreviva ao encerramento da sessão ou do container.
 * **Data Warehouse (PostgreSQL + dbt):** Modelagem dimensional (Star Schema) para consumo analítico, com governança de transformações via dbt.
 * **Camada Analítica & ML:**
   * **Jupyter Notebook:** Executado em ambiente isolado, consome dados da camada Gold para exploração, treino e validação de modelos, gerando artefatos analíticos e modelos versionados (.pkl).
   * **Streamlit:** Camada de visualização para consumo de KPIs e métricas a partir dos **Data Marts do Data Warehouse** (escopo opcional).
-
 
 
 
@@ -45,7 +46,7 @@ A matriz abaixo destaca apenas os componentes que representam decisões arquitet
 | **Pandera** | **Data Quality** | Validação de schema na ingestão (Data Contracts). | **Prevenção de Erros:** Bloqueia inconsistências na entrada do pipeline. |
 | **Jupyter Notebook** | **Experimentação & ML** | Treinamento interativo de modelos e feature engineering com baixo overhead operacional. | **Reprodutibilidade:** Notebooks versionados, seeds fixas e datasets imutáveis por `run_id`. |
 | **Streamlit** | **Camada de Apresentação** | Exposição opcional de KPIs e métricas analíticas para stakeholders. | **Consumo Governado:** Acesso somente a Data Marts do Data Warehouse e artefatos de modelo versionados. |
-
+| **Observability** | **Metadata Storage** | Garante que logs de erro e profilings de qualidade sejam persistidos no S3. | **Sincronia Operacional:** Relatórios nascem e morrem vinculados a pipeline através do `run_id`. |
 
 ## 🚀 Estratégias de Engenharia e Confiabilidade
 
@@ -59,7 +60,7 @@ Esta PoC implementa pilares de **Data Reliability** que garantem a resiliência 
    * **Freshness & Integridade:** Uso da coluna técnica `ingestion_ts` e auditoria de partições para garantir que a estrutura física condiz com a cronologia dos dados.
    * **Saúde de Safra (Health Check):** Monitoramento de volumetria (regra 10%-90%) na Gold Pipeline, impedindo o processamento de cargas incompletas.
    * **Audit de Overlap:** Monitoramento da taxa de encontro de chaves entre camadas para garantir a riqueza de informação necessária à modelagem.
-   * **Persistência de Evidências:** Diferente de pipelines tradicionais, esta arquitetura sincroniza automaticamente o "Master Log" e os relatórios de qualidade com o S3 ao final de cada execução, criando um histórico imutável do comportamento do pipeline.
+   * **Persistência de Evidências:** A arquitetura implementa a sincronização automática do "Master Log" e dos relatórios de qualidade com o S3 ao final de cada execução. Isso estabelece um histórico imutável do comportamento do pipeline, facilitando auditorias, depuração retroativa e conformidade de dados.
 
 3. **Resiliência e Recuperação:**
    * **Idempotência:** O reprocessamento de um mesmo mês não gera duplicidade; a nova `run_id` substitui logicamente a anterior.
