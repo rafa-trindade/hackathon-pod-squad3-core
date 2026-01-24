@@ -1,0 +1,10 @@
+📋 RAW DATA CONTRACT AUDIT | 2026-01-24 16:29:22
+================================================================================
+STATUS     | COLS  | DETALHE
+--------------------------------------------------------------------------------
+✅ PASS    | 50    | Tabela 'atraso' em conformidade.
+✅ PASS    | 33    | Tabela 'dados_cadastrais' em conformidade.
+✅ PASS    | 73    | Tabela 'pagamento' em conformidade.
+✅ PASS    | 24    | Tabela 'recarga' em conformidade.
+✅ PASS    | 8     | Tabela 'score_bureau_movel' em conformidade.
+✅ PASS    | 74    | Tabela 'telco' em conformidade.
