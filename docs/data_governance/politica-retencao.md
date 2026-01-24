@@ -23,6 +23,7 @@ A retenção é gerenciada de forma automatizada pelo utilitário `lake_retentio
 * **Parâmetro:** `MAX_RUNS` (configurável via variável de ambiente ou código).
 * **Lógica:** Mantemos as **N** versões mais recentes e removemos fisicamente as versões excedentes.
 * **Segurança:** A run atual é explicitamente protegida e nunca é alvo de deleção.
+* **Sincronização de Metadados:** A limpeza de artefatos de observabilidade (Logs e Reports) acompanha o ciclo de vida dos dados. Isso garante que cada `run_id` presente no Lake possua seu respectivo lastro técnico, evitando o acúmulo de evidências sem referência física.
 
 **Exemplo Prático (`MAX_RUNS = 2`):**
 1.  **Run T0:** Escrita finalizada (Total: 1 run).
@@ -49,6 +50,7 @@ A limpeza **nunca** precede a escrita. O fluxo obedece rigorosamente a seguinte 
 | **BRONZE** | Curta (1 a 3 runs) | Camada intermediária de tipagem. Requer histórico apenas para validação imediata e rollback técnico. |
 | **SILVER** | Moderada | Dados limpos e padronizados. Retenção maior para suportar análises históricas e reprocessamentos de Gold. |
 | **GOLD** | Específica por Modelo | Governança baseada no ciclo de vida dos modelos de ML e requisitos de auditoria. |
+| OBSERVABILITY | Sincronizada com o Dado | Garantir que existam logs e profilings disponíveis para todas as run_id ativas no Lake. |
 
 
 ## 4. Implementação e Governança
@@ -56,7 +58,7 @@ A limpeza **nunca** precede a escrita. O fluxo obedece rigorosamente a seguinte 
 A lógica de limpeza é centralizada no módulo `scripts/transformations/utils/lake_retention.py`, utilizando a biblioteca `boto3` para operações atômicas no S3.
 
 **Responsabilidades:**
-* **Engenharia de Dados:** Configurar o parâmetro `MAX_RUNS` adequado para a volumetria de cada dataset.
+* **Engenharia de Dados:** Configurar o parâmetro `MAX_RUNS` adequado para a volumetria de cada dataset e garantir a execução do utilitário `upload_reports_with_log.py` ao final de cada pipeline para persistência e limpeza das evidências.
 * **Infraestrutura/Cloud:** Monitorar logs de deleção e métricas de custo do S3.
 
 
