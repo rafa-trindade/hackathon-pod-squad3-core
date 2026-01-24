@@ -84,6 +84,11 @@ separator
 
 PIPELINE_START=$(date +%s%3N)
 
+######################################### 
+# 0. QUALITY RAW 
+######################################### 
+run_step "QUALITY RAW" "scripts.quality.contracts.raw_contract"
+
 #########################################
 # 1. PROFILING - RAW
 #########################################
