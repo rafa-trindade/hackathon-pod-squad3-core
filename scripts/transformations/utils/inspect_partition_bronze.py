@@ -22,7 +22,7 @@ LOG_FILE = LOG_DIR / "inspect_partition-bronze.log"
 class Logger(object):
     def __init__(self):
         self.terminal = sys.stdout
-        self.log = open(LOG_FILE, "a", encoding="utf-8")
+        self.log = open(LOG_FILE, "w", encoding="utf-8")
     def write(self, message):
         self.terminal.write(message)
         self.log.write(message)

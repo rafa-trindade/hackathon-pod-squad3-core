@@ -22,7 +22,7 @@ LOG_FILE = LOG_DIR / "inspect_partition-gold.log"
 class Logger(object):
     def __init__(self):
         self.terminal = sys.stdout
-        self.log = open(LOG_FILE, "a", encoding="utf-8")
+        self.log = open(LOG_FILE, "w", encoding="utf-8")
     def write(self, message):
         self.terminal.write(message)
         self.log.write(message)
@@ -35,6 +35,11 @@ class Logger(object):
 # ------------------------------------------------------------------
 TABLES_CONFIG = {
     "labels_fpd": {
+        "col_date": "safra",
+        "start": "202410",
+        "end": "202503"
+    },
+    "abt_base_prod": {
         "col_date": "safra",
         "start": "202410",
         "end": "202503"
