@@ -23,14 +23,15 @@ A arquitetura micro detalha os componentes da plataforma e seus mecanismos opera
 ![Arquitetura Micro](../images/data_architecture/arquitetura_micro.png)
 
 * **Orquestração (Apache Airflow):** Maestro responsável por garantir a idempotência e a ordem de execução das DAGs.
+   * **Identificação de Ciclo:** Nesta orquestração, um `run_id` exclusivo é gerado a cada execução. Isso garante que o dado processado e seus respectivos artefatos de observabilidade estejam deterministicamente vinculados à mesma janela de execução.
 * **Isolamento (Docker):** Coexistência de serviços (MinIO, Postgres, Airflow) em containers, facilitando o setup e a portabilidade.
-* **Data Lake (MinIO - S3 Compatible):** Camada de armazenamento central baseada no padrão Medallion (Bronze, Silver e Gold), com dados imutáveis por `run_id`, suportando reprocessamento, auditoria e observabilidade nativa.
-   * **Fluxo de Evidências Técnicas:** O `run_id` atua como a chave mestra que vincula o processamento do dado aos buckets dedicados de **OBSERVABILITY** e **REPORTS**.
-   * **Persistência de Artefatos:** Os artefatos de observabilidade são gerados localmente para consulta imediata e automaticamente persistidos no Data Lake a cada execução, garantindo um histórico imutável e auditável vinculado a cada processamento.
-* **Data Warehouse (PostgreSQL + dbt):** Modelagem dimensional (Star Schema) para consumo analítico, com governança de transformações via dbt.
+* **Data Lake (MinIO - S3 Compatible):** Camada de armazenamento central baseada no padrão Medallion (Bronze, Silver e Gold), com dados imutáveis por `run_id`.
+    * **Fluxo de Evidências Técnicas:** O `run_id` atua como a chave mestra que vincula o processamento do dado aos buckets dedicados de **OBSERVABILITY** e **REPORTS**.
+    * **Persistência de Artefatos:** Os artefatos de observabilidade são gerados localmente para consulta imediata e automaticamente persistidos no Data Lake a cada execução, garantindo um histórico imutável e auditável vinculado a cada processamento.
+* **Data Warehouse (PostgreSQL + dbt):** Modelagem dimensional (Star Schema) para consumo analítico, com governança de transformações via dbt. *(escopo opcional)*
 * **Camada Analítica & ML:**
   * **Jupyter Notebook:** Executado em ambiente isolado, consome dados da camada Gold para exploração, treino e validação de modelos, gerando artefatos analíticos e modelos versionados (.pkl).
-  * **Streamlit:** Camada de visualização para consumo de KPIs e métricas a partir dos **Data Marts do Data Warehouse** (escopo opcional).
+  * **Streamlit:** Camada de visualização para consumo de KPIs e métricas a partir dos **Data Marts do Data Warehouse**. *(escopo opcional)*
 
 
 
