@@ -12,7 +12,7 @@ A arquitetura macro ilustra o fluxo end-to-end do dado, evidenciando como polít
 * **Ingestion & External Data:** Captura de fontes com validação via **Contratos de Dados (Pandera)**, garantindo conformidade antes da persistência na camada Raw/Landing.
 * **Data Processing (Medallion):** Implementação das camadas **Bronze, Silver e Gold** no MinIO (S3-Compatible). 
 * **Engine de Processamento:** O **DuckDB** executa transformações SQL vetorizadas com alta eficiência em recursos limitados.
-* **Data Observability:** Monitoramento automático de *Freshness*, Volumetria e Distribuição Estatística por meio de auditorias programáticas e logs de integridade.
+* **Data Observability:** Monitoramento automático de *Freshness*, Volumetria e Distribuição Estatística. Os logs de execução e relatórios técnicos são persistidos no Data Lake (S3) vinculados ao `run_id`, garantindo auditoria histórica e governança operacional.
 * **Deliverables:** Entrega de modelo **.pkl**, relatórios de análise de público e dashboard analítico em **Streamlit** (escopo opcional).
 
 ## 🛠️ Arquitetura Micro (Visão de Componentes)
@@ -59,6 +59,7 @@ Esta PoC implementa pilares de **Data Reliability** que garantem a resiliência 
    * **Freshness & Integridade:** Uso da coluna técnica `ingestion_ts` e auditoria de partições para garantir que a estrutura física condiz com a cronologia dos dados.
    * **Saúde de Safra (Health Check):** Monitoramento de volumetria (regra 10%-90%) na Gold Pipeline, impedindo o processamento de cargas incompletas.
    * **Audit de Overlap:** Monitoramento da taxa de encontro de chaves entre camadas para garantir a riqueza de informação necessária à modelagem.
+   * **Persistência de Evidências:** Diferente de pipelines tradicionais, esta arquitetura sincroniza automaticamente o "Master Log" e os relatórios de qualidade com o S3 ao final de cada execução, criando um histórico imutável do comportamento do pipeline.
 
 3. **Resiliência e Recuperação:**
    * **Idempotência:** O reprocessamento de um mesmo mês não gera duplicidade; a nova `run_id` substitui logicamente a anterior.
@@ -80,5 +81,10 @@ Diretrizes formais de governança aplicadas ao projeto.
 ### 🔍 Data Observability
 📑 **[Manual de Observabilidade](../data_observability/README.md)**  
 Referência das práticas de monitoramento e saúde do pipeline.
+
+---
+
+### ⚙️ Operação e Setup
+📑 **[Guia de Execução do Projeto](../guides/pipeline_execution.md)** Protocolos de infraestrutura e passos para acionamento do pipeline.
 
 
