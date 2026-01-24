@@ -21,6 +21,7 @@ A governança atua de forma transversal para garantir:
 - Define a estratégia de **Imutabilidade por Execução** (`run_id`).
 - Estabelece o protocolo de limpeza *post-write* para evitar perda de dados em falhas.
 - **Implementação:** Reforçada pelo utilitário `scripts/transformations/utils/lake_retention.py`.
+- **Persistência de Logs:** Estabelece a sincronização e retenção das evidências de observabilidade no Data Lake, vinculadas ao ciclo de vida das execuções (`run_id`).
 
 ---
 
@@ -44,11 +45,16 @@ A governança atua de forma transversal para garantir:
 
 ## 🏛️ Evidências de Governança (Compliance & Audit)
 
-Para fins de auditoria e conformidade, as evidências de que as políticas acima foram aplicadas estão disponíveis em:
+As evidências de conformidade são geradas automaticamente e armazenadas em dois níveis: **Local** (consulta rápida da última execução) e **Data Lake** (histórico imutável para auditoria).
 
-- **Logs de Integridade:** [`reports/observability/integrity/`](../../reports/observability/integrity/) - Cumprimento da Política de Particionamento.
-- **Diagnósticos Estatísticos (Profiling):** [`reports/observability/profiling/`](../../reports/observability/profiling/) - Transparência e saúde estatística dos dados (Data Discovery).
-- **Relatórios de Qualidade:** [`reports/observability/quality/`](../../reports/observability/quality/) - Aplicação dos Contratos de Dados (Pandera).
+#### **Acesso Rápido (Última Execução Local)**
+- ✅ **Logs de Integridade:** [`reports/observability/integrity/`](../../reports/observability/integrity/) - Cumprimento da Política de Particionamento.
+- 📊 **Diagnósticos de Profiling:** [`reports/observability/profiling/`](../../reports/observability/profiling/) - Transparência e saúde estatística dos dados.
+- 🛡️ **Relatórios de Qualidade:** [`reports/observability/quality/`](../../reports/observability/quality/) - Aplicação dos Contratos de Dados (Pandera).
+
+#### **Repositório Histórico (Data Lake)**
+Todas as evidências acima, incluindo o **Master Pipeline Log** (registro técnico consolidado da execução), são persistidas no S3 de forma versionada para fins de rastreabilidade:
+> `s3://lake/observability/reports/run_id={run_id}/`
 
 
 
@@ -58,7 +64,7 @@ Graças às políticas acima, o projeto herda capacidades operacionais críticas
 
 1. **Rollback Imediato:** Como mantemos as `MAX_RUNS` anteriores, voltar uma versão de um dataset é apenas uma alteração de ponteiro.
 2. **Isolamento de Erros:** Uma falha na ingestão da `run_id` atual não corrompe os dados já existentes.
-3. **Auditoria Simplificada:** Cada partição e run carregam o metadado de tempo (`ingestion_ts`), rastreando a origem de qualquer inconsistência. 
+3. **Auditoria Simplificada:** Cada partição e run carregam o metadado de tempo (`ingestion_ts`), com o log técnico de suporte persistido no Lake para rastrear a origem de qualquer inconsistência.
 4. **Verificação de Integridade:** O uso da auditoria de partições permite validar se uma carga foi distribuída corretamente, evitando "data drift" físico.
 
 
@@ -70,7 +76,7 @@ A governança atua como uma camada transversal, garantindo que as definições e
 - **Data Architecture:** Define o desenho físico e lógico do lake.
 - **Data Lineage:** Permite rastreabilidade ponta a ponta.
 - **Data Quality:** Garante confiabilidade semântica.
-- **Data Observability:** Monitora saúde e comportamento dos dados.
+- **Data Observability:** Monitora saúde, comportamento e garante a persistência das evidências de governança no Data Lake.
 
 Governança, neste contexto, **não é um silo**, mas uma camada transversal.
 
