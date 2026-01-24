@@ -3,9 +3,6 @@
 
 Este documento consolida, em uma **visão única**, as **etapas de processamento de dados** aplicadas no Lakehouse, considerando tanto os **fluxos comuns** quanto as **variações específicas por entidade**, conforme definido na documentação técnica individual de cada domínio, disponível no repositório oficial de lineage.
 
-> **Escopo do documento:** transformação, organização e enriquecimento de dados  
-> **Fora de escopo:** logs técnicos, métricas de execução e evidências operacionais detalhadas
-
 ---
 
 ### 🧭 Nota de Escopo - Maturidade da Solução (PoC)
@@ -14,7 +11,7 @@ Nesta fase, a solução é apresentada como uma **Prova de Conceito (PoC)** com 
 
 A **orquestração do pipeline já está definida conceitualmente** e será **migrada para o Apache Airflow na entrega final**, sem necessidade de alteração nos scripts de processamento.
 
-Os **artefatos de observabilidade**, atualmente armazenados de forma local, **serão persistidos no Data Lake na etapa final**, integrando governança e auditoria.
+Os **artefatos de observabilidade** são gerados localmente para consulta imediata e **automaticamente persistidos no Data Lake a cada execução**, garantindo um histórico imutável e auditável vinculado a cada `run_id`.
 
 ---
 
@@ -53,6 +50,7 @@ Para garantir a reprodutibilidade e a confiabilidade, o Lakehouse adota os segui
 - **Grão Analítico Imutável:** Definição rigorosa da unicidade por entidade para evitar duplicação e perda de integridade.
 - **Prevenção de Data Leakage:** Governança temporal rigorosa na transição para a camada final via *Point-in-Time Join*.
 - **Auditoria Automática:** Validação de integridade e cobertura em cada salto de camada.
+- **Persistência de Evidências (Observability):** Centralização de todos os logs técnicos e relatórios de qualidade (`.md` e `.log`) no Data Lake, permitindo que qualquer processamento histórico tenha sua saúde validada retroativamente.
 
 ---
 
@@ -261,7 +259,14 @@ s3://lake/
 │   └── {entidade}/
 │       └── run_id=YYYYMMDD_HHMMSS/
 │           └── ano_mes=YYYYMM/
-│               └── data_0.parquet          
+│               └── data_0.parquet 
+├── observability/
+│   └── reports/
+│       └── run_id=YYYYMMDD_HHMMSS/
+│           ├── pipeline_run_YYYYMMDD_HHMMSS.log
+│           ├── integrity/ 
+│           ├── profiling/
+│           └── quality/      
 ```
 
 ---
@@ -381,6 +386,7 @@ A variável `rec_vlr_avg_l60d` refere-se ao **valor médio de recarga** nos **ú
 - **Data Leakage (Vazamento de Dados):** Erro onde informações do futuro são usadas indevidamente no treino. Nossa governança elimina esse risco via **Point-in-Time Join**.
 - **Maturidade (D+4):** Tempo de espera técnica necessário para garantir que todos os eventos do mês anterior foram devidamente consolidados no Lake antes da geração da Gold.
 - **Mesa Farta:** Abordagem de *Feature Engineering* que consiste em gerar o máximo de variáveis e combinações temporais para que o algoritmo identifique as melhores correlações.
+- **Observability Layer (Camada de Observabilidade):** Zona de armazenamento dedicada ao histórico de logs, auditorias e profilings, isolada das camadas de dados de negócio (Medallion) para garantir a governança técnica.
 
 
 
