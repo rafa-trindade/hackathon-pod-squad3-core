@@ -2,6 +2,16 @@
 
 Repositório de desenvolvimento, documentação e implementação da solução integrada de dados para o Hackathon da PoD Academy - Squad 3.
 
+## 📚 Mapeamento de Documentação (*Project Hub*)
+
+### ⚙️ Setup e Reprodução da Solução
+> 📁 [`docs/guides/*`](docs/guides/)  
+> **Descreve** os protocolos para configuração do ambiente e reprodução integral da solução. **Define** os requisitos de infraestrutura necessários para o processamento vetorizado no DuckDB e **detalha** os passos para acionamento do orquestrador, garantindo a persistência dos logs e a sincronização automática da observabilidade com o Data Lake.
+>
+> * 📑 **Guia:** [`Guia de Execução da Pipeline`](docs/guides/pipeline_execution.md)
+
+---
+
 ### 📅 Gestão e Planejamento do Projeto
 > 📁 [`docs/project_plan/*`](docs/project_plan/)  
 > **Consolida** a visão estratégica e operacional do projeto, integrando o contexto de negócio, objetivos e plano de trabalho da Squad. **Define** o cronograma de entregas, as métricas de sucesso e as responsabilidades de cada frente sob uma abordagem híbrida de governança e agilidade.
