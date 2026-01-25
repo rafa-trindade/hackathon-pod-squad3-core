@@ -1,7 +1,5 @@
 ![header](docs/images/main/header_main.png)
 
-# 🧠 hackathon-pod-squad3-core
-
 Repositório de desenvolvimento, documentação e implementação técnica de solução integrada de dados para o Hackathon da Pod Academy - Squad 3. 
 
 > Este repositório centraliza a engine de processamento, a implementação da arquitetura medalhão e a aplicação de governança ativa através de contratos de dados e observabilidade nativa.
@@ -9,20 +7,12 @@ Repositório de desenvolvimento, documentação e implementação técnica de so
 ---
 
 ### 🔗 Ecossistema Squad 3
-* **Repositório 1 de 2 (Core):** [hackathon-pod-squad3-core](https://github.com/rafa-trindade/hackathon-pod-squad3-core) - _Engine de processamento, contratos de dados e arquitetura medalhão._
+* **Repositório 1 de 2 (Core):** [hackathon-pod-squad3-core](https://github.com/rafa-trindade/hackathon-pod-squad3-core) - _Engine de processamento e Governança de Dados (arquitetura medalhão)._
 * **Repositório 2 de 2 (Ops):** [hackathon-pod-squad3-ops](https://github.com/rafa-trindade/hackathon-pod-squad3-ops) - _Infraestrutura (IaC), Orquestração e Ingestão de Dados._
 
 ---
 
 ## 📚 Mapeamento de Documentação (*Project Hub*)
-
-### ⚙️ Setup e Reprodução da Solução
-> 📁 [`docs/guides/*`](docs/guides/)  
-> **Descreve** os protocolos para configuração do ambiente e reprodução integral da solução. **Define** os requisitos de infraestrutura necessários para o processamento vetorizado no DuckDB e **detalha** os passos para acionamento do orquestrador, garantindo a persistência dos logs e a sincronização automática da observabilidade com o Data Lake.
->
-> * 📑 **Guia:** [`Guia de Execução da Pipeline`](docs/guides/pipeline_execution.md)
-
----
 
 ### 📅 Gestão e Planejamento do Projeto
 > 📁 [`docs/project_plan/*`](docs/project_plan/)  
@@ -79,3 +69,11 @@ Repositório de desenvolvimento, documentação e implementação técnica de so
 >
 > * 📑 [`Quality Policy`](docs/data_governance/politica-qualidade.md) - Diretrizes gerais e dimensões de qualidade.
 > * 📁 [`Quality Reports`](reports/observability/quality/) - Evidências de conformidade de schemas e logs de auditoria das pipelines.
+
+---
+
+### ⚙️ Setup e Reprodução da Solução
+> 📁 [`docs/guides/*`](docs/guides/)  
+> **Descreve** os protocolos para configuração do ambiente e reprodução integral da solução. **Define** os requisitos de infraestrutura necessários para o processamento vetorizado no DuckDB e **detalha** os passos para acionamento do orquestrador, garantindo a persistência dos logs e a sincronização automática da observabilidade com o Data Lake.
+>
+> * 📑 **Guia:** [`Guia de Execução da Pipeline`](docs/guides/pipeline_execution.md)
