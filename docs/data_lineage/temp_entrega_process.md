@@ -11,6 +11,7 @@ Nesta fase, a solução é apresentada como uma **Prova de Conceito (PoC)** com 
 
 A **orquestração do pipeline já está definida conceitualmente** e será **migrada para o Apache Airflow na entrega final (Fase 2)**, sem necessidade de alteração nos scripts de processamento. Esta evolução técnica e operacional para a nuvem está detalhada no roadmap de migração:
 
+🚀 **[Repositório de Orquestração & Infraestrutura (Ops)](https://github.com/rafa-trindade/hackathon-pod-squad3-ops)**
 📑 **[Estratégia de Migração e Cloud Readiness (VPS → OCI)](../data_architecture/oci-cloud-ready-strategy.md)**
 
 ---
