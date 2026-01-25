@@ -79,4 +79,6 @@ A arquitetura transporta os pilares desenvolvidos na Prova de Conceito para a OC
 >
 > Decisões arquiteturais estruturais, modelagem de dados e políticas de governança são definidas no documento principal de arquitetura (`docs/data_architecture/README.md`) e no repositório de operações (`-ops`), quando relacionadas à execução.
 >
-> A OCI é adotada como ambiente de execução da arquitetura **cloud ready**, podendo empregar serviços nativos quando apropriado, sem redefinir o desenho arquitetural.
+> A OCI é adotada como ambiente de execução da arquitetura **cloud ready**.  
+>
+> Variações na adoção de serviços nativos são tratadas como **decisões operacionais**, documentadas e versionadas no repositório (`-ops`), sem alterar o **desenho arquitetural lógico** definido no Core.
