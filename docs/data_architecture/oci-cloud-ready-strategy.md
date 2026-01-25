@@ -53,5 +53,5 @@ A arquitetura transporta os pilares desenvolvidos na Prova de Conceito para a OC
 ---
 
 ### 🔗 Ecossistema Squad 3
-* **Repositório 1 de 2 (Core):** [hackathon-pod-squad3-core](https://github.com/rafa-trindade/hackathon-pod-squad3-core) — _Engine de processamento, contratos de dados e arquitetura medalhão._
-* **Repositório 2 de 2 (Ops):** [hackathon-pod-squad3-ops](https://github.com/rafa-trindade/hackathon-pod-squad3-ops) — _Infraestrutura (IaC), Orquestração e Ingestão de Dados nativa em OCI._
+* **Repositório 1 de 2 (Core):** [hackathon-pod-squad3-core](https://github.com/rafa-trindade/hackathon-pod-squad3-core) - _Engine de processamento e Governança de Dados (arquitetura medalhão)._
+* **Repositório 2 de 2 (Ops):** [hackathon-pod-squad3-ops](https://github.com/rafa-trindade/hackathon-pod-squad3-ops) - _Infraestrutura (IaC), Orquestração e Ingestão de Dados._
