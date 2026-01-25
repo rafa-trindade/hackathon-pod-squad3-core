@@ -14,14 +14,15 @@ O conteúdo a seguir detalha a **estratégia de execução em nuvem** da arquite
 
 ## 🎯 1. Visão Geral da Estratégia
 
-Esta estratégia tem como objetivo **validar a execução em nuvem** do modelo de dados e processamento já definido, assegurando:
+Esta estratégia tem como objetivo **descrever como o modelo de dados e processamento, já concebido como cloud ready, é executado em ambiente OCI**, assegurando:
 
 - Portabilidade entre ambientes (on-prem e cloud)
 - Separação clara de responsabilidades
 - Governança e observabilidade aplicadas via código
 - Escalabilidade e eficiência operacional em Object Storage
 
-A OCI é utilizada como **plataforma de execução**, validando que a arquitetura é efetivamente Cloud Ready.
+A OCI é utilizada como **plataforma de execução**, **materializando uma arquitetura concebida desde sua origem como Cloud Ready**.
+
 
 ---
 
@@ -59,7 +60,7 @@ Simulação de ingestão real de um sistema legado:
 
 ---
 
-### **Fase 4: Execução da Pipeline**
+### **Fase 4: Execução do Pipeline**
 Processamento das camadas Bronze, Silver e Gold já em ambiente Oracle, garantindo que o processamento analítico (DuckDB) ocorra com baixa latência e alta performance sobre o Object Storage.
 
 
