@@ -4,7 +4,7 @@ Este documento descreve como a arquitetura de dados do projeto, concebida desde 
 
 ## 🎯 1. Visão Geral da Estratégia
 
-A execução da arquitetura em ambiente OCI é orientada por princípios de portabilidade, governança e separação de responsabilidades, permitindo que o mesmo modelo de dados e processamento opere de forma consistente em diferentes ambientes.
+A execução da arquitetura em nuvem é orientada por princípios de portabilidade, governança e separação de responsabilidades, permitindo que o mesmo modelo de dados e processamento opere de forma consistente em diferentes ambientes.
 
 Essa abordagem assegura:
 
@@ -13,7 +13,7 @@ Essa abordagem assegura:
 - Governança e observabilidade aplicadas via código
 - Escalabilidade e eficiência operacional em Object Storage
 
-Nesse contexto, a OCI atua como **plataforma de execução** da arquitetura, suportando sua operação de forma consistente e governada.
+Nesse contexto, a plataforma de execução sustenta a operação da arquitetura de forma consistente e governada.
 
 ---
 
@@ -31,28 +31,36 @@ A estratégia de "Cloud Ready" não se limita a mover arquivos; trata-se de gara
 A execução do projeto na OCI é dividida em quatro fases críticas:
 
 ### **Fase 1: Provisionamento de Infraestrutura (IaC)**
-Utilizando **Terraform**, o ambiente é criado de forma imutável na OCI:
-* **Storage:** Bucket `lake-squad3` no Object Storage (S3-Compatible).
-* **Compute:** Instância Flex (OCI E4) para hospedagem do Airflow via Docker.
-* **IAM & Security:** Configuração de *Dynamic Groups*, permitindo acesso ao storage via identidade nativa.
+
+- **Objetivo:** Criar o ambiente de forma imutável na OCI utilizando Terraform.  
+- **Storage:** Bucket `lake-squad3` no Object Storage (S3-Compatible).  
+- **Compute:** Instância Flex (OCI E4) para hospedagem do Airflow via Docker.  
+- **IAM & Security:** Configuração de *Dynamic Groups*, permitindo acesso ao storage via identidade nativa.  
 
 ---
 
 ### **Fase 2: Orquestração e Bootstrap**
-O repositório de operações (`-ops`) gerencia o ciclo de vida:
-1.  **Task Bootstrap:** O Airflow realiza o `git clone` deste repositório (`-core`) para garantir a execução da versão mais recente.
-2.  **Ambiente:** Instalação dinâmica de dependências (DuckDB, Pandera, Boto3).
+
+- **Repositório responsável:** `-ops` gerencia o ciclo de vida do pipeline.  
+- **Task Bootstrap:** Airflow realiza `git clone` do repositório `-core` para garantir a execução da versão mais recente.  
+- **Preparação do ambiente:** Instalação dinâmica de dependências (DuckDB, Pandera, Boto3, etc.)  
 
 ---
 
-### **Fase 3: Ingestão "Cloud-Ready" (PoC to Cloud)**
-Simulação de ingestão real de um sistema legado:
-* O script de ingestão consome dados brutos da camada `RAW` da VPS (MinIO) e replica para o `RAW` do OCI Object Storage.
+### **Fase 3: Ingestão Cloud Ready**
+
+- **Objetivo:** Ingestão representativa de dados de origem legada, reproduzindo condições reais de volume, formato e acoplamento.  
+- **Execução:** Script consome dados brutos da camada `RAW` da VPS (MinIO) e replica para o `RAW` do OCI Object Storage.  
 
 ---
 
 ### **Fase 4: Execução do Pipeline**
-Processamento das camadas Bronze, Silver e Gold já em ambiente Oracle, garantindo que o processamento analítico (DuckDB) ocorra com baixa latência e alta performance sobre o Object Storage.
+
+- **Camadas processadas:** Bronze, Silver e Gold, já em ambiente Oracle.  
+- **Transformações:** DuckDB utiliza o acesso S3-compatível para executar SQL vetorizado diretamente sobre o Object Storage.  
+- **Benefícios:**  
+  - Reduz a necessidade de materialização prévia de dados  
+  - Garante execução eficiente com baixa latência
 
 
 ## 🛡️ 3. Governança e Observabilidade (Cloud Ready)
