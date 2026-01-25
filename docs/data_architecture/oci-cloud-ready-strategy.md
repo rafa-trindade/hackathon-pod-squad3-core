@@ -41,7 +41,7 @@ Simulação de ingestão real de um sistema legado:
 
 ---
 
-### **Fase 4: Execução do Pipeline e Qualidade**
+### **Fase 4: Execução da Pipeline**
 Processamento das camadas Bronze, Silver e Gold já em ambiente Oracle, garantindo que o processamento analítico (DuckDB) ocorra com baixa latência e alta performance sobre o Object Storage.
 
 
