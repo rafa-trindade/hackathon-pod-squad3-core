@@ -16,7 +16,7 @@ A **orquestração do pipeline já está definida conceitualmente** e será **mi
 
 ---
 
-## 🏗️ 1. Visão Global do Fluxo de Dados
+## 🏗️ 1. Visão Global do Fluxo de Dados (CORE)
 
 Todas as entidades seguem o padrão arquitetural **Medallion (RAW → BRONZE → SILVER → GOLD)**, com responsabilidades bem definidas por camada.  
 
