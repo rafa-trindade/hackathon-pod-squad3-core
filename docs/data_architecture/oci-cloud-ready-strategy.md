@@ -8,9 +8,9 @@ Este documento detalha a estratégia de arquitetura para a prontidão em nuvem (
 O objetivo desta arquitetura é demonstrar a portabilidade do pipeline de dados, utilizando serviços gerenciados de nuvem para ganhar escalabilidade, segurança e observabilidade. 
 
 ### **Por que a Separação Core vs Ops?**
-Para atingir maturidade do projeto, o ecossistema foi dividido em dois repositórios:
-1.  **`hackathon-pod-squad3-core`:** Contém a inteligência de processamento. Projetado para ser agnóstico à infraestrutura, foca em lógica de transformação, contratos de dados e qualidade.
-2.  **`hackathon-pod-squad3-ops`:** Contém a sustentação técnica. Responsável por "dar vida" à infraestrutura via código (IaC), orquestrar fluxos e gerenciar a movimentação de dados (raw) para a nuvem.
+Para atingir maturidade arquitetural e prontidão para nuvem, o ecossistema foi dividido em dois repositórios com responsabilidades bem definidas:
+1. **`hackathon-pod-squad3-core`:** Concentra a engine de processamento e a governança de dados, aplicando as políticas de qualidade, modelagem e padronização da arquitetura medalhão. É projetado para ser agnóstico à infraestrutura, garantindo portabilidade entre ambientes on-prem e cloud.
+2. **`hackathon-pod-squad3-ops`:** Responsável pela sustentação operacional da plataforma, incluindo infraestrutura como código (IaC), orquestração dos pipelines e ingestão de dados, viabilizando a execução do Core em ambientes de nuvem.
 
 A estratégia de "Cloud Ready" não se limita a mover arquivos; trata-se de garantir que o código seja **portável, resiliente e governado**. 
 
