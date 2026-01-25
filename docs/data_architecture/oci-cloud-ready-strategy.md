@@ -86,10 +86,10 @@ A arquitetura transporta os pilares desenvolvidos na Prova de Conceito para a OC
 
 ## 📌 Nota de Escopo
 
-> Este documento descreve exclusivamente a **estratégia de execução em nuvem** da arquitetura de dados do projeto, tendo a **Oracle Cloud Infrastructure (OCI)** como plataforma de execução.
+> Este documento descreve exclusivamente a **estratégia de execução em nuvem** da arquitetura de dados do projeto, utilizando a **Oracle Cloud Infrastructure (OCI)** como plataforma de execução.  
 >
-> Decisões arquiteturais estruturais, modelagem de dados e políticas de governança são definidas no documento principal de arquitetura (`docs/data_architecture/README.md`) e no repositório de operações (`-ops`), quando relacionadas à execução.
+> Decisões arquiteturais estruturais são definidas no documento principal de arquitetura (`docs/data_architecture/README.md`) e, quando relacionadas à execução e portabilidade de serviços, no repositório de operações (`-ops`).  
 >
-> A OCI é adotada como ambiente de execução da arquitetura **cloud ready**.  
+> A OCI é adotada como ambiente de execução da arquitetura **cloud ready**. 
 >
-> Variações na adoção de serviços nativos são tratadas como **decisões operacionais**, documentadas e versionadas no repositório (`-ops`), sem alterar o **desenho arquitetural lógico** definido no Core.
+> Variações na utilização de serviços nativos são tratadas como **decisões operacionais de execução**, documentadas e versionadas no repositório (`-ops`), sem modificar o **desenho arquitetural lógico** definido no Core.
