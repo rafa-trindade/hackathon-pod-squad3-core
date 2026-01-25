@@ -26,19 +26,24 @@ Utilizando **Terraform**, o ambiente é criado de forma imutável na OCI:
 * **Compute:** Instância Flex (OCI E4) para hospedagem do Airflow via Docker.
 * **IAM & Security:** Configuração de *Dynamic Groups*, permitindo acesso ao storage via identidade nativa.
 
+---
+
 ### **Fase 2: Orquestração e Bootstrap**
 O repositório de operações (`-ops`) gerencia o ciclo de vida:
 1.  **Task Bootstrap:** O Airflow realiza o `git clone` deste repositório (`-core`) para garantir a execução da versão mais recente.
 2.  **Ambiente:** Instalação dinâmica de dependências (DuckDB, Pandera, Boto3).
 
+---
+
 ### **Fase 3: Ingestão "Cloud-Ready" (PoC to Cloud)**
 Simulação de ingestão real de um sistema legado:
 * O script de ingestão consome dados brutos da camada `RAW` da VPS (MinIO) e replica para o `RAW` do OCI Object Storage.
 
+---
+
 ### **Fase 4: Execução do Pipeline e Qualidade**
 Processamento das camadas Bronze, Silver e Gold já em ambiente Oracle, garantindo que o processamento analítico (DuckDB) ocorra com baixa latência e alta performance sobre o Object Storage.
 
----
 
 ## 🛡️ 3. Governança e Observabilidade (Cloud Ready)
 
