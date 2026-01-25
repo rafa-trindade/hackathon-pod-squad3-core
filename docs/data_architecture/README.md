@@ -86,6 +86,11 @@ Referência das práticas de monitoramento e saúde do pipeline.
 
 ---
 
+### ☁️ Cloud Readiness (OCI)
+📑 **[Estratégia de Migração e Operação OCI](./oci-cloud-ready-strategy.md)** Detalhamento técnico da arquitetura para escala em nuvem na Oracle Cloud Infrastructure.
+
+---
+
 ### ⚙️ Operação e Setup
 📑 **[Guia de Execução do Projeto](../guides/pipeline_execution.md)** Protocolos de infraestrutura e passos para acionamento do pipeline.
 
