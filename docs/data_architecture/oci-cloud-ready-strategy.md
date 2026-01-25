@@ -1,11 +1,29 @@
-# 🏛️ Data Architecture: OCI Cloud Ready Strategy
+# 🏛️ Data Architecture - Estratégia de Execução Cloud Ready na OCI
 
-Este documento detalha a estratégia de arquitetura para a prontidão em nuvem (**Cloud Readiness**) do projeto **Squad 3**. Ele descreve como a solução evolui de um ambiente de desenvolvimento isolado para uma plataforma de dados escalável na **Oracle Cloud Infrastructure (OCI)**.
+> 📌 **Escopo do Documento**
+>
+> Este documento é **complementar** ao documento principal de arquitetura (`docs/data_architecture/README.md`).
+>
+> Seu objetivo é descrever **como a arquitetura já definida é executada em ambiente de nuvem**, validando sua prontidão para a **Oracle Cloud Infrastructure (OCI)**.
+>
+> Nenhuma decisão arquitetural estrutural é redefinida aqui - a OCI é tratada como **plataforma de execução** de um desenho previamente preparado para cloud, podendo utilizar serviços e ferramentas nativas quando apropriado.
+>
+> Eventuais substituições de serviços e ferramentas são documentadas no repositório de operações (`-ops`), no contexto da arquitetura de execução.
 
+O conteúdo a seguir detalha a **estratégia de execução em nuvem** da arquitetura já definida, evidenciando sua aderência prática à **Oracle Cloud Infrastructure (OCI)**.
 
 ## 🎯 1. Visão Geral da Estratégia
 
-O objetivo desta arquitetura é demonstrar a portabilidade do pipeline de dados, utilizando serviços gerenciados de nuvem para ganhar escalabilidade, segurança e observabilidade. 
+Esta estratégia tem como objetivo **validar a execução em nuvem** do modelo de dados e processamento já definido, assegurando:
+
+- Portabilidade entre ambientes (on-prem e cloud)
+- Separação clara de responsabilidades
+- Governança e observabilidade aplicadas via código
+- Escalabilidade e eficiência operacional em Object Storage
+
+A OCI é utilizada como **plataforma de execução**, validando que a arquitetura é efetivamente Cloud Ready.
+
+---
 
 ### **Por que a Separação Core vs Ops?**
 Para atingir maturidade arquitetural e prontidão para nuvem, o ecossistema foi dividido em dois repositórios com responsabilidades bem definidas:
@@ -59,4 +77,4 @@ A arquitetura transporta os pilares desenvolvidos na Prova de Conceito para a OC
 
 ### 🔗 Ecossistema Squad 3
 * **Repositório 1 de 2 (Core):** [hackathon-pod-squad3-core](https://github.com/rafa-trindade/hackathon-pod-squad3-core) - _Engine de processamento e Governança de Dados (arquitetura medalhão)._
-* **Repositório 2 de 2 (Ops):** [hackathon-pod-squad3-ops](https://github.com/rafa-trindade/hackathon-pod-squad3-ops) - _Infraestrutura (IaC), Orquestração e Ingestão de Dados._
+* **Repositório 2 de 2 (Ops):** [hackathon-pod-squad3-ops](https://github.com/rafa-trindade/hackathon-pod-squad3-ops) - _Infraestrutura (IaC), Orquestração e Ingestão de Dados (Cloud Readiness)._
