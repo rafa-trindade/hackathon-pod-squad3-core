@@ -10,6 +10,9 @@ Repositório de desenvolvimento, documentação e implementação técnica de so
 * **Repositório 1 de 2 (Core):** [hackathon-pod-squad3-core](https://github.com/rafa-trindade/hackathon-pod-squad3-core) - _Engine de processamento e Governança de Dados (arquitetura medalhão)._
 * **Repositório 2 de 2 (Ops):** [hackathon-pod-squad3-ops](https://github.com/rafa-trindade/hackathon-pod-squad3-ops) - _Infraestrutura (IaC), Orquestração e Ingestão de Dados (Cloud Readiness)._
 
+> 🔐 O Core define **o que** a arquitetura faz.  
+> ⚙️ O Ops define **como e onde** ela é executada.
+
 ---
 
 ## 📚 Mapeamento de Documentação (*Project Hub*)
