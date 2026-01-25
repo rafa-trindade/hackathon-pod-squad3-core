@@ -1,6 +1,18 @@
 ![header](docs/images/main/header_main.png)
 
-Repositório de desenvolvimento, documentação e implementação da solução integrada de dados para o Hackathon da PoD Academy - Squad 3.
+# 🧠 hackathon-pod-squad3-core
+
+Repositório de desenvolvimento, documentação e implementação técnica de solução integrada de dados para o Hackathon da Pod Academy - Squad 3. 
+
+> Este repositório centraliza a engine de processamento, a implementação da arquitetura medalhão e a aplicação de governança ativa através de contratos de dados e observabilidade nativa.
+
+---
+
+### 🔗 Ecossistema Squad 3
+* **Repositório 1 de 2 (Core):** [hackathon-pod-squad3-core](https://github.com/rafa-trindade/hackathon-pod-squad3-core) - _Engine de processamento, contratos de dados e arquitetura medalhão._
+* **Repositório 2 de 2 (Ops):** [hackathon-pod-squad3-ops](https://github.com/rafa-trindade/hackathon-pod-squad3-ops) - _Infraestrutura (IaC), Orquestração e Ingestão de Dados._
+
+---
 
 ## 📚 Mapeamento de Documentação (*Project Hub*)
 
@@ -22,9 +34,9 @@ Repositório de desenvolvimento, documentação e implementação da solução i
 
 ### 🏗️ Data Architecture
 > 📁 [`docs/data_architecture/*`](docs/data_architecture/)  
-> **Define** uma stack **Cloud-Ready** operada em VPS através de **Docker** e **Airflow**. **Implementa** MinIO para storage Medallion (S3-API), DuckDB para processamento vetorial e PostgreSQL para o Data Warehouse com dbt. **Garante** a entrega de valor via **Model (.pkl)** versionados e relatórios analíticos, com suporte a **DataViz (Streamlit)** como escopo opcional e plano de migração para **OCI**.
+> **Define** uma stack **Cloud-Ready** orquestrada em ambiente VPS via **Docker** e **Airflow**. **Implementa** MinIO para storage Medallion (S3-API), DuckDB para processamento vetorial e PostgreSQL para o Data Warehouse. **Garante** a entrega de valor via **Modelos (.pkl)** versionados e relatórios analíticos, com suporte a **DataViz (Streamlit)** e estratégia de migração nativa para **OCI**.
 >
-> * 📑 **Documents:** [`Arquitetura Técnica (Macro & Micro)`](docs/data_architecture/README.md) | [`Estratégia de Migração (VPS → OCI)`](docs/data_architecture/migration_oci.md)
+> * 📑 **Documents:** [`Arquitetura Técnica (Macro & Micro)`](docs/data_architecture/README.md) | [`Estratégia de Migração (VPS → OCI)`](docs/data_architecture/oci-cloud-ready-strategy.md)
 
 ---
 
