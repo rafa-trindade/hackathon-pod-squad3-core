@@ -9,9 +9,9 @@ Este documento consolida, em uma **visão única**, as **etapas de processamento
 
 Nesta fase, a solução é apresentada como uma **Prova de Conceito (PoC)** com **execução linear**, cujo objetivo é evidenciar o fluxo lógico, a governança aplicada e a reprodutibilidade dos dados.
 
-A **orquestração do pipeline já está definida conceitualmente** e será **migrada para o Apache Airflow na entrega final**, sem necessidade de alteração nos scripts de processamento.
+A **orquestração do pipeline já está definida conceitualmente** e será **migrada para o Apache Airflow na entrega final (Fase 2)**, sem necessidade de alteração nos scripts de processamento. Esta evolução técnica e operacional para a nuvem está detalhada no roadmap de migração:
 
-Os **artefatos de observabilidade** são gerados localmente para consulta imediata e **automaticamente persistidos no Data Lake a cada execução**, garantindo um histórico imutável e auditável vinculado a cada `run_id`.
+📑 **[Estratégia de Migração e Cloud Readiness (VPS → OCI)](../data_architecture/oci-cloud-ready-strategy.md)**
 
 ---
 
