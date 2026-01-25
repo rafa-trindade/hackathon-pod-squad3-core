@@ -1,28 +1,19 @@
 # 🏛️ Data Architecture - Estratégia de Execução Cloud Ready na OCI
 
-> 📌 **Escopo do Documento**
->
-> Este documento é **complementar** ao documento principal de arquitetura (`docs/data_architecture/README.md`).
->
-> Seu objetivo é descrever **como a arquitetura já definida é executada em ambiente de nuvem**, validando sua prontidão para a **Oracle Cloud Infrastructure (OCI)**.
->
-> Nenhuma decisão arquitetural estrutural é redefinida aqui - a OCI é tratada como **plataforma de execução** de um desenho previamente preparado para cloud, podendo utilizar serviços e ferramentas nativas quando apropriado.
->
-> Eventuais substituições de serviços e ferramentas são documentadas no repositório de operações (`-ops`), no contexto da arquitetura de execução.
-
-O conteúdo a seguir detalha a **estratégia de execução em nuvem** da arquitetura já definida, evidenciando sua aderência prática à **Oracle Cloud Infrastructure (OCI)**.
+Este documento descreve como a arquitetura de dados do projeto, concebida desde sua origem como **cloud ready**, é executada em ambiente de nuvem, utilizando a **Oracle Cloud Infrastructure (OCI)** como plataforma de execução.
 
 ## 🎯 1. Visão Geral da Estratégia
 
-Esta estratégia tem como objetivo **descrever como o modelo de dados e processamento, já concebido como cloud ready, é executado em ambiente OCI**, assegurando:
+A execução da arquitetura em ambiente OCI é orientada por princípios de portabilidade, governança e separação de responsabilidades, permitindo que o mesmo modelo de dados e processamento opere de forma consistente em diferentes ambientes.
+
+Essa abordagem assegura:
 
 - Portabilidade entre ambientes (on-prem e cloud)
 - Separação clara de responsabilidades
 - Governança e observabilidade aplicadas via código
 - Escalabilidade e eficiência operacional em Object Storage
 
-A OCI é utilizada como **plataforma de execução**, **materializando uma arquitetura concebida desde sua origem como Cloud Ready**.
-
+Nesse contexto, a OCI atua como **plataforma de execução** da arquitetura, suportando sua operação de forma consistente e governada.
 
 ---
 
@@ -79,3 +70,13 @@ A arquitetura transporta os pilares desenvolvidos na Prova de Conceito para a OC
 ### 🔗 Ecossistema Squad 3
 * **Repositório 1 de 2 (Core):** [hackathon-pod-squad3-core](https://github.com/rafa-trindade/hackathon-pod-squad3-core) - _Engine de processamento e Governança de Dados (arquitetura medalhão)._
 * **Repositório 2 de 2 (Ops):** [hackathon-pod-squad3-ops](https://github.com/rafa-trindade/hackathon-pod-squad3-ops) - _Infraestrutura (IaC), Orquestração e Ingestão de Dados (Cloud Readiness)._
+
+---
+
+## 📌 Nota de Escopo
+
+> Este documento descreve exclusivamente a **estratégia de execução em nuvem** da arquitetura de dados do projeto, tendo a **Oracle Cloud Infrastructure (OCI)** como plataforma de execução.
+>
+> Decisões arquiteturais estruturais, modelagem de dados e políticas de governança são definidas no documento principal de arquitetura (`docs/data_architecture/README.md`) e no repositório de operações (`-ops`), quando relacionadas à execução.
+>
+> A OCI é adotada como ambiente de execução da arquitetura **cloud ready**, podendo empregar serviços nativos quando apropriado, sem redefinir o desenho arquitetural.
