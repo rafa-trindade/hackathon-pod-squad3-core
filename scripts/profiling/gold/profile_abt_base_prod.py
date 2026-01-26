@@ -17,7 +17,7 @@ from scripts.profiling.utils.profiling_utils import init_md_report, print_and_sa
 
 GOLD_BASE_PATH = "s3://lake/gold/abt_base_prod"
 
-con = get_duckdb_connection(memory_limit="6GB", threads=5)
+con = get_duckdb_connection()
 
 # Captura a última run_id
 latest_run_id = con.execute(f"""
