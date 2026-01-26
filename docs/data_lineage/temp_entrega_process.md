@@ -1,9 +1,4 @@
 # 📖 Documentação de Data Lineage & Processamento de Dados
-## Arquitetura Medallion (RAW → BRONZE → SILVER → GOLD)
-
-Este documento consolida, em uma **visão única**, as **etapas de processamento de dados** aplicadas no Lakehouse, considerando tanto os **fluxos comuns** quanto as **variações específicas por entidade**, conforme definido na documentação técnica individual de cada domínio, disponível no repositório oficial de lineage.
-
----
 
 ### 🧭 Nota de Escopo - Maturidade da Solução (PoC)
 
