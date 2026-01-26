@@ -21,7 +21,7 @@ md_file = init_md_report(
     layer="bronze"
 )
 
-con = get_duckdb_connection(memory_limit="6GB", threads=5)
+con = get_duckdb_connection()
 files = con.execute(f"SELECT file FROM glob('{path_parquet_glob}')").df()['file'].tolist()
 
 # %% 
