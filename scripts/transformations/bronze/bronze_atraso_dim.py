@@ -25,10 +25,7 @@ BRONZE_DEST_PATH = f"s3://lake/bronze/{TABLE_NAME}/{DIM_NAME}.parquet"
 QUALITY_REPORT_PATH = PROJECT_ROOT / "reports" / "observability" / "quality" / "pipeline" / f"bronze-{TABLE_NAME}-quality.log"
 
 def run():
-    con = get_duckdb_connection(
-        memory_limit="4GB", 
-        threads=4
-    )
+    con = get_duckdb_connection()
 
     con.execute("SET preserve_insertion_order = false")
     WORK_DB_PATH = f"/mnt/nvme/duckdb_temp/work_{DIM_NAME}.db"

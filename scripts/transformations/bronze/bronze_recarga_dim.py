@@ -141,7 +141,7 @@ DIMENSIONS_CONFIG = {
 }
 
 def run():
-    con = get_duckdb_connection(memory_limit="6GB", threads=6)
+    con = get_duckdb_connection()
     con.execute("SET preserve_insertion_order = true")
     
     fato_schema = con.execute(f"DESCRIBE SELECT * FROM read_parquet('{BRONZE_RECARGA_FATO}')").df()

@@ -25,10 +25,7 @@ BRONZE_PATH = f"s3://lake/{BRONZE_BASE_PATH}run_id={RUN_ID}/"
 MAX_BRONZE_RUNS = int(os.getenv("BRONZE_MAX_RUNS", 1))
 
 def run():
-    con = get_duckdb_connection(
-        memory_limit="6GB",
-        threads=5,
-    )
+    con = get_duckdb_connection()
 
     print("🚀 Iniciando Bronze: pagamento")
     print(f"🧾 run_id = {RUN_ID}")
