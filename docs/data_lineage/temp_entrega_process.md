@@ -300,6 +300,8 @@ Referência das práticas de monitoramento e saúde do pipeline.
 ## Nota para Documentação:
 ## Aqui entra a parte que a documentação pede "**estruturação do modelo baseline**" que ja temos documentado
 
+> Validar com o Lucas
+
 # 🧪 Estruturação do Modelo Baseline: Governança Temporal
 
 > **Nota Conceitual:** A **ABT** (Analytical Base Table) é a nossa tabela final de consumo físico. Já a **estruturação do baseline** é o conjunto de premissas técnicas (como a Governança Temporal e as janelas de 30/60/90 dias) que aplicamos na construção dessa ABT para garantir que o primeiro modelo do projeto seja treinado com **total confiabilidade**, sem viés ou *data leakage* (vazamento de dados).
