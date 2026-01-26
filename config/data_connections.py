@@ -33,9 +33,17 @@ def get_s3_client():
 # DuckDB connection
 # --------------------------------------------------------------
 def get_duckdb_connection(
-    memory_limit: str = "6GB",
-    threads: int = 5,
+    memory_limit: str = None,
+    threads: int = None,
 ) -> duckdb.DuckDBPyConnection:
+    
+    # Se não passar nada na chamada da função, ele busca do .env
+    # Se não tiver no .env, ele usa o fallback (6GB / 5)
+    if memory_limit is None:
+        memory_limit = os.getenv("DUCKDB_MEMORY_LIMIT", "6GB")
+    
+    if threads is None:
+        threads = int(os.getenv("DUCKDB_THREADS", 5))
 
     con = duckdb.connect()
 
