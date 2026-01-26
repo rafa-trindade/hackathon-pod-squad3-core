@@ -21,10 +21,7 @@ md_file = init_md_report(
     layer="raw"
 )
 
-con = get_duckdb_connection(
-    memory_limit="6GB",
-    threads=5
-)
+con = get_duckdb_connection()
 
 
 # %%  
