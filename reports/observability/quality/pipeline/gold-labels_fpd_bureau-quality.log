@@ -1,0 +1,22 @@
+📋 QUALITY REPORT - labels_fpd_bureau | RUN: 20260127_145520
+----------------------------------------------------------------------------------
+TESTE                         | STATUS     | OBSERVAÇÃO
+----------------------------------------------------------------------------------
+Unicidade no Grão             | PASS       | 0 duplicatas
+Missing FPD Gold = 0          | PASS       | 0 nulos
+----------------------------------------------------------------------------------
+Distribuição Safra 202410     | PASS       | 16.2%
+Distribuição Safra 202411     | PASS       | 17.3%
+Distribuição Safra 202412     | PASS       | 16.9%
+Distribuição Safra 202501     | PASS       | 17.2%
+Distribuição Safra 202502     | PASS       | 15.9%
+Distribuição Safra 202503     | PASS       | 16.6%
+----------------------------------------------------------------------------------
+Overlap dados_cadastrais      | PASS       | 100.00% de match
+Overlap score_bureau_movel    | PASS       | 100.00% de match
+Overlap atraso                | PASS       | 77.11% de match
+Overlap pagamento             | PASS       | 71.84% de match
+Overlap recarga               | PASS       | 90.68% de match
+----------------------------------------------------------------------------------
+Saneamento (Missing)          | INFO       | Descartados 1,161,410 registros (30.60%)
+----------------------------------------------------------------------------------

@@ -1,0 +1,9 @@
+
+📋 RELATÓRIO TÉCNICO ABT - abt_base_cmv | RUN: 20260127_150607
+=================================================================
+✅ Status:              ABT Gerada com Sucesso
+📊 Variáveis:           207 colunas
+📈 Volumetria:          2,633,900 registros
+👤 Cardinalidade:       2,565,985 CPFs únicos
+📌 Grão da Tabela:      CPF + SAFRA + PROD
+=================================================================
