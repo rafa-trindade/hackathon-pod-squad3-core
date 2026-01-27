@@ -202,29 +202,8 @@ Para garantir a cobertura total do ecossistema e atender às necessidades espec�
 > 1. **Cobertura de Mercado (Âncora Bureau):** Ao utilizar o Bureau como âncora, acessamos um universo de 3.59M de CPFs. Por ser uma base de histórico de crédito de mercado, ela possui um alcance populacional maior, o que nos permitiu isolar o produto móvel (CMV) mantendo um **volume de amostragem superior** para o treinamento do modelo.
 > 2. **Universo Transacional (Âncora Telco):** O baseline anterior baseava-se estritamente em clientes com **eventos transacionais registrados** (faturamento ou recarga) no ecossistema da operadora. Por isso, seu alcance é numericamente menor (**1.32M de CPFs**), embora cubra uma diversidade maior de produtos (CMV, NET, DTH).
 
-```mermaid
-graph LR
-    subgraph Estrategia_CMV [Âncora Bureau]
-        A[Volume: 3.59M] --> B{FPD ≠ ∅ CMV}
-        B --> C[Dataset Gold: 2.6M]
-    end
+![ancoras](../images/data_lineage/ancoras.png)
 
-    subgraph Baseline_Geral [Âncora Telco]
-        D[Volume: 1.32M] --> E{FPD ≠ ∅ Geral}
-        E --> F[Dataset Gold: 1.3M]
-    end
-
-    C -.->|Impacto| G(Maior Volume de Amostragem)
-    F -.->|Impacto| H(Maior Mix de Produtos)
-
-    %% Estilização baseada no tom #BC3138
-    style C fill:#BC3138,stroke:#333,color:#fff
-    style A fill:#BC3138,stroke:#333,color:#fff
-    style G fill:#BC3138,stroke:#333,color:#fff
-    style F fill:#E6A4A8,stroke:#333,color:#330000
-    style H fill:#E6A4A8,stroke:#333,color:#330000
-    style D fill:#E6A4A8,stroke:#333,color:#330000
-```
 
 ---
 
