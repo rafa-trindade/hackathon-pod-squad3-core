@@ -255,7 +255,7 @@ graph LR
     E --> F
 
     %% Estilização baseada no tom #BC3138
-    style B fill:#F2D7D9,stroke:#BC3138,stroke-width:2px,color:#330000
+    style A fill:#BC3138,stroke:#330000,stroke-width:4px,color:#fff
     style C fill:#E6A4A8,stroke:#BC3138,color:#330000
     style D fill:#D97277,stroke:#BC3138,color:#330000
     style E fill:#CC4148,stroke:#BC3138,color:#fff
