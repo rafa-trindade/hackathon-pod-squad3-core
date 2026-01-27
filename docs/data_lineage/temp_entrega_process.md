@@ -205,12 +205,12 @@ Para garantir a cobertura total do ecossistema e atender às necessidades espec�
 ```mermaid
 graph LR
     subgraph Estrategia_CMV [Âncora Bureau]
-        A[Volume: 3.59M] --> B{FPD não nulo<br/>(Contexto: CMV)}
+        A[Volume: 3.59M] --> B{FPD não nulo\n(Contexto: CMV)}
         B --> C[Dataset Gold: 2.6M]
     end
 
     subgraph Baseline_Geral [Âncora Telco]
-        D[Volume: 1.32M] --> E{FPD não nulo<br/>(Contexto: Geral)}
+        D[Volume: 1.32M] --> E{FPD não nulo\n(Contexto: Geral)}
         E --> F[Dataset Gold: 1.3M]
     end
 
@@ -224,6 +224,7 @@ graph LR
     style F fill:#E6A4A8,stroke:#333,color:#330000
     style H fill:#E6A4A8,stroke:#333,color:#330000
     style D fill:#E6A4A8,stroke:#333,color:#330000
+
 ```
 
 ---
