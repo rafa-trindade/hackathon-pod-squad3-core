@@ -338,3 +338,42 @@
 
 ---
 
+### 📅 Estabilidade de Safras (Volumetria Mensal)
+
+| safra               |   qtd_registros | representatividade   |
+|:--------------------|----------------:|:---------------------|
+| 2024-10-01 00:00:00 |          426104 | 16.18%               |
+| 2024-11-01 00:00:00 |          454572 | 17.26%               |
+| 2024-12-01 00:00:00 |          445154 | 16.9%                |
+| 2025-01-01 00:00:00 |          452621 | 17.18%               |
+| 2025-02-01 00:00:00 |          419453 | 15.93%               |
+| 2025-03-01 00:00:00 |          435996 | 16.55%               |
+
+---
+
+### 📶 Densidade de Sinal (Sparsity Média por Prefixo)
+> Mede o percentual médio de preenchimento das variáveis agrupadas por origem.
+
+| prefixo   |   qtd_features | pct_missing_medio   | densidade_sinal   |
+|:----------|---------------:|:--------------------|:------------------|
+| tel       |             69 | 50.34%              | 49.66%            |
+| rec       |             39 | 30.15%              | 69.85%            |
+| pag       |             36 | 57.53%              | 42.47%            |
+| cad       |             28 | 56.1%               | 43.9%             |
+| atr       |             24 | 42.88%              | 57.12%            |
+| outros    |              5 | 0.0%                | 100.0%            |
+| bur       |              3 | 0.25%               | 99.75%            |
+| ano       |              1 | 0.0%                | 100.0%            |
+| num       |              1 | 0.0%                | 100.0%            |
+| run       |              1 | 0.0%                | 100.0%            |
+
+---
+
+### 💳 Perfil de Risco (Taxa de FPD por Produto)
+
+| prod   |   total_cpfs |   qtd_bad | fpd_rate   |
+|:-------|-------------:|----------:|:-----------|
+| CMV    |      2633900 |    559229 | 21.23%     |
+
+---
+
