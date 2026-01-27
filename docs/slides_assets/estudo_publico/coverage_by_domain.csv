@@ -1,0 +1,6 @@
+dominio,coverage
+Recarga (rec_qtd_l90d),1.0
+Atraso (atr_qtd_faturas_atrasadas_l90d),1.0
+Pagamento (pag_qtd_faturas_l90d),1.0
+Cadastro (nascimento),0.9985369006818209
+Bureau (bur_score_02),0.9902820837319705
