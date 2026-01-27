@@ -174,44 +174,83 @@ A camada **GOLD** materializa os dados para Machine Learning, entregando ativos 
 
 ### 6.2 📦 Ativos GOLD Disponíveis
 
-#### A) Labels de Target CMV (`labels_fpd_bureau`)
-**Origem:** `s3://lake/silver/score_bureau_movel/**/*.parquet`  
-**Destino:** `s3://lake/gold/labels_fpd_bureau/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
+Para garantir a cobertura total do ecossistema e atender às necessidades específicas de modelagem, a camada Gold disponibiliza dois conjuntos de ativos com finalidades distintas:
 
-| Ativo | Tipo | Finalidade |
-|:-----|:-----|:-----------|
-| `labels_fpd_bureau` | Target | Variável resposta oficial (FPD) restrita ao público de Bureau (CMV) |
+#### A) Ativos Focados em CMV (Estratégia Atual)
+*Foco em Especialização de Produto e Volume Histórico.*
 
-🔗 **[Estudo de Seleção e Estruturação do Target CMV](../data_lineage/gold/labels_fpd_bureau-lineage.md)**
+| Ativo | Tipo | Finalidade | Origem / Referência |
+|:-----|:-----|:-----------|:---|
+| `labels_fpd_bureau` | Target | Resposta FPD restrita ao público Bureau. | [Linhagem CMV](../data_lineage/gold/labels_fpd_bureau-lineage.md) |
+| `abt_base_cmv` | ABT | Base analítica enriquecida (~2.6M registros). | [Book CMV](../data_modelling/features/abt_base_cmv-book.md) |
 
 ---
 
-#### B) Tabela Base Analítica CMV (`abt_base_cmv`)
-**Origem:** `s3://lake/silver/**/*` e `s3://lake/gold/labels_fpd_bureau/**/*`  
-**Destino:** `s3://lake/gold/abt_base_cmv/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
+#### B) Ativos de Escopo Geral (Baseline Original)
+*Foco em Diversidade de Produtos e Densidade de Features.*
 
-| Ativo | Tipo | Finalidade |
-|:-----|:-----|:-----------|
-| `abt_base_cmv` | ABT | Base analítica CMV (~2.6M registros / 207 features) |
+| Ativo | Tipo | Finalidade | Origem / Referência |
+|:-----|:-----|:-----------|:---|
+| `labels_fpd` | Target | Resposta FPD baseada no ecossistema Telco. | [Linhagem Geral](../data_lineage/gold/labels_fpd-lineage.md) |
+| `abt_base_prod` | ABT | Base analítica para o público geral (~1.3M registros). | [Book Geral](../data_modelling/features/abt_base_prod-book.md) |
 
-🔗 **[Book de Variáveis - ABT CMV](../data_modelling/features/abt_base_cmv-book.md)**
+> 💡 **Observação de Governança: Diferencial de Cobertura entre Âncoras**
+>
+> A variação de volume entre a estratégia CMV (~2.6M) e o baseline geral (~1.3M) decorre das premissas de seleção de cada base de origem:
+>
+> 1. **Cobertura de Mercado (Âncora Bureau):** Ao utilizar o Bureau como âncora, acessamos um universo de 3.59M de CPFs. Por ser uma base de histórico de crédito de mercado, ela possui um alcance populacional maior, o que nos permitiu isolar o produto móvel (CMV) mantendo um **volume de amostragem superior** para o treinamento do modelo.
+> 2. **Universo Transacional (Âncora Telco):** O baseline anterior baseava-se estritamente em clientes com **eventos transacionais registrados** (faturamento ou recarga) no ecossistema da operadora. Por isso, seu alcance é numericamente menor (**1.32M de CPFs**), embora cubra uma diversidade maior de produtos (CMV, NET, DTH).
+
+```mermaid
+graph LR
+    subgraph Estrategia_CMV [Âncora Bureau]
+        A[Volume: 3.59M] --> B{Filtro CMV}
+        B --> C[Dataset Gold: 2.6M]
+    end
+
+    subgraph Baseline_Geral [Âncora Telco]
+        D[Volume: 1.32M] --> E{Filtro Geral}
+        E --> F[Dataset Gold: 1.3M]
+    end
+
+    C -.->|Impacto| G(Maior Volume de Amostragem)
+    F -.->|Impacto| H(Maior Mix de Produtos)
+
+    style C fill:#2ecc71,stroke:#333
+    style F fill:#3498db,stroke:#333
+```
 
 ---
 
 ### 6.3 🔀 Fluxo Lógico: SILVER → GOLD (Público Bureau)
 
-```text
-Silver (Entidades de Domínio)
-        ↓
-Fixação da Âncora CMV (Bureau)
-        ↓
-Enriquecimento Estratégico (Point-in-Time Join)
-        ↓
-Agregações Históricas (Lookbacks Sincronizados)
-        ↓
-Join Controlado Multi-Silver (Consolidação de Features)
-        ↓
-Gold (Dataset CMV-Ready para Treinamento)
+O pipeline prioriza a âncora de Bureau para garantir a fidelidade do produto, utilizando o fluxo de enriquecimento Point-in-Time:
+
+```mermaid
+graph LR
+    subgraph Silver_Layer [Camada Silver]
+        A[(Entidades de Domínio)]
+    end
+
+    subgraph Gold_Transformation [Processamento Gold]
+        B{Âncora Bureau CMV}
+        C[Join Point-in-Time]
+        D[Janelas de Lookback]
+        E[Consolidação Multi-Silver]
+    end
+
+    subgraph Gold_Layer [Camada Gold]
+        F[(Dataset CMV-Ready)]
+    end
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+
+    style B fill:#f9f,stroke:#333,stroke-width:2px
+    style F fill:#dfd,stroke:#333,stroke-width:4px
 ```
 
 ---
@@ -377,7 +416,7 @@ A variável `rec_vlr_avg_l60d` refere-se ao **valor médio de recarga** nos **ú
 - **Run ID:** Identificador único de uma execução do pipeline, garantindo o isolamento e a reprodutibilidade histórica das cargas.
 - **Partition Pruning:** Otimização que permite ler apenas as partições necessárias no S3, reduzindo drasticamente o tempo e o custo de processamento.
 - **Point-in-Time Join:** Técnica de cruzamento de dados que respeita a linha do tempo, garantindo que o modelo use apenas dados disponíveis no momento exato do evento.
-- **Safra (Observação):** O ponto fixo no tempo (mês/ano) que define o grão temporal da tabela e separa o passado (features) do futuro (target).
+- **Safra (Observação):** O ponto fixo no tempo (mês/ano) que define o grão temporal da tabela e separa o passado (features) do futuro (target). Para o produto CMV, a base consolidada apresenta uma volumetria robusta de **~2.6M de registros**, garantindo significância estatística para o treinamento.
 - **Target (Alvo):** A variável resposta (o fenômeno) que o modelo tenta prever (neste caso, o `fpd` - *First Payment Default*).
 - **ABT (Analytical Base Table):** Tabela consolidada com variáveis (features) pronta para o treinamento de modelos de Machine Learning.
 - **Lookback Window (Janela de Retrocesso):** O período de tempo (30, 60, 90 dias) que o modelo "olha para trás" a partir da **Safra** para calcular comportamentos.
