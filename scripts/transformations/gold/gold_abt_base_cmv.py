@@ -44,9 +44,9 @@ def run():
     print("🎯 Etapa 1: Agregando histórico transacional...")
 
     # 1.1 RECARGA
-    con.execute("""
+    con.execute(f"""
         CREATE TABLE work_db.agg_recarga AS
-        WITH base_anchor AS (SELECT DISTINCT num_cpf, safra FROM read_parquet('s3://lake/gold/labels_fpd/**/*.parquet'))
+        WITH base_anchor AS (SELECT DISTINCT num_cpf, safra FROM read_parquet('{ANCHOR_PATH}'))
         SELECT 
             b.num_cpf, b.safra,
             -- QTD
@@ -138,9 +138,9 @@ def run():
     """)
 
     # 1.2 PAGAMENTO
-    con.execute("""
+    con.execute(f"""
         CREATE TABLE work_db.agg_pagamento AS
-        WITH base_anchor AS (SELECT DISTINCT num_cpf, safra FROM read_parquet('s3://lake/gold/labels_fpd/**/*.parquet'))
+        WITH base_anchor AS (SELECT DISTINCT num_cpf, safra FROM read_parquet('{ANCHOR_PATH}'))
         SELECT 
             b.num_cpf, b.safra,
             -- VLR TOTAL
@@ -236,9 +236,9 @@ def run():
     """)
 
     # 1.3 ATRASO
-    con.execute("""
+    con.execute(f"""
         CREATE TABLE work_db.agg_atraso AS
-        WITH base_anchor AS (SELECT DISTINCT num_cpf, safra FROM read_parquet('s3://lake/gold/labels_fpd/**/*.parquet'))
+        WITH base_anchor AS (SELECT DISTINCT num_cpf, safra FROM read_parquet('{ANCHOR_PATH}'))
         SELECT 
             b.num_cpf, b.safra,
             -- VLR MAX
