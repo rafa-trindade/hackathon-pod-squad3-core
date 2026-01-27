@@ -159,75 +159,76 @@ Ao final do processamento na camada Silver, todas as entidades apresentam:
 
 ---
 
-## 🥇 6. Camada GOLD - Consumo Analítico e Modelagem
+## 🥇 6. Camada GOLD - Consumo Analítico e Modelagem (Estratégia CMV)
 
-A camada **GOLD** materializa os dados para Machine Learning, entregando ativos semânticos, versionados e auditáveis. A arquitetura garante **reprodutibilidade científica**: qualquer versão histórica de um modelo de ML pode ser auditada reconstruindo-se a base de dados exata através do vínculo entre os `run_id` das camadas Silver e Gold.
+A camada **GOLD** materializa os dados para Machine Learning, entregando ativos semânticos, versionados e auditáveis. Seguindo as diretrizes da avaliação técnica, esta camada foi reestruturada para garantir o **foco exclusivo no produto CMV**, eliminando distorções de métricas causadas por produtos residenciais. A arquitetura garante **reprodutibilidade científica**: qualquer versão histórica de um modelo pode ser auditada através do vínculo entre os `run_id` das camadas Silver e Gold.
 
 ---
 
 ### 6.1 🎯 Objetivos da Camada GOLD
-- Centralizar **targets oficiais** de modelagem.
-- Disponibilizar **Analytical Base Tables (ABTs)** padronizadas.
-- Servir como **contrato único** entre Engenharia e Ciência de Dados.
+- Centralizar **targets oficiais** de modelagem restritos ao público CMV.
+- Disponibilizar **Analytical Base Tables (ABTs)** enriquecidas via Point-in-Time Join.
+- Servir como **contrato único** de conformidade entre Engenharia e Ciência de Dados.
 
 ---
 
 ### 6.2 📦 Ativos GOLD Disponíveis
 
-#### A) Labels de Target (`labels_fpd`)
-**Origem:** `s3://lake/silver/telco/**/*.parquet`  
-**Destino:** `s3://lake/gold/labels_fpd/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
+#### A) Labels de Target CMV (`labels_fpd_bureau`)
+**Origem:** `s3://lake/silver/score_bureau_movel/**/*.parquet`  
+**Destino:** `s3://lake/gold/labels_fpd_bureau/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
 
 | Ativo | Tipo | Finalidade |
 |:-----|:-----|:-----------|
-| `labels_fpd` | Target | Variável resposta oficial (First Payment Default) |
+| `labels_fpd_bureau` | Target | Variável resposta oficial (FPD) restrita ao público de Bureau (CMV) |
 
-🔗 **[Estudo de Seleção e Estruturação do Target](../data_lineage/gold/labels_fpd-lineage.md)**
+🔗 **[Estudo de Seleção e Estruturação do Target CMV](../data_lineage/gold/labels_fpd_bureau-lineage.md)**
 
 ---
 
-#### B) Tabela Base Analítica (`abt_base_prod`)
-**Origem:** `s3://lake/silver/**/*` e `s3://lake/gold/labels_fpd/**/*`  
-**Destino:** `s3://lake/gold/abt_base_prod/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
+#### B) Tabela Base Analítica CMV (`abt_base_cmv`)
+**Origem:** `s3://lake/silver/**/*` e `s3://lake/gold/labels_fpd_bureau/**/*`  
+**Destino:** `s3://lake/gold/abt_base_cmv/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
 
 | Ativo | Tipo | Finalidade |
 |:-----|:-----|:-----------|
-| `abt_base_prod` | ABT | Base analítica para treinamento e validação |
+| `abt_base_cmv` | ABT | Base analítica CMV (~2.6M registros / 207 features) |
 
-🔗 **[Book de Variáveis - ABT](../data_modelling/features/abt_base_prod-book.md)**
+🔗 **[Book de Variáveis - ABT CMV](../data_modelling/features/abt_base_cmv-book.md)**
 
 ---
 
-### 6.3 🔀 Fluxo Lógico: SILVER → GOLD
+### 6.3 🔀 Fluxo Lógico: SILVER → GOLD (Público Bureau)
 
 ```text
 Silver (Entidades de Domínio)
         ↓
-Definição de Âncora (Target)
+Fixação da Âncora CMV (Bureau)
         ↓
-Governança Temporal (Point-in-Time)
+Enriquecimento Estratégico (Point-in-Time Join)
         ↓
-Agregações Históricas (Lookbacks)
+Agregações Históricas (Lookbacks Sincronizados)
         ↓
-Join Controlado Multi-Silver
+Join Controlado Multi-Silver (Consolidação de Features)
         ↓
-Gold (Labels e ABTs ML-Ready)
+Gold (Dataset CMV-Ready para Treinamento)
 ```
 
 ---
 
 ### 6.4 🛡️ Governança de Histórico e Versionamento (`run_id`)
 
-A utilização do **run_id** como chave de particionamento na camada Gold transcende a organização técnica, atuando como o pilar de **Imutabilidade dos Experimentos**. Cada execução do pipeline gera um snapshot completo da ABT, preservando o estado exato das features e das Janelas de Lookback naquele instante. 
+A utilização do **run_id** como chave de particionamento na camada Gold transcende a organização técnica, atuando como o pilar de **Imutabilidade dos Experimentos**. Cada execução do pipeline gera um snapshot completo da ABT, preservando o estado exato das features e das Janelas de Lookback naquele instante.
 
 Esta estratégia permite:
-- **Comparação A/B de Versões:** Permite confrontar a performance de diferentes versões de modelos (ex: v1 vs v2) sobre a mesma base histórica imutável.
-- **Auditoria de Drift:** Comparação histórica entre diferentes versões da mesma ABT para identificar se a queda de performance de um modelo se deve a mudanças no comportamento dos dados.
-- **Backtesting e Rollback:** Capacidade de revalidar modelos antigos ou reverter para a base exata de um experimento anterior com total determinismo.
+
+* **Comparação A/B de Versões:** Permite confrontar a performance de diferentes versões de modelos (ex: v1 vs v2) sobre a mesma base histórica imutável de CMV.
+* **Auditoria de Drift:** Comparação histórica entre diferentes versões da ABT CMV para identificar se a queda de performance de um modelo se deve a mudanças no comportamento dos dados do Bureau.
+* **Backtesting e Rollback:** Capacidade de revalidar modelos antigos ou reverter para a base exata de um experimento anterior com total determinismo estatístico.
 
 ---
 
-> ⚠️ **Nota de Escopo:** Este documento não detalha a lógica interna de construção dos ativos Gold, tais como estratégias de **Point-in-Time Join**, definição de **janelas de lookback** e regras de **anti-data leakage**. Essas especificações constam na documentação dedicada de **estruturação do modelo baseline**, onde cada ativo é descrito com suas decisões estatísticas e justificativas técnicas.
+> ⚠️ **Nota de Escopo:** Este documento não detalha a lógica interna de construção dos ativos Gold, tais como estratégias de **Point-in-Time Join**, definição de **janelas de lookback** e regras de **anti-data leakage**. Essas especificações constam na documentação dedicada de **estruturação do modelo CMV**, onde cada ativo é descrito com suas decisões estatísticas e justificativas técnicas baseadas no público-alvo de Bureau.
 
 ---
 
@@ -302,17 +303,17 @@ Referência das práticas de monitoramento e saúde do pipeline.
 
 > Validar com o Lucas
 
-# 🧪 Estruturação do Modelo Baseline: Governança Temporal
+# 🧪 Estruturação do Modelo Baseline: Governança Temporal (Foco CMV)
 
-> **Nota Conceitual:** A **ABT** (Analytical Base Table) é a nossa tabela final de consumo físico. Já a **estruturação do baseline** é o conjunto de premissas técnicas (como a Governança Temporal e as janelas de 30/60/90 dias) que aplicamos na construção dessa ABT para garantir que o primeiro modelo do projeto seja treinado com **total confiabilidade**, sem viés ou *data leakage* (vazamento de dados).
+> **Nota Conceitual:** A **ABT** (Analytical Base Table) é a nossa tabela final de consumo físico. Já a **estruturação do baseline** é o conjunto de premissas técnicas (como a Governança Temporal e as janelas de 30/60/90 dias) que aplicamos na construção dessa ABT para garantir que o modelo focado no produto **CMV** seja treinado com **total confiabilidade**, sem viés ou *data leakage* (vazamento de dados).
 
 ---
 
 ## 📉 Visão Geral
 
-- **Entidade Principal:** Analytical Base Table (ABT) para Modelagem.
+- **Entidade Principal:** Analytical Base Table (ABT) para Modelagem de Crédito CMV.
 - **Grão da Tabela (Unicidade):** `num_cpf, safra, prod`
-- **Âncora de Seleção:** `gold/labels_fpd` (Ponto de Observação D+4)
+- **Âncora de Seleção:** `gold/labels_fpd_bureau` (Público restrito ao Score de Bureau Móvel)
 - **Chave de Particionamento:** `ano_mes` (Derivado da `safra`)
 
 ---
@@ -320,10 +321,10 @@ Referência das práticas de monitoramento e saúde do pipeline.
 ## ⏳ 1. Definição da Âncora Temporal (Safra)
 A âncora é o "ponto de observação" que separa o passado (features) do futuro (target).
 
-* **Safra:** Representa o primeiro dia do mês de ativação ou evento do cliente. É a referência temporal absoluta para o grão da ABT.
+* **Safra:** Representa o primeiro dia do mês de geração do score de bureau. É a referência temporal absoluta para o grão da ABT e garante o alinhamento com o público-alvo CMV.
 * **Ponto de Corte (Cutoff):** Para cada registro, o sistema isola o universo de dados. Apenas eventos com data **estritamente inferior** à **Safra** são elegíveis para a criação de features.
-* **Maturidade de Ingestão (D+4):** A captura da **Safra** é realizada em **D+4** após o fechamento do mês. Isso garante que os dados transacionais das camadas Silver estejam estabilizados e completos antes da consolidação na Gold.
-* **Objetivo:** Garantir que o modelo seja treinado exatamente com as informações que estariam disponíveis no momento da decisão de crédito.
+* **Maturidade de Ingestão (Público Alvo):** A captura da **Safra** via Bureau garante que estamos observando apenas o público CMV, evitando a inclusão de produtos residenciais (NET/DTH) que poderiam distorcer as métricas de performance do modelo.
+* **Objetivo:** Garantir que o modelo seja treinado exatamente com as informações que estariam disponíveis no momento da decisão de crédito no Bureau.
 
 ---
 
@@ -346,25 +347,25 @@ Esta ABT utiliza uma abordagem de **Mesa Farta**. Para cada métrica estatístic
 
 ## 🧬 3. Composição e Nomenclatura dos Ativos
 
-Para garantir que o modelo baseline tenha uma visão 360º e interprete corretamente a origem de cada sinal, aplicamos um mapeamento rigoroso de prefixos e padrões de nomes:
+Para garantir que o modelo baseline tenha uma visão 360º do público CMV e interprete corretamente a origem de cada sinal, aplicamos um mapeamento rigoroso de prefixos:
 
 ### 3.1 Mapeamento de Prefixos (Origens Silver)
 | Prefixo | Tabela Origem (Silver) | Estratégia de Captura |
 | :--- | :--- | :--- |
-| `bur_` | `silver/score_bureau_movel` | Snapshot completo de scores e bureaus externos. |
+| `bur_` | `silver/score_bureau_movel` | Snapshot completo de scores e atributos de Bureau CMV. |
 | `cad_` | `silver/dados_cadastrais` | Snapshot completo de atributos demográficos e cadastrais. |
-| `tel_` | `silver/telco` | Snapshot completo de variáveis de rede e consumo móvel. |
+| `tel_` | `silver/telco` | Captura da `flag_instalacao` e variáveis de rede móvel. |
 | `rec_` | `silver/recarga` | Agregações estatísticas sobre histórico de créditos. |
 | `pag_` | `silver/pagamento` | Agregações estatísticas sobre liquidação de faturas. |
 | `atr_` | `silver/atraso` | Agregações estatísticas sobre histórico de inadimplência. |
 
-🔗 **[Book de Variáveis - ABT](../data_modelling/features/abt_base_prod-book.md)**
+🔗 **[Book de Variáveis - ABT CMV](../data_modelling/features/abt_base_cmv-book.md)**
 
 ### 3.2 Padrão de Nomenclatura
 O padrão seguido para as features é: `{prefixo}_{métrica}_{janela/tipo}`. 
 
 **Exemplo de interpretação:**
-A variável `rec_vlr_avg_l60d` refere-se ao **valor médio de recarga** nos **últimos 60 dias** anteriores à safra. Esse padrão garante que o modelo baseline receba dados autoexplicativos, facilitando a análise de importância de variáveis.
+A variável `rec_vlr_avg_l60d` refere-se ao **valor médio de recarga** nos **últimos 60 dias** anteriores à safra de bureau. Esse padrão garante que o modelo baseline receba dados autoexplicativos, facilitando a análise de importância de variáveis (Feature Importance).
 
 <br><br><br>
 
