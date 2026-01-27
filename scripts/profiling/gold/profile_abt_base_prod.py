@@ -260,6 +260,64 @@ except Exception as e:
 print_and_save_md(md, md_file)
 
 # %% 
+# 📅 BLOCO 5: ESTABILIDADE TEMPORAL (SAFRAS) ###############
+#############################################################
+md = "### 📅 Estabilidade de Safras (Volumetria Mensal)\n\n"
+
+df_safras = con.execute(f"""
+    SELECT 
+        safra,
+        COUNT(*) as qtd_registros,
+        ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER(), 2) || '%' as representatividade
+    FROM read_parquet('{path_parquet}')
+    GROUP BY 1
+    ORDER BY 1
+""").df()
+
+md += df_safras.to_markdown(index=False)
+print_and_save_md(md, md_file)
+
+# %% 
+# 📶 BLOCO 6: DENSIDADE DE SINAL POR ORIGEM ################
+#############################################################
+md = "### 📶 Densidade de Sinal (Sparsity Média por Prefixo)\n"
+md += "> Mede o percentual médio de preenchimento das variáveis agrupadas por origem.\n\n"
+
+# Calculando sparsity média por prefixo
+df_stats['prefixo'] = df_stats['column_name'].str.extract(r'^([a-z]{3})_')
+df_stats['prefixo'] = df_stats['prefixo'].fillna('outros')
+
+df_sparsity = df_stats.groupby('prefixo').agg(
+    qtd_features=('column_name', 'count'),
+    pct_missing_medio=('pct_missing_val', 'mean')
+).reset_index()
+
+df_sparsity['densidade_sinal'] = (100 - df_sparsity['pct_missing_medio']).round(2).astype(str) + '%'
+df_sparsity['pct_missing_medio'] = df_sparsity['pct_missing_medio'].round(2).astype(str) + '%'
+
+md += df_sparsity.sort_values('qtd_features', ascending=False).to_markdown(index=False)
+print_and_save_md(md, md_file)
+
+# %% 
+# 💳 BLOCO 7: PERFIL DE RISCO POR PRODUTO ##################
+#############################################################
+md = "### 💳 Perfil de Risco (Taxa de FPD por Produto)\n\n"
+
+df_risk = con.execute(f"""
+    SELECT 
+        prod,
+        COUNT(*) as total_cpfs,
+        SUM(CASE WHEN fpd THEN 1 ELSE 0 END) as qtd_bad,
+        ROUND(SUM(CASE WHEN fpd THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 2) || '%' as fpd_rate
+    FROM read_parquet('{path_parquet}')
+    GROUP BY 1
+    ORDER BY total_cpfs DESC
+""").df()
+
+md += df_risk.to_markdown(index=False)
+print_and_save_md(md, md_file)
+
+# %% 
 # FINALIZAÇÃO ####################################
 ##################################################
 
