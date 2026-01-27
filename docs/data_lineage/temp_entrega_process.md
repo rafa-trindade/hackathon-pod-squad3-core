@@ -161,14 +161,15 @@ Ao final do processamento na camada Silver, todas as entidades apresentam:
 
 ## 🥇 6. Camada GOLD - Consumo Analítico e Modelagem (Estratégia CMV)
 
-A camada **GOLD** materializa os dados para Machine Learning, entregando ativos semânticos, versionados e auditáveis. Seguindo as diretrizes da avaliação técnica, esta camada foi reestruturada para garantir o **foco exclusivo no produto CMV**, eliminando distorções de métricas causadas por produtos residenciais. A arquitetura garante **reprodutibilidade científica**: qualquer versão histórica de um modelo pode ser auditada através do vínculo entre os `run_id` das camadas Silver e Gold.
+A camada **GOLD** materializa os dados para Machine Learning através de ativos semânticos, versionados e auditáveis. Para garantir a **cobertura total do ecossistema** e, simultaneamente, atender às **necessidades de especialização** do projeto, a camada foi estruturada em dois conjuntos de ativos com finalidades distintas: um focado na **especificidade do produto CMV** e outro voltado ao baseline geral.
 
 ---
 
 ### 6.1 🎯 Objetivos da Camada GOLD
-- Centralizar **targets oficiais** de modelagem restritos ao público CMV.
-- Disponibilizar **Analytical Base Tables (ABTs)** enriquecidas via Point-in-Time Join.
-- Servir como **contrato único** de conformidade entre Engenharia e Ciência de Dados.
+
+* **Especialização de Target:** Isolar o público CMV para garantir que o sinal de inadimplência reflita estritamente o comportamento móvel, eliminando distorções cruzadas de produtos residenciais (NET/DTH).
+* **Visão Baseline:** Manter a paridade com o ecossistema amplo, permitindo auditorias comparativas e benchmarks de performance entre a estratégia focada e a visão geral de negócio.
+* **Governança de Contrato:** Servir como **contrato único** de conformidade entre Engenharia e Ciência de Dados, entregando ativos imutáveis, homologados e blindados contra *data leakage*.
 
 ---
 
