@@ -205,12 +205,12 @@ Para garantir a cobertura total do ecossistema e atender às necessidades espec�
 ```mermaid
 graph LR
     subgraph Estrategia_CMV [Âncora Bureau]
-        A[Volume: 3.59M] --> B{Filtro CMV}
+        A[Volume: 3.59M] --> B{FPD não nulo<br/>(Contexto: CMV)}
         B --> C[Dataset Gold: 2.6M]
     end
 
     subgraph Baseline_Geral [Âncora Telco]
-        D[Volume: 1.32M] --> E{Filtro Geral}
+        D[Volume: 1.32M] --> E{FPD não nulo<br/>(Contexto: Geral)}
         E --> F[Dataset Gold: 1.3M]
     end
 
