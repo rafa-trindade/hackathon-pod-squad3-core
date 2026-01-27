@@ -216,8 +216,13 @@ graph LR
     C -.->|Impacto| G(Maior Volume de Amostragem)
     F -.->|Impacto| H(Maior Mix de Produtos)
 
-    style C fill:#2ecc71,stroke:#333
-    style F fill:#3498db,stroke:#333
+    %% Estilização baseada no tom #BC3138
+    style C fill:#BC3138,stroke:#333,color:#fff
+    style A fill:#BC3138,stroke:#333,color:#fff
+    style G fill:#BC3138,stroke:#333,color:#fff
+    style F fill:#E6A4A8,stroke:#333,color:#330000
+    style H fill:#E6A4A8,stroke:#333,color:#330000
+    style D fill:#E6A4A8,stroke:#333,color:#330000
 ```
 
 ---
@@ -249,8 +254,12 @@ graph LR
     D --> E
     E --> F
 
-    style B fill:#f9f,stroke:#333,stroke-width:2px
-    style F fill:#dfd,stroke:#333,stroke-width:4px
+    %% Estilização baseada no tom #BC3138
+    style B fill:#F2D7D9,stroke:#BC3138,stroke-width:2px,color:#330000
+    style C fill:#E6A4A8,stroke:#BC3138,color:#330000
+    style D fill:#D97277,stroke:#BC3138,color:#330000
+    style E fill:#CC4148,stroke:#BC3138,color:#fff
+    style F fill:#BC3138,stroke:#330000,stroke-width:4px,color:#fff
 ```
 
 ---
