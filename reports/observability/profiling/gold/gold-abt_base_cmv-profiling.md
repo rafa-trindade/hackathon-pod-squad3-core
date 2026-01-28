@@ -1,4 +1,4 @@
-# Relatório de Profiling: `gold/abt_base_cmv` - `20260127_153240`
+# Relatório de Profiling: `gold/abt_base_cmv` - `20260128`
 
 ### ⚙️ Sumário Técnico do Dataset: `abt_base_cmv`
 
@@ -62,13 +62,13 @@
 | rec_vlr_std_l60d                  | DOUBLE                   | 41.29%        |
 | rec_vlr_std_l90d                  | DOUBLE                   | 35.94%        |
 | rec_vlr_std_geral                 | DOUBLE                   | 29.6%         |
-| rec_vlr_coef_var_l30d             | DOUBLE                   | 69.59%        |
+| rec_vlr_coef_var_l30d             | DOUBLE                   | 69.58%        |
 | rec_vlr_coef_var_l60d             | DOUBLE                   | 57.5%         |
 | rec_vlr_coef_var_l90d             | DOUBLE                   | 52.79%        |
 | rec_ratio_qtd_l30d_l60d           | DOUBLE                   | 33.85%        |
 | rec_ratio_qtd_l60d_l90d           | DOUBLE                   | 31.11%        |
-| rec_ratio_vlr_l30d_l60d           | DOUBLE                   | 59.02%        |
-| rec_ratio_vlr_l60d_l90d           | DOUBLE                   | 52.71%        |
+| rec_ratio_vlr_l30d_l60d           | DOUBLE                   | 59.01%        |
+| rec_ratio_vlr_l60d_l90d           | DOUBLE                   | 52.7%         |
 | rec_flag_sem_recarga_l30d         | INTEGER                  | 0.0%          |
 | rec_flag_sem_recarga_l60d         | INTEGER                  | 0.0%          |
 | rec_flag_sem_recarga_l90d         | INTEGER                  | 0.0%          |
@@ -232,7 +232,7 @@
 | tel_var_91                        | VARCHAR                  | 50.3%         |
 | tel_var_92                        | VARCHAR                  | 50.3%         |
 | tel_var_93                        | VARCHAR                  | 50.3%         |
-| run_id                            | VARCHAR                  | 0.0%          |
+| run_id                            | BIGINT                   | 0.0%          |
 | ingestion_ts                      | TIMESTAMP WITH TIME ZONE | 0.0%          |
 | ano_mes                           | BIGINT                   | 0.0%          |
 
@@ -249,14 +249,14 @@
 | rec_vlr_total_l30d                | 50.000,00     | 242,91           | ⚠️ Outlier Detected |
 | rec_vlr_total_l60d                | 50.109,80     | 399,16           | ⚠️ Outlier Detected |
 | rec_vlr_total_l90d                | 75.164,70     | 588,22           | ⚠️ Outlier Detected |
-| rec_vlr_total_geral               | 425.000,00    | 3.078,74         | ⚠️ Outlier Detected |
+| rec_vlr_total_geral               | 425.000,00    | 3.078,75         | ⚠️ Outlier Detected |
 | rec_vlr_avg_l30d                  | 12.500,00     | 70,02            | ⚠️ Outlier Detected |
 | rec_vlr_avg_l60d                  | 12.500,00     | 65,13            | ⚠️ Outlier Detected |
 | rec_vlr_avg_l90d                  | 12.500,00     | 63,02            | ⚠️ Outlier Detected |
 | rec_vlr_avg_geral                 | 12.500,00     | 80,34            | ⚠️ Outlier Detected |
 | rec_vlr_min_l30d                  | 109,84        | 36,45            | ⚠️ Outlier Detected |
 | rec_vlr_min_l60d                  | 109,84        | 30,93            | ⚠️ Outlier Detected |
-| rec_vlr_min_l90d                  | 109,84        | 27,47            | ⚠️ Outlier Detected |
+| rec_vlr_min_l90d                  | 109,84        | 27,48            | ⚠️ Outlier Detected |
 | rec_vlr_min_geral                 | 100,00        | 19,92            | ⚠️ Outlier Detected |
 | rec_vlr_max_l30d                  | 25.000,00     | 183,82           | ⚠️ Outlier Detected |
 | rec_vlr_max_l60d                  | 25.000,00     | 195,52           | ⚠️ Outlier Detected |
@@ -271,39 +271,39 @@
 | rec_vlr_coef_var_l30d             | 16,12         | 2,89             | ⚠️ Outlier Detected |
 | rec_vlr_coef_var_l60d             | 20,54         | 3,09             | ⚠️ Outlier Detected |
 | rec_vlr_coef_var_l90d             | 26,12         | 3,25             | ⚠️ Outlier Detected |
-| pag_vlr_total_l30d                | 438.467,35    | 2.392,69         | ⚠️ Outlier Detected |
-| pag_vlr_total_l60d                | 951.172,55    | 4.651,71         | ⚠️ Outlier Detected |
-| pag_vlr_total_l90d                | 951.172,55    | 6.165,41         | ⚠️ Outlier Detected |
-| pag_vlr_total_geral               | 1.815.002,44  | 20.156,76        | ⚠️ Outlier Detected |
-| pag_vlr_avg_l30d                  | 438.467,35    | 1.907,38         | ⚠️ Outlier Detected |
-| pag_vlr_avg_l60d                  | 190.234,51    | 1.022,25         | ⚠️ Outlier Detected |
-| pag_vlr_avg_l90d                  | 190.234,51    | 1.039,70         | ⚠️ Outlier Detected |
-| pag_vlr_avg_geral                 | 60.778,82     | 765,66           | ⚠️ Outlier Detected |
-| pag_vlr_min_l30d                  | 438.467,35    | 1.852,13         | ⚠️ Outlier Detected |
-| pag_vlr_min_l60d                  | 55.261,99     | 569,61           | ⚠️ Outlier Detected |
-| pag_vlr_min_l90d                  | 55.261,99     | 539,68           | ⚠️ Outlier Detected |
-| pag_vlr_min_geral                 | 16.874,46     | 235,88           | ⚠️ Outlier Detected |
-| pag_vlr_max_l30d                  | 438.467,35    | 2.147,17         | ⚠️ Outlier Detected |
-| pag_vlr_max_l60d                  | 480.478,67    | 2.205,05         | ⚠️ Outlier Detected |
-| pag_vlr_max_l90d                  | 480.478,67    | 2.245,92         | ⚠️ Outlier Detected |
-| pag_vlr_max_geral                 | 1.028.185,94  | 4.475,48         | ⚠️ Outlier Detected |
-| pag_qtd_faturas_l30d              | 25,00         | 2,33             | ⚠️ Outlier Detected |
+| pag_vlr_total_l30d                | 438.467,35    | 2.427,00         | ⚠️ Outlier Detected |
+| pag_vlr_total_l60d                | 979.673,73    | 4.715,57         | ⚠️ Outlier Detected |
+| pag_vlr_total_l90d                | 979.673,73    | 6.103,76         | ⚠️ Outlier Detected |
+| pag_vlr_total_geral               | 1.729.385,38  | 20.101,78        | ⚠️ Outlier Detected |
+| pag_vlr_avg_l30d                  | 438.467,35    | 1.909,50         | ⚠️ Outlier Detected |
+| pag_vlr_avg_l60d                  | 122.459,22    | 868,41           | ⚠️ Outlier Detected |
+| pag_vlr_avg_l90d                  | 122.459,22    | 891,32           | ⚠️ Outlier Detected |
+| pag_vlr_avg_geral                 | 60.755,19     | 763,72           | ⚠️ Outlier Detected |
+| pag_vlr_min_l30d                  | 438.467,35    | 1.851,88         | ⚠️ Outlier Detected |
+| pag_vlr_min_l60d                  | 55.261,99     | 571,01           | ⚠️ Outlier Detected |
+| pag_vlr_min_l90d                  | 55.261,99     | 535,97           | ⚠️ Outlier Detected |
+| pag_vlr_min_geral                 | 16.874,46     | 235,00           | ⚠️ Outlier Detected |
+| pag_vlr_max_l30d                  | 438.467,35    | 2.159,21         | ⚠️ Outlier Detected |
+| pag_vlr_max_l60d                  | 480.478,67    | 2.192,63         | ⚠️ Outlier Detected |
+| pag_vlr_max_l90d                  | 480.478,67    | 2.234,39         | ⚠️ Outlier Detected |
+| pag_vlr_max_geral                 | 1.028.185,94  | 4.544,03         | ⚠️ Outlier Detected |
+| pag_qtd_faturas_l30d              | 26,00         | 2,33             | ⚠️ Outlier Detected |
 | pag_qtd_faturas_l60d              | 30,00         | 4,04             | ⚠️ Outlier Detected |
 | pag_qtd_faturas_l90d              | 40,00         | 5,78             | ⚠️ Outlier Detected |
 | pag_qtd_faturas_geral             | 110,00        | 24,64            | ⚠️ Outlier Detected |
-| pag_qtd_vezes_com_juros           | 260,00        | 19,42            | ⚠️ Outlier Detected |
-| pag_dias_desde_ultimo_pagamento   | 516,00        | 166,41           | ⚠️ Outlier Detected |
-| pag_ticket_medio_l30d             | 438.467,35    | 2.081,43         | ⚠️ Outlier Detected |
-| pag_ticket_medio_l60d             | 190.234,51    | 1.283,51         | ⚠️ Outlier Detected |
-| pag_ticket_medio_l90d             | 190.234,51    | 1.294,66         | ⚠️ Outlier Detected |
-| pag_ticket_medio_geral            | 121.000,16    | 1.203,51         | ⚠️ Outlier Detected |
+| pag_qtd_vezes_com_juros           | 252,00        | 19,41            | ⚠️ Outlier Detected |
+| pag_dias_desde_ultimo_pagamento   | 516,00        | 166,44           | ⚠️ Outlier Detected |
+| pag_ticket_medio_l30d             | 438.467,35    | 2.059,32         | ⚠️ Outlier Detected |
+| pag_ticket_medio_l60d             | 122.459,22    | 1.132,47         | ⚠️ Outlier Detected |
+| pag_ticket_medio_l90d             | 122.459,22    | 1.140,00         | ⚠️ Outlier Detected |
+| pag_ticket_medio_geral            | 115.292,36    | 1.193,31         | ⚠️ Outlier Detected |
 | pag_share_faturas_com_juros_l30d  | 8,00          | 2,49             | ⚠️ Outlier Detected |
 | pag_share_faturas_com_juros_l60d  | 7,00          | 2,40             | ⚠️ Outlier Detected |
 | pag_share_faturas_com_juros_l90d  | 7,33          | 2,31             | ⚠️ Outlier Detected |
 | pag_share_faturas_com_juros_geral | 7,70          | 2,10             | ⚠️ Outlier Detected |
-| pag_vlr_std_l30d                  | 52.576,08     | 768,44           | ⚠️ Outlier Detected |
-| pag_vlr_std_l60d                  | 246.229,17    | 1.111,57         | ⚠️ Outlier Detected |
-| pag_vlr_std_l90d                  | 246.229,17    | 1.066,00         | ⚠️ Outlier Detected |
+| pag_vlr_std_l30d                  | 52.576,08     | 779,38           | ⚠️ Outlier Detected |
+| pag_vlr_std_l60d                  | 208.314,08    | 983,74           | ⚠️ Outlier Detected |
+| pag_vlr_std_l90d                  | 208.314,08    | 946,25           | ⚠️ Outlier Detected |
 | atr_vlr_max_l30d                  | 509.114,06    | 3.064,48         | ⚠️ Outlier Detected |
 | atr_vlr_max_l60d                  | 3.406.523,69  | 12.414,23        | ⚠️ Outlier Detected |
 | atr_vlr_max_l90d                  | 3.406.523,69  | 12.120,22        | ⚠️ Outlier Detected |
@@ -328,13 +328,13 @@
 ### 📦 Volumetria: `abt_base_cmv`
 | diretorio      |   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
 |:---------------|---------------:|:------------|----------:|-------------------------:|----------------------------:|
-| ano_mes=202410 |              1 | 426.104     |       207 |                    59.43 |                       76.45 |
-| ano_mes=202411 |              1 | 454.572     |       207 |                    61.95 |                       79.67 |
-| ano_mes=202412 |              1 | 445.154     |       207 |                    63.38 |                       81.19 |
-| ano_mes=202501 |              1 | 452.621     |       207 |                    62.9  |                       80.06 |
-| ano_mes=202502 |              1 | 419.453     |       207 |                    58.47 |                       74.92 |
-| ano_mes=202503 |              1 | 435.996     |       207 |                    64.14 |                       81.92 |
-| TOTAL          |              6 | 2.633.900   |       207 |                   370.27 |                      474.22 |
+| ano_mes=202410 |              1 | 426.104     |       207 |                    59.33 |                       76.44 |
+| ano_mes=202411 |              1 | 454.572     |       207 |                    61.88 |                       79.54 |
+| ano_mes=202412 |              1 | 445.154     |       207 |                    63.35 |                       81.16 |
+| ano_mes=202501 |              1 | 452.621     |       207 |                    62.71 |                       79.96 |
+| ano_mes=202502 |              1 | 419.453     |       207 |                    58.44 |                       74.76 |
+| ano_mes=202503 |              1 | 435.996     |       207 |                    64.15 |                       82.2  |
+| TOTAL          |              6 | 2.633.900   |       207 |                   369.86 |                      474.06 |
 
 ---
 
@@ -351,7 +351,7 @@
 
 ---
 
-### 📶 Densidade de Sinal (Percentual de nulos médio (sparsity) por Prefixo)
+### 📶 Densidade de Sinal (Percentual de nulos médio por Prefixo)
 > Mede o percentual médio de preenchimento das variáveis agrupadas por origem.
 
 | prefixo   |   qtd_features | pct_missing_medio   | densidade_sinal   |

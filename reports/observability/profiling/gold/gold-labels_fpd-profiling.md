@@ -1,4 +1,4 @@
-# Relatório de Profiling: `gold/labels_fpd` - `20260124_020917`
+# Relatório de Profiling: `gold/labels_fpd` - `20260128`
 
 ### 🔑 Garantia de Unicidade: `gold/labels_fpd`
 - **Chave Técnica:** `num_cpf, safra, prod`
@@ -22,7 +22,7 @@
 | prod            | VARCHAR                  |           3 |       0 |      1321165 | 0.0%        | 100.0%           | BAIXA           |
 | fpd             | BOOLEAN                  |           2 |       0 |      1321166 | 0.0%        | 100.0%           | BAIXA           |
 | flag_instalacao | BOOLEAN                  |           1 |       0 |      1321167 | 0.0%        | 100.0%           | BAIXA           |
-| run_id          | VARCHAR                  |           1 |       0 |      1321167 | 0.0%        | 100.0%           | BAIXA           |
+| run_id          | BIGINT                   |           1 |       0 |      1321167 | 0.0%        | 100.0%           | BAIXA           |
 | ingestion_ts    | TIMESTAMP WITH TIME ZONE |           1 |       0 |      1321167 | 0.0%        | 100.0%           | BAIXA           |
 | ano_mes         | BIGINT                   |           6 |       0 |      1321162 | 0.0%        | 100.0%           | BAIXA           |
 
@@ -34,10 +34,10 @@
 | ano_mes=202410 |              1 | 207.953     |         8 |                     1.86 |                        3.06 |
 | ano_mes=202411 |              1 | 231.824     |         8 |                     2.07 |                        3.41 |
 | ano_mes=202412 |              1 | 232.984     |         8 |                     2.08 |                        3.43 |
-| ano_mes=202501 |              1 | 226.446     |         8 |                     2.03 |                        3.33 |
-| ano_mes=202502 |              1 | 208.731     |         8 |                     1.88 |                        3.08 |
+| ano_mes=202501 |              1 | 226.446     |         8 |                     2.03 |                        3.34 |
+| ano_mes=202502 |              1 | 208.731     |         8 |                     1.87 |                        3.08 |
 | ano_mes=202503 |              1 | 213.230     |         8 |                     1.91 |                        3.14 |
-| TOTAL          |              6 | 1.321.168   |         8 |                    11.83 |                       19.45 |
+| TOTAL          |              6 | 1.321.168   |         8 |                    11.82 |                       19.45 |
 
 ---
 
@@ -50,7 +50,7 @@
 #### Coluna: `ingestion_ts`
 | min                              | max                              |
 |:---------------------------------|:---------------------------------|
-| 2026-01-23 23:09:17.533358-03:00 | 2026-01-23 23:09:17.533358-03:00 |
+| 2026-01-28 01:23:04.394592-03:00 | 2026-01-28 01:23:04.394592-03:00 |
 
 
 
@@ -69,16 +69,16 @@
 
 | valor       |   qtd |
 |:------------|------:|
-| ZTZTWZXTYZX |     5 |
-| ZWZT9ZZUZU8 |     5 |
-| YTWN99NY8ZU |     5 |
+| Y97YZZX88TY |     5 |
 | XYUZ8ZXUUZ9 |     5 |
-| ZW9TYZXTWTZ |     5 |
 | T9ZYTXZ7WYZ |     5 |
 | XYTY9ZX879Z |     5 |
-| Y97YZZX88TY |     5 |
-| U89WNW7TWWU |     4 |
-| UZTWX7NU8UY |     4 |
+| YTWN99NY8ZU |     5 |
+| ZTZTWZXTYZX |     5 |
+| ZWZT9ZZUZU8 |     5 |
+| ZW9TYZXTWTZ |     5 |
+| ZX9Y7UZ8XU8 |     4 |
+| W9ZN9ZXN88T |     4 |
 
 #### Coluna: `safra`
 
@@ -114,15 +114,15 @@
 
 #### Coluna: `run_id`
 
-|           valor |     qtd |
-|----------------:|--------:|
-| 20260124_020917 | 1321168 |
+|    valor |     qtd |
+|---------:|--------:|
+| 20260128 | 1321168 |
 
 #### Coluna: `ingestion_ts`
 
 | valor                         |     qtd |
 |:------------------------------|--------:|
-| 2026-01-23 23:09:17.533358-03 | 1321168 |
+| 2026-01-28 01:23:04.394592-03 | 1321168 |
 
 #### Coluna: `ano_mes`
 
