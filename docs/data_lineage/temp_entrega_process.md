@@ -201,7 +201,7 @@ Para garantir a cobertura total do ecossistema e atender às necessidades espec�
 >
 > A coexistência dos dois ativos GOLD é fundamentada nos resultados obtidos via *data profiling* das execuções:
 >
-> 1. **Âncora Bureau (Massa de Expansão - 2.6M):** Garante a **generalização do modelo** em larga escala, permitindo prospecção de mercado. Apresenta sparsity de 50.3% em dados de rede, inerente a novos entrantes. ([📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_cmv-profiling.md))
+> 1. **Âncora Bureau (Massa de Expansão - 2.6M):** Garante a **generalização do modelo** em larga escala, permitindo prospecção de mercado. Apresenta percentual de nulos detectados de 50.3% em dados de rede, inerente a novos entrantes. ([📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_cmv-profiling.md))
 > 2. **Âncora Telco (Ativo de Controle - 1.3M):** Atua como **Padrão de Ouro** para calibração. Retém densidade de sinais transacionais de **99.9%**, permitindo validar se a performance do modelo é consistente com o comportamento real de uso da rede. ([📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_prod-profiling.md))
 > 3. **Isolamento de Risco:** O profiling identificou que o produto **DTH apresenta 53.4% de FPD**, enquanto o **CMV estabiliza em 21.2%**. A separação garante que o aprendizado do modelo CMV não seja distorcido pelo risco extremo de produtos residenciais.
 >
@@ -388,7 +388,6 @@ A variável `rec_vlr_avg_l60d` refere-se ao **valor médio de recarga** nos **ú
 - **Maturidade (D+4):** Tempo de espera técnica necessário para garantir que todos os eventos do mês anterior foram devidamente consolidados no Lake antes da geração da Gold.
 - **Mesa Farta:** Abordagem de *Feature Engineering* que consiste em gerar o máximo de variáveis e combinações temporais para que o algoritmo identifique as melhores correlações.
 - **Densidade de Sinal:** Percentual de preenchimento das variáveis agrupadas por origem (`tel`, `rec`, `pag`). Máxima no ativo de controle (99.9%).
-- **Sparsity (Dispersão):** Percentual de nulos detectados. O projeto gerencia uma sparsity de 50.3% em dados de rede no ativo de expansão via estratégias de imputação (Zero-Filling).
 - **Observability Layer (Camada de Observabilidade):** Zona de armazenamento dedicada ao histórico de logs, auditorias e profilings, isolada das camadas de dados de negócio (Medallion) para garantir a governança técnica.
 
 
