@@ -213,7 +213,7 @@ A camada Gold é estruturada em dois conjuntos de ativos para atender simultanea
 > 3. **Isolamento de Risco por Produto:** O profiling na `abt_base_prod` identificou que o produto **DTH apresenta 53.4% de FPD**, enquanto o **CMV estabiliza em 21.2%** na `abt_base_cmv`. A separação dos ativos garante que a predição para o produto móvel (CMV) não seja contaminada pelo risco extremo detectado em produtos residenciais (NET/DTH).
 >
 > ---
-> ### 📊 Direcionamento Estratégico das Âncoras
+> #### 📊 Direcionamento Estratégico das Âncoras
 > A síntese abaixo detalha a **responsabilidade técnica** da arquitetura para garantir tanto a amplitude quanto a fidelidade dos dados:
 >
 > ![ancoras](../images/data_lineage/ancoras.png)
