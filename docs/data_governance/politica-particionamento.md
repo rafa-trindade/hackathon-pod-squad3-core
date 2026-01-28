@@ -58,7 +58,7 @@ Para garantir o cumprimento desta política e a saúde dos dados para modelagem,
 Para cada partição `ano_mes`, o sistema mantém um controle de `run_id` (timestamp da execução). A política de retenção padrão é configurada para manter as execuções mais recentes, permitindo o *rollback* imediato. A trilha de auditoria dessas execuções é centralizada no diretório de [Observabilidade](../../reports/observability/).
 
 Para auditar uma execução específica, a estrutura no S3 deve ser consultada:
-`s3://lake/observability/reports/run_id=YYYYMMDD_HHMMSS/`
+`s3://lake/observability/reports/run_id=YYYYMMDD/`
 
 ---
 
