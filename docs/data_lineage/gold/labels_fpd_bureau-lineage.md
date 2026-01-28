@@ -1,8 +1,8 @@
 ## 📉 Visão Geral - `labels_fpd_bureau` (Gold Layer)
 
-- **Entidade Principal:** Target de Modelagem para Público Bureau (CMV)
+- **Entidade Principal:** Target de Modelagem de Expansão (Amplitude de Público)
 - **Grão da Tabela (Unicidade):** `num_cpf, safra, prod`
-- **Âncora de Seleção:** `score_bureau_movel` (Público-Alvo Aderente à Solução)
+- **Âncora de Seleção:** `silver/score_bureau_movel` (Foco em **Amplitude de Público**)
 - **Chave de Particionamento:** `ano_mes` (Derivado da `safra`)
 
 ---
@@ -27,16 +27,14 @@ Seguindo as recomendações da avaliação técnica, a âncora desta tabela foi 
 
 ---
 
-### 🏆 Veredito Técnico: Transição para Âncora Bureau
+### 🏆 Veredito Técnico: Transição para Âncora Bureau (Ativo de Expansão)
 
-A base **TELCO** original continha uma amostragem de produtos residenciais que não refletiam o risco de crédito móvel. A transição para a base **BUREAU** garante fidelidade total ao produto **CMV**.
+A transição para a base **BUREAU** é uma decisão de resposta da arquitetura para garantir a **Amplitude de Público** necessária para prospecção, mantendo o foco exclusivo no produto **CMV**.
 
-**Justificativa Visual da Mudança:**
-A análise exploratória inicial identificou que produtos de naturezas distintas (NET/DTH) apresentavam comportamentos de inadimplência (FPD) que distorciam a média do público-alvo móvel. O isolamento da âncora no Bureau remove esse ruído estatístico.
-
-1. **Fidelidade de Produto:** 100% dos registros são do produto **CMV**.
-2. **Mitigação de Viés:** Elimina-se a influência de modelos de propensão de TV ou Banda Larga.
-3. **Enriquecimento Estratégico:** A tabela mantém a `flag_instalacao` vinda da Telco Silver, porém aplicada estritamente ao público elegível pelo Bureau.
+**Justificativa Estratégica:**
+1. **Amplitude de Público:** Elevamos a cardinalidade para **2.5M**, permitindo que o modelo aprenda padrões de mercado aberto.
+2. **Isolamento de Risco:** Ao consumir o target da `silver/score_bureau_movel`, eliminamos o ruído estatístico de produtos residenciais (NET/DTH), estabilizando o FPD em **21.2%**.
+3. **Fidelidade Nativa:** 100% de aderência ao público elegível pela solução de crédito móvel.
 
 **📊 Comparativo de Estratégia:**
 
@@ -109,6 +107,6 @@ Saneamento (Missing)          | INFO       | Descartados 1,161,410 registros (30
 
 ### 💡 Notas de Auditoria Técnica
 
-1. **Expansão de Volumetria:** A migração para a âncora de Bureau elevou a cardinalidade para **2.5M de CPFs**, garantindo que o modelo seja treinado com o maior histórico disponível para o produto CMV.
+1. **Expansão de Volumetria:** A migração para a âncora de Bureau consolidou a **Amplitude de Público** em **2.5M de CPFs**, garantindo significância estatística para cenários de novos clientes.
 2. **Qualidade do Overlap:** O aumento do match de Pagamento (**71.84%**) e Atraso (**77.11%**) em relação à base Telco original sugere que o público que possui Score de Bureau é financeiramente mais ativo no ecossistema.
 3. **Eficiência do Saneamento:** O descarte de **30.60%** dos registros na Etapa 1 refere-se a CPFs que não possuíam a label de FPD calculada ou que pertenciam a safras fora do período de observação homologado.

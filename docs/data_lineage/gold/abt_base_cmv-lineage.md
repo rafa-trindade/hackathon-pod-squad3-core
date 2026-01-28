@@ -1,15 +1,15 @@
 ## 📉 Visão Geral - `abt_base_cmv` (Gold Layer)
 
-- **Entidade Principal:** Analytical Base Table (ABT) focada no público-alvo de Bureau (CMV).
+- **Entidade Principal:** Analytical Base Table (ABT) de Expansão (Amplitude de Público).
 - **Grão da Tabela (Unicidade):** `num_cpf, safra, prod`
-- **Âncora de Seleção:** `gold/labels_fpd_bureau` (Público restrito ao Score de Bureau Móvel)
+- **Âncora de Seleção:** `gold/labels_fpd_bureau` (Foco em **Amplitude e Cobertura**)
 - **Chave de Particionamento:** `ano_mes` (Derivado da `safra`)
 
 ---
 
 ## ⏳ Estratégia de Governança Temporal
 
-Este documento define as diretrizes para a construção da Analytical Base Table (ABT) `abt_base_cmv`. Seguindo a recomendação da avaliação técnica, esta base isola o público de **CMV**, garantindo que o modelo não sofra interferência de comportamentos de outros produtos (NET/DTH) presentes na base cadastral ampla.
+Este documento define as diretrizes para a construção da ABT de Expansão `abt_base_cmv`. Esta arquitetura assume a **responsabilidade técnica** de isolar o público de **CMV**, garantindo a **amplitude de público** necessária para prospecção (2.6M de registros) sem a interferência de risco de produtos residenciais (NET/DTH).
 
 ### 1. Definição da Âncora Temporal (Safra)
 A âncora é o "ponto de observação" que separa o passado (features) do futuro (target).
@@ -97,7 +97,7 @@ Status Enriquecimento         | 100% com flag_instalacao
 
 ### 💡 Notas de Auditoria Técnica
 
-1. **Aderência ao Público-Alvo:** Esta ABT foi reconstruída para mitigar as distorções identificadas pelo time de avaliação. O público agora é 100% alinhado à `score_bureau_movel`, eliminando o ruído de produtos residenciais (NET/DTH). Com a nova volumetria de **2.6M de registros**, garantimos massa crítica para o treinamento.
+1. **Amplitude de Público:** Esta ABT foi construída para garantir a máxima cobertura de mercado. O público é 100% alinhado à `silver/score_bureau_movel`, eliminando o ruído estatístico de produtos residenciais. Com a volumetria de **2.6M de registros**, garantimos a **capacidade de generalização** do modelo para novos clientes.
 
 2. **Densidade de Features:** O dataset foi expandido para **207 colunas**, cobrindo todo o espectro de bureaus, cadastro e comportamento transacional, mantendo o prefixo de origem para rastreabilidade total.
 
@@ -105,4 +105,4 @@ Status Enriquecimento         | 100% com flag_instalacao
 
 4. **Garantia de Point-in-Time:** O uso de f-strings e variáveis de ambiente no pipeline DuckDB garante que a âncora `labels_fpd_bureau` seja a única fonte de verdade para CPFs e datas em todo o fluxo de agregação.
 
-5. **Organização de Colunas:** Estrutura otimizada para consumo: `CHAVES/TARGET` > `ESTATÍSTICAS AGG` > `BUREAU` > `CADASTRO` > `TELCO` > `METADADOS`.
+5. **Organização de Colunas (DNA do Ativo):** Estrutura otimizada para consumo analítico: `CHAVES/TARGET` > `ESTATÍSTICAS AGG (rec_, pag_, atr_)` > `BUREAU` > `CADASTRO` > `TELCO` > `METADADOS`.

@@ -1,15 +1,15 @@
 ## 📉 Visão Geral - `abt_base_prod` (Gold Layer)
 
-- **Entidade Principal:** Analytical Base Table (ABT) para Modelagem de Crédito.
+- **Entidade Principal:** Analytical Base Table (ABT) de Controle (Baseline).
 - **Grão da Tabela (Unicidade):** `num_cpf, safra, prod`
-- **Âncora de Seleção:** `gold/labels_fpd` (Ponto de Observação D+4)
+- **Âncora de Seleção:** `gold/labels_fpd` (Responsável pela **Densidade Transacional**)
 - **Chave de Particionamento:** `ano_mes` (Derivado da `safra`)
 
 ---
 
 ## ⏳ Estratégia de Governança Temporal
 
-Este documento define as diretrizes para a construção da Analytical Base Table (ABT) `abt_base_prod`. O foco é garantir a integridade estatística através do **Point-in-Time Join**, permitindo o uso de todo o histórico disponível nas camadas Silver sem causar **Data Leakage**.
+Este documento define as diretrizes para a construção da ABT de Controle `abt_base_prod`. Além do rigor temporal (**Point-in-Time Join**), este ativo atua como o **Padrão de Ouro** do projeto, garantindo que o modelo seja calibrado com o máximo de preenchimento de atributos internos (99.9% de densidade em variáveis `tel_`).
 
 ### 1. Definição da Âncora Temporal (Safra)
 A âncora é o "ponto de observação" que separa o passado (features) do futuro (target).
@@ -98,7 +98,7 @@ Unicidade (PK)                | SUCESSO
 
 > 🔗 **Acesse o log de auditoria:** [gold-abt_base_prod-quality.log](../../../reports/observability/quality/pipeline/gold-abt_base_prod-quality.log)
 
-> 🔗 **Acesse o Profiling Detalhado:** [gold-labels_fpd-quality.md](../../../reports/observability/profiling/gold/gold-abt_base_prod-profiling.md)
+> 🔗 **Acesse o Profiling Detalhado:** [gold-abt_base_prod-profiling.md](../../../reports/observability/profiling/gold/gold-abt_base_prod-profiling.md)
 
 
 ---
@@ -107,7 +107,7 @@ Unicidade (PK)                | SUCESSO
 
 1. **Estratégia de Dados Completos:** Nenhuma informação foi descartada durante a criação desta tabela. Decidimos entregar todas as colunas disponíveis para que o modelo identifique sozinho quais são as informações mais importantes para prever o comportamento do cliente (Abordagem *Mesa Farta*).
    
-2. **Qualidade da Base:** Todos os clientes listados nesta tabela possuem informações de cadastro e de crédito (Bureau) preenchidas. Isso garante que não existam registros "fantasmas", permitindo que o modelo analise o perfil completo de cada CPF.
+2. **Qualidade da Base (Padrão de Ouro):** O profiling confirma que **99.9% dos registros** possuem informações transacionais completas. Isso garante a calibração do modelo em um ambiente de máxima fidelidade de atributos.
 
 3. **Monitoramento de Valores Extremos:** O sistema identifica automaticamente valores muito fora do comum (Outliers) através do método de 3 Sigmas ($\mu \pm 3\sigma$). Esse alerta serve para que a equipe de modelagem decida por ajustes de *Capping* antes de iniciar o treinamento, evitando distorções.
 
@@ -115,4 +115,4 @@ Unicidade (PK)                | SUCESSO
 
 5. **Densidade Temporal (Multi-Window):** Esta ABT entrega a "velocidade" do cliente. Ao comparar janelas curtas (30d, 60d, 90d) com o histórico longo (_geral), o modelo consegue identificar automaticamente sinais de melhora ou deterioração financeira antes da ocorrência do default.
 
-6. **Organização de Colunas:** A estrutura visual do arquivo Parquet foi otimizada para facilitar o consumo, seguindo a ordem lógica: `GRÃO/TARGET` > `ESTATÍSTICAS AGG` > `BUREAU` > `CADASTRO` > `TELCO` > `METADADOS`.
+6. **Organização e Mix de Produtos:** A estrutura foi desenhada para permitir o **Isolamento de Risco**, facilitando a identificação de disparidades de FPD entre o produto móvel (CMV) e produtos residenciais (NET/DTH), conforme detectado no diagnóstico de governança.

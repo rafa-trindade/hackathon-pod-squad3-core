@@ -1,8 +1,8 @@
 ## 📉 Visão Geral - `labels_fpd` (Gold Layer)
 
-- **Entidade Principal:** Target de Modelagem (FPD - First Payment Default)
+- **Entidade Principal:** Target de Modelagem de Controle (Baseline)
 - **Grão da Tabela (Unicidade):** `num_cpf, safra, prod`
-- **Âncora de Seleção:** `telco` (Ecossistema de Intenção e Comportamento)
+- **Âncora de Seleção:** `silver/telco` (Responsável pela **Densidade Transacional**)
 - **Chave de Particionamento:** `ano_mes` (Derivado da `safra`)
 
 ---
@@ -38,14 +38,14 @@ A definição da base âncora para a camada Gold foi precedida por um estudo exa
 
 ---
 
-### 🏆 Veredito Técnico: Seleção da Base `TELCO`
+### 🏆 Veredito Técnico: Seleção da Base `TELCO` (Ativo de Controle)
 
-A escolha do melhor Target depende do que a Squad prioriza: Volume Total (Alcance) ou Riqueza de Features (Poder Preditivo). Para este projeto, o veredito é a utilização da base **TELCO**.
+Para a composição do baseline de controle, o veredito é a utilização da base **TELCO**. Esta decisão de resposta garante que o modelo seja calibrado em um ambiente de dados "limpos", permitindo validar a correlação entre uso de rede e inadimplência.
 
-**Justificativa:**
-1. **Match de Ecossistema (Riqueza):** Possui um overlap de **99.78% com Recarga**. Quase 100% dos clientes possuem comportamento transacional ativo, o que é fundamental para o ganho marginal de KS buscado.
-2. **Qualidade Cadastral:** Possui **100% de match** com Cadastral e Bureau, eliminando "buracos" de informação básica.
-3. **Equilíbrio Financeiro:** Com 68% de match em pagamento, oferece a base perfeita para modelar o "Pós-pago" e o "Pré-pago de alto valor" (Proxy de Confiança).
+**Justificativa Estratégica:**
+1. **Padrão de Ouro:** Com **99.9% de densidade** nas variáveis de rede, elimina a necessidade de imputações agressivas na fase de calibração.
+2. **Qualidade Cadastral:** Possui **100% de match** com Cadastral e Bureau, servindo como âncora de sanidade para o ecossistema.
+3. **Equilíbrio Financeiro:** Oferece a base perfeita para modelar o mix de produtos, permitindo identificar o desvio de risco entre CMV e produtos residenciais (NET/DTH).
 
 **📊 Comparativo de Decisão:**
 
@@ -143,4 +143,4 @@ Saneamento (Missing)          | INFO       | Descartados 45,936 registros (3.36%
 
 1. **Justificativa do Overlap de Pagamento:** O status `WARN` (68.16%) no overlap de pagamento é um comportamento **esperado e validado** pela Squad. Ele reflete a parcela da base composta por clientes "Pré-pago Puro", que não possuem faturas na Silver de Pagamentos, mas são qualificados via Silver de Recarga (99.78% de match).
 2. **Estabilidade Temporal:** A Distribuição de Safra apresenta um desvio padrão mínimo, garantindo que o modelo não será treinado com vieses de sazonalidade ou falhas de carga em meses específicos.
-3. **Veredito Final:** Com 100% de cobertura em Cadastro e Bureau, e alta densidade em variáveis de comportamento Telco, o dataset está oficialmente homologado para a fase de treinamento.
+3. **Veredito Final:** Com 100% de cobertura em Cadastro e Bureau, e máxima **densidade transacional** em variáveis de comportamento Telco, o dataset está oficialmente homologado como o **Ativo de Controle** para o treinamento dos modelos.
