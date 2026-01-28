@@ -1,4 +1,4 @@
-# Relatório de Profiling: `bronze/telco` - `20260108_204751`
+# Relatório de Profiling: `bronze/telco` - `20260128`
 
 ### 🔑 Garantia de Unicidade: `bronze/telco`
 - **Chave Técnica:** `num_cpf, safra, prod, flag_instalacao`
@@ -94,7 +94,7 @@
 | var_90          | DOUBLE                   |        1412 |       0 |      1365692 | 0.0%        | 99.9%            | MEDIA           |
 | ingestion_ts    | TIMESTAMP WITH TIME ZONE |           1 |       0 |      1367103 | 0.0%        | 100.0%           | BAIXA           |
 | ano_mes         | BIGINT                   |           6 |       0 |      1367098 | 0.0%        | 100.0%           | BAIXA           |
-| run_id          | VARCHAR                  |           1 |       0 |      1367103 | 0.0%        | 100.0%           | BAIXA           |
+| run_id          | BIGINT                   |           1 |       0 |      1367103 | 0.0%        | 100.0%           | BAIXA           |
 
 ---
 
@@ -120,7 +120,7 @@
 #### Coluna: `ingestion_ts`
 | min                              | max                              |
 |:---------------------------------|:---------------------------------|
-| 2026-01-08 17:47:51.820723-03:00 | 2026-01-08 17:47:51.820723-03:00 |
+| 2026-01-28 00:51:48.623757-03:00 | 2026-01-28 00:51:48.623757-03:00 |
 
 
 
@@ -353,14 +353,14 @@
 | valor       |   qtd |
 |:------------|------:|
 | 888W78UZYYT |     6 |
-| 78YYWZT9TN8 |     5 |
+| WXXT7WUX8Y9 |     5 |
 | ZNTN78ZW7XX |     5 |
-| 8T9NWWT8TUZ |     5 |
-| ZUZUZZX7X88 |     5 |
-| ZWZT9ZZUZU8 |     5 |
+| ZZUNWZYXXTZ |     5 |
+| T9ZYTXZ7WYZ |     5 |
+| ZYWUTZXXTU8 |     5 |
 | ZTZTWZXTYZX |     5 |
-| ZW9TYZXTWTZ |     5 |
-| UZTWX7NU8UY |     5 |
+| YY7ZZNNN8TY |     5 |
+| ZW8Z8ZXWW7Z |     5 |
 | ZU7N8UW8XYX |     5 |
 
 #### Coluna: `safra`
@@ -1428,7 +1428,7 @@
 
 | valor                         |     qtd |
 |:------------------------------|--------:|
-| 2026-01-08 17:47:51.820723-03 | 1367104 |
+| 2026-01-28 00:51:48.623757-03 | 1367104 |
 
 #### Coluna: `ano_mes`
 
@@ -1443,9 +1443,9 @@
 
 #### Coluna: `run_id`
 
-|           valor |     qtd |
-|----------------:|--------:|
-| 20260108_204751 | 1367104 |
+|    valor |     qtd |
+|---------:|--------:|
+| 20260128 | 1367104 |
 
 
 

@@ -1,4 +1,4 @@
-# Relatório de Profiling: `bronze/score_bureau_movel` - `20260116_125510`
+# Relatório de Profiling: `bronze/score_bureau_movel` - `20260128`
 
 ### 🔑 Garantia de Unicidade: `bronze/score_bureau_movel`
 - **Chave Técnica:** `num_cpf, safra, prod`
@@ -28,7 +28,7 @@
 | score_02        | INTEGER                  |         598 |    1876 |      3794712 | 0.05%       | 99.98%           | BAIXA           |
 | ingestion_ts    | TIMESTAMP WITH TIME ZONE |           1 |       0 |      3795309 | 0.0%        | 100.0%           | BAIXA           |
 | ano_mes         | BIGINT                   |           6 |       0 |      3795304 | 0.0%        | 100.0%           | BAIXA           |
-| run_id          | VARCHAR                  |           1 |       0 |      3795309 | 0.0%        | 100.0%           | BAIXA           |
+| run_id          | BIGINT                   |           1 |       0 |      3795309 | 0.0%        | 100.0%           | BAIXA           |
 
 ---
 
@@ -54,7 +54,7 @@
 #### Coluna: `ingestion_ts`
 | min                              | max                              |
 |:---------------------------------|:---------------------------------|
-| 2026-01-16 09:55:10.159993-03:00 | 2026-01-16 09:55:10.159993-03:00 |
+| 2026-01-28 00:51:44.719720-03:00 | 2026-01-28 00:51:44.719720-03:00 |
 
 
 
@@ -82,15 +82,15 @@
 | valor       |   qtd |
 |:------------|------:|
 | 7X7NZ79YWU9 |     6 |
-| ZZZZZZZX7T9 |     6 |
 | U8Z9ZZ8N8XZ |     6 |
+| ZZZZZZZX7T9 |     6 |
 | Y77ZYUXU8NW |     6 |
 | 888W78UZYYT |     6 |
+| Y97YZZX88TY |     5 |
+| YY8U879X87Z |     5 |
+| XZ7ZXZW8XZX |     5 |
 | U79ZXXNY8ZT |     5 |
-| ZX7YTXWTXZ8 |     5 |
-| 9TUZT8Y8XU9 |     5 |
-| UW9TT8TU8TZ |     5 |
-| 78YYWZT9TN8 |     5 |
+| ZUZUZZX7X88 |     5 |
 
 #### Coluna: `safra`
 
@@ -165,9 +165,9 @@
 
 #### Coluna: `ingestion_ts`
 
-| valor                         |     qtd |
-|:------------------------------|--------:|
-| 2026-01-16 09:55:10.159993-03 | 3795310 |
+| valor                        |     qtd |
+|:-----------------------------|--------:|
+| 2026-01-28 00:51:44.71972-03 | 3795310 |
 
 #### Coluna: `ano_mes`
 
@@ -182,9 +182,9 @@
 
 #### Coluna: `run_id`
 
-|           valor |     qtd |
-|----------------:|--------:|
-| 20260116_125510 | 3795310 |
+|    valor |     qtd |
+|---------:|--------:|
+| 20260128 | 3795310 |
 
 
 

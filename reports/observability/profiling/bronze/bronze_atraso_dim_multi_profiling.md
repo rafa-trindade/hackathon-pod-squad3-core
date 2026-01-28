@@ -17,26 +17,26 @@
 
 |   dw_tipo_faturamento | dsc_tipo_faturamento   | dsc_tipo_faturamento_abrev   | cod_dsc_tipo_faturamento   |
 |----------------------:|:-----------------------|:-----------------------------|:---------------------------|
-|                 32527 | refund                 | refund                       | r                          |
-|                 32528 | credit                 | credit                       | c                          |
-|                 32529 | claro                  | service                      | b                          |
-|                 32530 | service deposit        | deposit                      | d                          |
-|                 32531 | reversal               | reversal                     | rv                         |
-|                 32532 | reversed print doc     | revrsprt                     | rp                         |
-|                 32533 | encargo de equipamento | equip                        | q                          |
-|                 32534 | payment arrangement    | pa                           | pa                         |
-|                 32535 | easytone               | easytone                     | 35                         |
-|                 32536 | cmbridge               | cmbridge                     | 49                         |
-|                 32537 | telcom65               | telcom65                     | 65                         |
-|                 32538 | pa easytone            | pa35                         | pe                         |
-|                 32539 | pa cambridge           | pa49                         | pc                         |
-|                 32540 | pa telecom 65          | pa65                         | pt                         |
-|                 32541 | embratel 21            | ebt                          | 21                         |
-|                 32542 | telefonica 15          | tlfonica                     | 15                         |
-|                 32543 | telemar 31             | telemar                      | 31                         |
-|                 32544 | ctbc 12                | ctbc                         | 12                         |
-|                 32545 | brt 14                 | brt                          | 14                         |
-|                 32546 | intelig 23             | intelig                      | 23                         |
+|                 32527 | Refund                 | REFUND                       | R                          |
+|                 32528 | Credit                 | CREDIT                       | C                          |
+|                 32529 | Claro                  | SERVICE                      | B                          |
+|                 32530 | Service Deposit        | DEPOSIT                      | D                          |
+|                 32531 | Reversal               | REVERSAL                     | RV                         |
+|                 32532 | Reversed Print Doc     | REVRSPRT                     | RP                         |
+|                 32533 | ENCARGO DE EQUIPAMENTO | EQUIP                        | Q                          |
+|                 32534 | Payment Arrangement    | PA                           | PA                         |
+|                 32535 | EASYTONE               | EASYTONE                     | 35                         |
+|                 32536 | CMBRIDGE               | CMBRIDGE                     | 49                         |
+|                 32537 | TELCOM65               | TELCOM65                     | 65                         |
+|                 32538 | PA EASYTONE            | PA35                         | PE                         |
+|                 32539 | PA CAMBRIDGE           | PA49                         | PC                         |
+|                 32540 | PA TELECOM 65          | PA65                         | PT                         |
+|                 32541 | Embratel 21            | EBT                          | 21                         |
+|                 32542 | Telefonica 15          | TLFONICA                     | 15                         |
+|                 32543 | Telemar 31             | TELEMAR                      | 31                         |
+|                 32544 | CTBC 12                | CTBC                         | 12                         |
+|                 32545 | BRT 14                 | BRT                          | 14                         |
+|                 32546 | Intelig 23             | INTELIG                      | 23                         |
 
 ---
 
