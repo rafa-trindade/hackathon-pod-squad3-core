@@ -4,7 +4,7 @@ set -euo pipefail
 #########################################
 # CONFIG
 #########################################
-RUN_ID=$(date +"%Y%m%d_%H%M%S")
+RUN_ID=$(date +"%Y%m%d")
 LOG_DIR="bin/reports"
 LOG_FILE="${LOG_DIR}/pipeline_run_${RUN_ID}.log"
 PYTHON_BIN=python
@@ -153,12 +153,16 @@ run_step "INSPECT SILVER" "scripts.transformations.utils.inspect_partition_silve
 #########################################
 run_step "GOLD - labels_fpd" "scripts.transformations.gold.gold_labels_fpd"
 run_step "GOLD - abt_base_prod" "scripts.transformations.gold.gold_abt_base_prod"
+run_step "GOLD - labels_fpd_bureau" "scripts.transformations.gold.gold_labels_fpd_bureau"
+run_step "GOLD - abt_base_cmv" "scripts.transformations.gold.gold_abt_base_cmv"
 
 #########################################
 # 7. PROFILING & INSPECTION - GOLD
 #########################################
 run_step "PROFILING GOLD - labels_fpd" "scripts.profiling.gold.profile_labels_fpd"
 run_step "PROFILING GOLD - abt_base_prod" "scripts.profiling.gold.profile_abt_base_prod"
+run_step "PROFILING GOLD - labels_fpd_bureau" "scripts.profiling.gold.profile_labels_fpd_bureau"
+run_step "PROFILING GOLD - abt_base_cmv" "scripts.profiling.gold.profile_abt_base_cmv"
 run_step "INSPECT GOLD" "scripts.transformations.utils.inspect_partition_gold"
 
 #########################################
