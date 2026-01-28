@@ -157,6 +157,8 @@ Ao final do processamento na camada Silver, todas as entidades apresentam:
 - Schema otimizado
 - Dados prontos para análises exploratórias, agregações controladas e estruturação de ativos na camada GOLD
 
+📚 **[Catálogo de Dados - Camada Silver](../data_dictionary/)**
+
 ---
 
 ## 🥇 6. Camada GOLD - Consolidação de Ativos (Expansão & Controle)
