@@ -43,7 +43,17 @@ TABLES_CONFIG = {
         "col_date": "safra",
         "start": "202410",
         "end": "202503"
-    }
+    },
+    "labels_fpd_bureau": {
+        "col_date": "safra",
+        "start": "202410",
+        "end": "202503"
+    },
+    "abt_base_cmv": {
+        "col_date": "safra",
+        "start": "202410",
+        "end": "202503"
+    }    
 }
 
 def get_month_list(start_str, end_str):
