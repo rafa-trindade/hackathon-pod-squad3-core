@@ -203,7 +203,6 @@ A camada Gold é estruturada em dois conjuntos de ativos para atender simultanea
 
  <br> 
 
-
 > 🛡️ **Nota de Governança: Diagnóstico Técnico de Cobertura e Atributos**
 >
 > A coexistência dos dois ativos na camada GOLD é fundamentada nos resultados obtidos via *data profiling* das ABTs, comprovando que as características das tabelas Silver foram preservadas para atender a objetivos distintos:
@@ -268,40 +267,7 @@ s3://lake/
 
 ---
 
-## 📚 Documentação Complementar
-
-### 🏗️ Data Architecture
-📑 **[Manual de Arquitetura de Dados](../data_architecture/README.md)**  
-Descrição da arquitetura técnica da plataforma de dados, incluindo visão macro e micro, decisões de engenharia, escolha de tecnologias e seus impactos em escalabilidade, governança, confiabilidade e observabilidade.
-
----
-
-### 🧬 Data Lineage
-📑 **[Manual de Lineage](../data_lineage/README.md)**  
-Documentação detalhada do fluxo de dados por entidade, incluindo origem, transformações e dependências entre camadas.
-
----
-
-### 🏛️ Data Governance
-📑 **[Manual de Governança](../data_governance/README.md)**  
-Diretrizes formais de governança aplicadas ao projeto.
-
----
-
-### 🔍 Data Observability
-📑 **[Manual de Observabilidade](../data_observability/README.md)**  
-Referência das práticas de monitoramento e saúde do pipeline.
-
-## Nota para Documentação:
-## FIM da Documentação de Data Lineage & Processamento de Dados
-
-<br><br><br>
-
-
-## Nota para Documentação:
-## Aqui entra a parte que a documentação pede "**estruturação do modelo baseline**" que ja temos documentado
-
-> Validar com o Lucas
+<br>
 
 # 🧪 Estruturação do Modelo Baseline: Governança Temporal (Foco CMV)
 
@@ -367,10 +333,10 @@ O padrão seguido para as features é: `{prefixo}_{métrica}_{janela/tipo}`.
 **Exemplo de interpretação:**
 A variável `rec_vlr_avg_l60d` refere-se ao **valor médio de recarga** nos **últimos 60 dias** anteriores à safra de bureau. Esse padrão garante que o modelo baseline receba dados autoexplicativos, facilitando a análise de importância de variáveis (Feature Importance).
 
-<br><br><br>
 
-## Nota para Documentação:
-## No final geral da documento add o glossario
+---
+
+<br>
 
 ## 📖 Apêndice: Glossário Geral da Documentação
 
@@ -388,5 +354,30 @@ A variável `rec_vlr_avg_l60d` refere-se ao **valor médio de recarga** nos **ú
 - **Densidade de Sinal:** Percentual de preenchimento das variáveis agrupadas por origem (`tel`, `rec`, `pag`). Máxima no ativo de controle (99.9%).
 - **Observability Layer (Camada de Observabilidade):** Zona de armazenamento dedicada ao histórico de logs, auditorias e profilings, isolada das camadas de dados de negócio (Medallion) para garantir a governança técnica.
 
+<br>
+
+## 📚 Apêndice: Documentação Complementar
+
+### 🏗️ Data Architecture
+📑 **[Manual de Arquitetura de Dados](../data_architecture/README.md)**  
+Descrição da arquitetura técnica da plataforma de dados, incluindo visão macro e micro, decisões de engenharia, escolha de tecnologias e seus impactos em escalabilidade, governança, confiabilidade e observabilidade.
+
+---
+
+### 🧬 Data Lineage
+📑 **[Manual de Lineage](../data_lineage/README.md)**  
+Documentação detalhada do fluxo de dados por entidade, incluindo origem, transformações e dependências entre camadas.
+
+---
+
+### 🏛️ Data Governance
+📑 **[Manual de Governança](../data_governance/README.md)**  
+Diretrizes formais de governança aplicadas ao projeto.
+
+---
+
+### 🔍 Data Observability
+📑 **[Manual de Observabilidade](../data_observability/README.md)**  
+Referência das práticas de monitoramento e saúde do pipeline.
 
 
