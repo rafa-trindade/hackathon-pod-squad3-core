@@ -33,7 +33,7 @@ Entidades contempladas neste fluxo:
 - `dados_cadastrais`
 - `score_bureau_movel`
 - `telco`
-- dimensões de suporte (`atraso_dim`, `recarga_dim`)
+- dimensões de suporte (`atraso_dim` `recarga_dim`)
 
 ---
 
@@ -72,7 +72,7 @@ Este estágio é **comum a todas as entidades de negócio** e tem como objetivo 
 
 ### 4.1 🔁 Etapas Comuns de Processamento
 
-**Entidades:** `atraso`, `pagamento`, `recarga`, `dados_cadastrais`, `score_bureau_movel`, `telco`  
+**Entidades:** `atraso` `pagamento` `recarga` `dados_cadastrais` `score_bureau_movel` `telco`  
 
 **Origem:** `s3://lake/raw/{entidade}/*.parquet`  
 **Destino:** `s3://lake/bronze/{entidade}/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`
@@ -81,8 +81,8 @@ Este estágio é **comum a todas as entidades de negócio** e tem como objetivo 
 |----:|---------|-----------|
 | 1 | **Normalization (Lowercase)** | Conversão de todos os nomes de colunas para minúsculo, eliminando ambiguidades de *case-sensitivity*. |
 | 2 | **Tipagem Forte** | Aplicação de `CAST` explícito baseada no profiling da origem. |
-| 3 | **Metadados Técnicos** | Inclusão de colunas técnicas (`ingestion_ts`, `run_id`) para rastreabilidade e auditoria. |
-| 4 | **Particionamento Técnico** | Criação da coluna técnica `ano_mes = YYYYMM`, derivada da data de referência principal da entidade. |
+| 3 | **Metadados Técnicos** | Inclusão de colunas técnicas (`ingestion_ts` `run_id`) para rastreabilidade e auditoria. |
+| 4 | **Particionamento Técnico** | Criação da coluna técnica `ano_mes = YYYYMM` derivada da data de referência principal da entidade. |
 
 ---
 
@@ -208,7 +208,7 @@ A camada Gold é estruturada em dois conjuntos de ativos para atender simultanea
 > A coexistência dos dois ativos na camada GOLD é fundamentada nos resultados obtidos via *data profiling* das ABTs, comprovando que as características das tabelas Silver foram preservadas para atender a objetivos distintos:
 >
 > 1. **Massa de Expansão (`abt_base_cmv` - 2.6M):** Utiliza o target oriundo da `silver/score_bureau_movel`. Garante o volume necessário para treinamento focado no **Público-Alvo**, embora apresente **50.3% de nulos** nas colunas com prefixo `tel_`. É o ativo ideal para garantir a **generalização do modelo** em cenários de prospecção e novos clientes. ([📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_cmv-profiling.md))
-> 2. **Densidade de Controle (`abt_base_prod` - 1.3M):** Utiliza o target oriundo da `silver/telco`. Atua como o **Padrão de Ouro** para calibração, pois retém **99.9% de preenchimento** nas colunas `tel_`. Permite validar se os sinais aprendidos pelo algoritmo são consistentes com o **comportamento transacional interno** (`rec_`, `pag_`, `atr_`). ([📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_prod-profiling.md))
+> 2. **Densidade de Controle (`abt_base_prod` - 1.3M):** Utiliza o target oriundo da `silver/telco`. Atua como o **Padrão de Ouro** para calibração, pois retém **99.9% de preenchimento** nas colunas `tel_`. Permite validar se os sinais aprendidos pelo algoritmo são consistentes com o **comportamento transacional interno** (`rec_` `pag_` `atr_`). ([📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_prod-profiling.md))
 > 3. **Isolamento de Risco por Produto:** O profiling na `abt_base_prod` identificou que o produto **DTH apresenta 53.4% de FPD**, enquanto o **CMV estabiliza em 21.2%** na `abt_base_cmv`. A separação dos ativos garante que a predição para o produto móvel (CMV) não seja contaminada pelo risco extremo detectado em produtos residenciais (NET/DTH).
 >
 > ---
@@ -351,7 +351,7 @@ A variável `rec_vlr_avg_l60d` refere-se ao **valor médio de recarga** nos **ú
 - **Data Leakage (Vazamento de Dados):** Erro onde informações do futuro são usadas indevidamente no treino. Nossa governança elimina esse risco via **Point-in-Time Join**.
 - **Maturidade (D+4):** Tempo de espera técnica necessário para garantir que todos os eventos do mês anterior foram devidamente consolidados no Lake antes da geração da Gold.
 - **Mesa Farta:** Abordagem de *Feature Engineering* que consiste em gerar o máximo de variáveis e combinações temporais para que o algoritmo identifique as melhores correlações.
-- **Densidade de Sinal:** Percentual de preenchimento das variáveis agrupadas por origem (`tel`, `rec`, `pag`). Máxima no ativo de controle (99.9%).
+- **Densidade de Sinal:** Percentual de preenchimento das variáveis agrupadas por origem (`tel` `rec` `pag`). Máxima no ativo de controle (99.9%).
 - **Observability Layer (Camada de Observabilidade):** Zona de armazenamento dedicada ao histórico de logs, auditorias e profilings, isolada das camadas de dados de negócio (Medallion) para garantir a governança técnica.
 
 <br>
