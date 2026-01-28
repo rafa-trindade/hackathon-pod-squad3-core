@@ -1,5 +1,5 @@
 
-📋 QUALITY REPORT - canal_aquisicao_credito | RUN: 20260121_164307
+📋 QUALITY REPORT - canal_aquisicao_credito | RUN: 20260128
 ----------------------------------------------------------------------------------
 TESTE                          | STATUS    | OBSERVAÇÃO          
 ----------------------------------------------------------------------------------
@@ -11,7 +11,7 @@ Integridade de Chave (Fato)    | PASS      | 0 registros órfãos
 Resultado Final: SUCCESS
 ----------------------------------------------------------------------------------
 
-📋 QUALITY REPORT - forma_pagamento | RUN: 20260121_164307
+📋 QUALITY REPORT - forma_pagamento | RUN: 20260128
 ----------------------------------------------------------------------------------
 TESTE                          | STATUS    | OBSERVAÇÃO          
 ----------------------------------------------------------------------------------
@@ -23,7 +23,7 @@ Integridade de Chave (Fato)    | PASS      | 0 registros órfãos
 Resultado Final: SUCCESS
 ----------------------------------------------------------------------------------
 
-📋 QUALITY REPORT - instituicao | RUN: 20260121_164307
+📋 QUALITY REPORT - instituicao | RUN: 20260128
 ----------------------------------------------------------------------------------
 TESTE                          | STATUS    | OBSERVAÇÃO          
 ----------------------------------------------------------------------------------
@@ -35,7 +35,7 @@ Integridade de Chave (Fato)    | WARN      | 4 registros órfãos
 Resultado Final: CHECK_REQUIRED
 ----------------------------------------------------------------------------------
 
-📋 QUALITY REPORT - plano_preco | RUN: 20260121_164307
+📋 QUALITY REPORT - plano_preco | RUN: 20260128
 ----------------------------------------------------------------------------------
 TESTE                          | STATUS    | OBSERVAÇÃO          
 ----------------------------------------------------------------------------------
@@ -47,7 +47,7 @@ Integridade de Chave (Fato)    | PASS      | 0 registros órfãos
 Resultado Final: SUCCESS
 ----------------------------------------------------------------------------------
 
-📋 QUALITY REPORT - plataforma | RUN: 20260121_164307
+📋 QUALITY REPORT - plataforma | RUN: 20260128
 ----------------------------------------------------------------------------------
 TESTE                          | STATUS    | OBSERVAÇÃO          
 ----------------------------------------------------------------------------------
@@ -59,7 +59,7 @@ Integridade de Chave (Fato)    | PASS      | 0 registros órfãos
 Resultado Final: SUCCESS
 ----------------------------------------------------------------------------------
 
-📋 QUALITY REPORT - promocao_credito | RUN: 20260121_164307
+📋 QUALITY REPORT - promocao_credito | RUN: 20260128
 ----------------------------------------------------------------------------------
 TESTE                          | STATUS    | OBSERVAÇÃO          
 ----------------------------------------------------------------------------------
@@ -71,7 +71,7 @@ Integridade de Chave (Fato)    | WARN      | 1 registros órfãos
 Resultado Final: CHECK_REQUIRED
 ----------------------------------------------------------------------------------
 
-📋 QUALITY REPORT - status_plataforma | RUN: 20260121_164307
+📋 QUALITY REPORT - status_plataforma | RUN: 20260128
 ----------------------------------------------------------------------------------
 TESTE                          | STATUS    | OBSERVAÇÃO          
 ----------------------------------------------------------------------------------
@@ -83,7 +83,7 @@ Integridade de Chave (Fato)    | WARN      | 8 registros órfãos
 Resultado Final: CHECK_REQUIRED
 ----------------------------------------------------------------------------------
 
-📋 QUALITY REPORT - tecnologia | RUN: 20260121_164307
+📋 QUALITY REPORT - tecnologia | RUN: 20260128
 ----------------------------------------------------------------------------------
 TESTE                          | STATUS    | OBSERVAÇÃO          
 ----------------------------------------------------------------------------------
@@ -95,7 +95,7 @@ Integridade de Chave (Fato)    | PASS      | 0 registros órfãos
 Resultado Final: SUCCESS
 ----------------------------------------------------------------------------------
 
-📋 QUALITY REPORT - tipo_credito | RUN: 20260121_164307
+📋 QUALITY REPORT - tipo_credito | RUN: 20260128
 ----------------------------------------------------------------------------------
 TESTE                          | STATUS    | OBSERVAÇÃO          
 ----------------------------------------------------------------------------------
@@ -107,7 +107,7 @@ Integridade de Chave (Fato)    | PASS      | 0 registros órfãos
 Resultado Final: SUCCESS
 ----------------------------------------------------------------------------------
 
-📋 QUALITY REPORT - tipo_insercao | RUN: 20260121_164307
+📋 QUALITY REPORT - tipo_insercao | RUN: 20260128
 ----------------------------------------------------------------------------------
 TESTE                          | STATUS    | OBSERVAÇÃO          
 ----------------------------------------------------------------------------------
@@ -119,7 +119,7 @@ Integridade de Chave (Fato)    | WARN      | 3 registros órfãos
 Resultado Final: CHECK_REQUIRED
 ----------------------------------------------------------------------------------
 
-📋 QUALITY REPORT - tipo_recarga | RUN: 20260121_164307
+📋 QUALITY REPORT - tipo_recarga | RUN: 20260128
 ----------------------------------------------------------------------------------
 TESTE                          | STATUS    | OBSERVAÇÃO          
 ----------------------------------------------------------------------------------
