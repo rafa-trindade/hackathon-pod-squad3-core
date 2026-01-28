@@ -177,70 +177,42 @@ A camada **GOLD** materializa os dados para Machine Learning através de ativos 
 
 Para garantir a cobertura total do ecossistema e atender às necessidades específicas de modelagem, a camada Gold disponibiliza dois conjuntos de ativos com finalidades distintas:
 
-#### A) Ativos Focados em CMV (Estratégia Atual)
+#### A) Ativos Focados em CMV (Estratégia de Expansão)
 *Foco em Especialização de Produto e Volume Histórico.*
 
-| Ativo | Tipo | Finalidade | Origem / Referência |
+| Ativo | Tipo | Finalidade | Evidências e Book |
 |:-----|:-----|:-----------|:---|
-| `labels_fpd_bureau` | Target | Resposta FPD restrita ao público Bureau. | [Linhagem CMV](../data_lineage/gold/labels_fpd_bureau-lineage.md) |
-| `abt_base_cmv` | ABT | Base analítica enriquecida (~2.6M registros). | [Book CMV](../data_modelling/features/abt_base_cmv-book.md) |
+| `labels_fpd_bureau` | Target | Resposta FPD 100% CMV. | [Linhagem CMV](../data_lineage/gold/labels_fpd_bureau-lineage.md) |
+| `abt_base_cmv` | ABT | Massa crítica de treinamento (~2.6M). | [📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_cmv-profiling.md) \| [📖 Book](../data_modelling/features/abt_base_cmv-book.md) |
 
 ---
 
-#### B) Ativos de Escopo Geral (Baseline Original)
-*Foco em Diversidade de Produtos e Densidade de Features.*
+#### B) Ativos de Escopo Geral (Baseline de Controle)
+*Foco em Densidade Transacional e Estabilidade de Features.*
 
-| Ativo | Tipo | Finalidade | Origem / Referência |
+| Ativo | Tipo | Finalidade | Evidências e Book |
 |:-----|:-----|:-----------|:---|
-| `labels_fpd` | Target | Resposta FPD baseada no ecossistema Telco. | [Linhagem Geral](../data_lineage/gold/labels_fpd-lineage.md) |
-| `abt_base_prod` | ABT | Base analítica para o público geral (~1.3M registros). | [Book Geral](../data_modelling/features/abt_base_prod-book.md) |
+| `labels_fpd` | Target | Mix de Produtos (CMV/NET/DTH). | [Linhagem Geral](../data_lineage/gold/labels_fpd-lineage.md) |
+| `abt_base_prod` | ABT | Ativo de densidade e benchmark (~1.3M). | [📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_prod-profiling.md) \| [📖 Book](../data_modelling/features/abt_base_prod-book.md) |
 
-> 💡 **Observação de Governança: Diferencial de Cobertura entre Âncoras**
+> 🛡️ **Nota de Governança: Diagnóstico Técnico de Cobertura e Sinais**
 >
-> A variação de volume entre a estratégia CMV (~2.6M) e o baseline geral (~1.3M) decorre das premissas de seleção de cada base de origem:
+> A coexistência dos dois ativos GOLD é fundamentada nos resultados obtidos via *data profiling* das execuções de Jan/2026:
 >
-> 1. **Cobertura de Mercado (Âncora Bureau):** Ao utilizar o Bureau como âncora, acessamos um universo de 3.59M de CPFs. Por ser uma base de histórico de crédito de mercado, ela possui um alcance populacional maior, o que nos permitiu isolar o produto móvel (CMV) mantendo um **volume de amostragem superior** para o treinamento do modelo.
-> 2. **Universo Transacional (Âncora Telco):** O baseline anterior baseava-se estritamente em clientes com **eventos transacionais registrados** (faturamento ou recarga) no ecossistema da operadora. Por isso, seu alcance é numericamente menor (**1.32M de CPFs**), embora cubra uma diversidade maior de produtos (CMV, NET, DTH).
+> 1. **Âncora Bureau (Massa de Expansão - 2.6M):** Garante a **generalização do modelo** em larga escala, permitindo prospecção de mercado. Apresenta sparsity de 50.3% em dados de rede, inerente a novos entrantes.
+> 2. **Âncora Telco (Ativo de Controle - 1.3M):** Atua como **Padrão de Ouro** para calibração. Retém densidade de sinais transacionais de **99.9%**, permitindo validar se a performance do modelo é consistente com o comportamento real de uso da rede.
+> 3. **Isolamento de Risco:** O profiling identificou que o produto **DTH apresenta 53.4% de FPD**, enquanto o **CMV estabiliza em 21.2%**. A separação garante que o aprendizado do modelo CMV não seja distorcido pelo risco extremo de produtos residenciais.
 
 ![ancoras](../images/data_lineage/ancoras.png)
 
 
 ---
 
-### 6.3 🔀 Fluxo Lógico: SILVER → GOLD (Público Bureau)
+### 6.3 🔀 Fluxo Lógico de Geração de Ativos (SILVER → GOLD)
 
-O pipeline prioriza a âncora de Bureau para garantir a fidelidade do produto, utilizando o fluxo de enriquecimento Point-in-Time:
+A camada Gold consolida as entidades Silver em tabelas analíticas (`ABTs`) através de um fluxo padronizado de enriquecimento temporal. O processamento é segmentado por âncora para garantir que cada ativo preserve suas características de densidade e volume originais:
 
-```mermaid
-graph LR
-    subgraph Silver_Layer [Camada Silver]
-        A[(Entidades de Domínio)]
-    end
-
-    subgraph Gold_Transformation [Processamento Gold]
-        B{Âncora Bureau CMV}
-        C[Join Point-in-Time]
-        D[Janelas de Lookback]
-        E[Consolidação Multi-Silver]
-    end
-
-    subgraph Gold_Layer [Camada Gold]
-        F[(Dataset CMV-Ready)]
-    end
-
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    E --> F
-
-    %% Estilização baseada no tom #BC3138
-    style A fill:#BC3138,stroke:#330000,stroke-width:4px,color:#fff
-    style C fill:#E6A4A8,stroke:#BC3138,color:#330000
-    style D fill:#D97277,stroke:#BC3138,color:#330000
-    style E fill:#CC4148,stroke:#BC3138,color:#fff
-    style F fill:#BC3138,stroke:#330000,stroke-width:4px,color:#fff
-```
+![ancoras](../images/data_lineage/gold_abts.png)
 
 ---
 
@@ -413,6 +385,8 @@ A variável `rec_vlr_avg_l60d` refere-se ao **valor médio de recarga** nos **ú
 - **Data Leakage (Vazamento de Dados):** Erro onde informações do futuro são usadas indevidamente no treino. Nossa governança elimina esse risco via **Point-in-Time Join**.
 - **Maturidade (D+4):** Tempo de espera técnica necessário para garantir que todos os eventos do mês anterior foram devidamente consolidados no Lake antes da geração da Gold.
 - **Mesa Farta:** Abordagem de *Feature Engineering* que consiste em gerar o máximo de variáveis e combinações temporais para que o algoritmo identifique as melhores correlações.
+- **Densidade de Sinal:** Percentual de preenchimento das variáveis agrupadas por origem (`tel`, `rec`, `pag`). Máxima no ativo de controle (99.9%).
+- **Sparsity (Dispersão):** Percentual de nulos detectados. O projeto gerencia uma sparsity de 50.3% em dados de rede no ativo de expansão via estratégias de imputação (Zero-Filling).
 - **Observability Layer (Camada de Observabilidade):** Zona de armazenamento dedicada ao histórico de logs, auditorias e profilings, isolada das camadas de dados de negócio (Medallion) para garantir a governança técnica.
 
 
