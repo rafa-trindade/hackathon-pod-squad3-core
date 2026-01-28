@@ -353,7 +353,7 @@
 
 ---
 
-### 📶 Densidade de Sinal (Sparsity Média por Prefixo)
+### 📶 Densidade de Sinal (Percentual de nulos médio (sparsity) por Prefixo)
 > Mede o percentual médio de preenchimento das variáveis agrupadas por origem.
 
 | prefixo   |   qtd_features | pct_missing_medio   | densidade_sinal   |
