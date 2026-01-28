@@ -175,25 +175,29 @@ A camada **GOLD** materializa os dados para Machine Learning através de ativos 
 
 ### 6.2 📦 Ativos GOLD Disponíveis
 
-Para garantir a cobertura total do ecossistema e atender às necessidades específicas de modelagem, a camada Gold disponibiliza dois conjuntos de ativos com finalidades distintas:
+A camada Gold é estruturada em dois conjuntos de ativos para atender simultaneamente à demanda de **Expansão de Mercado** e à de **Estabilidade Transacional**.
 
-#### A) Ativos Focados em CMV (Estratégia de Expansão)
-*Foco em Especialização de Produto e Volume Histórico.*
+#### A) Estratégia de Expansão (Âncora Bureau)
+*Ativos especializados para maximizar o volume de treinamento e isolar estritamente o produto móvel.*
 
-| Ativo | Tipo | Finalidade | Evidências e Book |
-|:-----|:-----|:-----------|:---|
-| `labels_fpd_bureau` | Target | Resposta FPD 100% CMV. | [📊 Profiling](../../reports/observability/profiling/gold/gold-labels_fpd_bureau-profiling.md) \| [📖 Book](../data_modelling/target/labels_fpd_bureau-book.md) |
-| `abt_base_cmv` | ABT | Massa crítica de treinamento (~2.6M). | [📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_cmv-profiling.md) \| [📖 Book](../data_modelling/features/abt_base_cmv-book.md) |
+| Ativo | Tipo | Finalidade | Fluxo S3 (Origem ➔ Destino) | Evidências e Book |
+|:---|:---:|:---|:---|:---|
+| **labels_fpd_bureau** | `Target` | Resposta FPD 100% CMV. | **Origem:** `silver/score_bureau_movel` <br> **Destino:** `gold/labels_fpd_bureau` | [📊 Profiling](../../reports/observability/profiling/gold/gold-labels_fpd_bureau-profiling.md) \| [📖 Book](../data_modelling/target/labels_fpd_bureau-book.md) |
+| **abt_base_cmv** | `ABT` | Massa crítica (~2.6M). | **Origem:** `silver/**/*` + `labels_fpd_bureau` <br> **Destino:** `gold/abt_base_cmv` | [📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_cmv-profiling.md) \| [📖 Book](../data_modelling/features/abt_base_cmv-book.md) |
 
 ---
 
-#### B) Ativos de Escopo Geral (Baseline de Controle)
-*Foco em Densidade Transacional e Estabilidade de Features.*
+#### B) Baseline de Controle (Âncora Telco)
+*Ativos voltados à densidade de sinais comportamentais e paridade com o ecossistema histórico.*
 
-| Ativo | Tipo | Finalidade | Evidências e Book |
-|:-----|:-----|:-----------|:---|
-| `labels_fpd` | Target | Mix de Produtos (CMV/NET/DTH). | [📊 Profiling](../../reports/observability/profiling/gold/gold-labels_fpd-profiling.md) \| [📖 Book](../data_modelling/target/labels_fpd-book.md) |
-| `abt_base_prod` | ABT | Ativo de densidade e benchmark (~1.3M). | [📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_prod-profiling.md) \| [📖 Book](../data_modelling/features/abt_base_prod-book.md) |
+| Ativo | Tipo | Finalidade | Fluxo S3 (Origem ➔ Destino) | Evidências e Book |
+|:---|:---:|:---|:---|:---|
+| **labels_fpd** | `Target` | Mix (CMV/NET/DTH). | **Origem:** `silver/telco` <br> **Destino:** `gold/labels_fpd` | [📊 Profiling](../../reports/observability/profiling/gold/gold-labels_fpd-profiling.md) \| [📖 Book](../data_modelling/target/labels_fpd-book.md) |
+| **abt_base_prod** | `ABT` | Controle e Benchmark. | **Origem:** `silver/**/*` + `labels_fpd` <br> **Destino:** `gold/abt_base_prod` | [📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_prod-profiling.md) \| [📖 Book](../data_modelling/features/abt_base_prod-book.md) |
+
+---
+
+> 💡 **Nota de Particionamento:** Todos os ativos acima seguem a convenção física padrão Hive: `.../{entidade}/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`.
 
 ---
 
