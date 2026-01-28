@@ -199,10 +199,10 @@ Para garantir a cobertura total do ecossistema e atender às necessidades espec�
 
 > 🛡️ **Nota de Governança: Diagnóstico Técnico de Cobertura e Sinais**
 >
-> A coexistência dos dois ativos GOLD é fundamentada nos resultados obtidos via *data profiling* das execuções de Jan/2026:
+> A coexistência dos dois ativos GOLD é fundamentada nos resultados obtidos via *data profiling* das execuções:
 >
-> 1. **Âncora Bureau (Massa de Expansão - 2.6M):** Garante a **generalização do modelo** em larga escala, permitindo prospecção de mercado. Apresenta sparsity de 50.3% em dados de rede, inerente a novos entrantes.
-> 2. **Âncora Telco (Ativo de Controle - 1.3M):** Atua como **Padrão de Ouro** para calibração. Retém densidade de sinais transacionais de **99.9%**, permitindo validar se a performance do modelo é consistente com o comportamento real de uso da rede.
+> 1. **Âncora Bureau (Massa de Expansão - 2.6M):** Garante a **generalização do modelo** em larga escala, permitindo prospecção de mercado. Apresenta sparsity de 50.3% em dados de rede, inerente a novos entrantes. ([📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_cmv-profiling.md))
+> 2. **Âncora Telco (Ativo de Controle - 1.3M):** Atua como **Padrão de Ouro** para calibração. Retém densidade de sinais transacionais de **99.9%**, permitindo validar se a performance do modelo é consistente com o comportamento real de uso da rede. ([📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_prod-profiling.md))
 > 3. **Isolamento de Risco:** O profiling identificou que o produto **DTH apresenta 53.4% de FPD**, enquanto o **CMV estabiliza em 21.2%**. A separação garante que o aprendizado do modelo CMV não seja distorcido pelo risco extremo de produtos residenciais.
 >
 > ![ancoras](../images/data_lineage/ancoras.png)
