@@ -65,7 +65,7 @@ bin/run_pipeline.sh
 
 ### Logs Locais
 A cada execução, um log detalhado é gerado em: 
-`bin/reports/pipeline_run_YYYYMMDD_HHMMSS.log`
+`bin/reports/pipeline_run_YYYYMMDD.log`
 
 O log registra o status de cada etapa (`PROCESS`, `SUCCESS`, `ERROR`) e a duração exata de cada step.
 
@@ -74,7 +74,7 @@ O log registra o status de cada etapa (`PROCESS`, `SUCCESS`, `ERROR`) e a duraç
 ### Persistência no Data Lake
 Ao final da execução, todos os relatórios de qualidade, profiling e o próprio log de execução são automaticamente sincronizados com o S3 para fins de auditoria e governança:
 
-> `s3://lake/observability/reports/run_id=YYYYMMDD_HHMMSS/`
+> `s3://lake/observability/reports/run_id=YYYYMMDD/`
 
 
 ## 🛡️ Nota de Confiabilidade (Reliability)
