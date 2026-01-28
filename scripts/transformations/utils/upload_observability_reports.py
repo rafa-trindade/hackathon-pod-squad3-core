@@ -15,7 +15,7 @@ from scripts.transformations.utils.lake_retention import cleanup_old_runs
 # ------------------------------------------------------------------
 # CONFIGURAÇÕES
 # ------------------------------------------------------------------
-RUN_ID = os.getenv("RUN_ID_PIPELINE", datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S"))
+RUN_ID = os.getenv("RUN_ID_PIPELINE", datetime.now(timezone.utc).strftime("%Y%m%d"))
 CURRENT_LOG_FILE = os.getenv("LOG_FILE_PATH")
 
 LOCAL_REPORTS_PATH = PROJECT_ROOT / "reports" / "observability"
