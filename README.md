@@ -41,12 +41,13 @@ Repositório de desenvolvimento, documentação e implementação técnica de so
 
 ---
 
-### 🧬 Data Lineage
+### 🧬 Data Lineage (Linhagem de Ativos)
 > 📁 [`docs/data_lineage/*`](docs/data_lineage/)  
-> **Mapeia** a jornada do dado entre as camadas Medallion. **Garante** a rastreabilidade ponta a ponta, desde a ingestão técnica até a homologação das tabelas âncoras através de Auditoria de Overlap e densidade de dados na camada Gold.
+> Mapeia a jornada completa dos dados sob a arquitetura **Medallion**, garantindo rastreabilidade técnica e governança temporal. A linhagem é validada através de auditorias de integridade e densidade de atributos, culminando na homologação das estratégias de **Expansão (Amplitude)** e **Controle (Densidade)** na camada Gold.
 >
-> * 📑 **Lineage:** [`Raw → Silver`](docs/data_lineage/) | [`Gold (Target & Features)`](docs/data_lineage/gold/)
-> * 📑 **Reports:** [`Integrity`](reports/observability/integrity/) | [`Profiling`](reports/observability/profiling/)
+> * 📁 **Fluxo de Refino:** [`Refino Técnico (Bronze → Silver)`](docs/data_lineage/bronze_silver/)
+> * 📁 **Estratégia Gold:** [`Amplitude e Densidade (Silver → Gold)`](docs/data_lineage/gold/)
+> * 📑 **Evidências de Auditoria:** [`Integridade de Partição`](reports/observability/integrity/) | [`Profiling de Atributos`](reports/observability/profiling/)
 
 ---
 
