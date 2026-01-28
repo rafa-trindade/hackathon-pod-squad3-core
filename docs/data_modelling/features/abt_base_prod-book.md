@@ -1,6 +1,6 @@
-# 📖 Book de Variáveis ABT - Camada Gold (`abt_base_prod`)
+# 📖 Book de Variáveis ABT de Controle - Camada Gold (`abt_base_prod`)
 
-Este documento é o dicionário de referência da Analytical Base Table (ABT). A estrutura segue o princípio de **Mesa Farta**, disponibilizando todas as features das camadas Silver prefixadas por origem e janela temporal.
+Este documento é o dicionário de referência da Analytical Base Table (ABT) de **Controle**. A estrutura segue o princípio de **Mesa Farta**, disponibilizando todas as features das camadas Silver prefixadas por origem e janela temporal, atuando como o **Padrão de Ouro** para calibração do modelo.
 
 ---
 
@@ -42,6 +42,7 @@ Este documento é o dicionário de referência da Analytical Base Table (ABT). A
 
 As colunas com prefixos `bur_`, `cad_` e `tel_` representam a totalidade das colunas disponíveis nas respectivas tabelas Silver, capturadas via **Point-in-Time**.
 
+* **Foco na Densidade (Padrão de Ouro):** Diferente da ABT de Expansão, os atributos `tel_` aqui incluídos apresentam **99.9% de preenchimento**, servindo como base de controle para validar se os sinais transacionais são consistentes com o comportamento histórico do ecossistema.
 * **Exaustividade:** Toda e qualquer variável presente na origem é prefixada e incluída na ABT (ex: `bur_score_01`, `cad_var_04`, `tel_var_28`).
 * **Finalidade:** Alimentar algoritmos de *Feature Selection* sem viés humano na seleção inicial, garantindo que o modelo veja a "foto" do cliente no momento da safra.
 

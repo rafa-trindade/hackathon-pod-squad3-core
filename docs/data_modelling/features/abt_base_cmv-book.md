@@ -43,7 +43,8 @@ Este documento é o dicionário de referência da Analytical Base Table (ABT) fo
 
 As colunas com prefixos `bur_`, `cad_` e `tel_` representam a totalidade das colunas disponíveis nas respectivas tabelas Silver, capturadas via **Point-in-Time Join** baseado na safra do Bureau.
 
-* **Foco CMV:** Diferente da ABT Genérica, os atributos `tel_` aqui incluídos referem-se apenas ao público que possui Score de Bureau, garantindo que o modelo aprenda o padrão de risco do produto móvel.
+
+* **Foco na Amplitude (CMV):** Diferente da ABT de Controle, os atributos `tel_` aqui incluídos referem-se ao público de **Expansão** (identificados via Bureau), garantindo que o modelo aprenda o padrão de risco do produto móvel mesmo em cenários de prospecção.
 * **Finalidade:** Alimentar algoritmos de *Feature Selection* (ex: SHAP, Permutation Importance) para identificar os drivers de risco específicos do público CMV.
 
 ---
