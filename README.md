@@ -41,7 +41,7 @@ Repositório de desenvolvimento, documentação e implementação técnica de so
 
 ---
 
-### 🧬 Data Lineage (Linhagem de Ativos)
+### 🧬 Data Lineage
 > 📁 [`docs/data_lineage/*`](docs/data_lineage/)  
 > Mapeia a jornada completa dos dados sob a arquitetura **Medallion**, garantindo rastreabilidade técnica e governança temporal. A linhagem é validada através de auditorias de integridade e densidade de atributos, culminando na homologação das estratégias de **Expansão (Amplitude)** e **Controle (Densidade)** na camada Gold.
 >
