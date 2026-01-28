@@ -184,8 +184,8 @@ A camada Gold é estruturada em dois conjuntos de ativos para atender simultanea
 
 | Ativo | Tipo | Finalidade | Fluxo S3 (Origem ➔ Destino) | Evidências e Book |
 |:---|:---:|:---|:---|:---|
-| **labels_fpd_bureau** | `Target` | Resposta FPD focado no Público-Alvo (CMV). | **Origem:** `silver/score_bureau_movel` <br> **Destino:** `gold/labels_fpd_bureau` | [📊 Profiling](../../reports/observability/profiling/gold/gold-labels_fpd_bureau-profiling.md) \| [📖 Book](../data_modelling/target/labels_fpd_bureau-book.md) |
-| **abt_base_cmv** | `ABT` | Ativo de Amplitude de Público e Expansão. | **Origem:** `silver/**/*` + `labels_fpd_bureau` <br> **Destino:** `gold/abt_base_cmv` | [📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_cmv-profiling.md) \| [📖 Book](../data_modelling/features/abt_base_cmv-book.md) |
+| **labels_fpd_bureau** | `Target` | Resposta FPD focado no Público-Alvo (CMV). | **Origem:** `silver/score_bureau_movel` <br> **Destino:** `gold/labels_fpd_bureau` | [📊 Profiling](../../reports/observability/profiling/gold/gold-labels_fpd_bureau-profiling.md)  <br>  [📖 Book](../data_modelling/target/labels_fpd_bureau-book.md) |
+| **abt_base_cmv** | `ABT` | Ativo de Amplitude de Público e Expansão. | **Origem:** `silver/**/*` + `labels_fpd_bureau` <br> **Destino:** `gold/abt_base_cmv` | [📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_cmv-profiling.md)  <br>  [📖 Book](../data_modelling/features/abt_base_cmv-book.md) |
 
 ---
 
@@ -196,14 +196,12 @@ A camada Gold é estruturada em dois conjuntos de ativos para atender simultanea
 
 | Ativo | Tipo | Finalidade | Fluxo S3 (Origem ➔ Destino) | Evidências e Book |
 |:---|:---:|:---|:---|:---|
-| **labels_fpd** | `Target` | Resposta FPD do Ecossistema (Mix CMV/NET/DTH). | **Origem:** `silver/telco` <br> **Destino:** `gold/labels_fpd` | [📊 Profiling](../../reports/observability/profiling/gold/gold-labels_fpd-profiling.md) \| [📖 Book](../data_modelling/target/labels_fpd-book.md) |
-| **abt_base_prod** | `ABT` | Ativo de Densidade Transacional e Controle. | **Origem:** `silver/**/*` + `labels_fpd` <br> **Destino:** `gold/abt_base_prod` | [📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_prod-profiling.md) \| [📖 Book](../data_modelling/features/abt_base_prod-book.md) |
+| **labels_fpd** | `Target` | Resposta FPD do Ecossistema (Mix CMV/NET/DTH). | **Origem:** `silver/telco` <br> **Destino:** `gold/labels_fpd` | [📊 Profiling](../../reports/observability/profiling/gold/gold-labels_fpd-profiling.md)  <br>  [📖 Book](../data_modelling/target/labels_fpd-book.md) |
+| **abt_base_prod** | `ABT` | Ativo de Densidade Transacional e Controle. | **Origem:** `silver/**/*` + `labels_fpd` <br> **Destino:** `gold/abt_base_prod` | [📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_prod-profiling.md)  <br>  [📖 Book](../data_modelling/features/abt_base_prod-book.md) |
 
 ---
 
-> 💡 **Nota de Particionamento:** Todos os ativos acima seguem a convenção física padrão Hive: `.../{entidade}/run_id={run_id}/ano_mes={YYYYMM}/*.parquet`.
-
----
+ <br> 
 
 > 🛡️ **Nota de Governança: Diagnóstico Técnico de Cobertura e Sinais**
 >
