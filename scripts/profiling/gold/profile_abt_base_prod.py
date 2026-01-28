@@ -280,10 +280,10 @@ print_and_save_md(md, md_file)
 # %% 
 # 📶 BLOCO 6: DENSIDADE DE SINAL POR ORIGEM ################
 #############################################################
-md = "### 📶 Densidade de Sinal (Sparsity Média por Prefixo)\n"
+md = "### 📶 Densidade de Sinal (Percentual de nulos médio por Prefixo)\n"
 md += "> Mede o percentual médio de preenchimento das variáveis agrupadas por origem.\n\n"
 
-# Calculando sparsity média por prefixo
+# Calculando Percentual de nulos médio (sparsity) por prefixo
 df_stats['prefixo'] = df_stats['column_name'].str.extract(r'^([a-z]{3})_')
 df_stats['prefixo'] = df_stats['prefixo'].fillna('outros')
 
