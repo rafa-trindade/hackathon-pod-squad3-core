@@ -66,7 +66,7 @@ Quando um teste de qualidade falha, o protocolo de governança define:
 * **Auditoria de Pipeline:** [`reports/observability/quality/pipeline/`](../../reports/observability/quality/pipeline/)
 
 Para auditar uma execução específica, a estrutura no S3 deve ser consultada:
-`s3://lake/observability/reports/run_id=YYYYMMDD_HHMMSS/`
+`s3://lake/observability/reports/run_id=YYYYMMDD/`
 
 ---
 
