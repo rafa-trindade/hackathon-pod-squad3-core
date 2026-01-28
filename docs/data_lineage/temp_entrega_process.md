@@ -180,20 +180,24 @@ A camada Gold é estruturada em dois conjuntos de ativos para atender simultanea
 #### A) Estratégia de Expansão (Âncora Bureau)
 *Ativos especializados para maximizar o volume de treinamento e isolar estritamente o produto móvel.*
 
+![abt](../images/data_lineage/abt_base_cmv.png)
+
 | Ativo | Tipo | Finalidade | Fluxo S3 (Origem ➔ Destino) | Evidências e Book |
 |:---|:---:|:---|:---|:---|
-| **labels_fpd_bureau** | `Target` | Resposta FPD 100% CMV. | **Origem:** `silver/score_bureau_movel` <br> **Destino:** `gold/labels_fpd_bureau` | [📊 Profiling](../../reports/observability/profiling/gold/gold-labels_fpd_bureau-profiling.md) \| [📖 Book](../data_modelling/target/labels_fpd_bureau-book.md) |
-| **abt_base_cmv** | `ABT` | Massa crítica (~2.6M). | **Origem:** `silver/**/*` + `labels_fpd_bureau` <br> **Destino:** `gold/abt_base_cmv` | [📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_cmv-profiling.md) \| [📖 Book](../data_modelling/features/abt_base_cmv-book.md) |
+| **labels_fpd_bureau** | `Target` | Resposta FPD focado no Público-Alvo (CMV). | **Origem:** `silver/score_bureau_movel` <br> **Destino:** `gold/labels_fpd_bureau` | [📊 Profiling](../../reports/observability/profiling/gold/gold-labels_fpd_bureau-profiling.md) \| [📖 Book](../data_modelling/target/labels_fpd_bureau-book.md) |
+| **abt_base_cmv** | `ABT` | Ativo de Amplitude de Público e Expansão. | **Origem:** `silver/**/*` + `labels_fpd_bureau` <br> **Destino:** `gold/abt_base_cmv` | [📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_cmv-profiling.md) \| [📖 Book](../data_modelling/features/abt_base_cmv-book.md) |
 
 ---
 
 #### B) Baseline de Controle (Âncora Telco)
 *Ativos voltados à densidade de sinais comportamentais e paridade com o ecossistema histórico.*
 
+![abt](../images/data_lineage/abt_base_prod.png)
+
 | Ativo | Tipo | Finalidade | Fluxo S3 (Origem ➔ Destino) | Evidências e Book |
 |:---|:---:|:---|:---|:---|
-| **labels_fpd** | `Target` | Mix (CMV/NET/DTH). | **Origem:** `silver/telco` <br> **Destino:** `gold/labels_fpd` | [📊 Profiling](../../reports/observability/profiling/gold/gold-labels_fpd-profiling.md) \| [📖 Book](../data_modelling/target/labels_fpd-book.md) |
-| **abt_base_prod** | `ABT` | Controle e Benchmark. | **Origem:** `silver/**/*` + `labels_fpd` <br> **Destino:** `gold/abt_base_prod` | [📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_prod-profiling.md) \| [📖 Book](../data_modelling/features/abt_base_prod-book.md) |
+| **labels_fpd** | `Target` | Resposta FPD do Ecossistema (Mix CMV/NET/DTH). | **Origem:** `silver/telco` <br> **Destino:** `gold/labels_fpd` | [📊 Profiling](../../reports/observability/profiling/gold/gold-labels_fpd-profiling.md) \| [📖 Book](../data_modelling/target/labels_fpd-book.md) |
+| **abt_base_prod** | `ABT` | Ativo de Densidade Transacional e Controle. | **Origem:** `silver/**/*` + `labels_fpd` <br> **Destino:** `gold/abt_base_prod` | [📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_prod-profiling.md) \| [📖 Book](../data_modelling/features/abt_base_prod-book.md) |
 
 ---
 
@@ -217,15 +221,7 @@ A camada Gold é estruturada em dois conjuntos de ativos para atender simultanea
 
 ---
 
-### 6.3 🔀 Fluxo Lógico de Geração de Ativos (SILVER → GOLD)
-
-A camada Gold consolida as entidades Silver em tabelas analíticas (`ABTs`) através de um fluxo padronizado de enriquecimento temporal. O processamento é segmentado por âncora para garantir que cada ativo preserve suas características de densidade e volume originais:
-
-![ancoras](../images/data_lineage/gold_abts.png)
-
----
-
-### 6.4 🛡️ Governança de Histórico e Versionamento (`run_id`)
+### 6.3 🛡️ Governança de Histórico e Versionamento (`run_id`)
 
 A utilização do **run_id** como chave de particionamento na camada Gold transcende a organização técnica, atuando como o pilar de **Imutabilidade dos Experimentos**. Cada execução do pipeline gera um snapshot completo da ABT, preservando o estado exato das features e das Janelas de Lookback naquele instante.
 
@@ -234,10 +230,6 @@ Esta estratégia permite:
 * **Comparação A/B de Versões:** Permite confrontar a performance de diferentes versões de modelos (ex: v1 vs v2) sobre a mesma base histórica imutável de CMV.
 * **Auditoria de Drift:** Comparação histórica entre diferentes versões da ABT CMV para identificar se a queda de performance de um modelo se deve a mudanças no comportamento dos dados do Bureau.
 * **Backtesting e Rollback:** Capacidade de revalidar modelos antigos ou reverter para a base exata de um experimento anterior com total determinismo estatístico.
-
----
-
-> ⚠️ **Nota de Escopo:** Este documento não detalha a lógica interna de construção dos ativos Gold, tais como estratégias de **Point-in-Time Join**, definição de **janelas de lookback** e regras de **anti-data leakage**. Essas especificações constam na documentação dedicada de **estruturação do modelo CMV**, onde cada ativo é descrito com suas decisões estatísticas e justificativas técnicas baseadas no público-alvo de Bureau.
 
 ---
 
