@@ -358,16 +358,13 @@
 
 | prefixo   |   qtd_features | pct_missing_medio   | densidade_sinal   |
 |:----------|---------------:|:--------------------|:------------------|
-| tel       |             69 | 0.08%               | 99.92%            |
-| rec       |             39 | 9.8%                | 90.2%             |
-| pag       |             36 | 63.48%              | 36.52%            |
-| cad       |             28 | 55.91%              | 44.09%            |
-| atr       |             24 | 45.95%              | 54.05%            |
+| rec_      |             39 | 9.8%                | 90.2%             |
+| pag_      |             36 | 63.48%              | 36.52%            |
+| atr_      |             24 | 45.95%              | 54.05%            |
+| bur_      |              3 | 1.18%               | 98.82%            |
+| tel_      |             69 | 0.08%               | 99.92%            |
+| cad_      |             28 | 55.91%              | 44.09%            |
 | outros    |              4 | 0.0%                | 100.0%            |
-| bur       |              3 | 1.18%               | 98.82%            |
-| ano       |              1 | 0.0%                | 100.0%            |
-| num       |              1 | 0.0%                | 100.0%            |
-| run       |              1 | 0.0%                | 100.0%            |
 
 ---
 
@@ -378,6 +375,39 @@
 | CMV    |      1308974 |    310555 | 23.73%     |
 | NET    |        10043 |      2626 | 26.15%     |
 | DTH    |         2151 |      1149 | 53.42%     |
+
+---
+
+### 📈 Top 15 Variáveis com Maior Correlação (Pearson) com Target
+> Identifica a força da relação linear entre as features e o evento de FPD.
+
+| feature                         |   correlacao |
+|:--------------------------------|-------------:|
+| bur_score_02                    |   -0.292252  |
+| bur_score_01                    |   -0.2177    |
+| tel_var_28                      |    0.0998143 |
+| cad_var_05                      |   -0.0920755 |
+| pag_qtd_faturas_geral           |   -0.0909211 |
+| pag_dias_desde_ultimo_pagamento |    0.0901333 |
+| tel_var_31                      |    0.0879407 |
+| atr_dias_desde_ultimo_atraso    |   -0.0805903 |
+| pag_qtd_faturas_l90d            |   -0.0801827 |
+| pag_flag_sem_pagamento_l30d     |    0.0793502 |
+| cad_var_02                      |    0.0778389 |
+| pag_flag_sem_pagamento_l60d     |    0.0772652 |
+| tel_var_30                      |    0.0770578 |
+| pag_qtd_faturas_l60d            |   -0.0751703 |
+| pag_flag_sem_pagamento_l90d     |    0.075094  |
+
+---
+
+### 📊 Sumário Estatístico dos Scores de Bureau
+> Análise de quartis e dispersão para validação da saúde dos scores de entrada.
+
+| feature      |   min |   p25 |   median |     avg |   p75 |   max |     std |
+|:-------------|------:|------:|---------:|--------:|------:|------:|--------:|
+| bur_score_01 |     0 |   554 |      587 | 586.877 |   621 |   778 | 57.3987 |
+| bur_score_02 |     1 |   557 |      622 | 627.528 |   697 |   917 | 96.1777 |
 
 ---
 
