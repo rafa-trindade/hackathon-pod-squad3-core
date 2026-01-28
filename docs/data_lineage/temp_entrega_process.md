@@ -159,9 +159,9 @@ Ao final do processamento na camada Silver, todas as entidades apresentam:
 
 ---
 
-## 🥇 6. Camada GOLD - Consumo Analítico e Modelagem (Estratégia CMV)
+## 🥇 6. Camada GOLD - Consolidação de Ativos (Expansão & Controle)
 
-A camada **GOLD** materializa os dados para Machine Learning através de ativos semânticos, versionados e auditáveis. Para garantir a **cobertura total do ecossistema** e, simultaneamente, atender às **necessidades de especialização** do projeto, a camada foi estruturada em dois conjuntos de ativos com finalidades distintas: um focado na **especificidade do produto CMV** e outro voltado ao baseline geral.
+A camada **GOLD** materializa os dados para Machine Learning através de ativos semânticos, versionados e auditáveis. Para garantir a **cobertura total do ecossistema** e, simultaneamente, atender às **necessidades de especialização** do projeto, a camada foi estruturada em dois conjuntos de ativos complementares: um focado na **amplitude de público (Expansão)** e outro voltado à **densidade transacional (Controle)**.
 
 ---
 
