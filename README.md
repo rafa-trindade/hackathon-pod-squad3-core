@@ -67,7 +67,7 @@ Repositório de desenvolvimento, documentação e implementação técnica de so
 
 ---
 
-### ✅ Data Quality (*Data Contracts*)
+### ✅ Data Quality
 > 📁 [`docs/data_quality/*`](docs/data_quality/)  
 > **Especifica** os contratos de dados e regras de negócio detalhadas para cada tabela nas camadas Raw e Gold. **Define** critérios de integridade, servindo como a documentação técnica que orienta as validações.
 >
