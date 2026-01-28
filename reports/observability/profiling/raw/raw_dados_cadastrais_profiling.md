@@ -7,7 +7,6 @@
 
 ---
 
-
 ### 🧬 Schema: `raw/dados_cadastrais`
 | column_name      | column_type   | null   | key   | default   | extra   |
 |:-----------------|:--------------|:-------|:------|:----------|:--------|
@@ -103,16 +102,16 @@
 
 | valor       |   qtd |
 |:------------|------:|
-| WXZY8TNZ7XZ |     6 |
-| Y77ZYUXU8NW |     6 |
 | ZX77YX8WNWN |     6 |
-| WW7NWZ9Y8ZW |     6 |
-| U8Z9ZZ8N8XZ |     6 |
-| 7X7NZ79YWU9 |     6 |
-| XX9Z8T8YUZT |     6 |
 | ZZTZ799U79T |     6 |
-| ZZZZZZZX7T9 |     6 |
+| 7X7NZ79YWU9 |     6 |
+| WXZY8TNZ7XZ |     6 |
+| U8Z9ZZ8N8XZ |     6 |
 | 888W78UZYYT |     6 |
+| WW7NWZ9Y8ZW |     6 |
+| Y77ZYUXU8NW |     6 |
+| ZZZZZZZX7T9 |     6 |
+| XX9Z8T8YUZT |     6 |
 
 #### Coluna: `SAFRA`
 
@@ -182,7 +181,7 @@
 | 12/10/1989 |   345 |
 | 08/06/1982 |   344 |
 | 06/06/1988 |   343 |
-| 28/02/1983 |   342 |
+| 29/06/1981 |   342 |
 
 #### Coluna: `var_03`
 

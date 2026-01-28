@@ -122,16 +122,16 @@
 
 | valor       |   qtd |
 |:------------|------:|
-| Y77ZYUXU8NW |     6 |
-| 7X7NZ79YWU9 |     6 |
 | U8Z9ZZ8N8XZ |     6 |
+| Y77ZYUXU8NW |     6 |
 | ZZZZZZZX7T9 |     6 |
 | 888W78UZYYT |     6 |
-| XYUZ8ZXUUZ9 |     5 |
-| ZUZUZZX7X88 |     5 |
-| 78YYWZT9TN8 |     5 |
-| U79ZXXNY8ZT |     5 |
-| ZYNYYUWWTZN |     5 |
+| 7X7NZ79YWU9 |     6 |
+| 7ZNUZYNWN8Y |     5 |
+| UYW78WZU897 |     5 |
+| Y97YZZX88TY |     5 |
+| ZXNWZNXTU8Z |     5 |
+| ZXX8UXXTUWT |     5 |
 
 
 

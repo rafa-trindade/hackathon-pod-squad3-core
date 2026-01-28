@@ -7,7 +7,6 @@
 
 ---
 
-
 ### 🧬 Schema: `raw/telco`
 | column_name     | column_type   | null   | key   | default   | extra   |
 |:----------------|:--------------|:-------|:------|:----------|:--------|
@@ -185,14 +184,14 @@
 | valor       |   qtd |
 |:------------|------:|
 | 888W78UZYYT |     6 |
-| UZTWX7NU8UY |     5 |
+| XNW79U9Z7WN |     5 |
 | ZW8Z8ZXWW7Z |     5 |
-| Y97YZZX88TY |     5 |
-| XYTY9ZX879Z |     5 |
-| 8NYZZZUWTYW |     5 |
-| YTWN99NY8ZU |     5 |
-| ZXNUU77UYZ8 |     5 |
-| ZW9TYZXTWTZ |     5 |
+| ZNTN78ZW7XX |     5 |
+| 7ZU8NNN7XUN |     5 |
+| T9ZYTXZ7WYZ |     5 |
+| XYN7XZZU788 |     5 |
+| ZYNYYUWWTZN |     5 |
+| XNXXWZZ97TZ |     5 |
 | UW7X8YWN88T |     5 |
 
 #### Coluna: `SAFRA`
