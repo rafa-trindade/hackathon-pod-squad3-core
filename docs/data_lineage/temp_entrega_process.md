@@ -203,14 +203,17 @@ A camada Gold é estruturada em dois conjuntos de ativos para atender simultanea
 
 > 🛡️ **Nota de Governança: Diagnóstico Técnico de Cobertura e Sinais**
 >
-> A coexistência dos dois ativos GOLD é fundamentada nos resultados obtidos via *data profiling* das execuções:
+> A coexistência dos dois ativos na camada GOLD é fundamentada nos resultados obtidos via *data profiling*, utilizando o contraste entre as tabelas da Silver para justificar a estratégia de modelagem:
 >
-> 1. **Âncora Bureau (Massa de Expansão - 2.6M):** Garante a **generalização do modelo** em larga escala, permitindo prospecção de mercado. Apresenta percentual de nulos detectados de 50.3% em dados de rede, inerente a novos entrantes. ([📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_cmv-profiling.md))
-> 2. **Âncora Telco (Ativo de Controle - 1.3M):** Atua como **Padrão de Ouro** para calibração. Retém densidade de sinais transacionais de **99.9%**, permitindo validar se a performance do modelo é consistente com o comportamento real de uso da rede. ([📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_prod-profiling.md))
-> 3. **Isolamento de Risco:** O profiling identificou que o produto **DTH apresenta 53.4% de FPD**, enquanto o **CMV estabiliza em 21.2%**. A separação garante que o aprendizado do modelo CMV não seja distorcido pelo risco extremo de produtos residenciais.
+> 1. **Massa de Expansão (`abt_base_cmv` - 2.6M):** Utiliza o target oriundo da `silver/score_bureau_movel`. Garante o volume necessário para treinamento focado no **Público-Alvo**, embora apresente **50.3% de nulos** nas colunas com prefixo `tel_`. É o ativo ideal para garantir a **generalização do modelo** em cenários de prospecção e novos clientes. ([📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_cmv-profiling.md))
+> 2. **Densidade de Controle (`abt_base_prod` - 1.3M):** Utiliza o target oriundo da `silver/telco`. Atua como o **Padrão de Ouro** para calibração, pois retém **99.9% de preenchimento** nas colunas `tel_`. Permite validar se os sinais aprendidos pelo algoritmo são consistentes com o **comportamento transacional interno** (`rec_`, `pag_`, `atr_`). ([📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_prod-profiling.md))
+> 3. **Isolamento de Risco por Produto:** O profiling na `abt_base_prod` identificou que o produto **DTH apresenta 53.4% de FPD**, enquanto o **CMV estabiliza em 21.2%** na `abt_base_cmv`. A separação dos ativos garante que a predição para o produto móvel (CMV) não seja contaminada pelo risco extremo detectado em produtos residenciais (NET/DTH).
+>
+> ---
+> ### 📊 Direcionamento Estratégico das Âncoras
+> A síntese abaixo detalha a **responsabilidade técnica** da arquitetura para garantir tanto a amplitude quanto a fidelidade dos dados:
 >
 > ![ancoras](../images/data_lineage/ancoras.png)
-
 
 ---
 
