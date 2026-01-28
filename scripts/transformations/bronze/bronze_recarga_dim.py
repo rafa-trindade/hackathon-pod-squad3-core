@@ -145,7 +145,7 @@ def run():
     con.execute("SET preserve_insertion_order = true")
     
     fato_schema = con.execute(f"DESCRIBE SELECT * FROM read_parquet('{BRONZE_RECARGA_FATO}')").df()
-    now_str = datetime.now().strftime('%Y%m%d_%H%M%S')
+    now_str = datetime.now().strftime('%Y%m%d')
     
     full_log = ""
 

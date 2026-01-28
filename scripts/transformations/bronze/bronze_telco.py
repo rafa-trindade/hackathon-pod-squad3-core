@@ -17,7 +17,7 @@ from scripts.transformations.utils.lake_retention import cleanup_old_runs
 # ------------------------------------------------------------------
 RAW_PATH = "s3://lake/raw/telco/*.parquet"
 
-RUN_ID = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+RUN_ID = datetime.now(timezone.utc).strftime("%Y%m%d")
 BRONZE_BASE_PATH = "bronze/telco/"
 BRONZE_PATH = f"s3://lake/{BRONZE_BASE_PATH}run_id={RUN_ID}/"
 

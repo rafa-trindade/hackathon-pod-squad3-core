@@ -76,7 +76,7 @@ def run():
     dim_count = con.execute(f"SELECT COUNT(*) FROM work_db.{DIM_NAME}_step1").fetchone()[0]
 
     # Gerando o Log
-    now_str = datetime.now().strftime('%Y%m%d_%H%M%S')
+    now_str = datetime.now().strftime('%Y%m%d')
     log_content = f"""
 📋 QUALITY REPORT - {DIM_NAME} | RUN: {now_str}
 ----------------------------------------------------------------------------------
