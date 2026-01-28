@@ -183,7 +183,6 @@ Para garantir a cobertura total do ecossistema e atender às necessidades espec�
 | Ativo | Tipo | Finalidade | Evidências e Book |
 |:-----|:-----|:-----------|:---|
 | `labels_fpd_bureau` | Target | Resposta FPD 100% CMV. | [📊 Profiling](../../reports/observability/profiling/gold/gold-labels_fpd_bureau-profiling.md) \| [📖 Book](../data_modelling/target/labels_fpd_bureau-book.md) |
-
 | `abt_base_cmv` | ABT | Massa crítica de treinamento (~2.6M). | [📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_cmv-profiling.md) \| [📖 Book](../data_modelling/features/abt_base_cmv-book.md) |
 
 ---
@@ -195,6 +194,8 @@ Para garantir a cobertura total do ecossistema e atender às necessidades espec�
 |:-----|:-----|:-----------|:---|
 | `labels_fpd` | Target | Mix de Produtos (CMV/NET/DTH). | [📊 Profiling](../../reports/observability/profiling/gold/gold-labels_fpd-profiling.md) \| [📖 Book](../data_modelling/target/labels_fpd-book.md) |
 | `abt_base_prod` | ABT | Ativo de densidade e benchmark (~1.3M). | [📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_prod-profiling.md) \| [📖 Book](../data_modelling/features/abt_base_prod-book.md) |
+
+---
 
 > 🛡️ **Nota de Governança: Diagnóstico Técnico de Cobertura e Sinais**
 >
