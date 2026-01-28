@@ -9,9 +9,9 @@ Adotamos uma abordagem de **Imutabilidade por Execução**. Em vez de sobrescrev
 
 ### 1.1 O Identificador `run_id`
 
-* **Definição:** O `run_id` é um carimbo de tempo (Timestamp) no formato `YYYYMMDD_HHMMSS`.
+* **Definição:** O `run_id` é um carimbo de tempo (Timestamp) no formato `YYYYMMDD`.
 * **Função:** Atuar como um contêiner técnico para uma fotografia completa do dataset naquele instante.
-* **Estrutura física no S3:** `s3://lake/{camada}/{dataset}/run_id=YYYYMMDD_HHMMSS/`
+* **Estrutura física no S3:** `s3://lake/{camada}/{dataset}/run_id=YYYYMMDD/`
 
 
 ## 2. Regras de Retenção (Purge Policy)
