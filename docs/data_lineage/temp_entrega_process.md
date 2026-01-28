@@ -202,11 +202,11 @@ A camada Gold é estruturada em dois conjuntos de ativos para atender simultanea
 ---
 
  <br> 
- 
 
-> 🛡️ **Nota de Governança: Diagnóstico Técnico de Cobertura e Sinais**
+
+> 🛡️ **Nota de Governança: Diagnóstico Técnico de Cobertura e Atributos**
 >
-> A coexistência dos dois ativos na camada GOLD é fundamentada nos resultados obtidos via *data profiling*, utilizando o contraste entre as tabelas da Silver para justificar a estratégia de modelagem:
+> A coexistência dos dois ativos na camada GOLD é fundamentada nos resultados obtidos via *data profiling* das ABTs, comprovando que as características das tabelas Silver foram preservadas para atender a objetivos distintos:
 >
 > 1. **Massa de Expansão (`abt_base_cmv` - 2.6M):** Utiliza o target oriundo da `silver/score_bureau_movel`. Garante o volume necessário para treinamento focado no **Público-Alvo**, embora apresente **50.3% de nulos** nas colunas com prefixo `tel_`. É o ativo ideal para garantir a **generalização do modelo** em cenários de prospecção e novos clientes. ([📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_cmv-profiling.md))
 > 2. **Densidade de Controle (`abt_base_prod` - 1.3M):** Utiliza o target oriundo da `silver/telco`. Atua como o **Padrão de Ouro** para calibração, pois retém **99.9% de preenchimento** nas colunas `tel_`. Permite validar se os sinais aprendidos pelo algoritmo são consistentes com o **comportamento transacional interno** (`rec_`, `pag_`, `atr_`). ([📊 Profiling](../../reports/observability/profiling/gold/gold-abt_base_prod-profiling.md))
