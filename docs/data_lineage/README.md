@@ -125,7 +125,7 @@ Na camada Silver, os dados são refinados para atender aos **requisitos de quali
 
 ---
 
-### 5.2 🔀 Regras de Transformação Específicas
+### 5.2 🔀 Regras de Transformações Específicas
 
 Apesar do fluxo base ser comum, algumas entidades possuem **processamentos adicionais**.
 
