@@ -1,4 +1,4 @@
-# Relatório de Profiling: `silver/score_bureau_movel` - `20260116_125820`
+# Relatório de Profiling: `silver/score_bureau_movel` - `20260128`
 
 ### 🔑 Garantia de Unicidade: `silver/score_bureau_movel`
 - **Chave Técnica:** `num_cpf, safra, prod`
@@ -26,7 +26,7 @@
 | score_01        | INTEGER                  |         355 |   54035 |      3794955 | 1.42%       | 99.99%           | BAIXA           |
 | score_02        | INTEGER                  |         598 |    1876 |      3794712 | 0.05%       | 99.98%           | BAIXA           |
 | ingestion_ts    | TIMESTAMP WITH TIME ZONE |           1 |       0 |      3795309 | 0.0%        | 100.0%           | BAIXA           |
-| run_id          | VARCHAR                  |           1 |       0 |      3795309 | 0.0%        | 100.0%           | BAIXA           |
+| run_id          | BIGINT                   |           1 |       0 |      3795309 | 0.0%        | 100.0%           | BAIXA           |
 | ano_mes         | BIGINT                   |           6 |       0 |      3795304 | 0.0%        | 100.0%           | BAIXA           |
 
 ---
@@ -40,7 +40,7 @@
 | ano_mes=202501 |              1 | 648.554     |        11 |                     6.6  |                       11.23 |
 | ano_mes=202502 |              1 | 602.344     |        11 |                     6.15 |                       10.42 |
 | ano_mes=202503 |              1 | 633.518     |        11 |                     6.45 |                       10.95 |
-| TOTAL          |              6 | 3.795.310   |        11 |                    38.65 |                       65.66 |
+| TOTAL          |              6 | 3.795.310   |        11 |                    38.64 |                       65.66 |
 
 ---
 
@@ -53,7 +53,7 @@
 #### Coluna: `ingestion_ts`
 | min                              | max                              |
 |:---------------------------------|:---------------------------------|
-| 2026-01-16 09:55:10.159993-03:00 | 2026-01-16 09:55:10.159993-03:00 |
+| 2026-01-28 00:51:44.719720-03:00 | 2026-01-28 00:51:44.719720-03:00 |
 
 
 
@@ -80,16 +80,16 @@
 
 | valor       |   qtd |
 |:------------|------:|
-| U8Z9ZZ8N8XZ |     6 |
-| 7X7NZ79YWU9 |     6 |
 | ZZZZZZZX7T9 |     6 |
-| Y77ZYUXU8NW |     6 |
 | 888W78UZYYT |     6 |
-| XW8ZW8X88N9 |     5 |
-| ZY9NYT7NXWW |     5 |
-| WU9UZZX88ZN |     5 |
-| ZXX8UXXTUWT |     5 |
-| 78YYWZT9TN8 |     5 |
+| U8Z9ZZ8N8XZ |     6 |
+| Y77ZYUXU8NW |     6 |
+| 7X7NZ79YWU9 |     6 |
+| XYN7XZZU788 |     5 |
+| ZNTN78ZW7XX |     5 |
+| 7ZNUZYNWN8Y |     5 |
+| 9TZTU7YWT87 |     5 |
+| YY8U879X87Z |     5 |
 
 #### Coluna: `safra`
 
@@ -164,15 +164,15 @@
 
 #### Coluna: `ingestion_ts`
 
-| valor                         |     qtd |
-|:------------------------------|--------:|
-| 2026-01-16 09:55:10.159993-03 | 3795310 |
+| valor                        |     qtd |
+|:-----------------------------|--------:|
+| 2026-01-28 00:51:44.71972-03 | 3795310 |
 
 #### Coluna: `run_id`
 
-|           valor |     qtd |
-|----------------:|--------:|
-| 20260116_125820 | 3795310 |
+|    valor |     qtd |
+|---------:|--------:|
+| 20260128 | 3795310 |
 
 #### Coluna: `ano_mes`
 
