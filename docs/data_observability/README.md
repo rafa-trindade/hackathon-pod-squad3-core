@@ -65,7 +65,7 @@ A observabilidade é materializada através de artefatos gerados em tempo de exe
 ## 🧭 Navegação de Observabilidade no Data Lake
 
 Para auditar uma execução específica, a estrutura no S3 deve ser consultada seguindo o padrão:
-`s3://lake/observability/reports/run_id=YYYYMMDD_HHMMSS/`
+`s3://lake/observability/reports/run_id=YYYYMMDD/`
 
 1. **Raiz da Pasta:** Contém o arquivo `.log` consolidado da execução do pipeline.
 2. **Subpastas:** Contêm os relatórios detalhados em `.md` (Profiling) e logs de integridade/qualidade.
