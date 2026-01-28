@@ -244,25 +244,25 @@ s3://lake/
 │   └── {entidade}/
 ├── bronze/
 │   ├── {entidade}/
-│   │   └── run_id=YYYYMMDD_HHMMSS/
+│   │   └── run_id=YYYYMMDD/
 │   │       └── ano_mes=YYYYMM/
 │   │           └── data_0.parquet
 │   └── {dimensao}/
 │       └── dimensao.parquet
 ├── silver/
 │   └── {entidade}/
-│       └── run_id=YYYYMMDD_HHMMSS/
+│       └── run_id=YYYYMMDD/
 │           └── ano_mes=YYYYMM/
 │               └── data_0.parquet
 ├── gold/
 │   └── {entidade}/
-│       └── run_id=YYYYMMDD_HHMMSS/
+│       └── run_id=YYYYMMDD/
 │           └── ano_mes=YYYYMM/
 │               └── data_0.parquet 
 ├── observability/
 │   └── reports/
-│       └── run_id=YYYYMMDD_HHMMSS/
-│           ├── pipeline_run_YYYYMMDD_HHMMSS.log
+│       └── run_id=YYYYMMDD/
+│           ├── pipeline_run_YYYYMMDD.log
 │           ├── integrity/ 
 │           ├── profiling/
 │           └── quality/      
