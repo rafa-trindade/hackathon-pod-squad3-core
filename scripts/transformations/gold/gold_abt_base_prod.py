@@ -19,7 +19,7 @@ from scripts.transformations.utils.lake_retention import cleanup_old_runs
 TARGET_TABLE = "abt_base_prod"
 ANCHOR_PATH = "s3://lake/gold/labels_fpd/**/*.parquet"
 
-RUN_ID = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+RUN_ID = datetime.now(timezone.utc).strftime("%Y%m%d")
 GOLD_BASE_PATH = f"gold/{TARGET_TABLE}/"
 GOLD_PATH = f"s3://lake/{GOLD_BASE_PATH}run_id={RUN_ID}/"
 

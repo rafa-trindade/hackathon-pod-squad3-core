@@ -20,7 +20,7 @@ SOURCE_TABLE = "telco"
 TARGET_TABLE = "labels_fpd"
 
 SILVER_PATH = f"s3://lake/silver/{SOURCE_TABLE}/**/*.parquet"
-RUN_ID = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+RUN_ID = datetime.now(timezone.utc).strftime("%Y%m%d")
 GOLD_BASE_PATH = f"gold/{TARGET_TABLE}/"
 GOLD_PATH = f"s3://lake/{GOLD_BASE_PATH}run_id={RUN_ID}/"
 
