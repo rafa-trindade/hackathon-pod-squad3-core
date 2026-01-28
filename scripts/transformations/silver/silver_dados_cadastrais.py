@@ -18,7 +18,7 @@ from scripts.transformations.utils.lake_retention import cleanup_old_runs
 TABLE_NAME = "dados_cadastrais"
 
 BRONZE_PATH = f"s3://lake/bronze/{TABLE_NAME}/**/*.parquet"
-RUN_ID = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+RUN_ID = datetime.now(timezone.utc).strftime("%Y%m%d")
 SILVER_BASE_PATH = f"silver/{TABLE_NAME}/"
 SILVER_PATH = f"s3://lake/{SILVER_BASE_PATH}run_id={RUN_ID}/"
 

@@ -19,7 +19,7 @@ TABLE_NAME = "atraso"
 
 BRONZE_PATH = f"s3://lake/bronze/{TABLE_NAME}/**/*.parquet"
 BRONZE_DIM_PATH = "s3://lake/bronze/atraso_dim/"
-RUN_ID = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+RUN_ID = datetime.now(timezone.utc).strftime("%Y%m%d")
 SILVER_BASE_PATH = f"silver/{TABLE_NAME}/"
 SILVER_PATH = f"s3://lake/{SILVER_BASE_PATH}run_id={RUN_ID}/"
 
@@ -160,7 +160,7 @@ def run():
         'dw_tipo_faturamento': 'dsc_tipo_faturamento'
     }
 
-    now_str = datetime.now().strftime('%Y%m%d_%H%M%S')
+    now_str = datetime.now().strftime('%Y%m%d')
     log_content = f"📋 QUALITY REPORT - {TABLE_NAME}_aggregation | RUN: {now_str}\n"
     log_content += "-" * 82 + "\n"
     log_content += f"{'PAREAMENTO (CHAVE -> DESC)':<45} | {'STATUS':<9} | {'NÃO INFORMADOS':<15}\n"
