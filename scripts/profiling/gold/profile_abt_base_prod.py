@@ -283,19 +283,25 @@ print_and_save_md(md, md_file)
 md = "### 📶 Densidade de Sinal (Percentual de nulos médio por Prefixo)\n"
 md += "> Mede o percentual médio de preenchimento das variáveis agrupadas por origem.\n\n"
 
-# Calculando Percentual de nulos médio (sparsity) por prefixo
+ordem_manual = ['rec', 'pag', 'atr', 'bur', 'tel', 'cad', 'outros']
+df_ordem = pd.DataFrame({'prefixo': ordem_manual})
+
 df_stats['prefixo'] = df_stats['column_name'].str.extract(r'^([a-z]{3})_')
 df_stats['prefixo'] = df_stats['prefixo'].fillna('outros')
 
-df_sparsity = df_stats.groupby('prefixo').agg(
+df_sparsity_calc = df_stats.groupby('prefixo').agg(
     qtd_features=('column_name', 'count'),
     pct_missing_medio=('pct_missing_val', 'mean')
 ).reset_index()
 
+df_sparsity = pd.merge(df_ordem, df_sparsity_calc, on='prefixo', how='inner')
+
 df_sparsity['densidade_sinal'] = (100 - df_sparsity['pct_missing_medio']).round(2).astype(str) + '%'
 df_sparsity['pct_missing_medio'] = df_sparsity['pct_missing_medio'].round(2).astype(str) + '%'
 
-md += df_sparsity.sort_values('qtd_features', ascending=False).to_markdown(index=False)
+df_sparsity['prefixo'] = df_sparsity['prefixo'].apply(lambda x: f"{x}_" if x != 'outros' else x)
+
+md += df_sparsity.to_markdown(index=False)
 print_and_save_md(md, md_file)
 
 # %% 
@@ -315,6 +321,57 @@ df_risk = con.execute(f"""
 """).df()
 
 md += df_risk.to_markdown(index=False)
+print_and_save_md(md, md_file)
+
+# %% 
+# 📈 BLOCO 8: CORRELAÇÃO LINEAR COM O TARGET (TOP 15) ########
+#############################################################
+md = "### 📈 Top 15 Variáveis com Maior Correlação (Pearson) com Target\n"
+md += "> Identifica a força da relação linear entre as features e o evento de FPD.\n\n"
+
+numeric_cols = df_stats[df_stats['column_type_x'].str.contains('DOUBLE|BIGINT|INTEGER', na=False)]['column_name'].tolist()
+features = [c for c in numeric_cols if c not in ['fpd', 'run_id', 'ano_mes']]
+
+corr_queries = [f"CORR(fpd::INTEGER, {c}) as {c}" for c in features]
+df_corr = con.execute(f"SELECT {', '.join(corr_queries)} FROM read_parquet('{path_parquet}')").df()
+
+df_corr_long = df_corr.T.reset_index()
+df_corr_long.columns = ['feature', 'correlacao']
+df_corr_long['correlacao_abs'] = df_corr_long['correlacao'].abs()
+
+md += df_corr_long.sort_values('correlacao_abs', ascending=False).head(15)[['feature', 'correlacao']].to_markdown(index=False)
+print_and_save_md(md, md_file)
+
+# %% 
+# 📊 BLOCO 9: DISTRIBUIÇÃO ESTATÍSTICA DE SCORES (BUREAU) ####
+#############################################################
+md = "### 📊 Sumário Estatístico dos Scores de Bureau\n"
+md += "> Análise de quartis e dispersão para validação da saúde dos scores de entrada.\n\n"
+
+# Busca colunas que contenham 'score' no nome
+score_cols = [c for c in df_stats['column_name'] if 'score' in c.lower()]
+
+if score_cols:
+    stats_query = []
+    for c in score_cols:
+        stats_query.append(f"""
+            SELECT 
+                '{c}' as feature,
+                MIN({c}) as min,
+                APPROX_QUANTILE({c}, 0.25) as p25,
+                APPROX_QUANTILE({c}, 0.50) as median,
+                AVG({c}) as avg,
+                APPROX_QUANTILE({c}, 0.75) as p75,
+                MAX({c}) as max,
+                STDDEV({c}) as std
+            FROM read_parquet('{path_parquet}')
+        """)
+    
+    df_scores = con.execute(" UNION ALL ".join(stats_query)).df()
+    md += df_scores.to_markdown(index=False)
+else:
+    md += "* ℹ️ Nenhuma coluna de Score detectada neste dataset."
+
 print_and_save_md(md, md_file)
 
 # %% 
