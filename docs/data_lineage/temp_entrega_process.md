@@ -202,6 +202,7 @@ A camada Gold é estruturada em dois conjuntos de ativos para atender simultanea
 ---
 
  <br> 
+ 
 
 > 🛡️ **Nota de Governança: Diagnóstico Técnico de Cobertura e Sinais**
 >
