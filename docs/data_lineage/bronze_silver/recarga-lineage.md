@@ -1,8 +1,7 @@
 ## 📱 Visão Geral - `recarga`
 
 - **Entidade Principal:** Linha do Cliente (`NUM_CPF` + `DW_NUM_NTC`)
-- **Grão da Tabela (Unicidade):** `NUM_CPF, DAT_INSERCAO_CREDITO, HOR_INSERCAO_CREDITO`
-- **Sugestão Chave de Relacionamento (Gold):** `NUM_CPF` (Identificador Único), `DW_NUM_NTC` (Vínculo de Linha), `DAT_INSERCAO_CREDITO` (Eixo Temporal)
+- **Grão da Tabela (Unicidade):** `NUM_CPF, DW_NUM_NTC, DAT_INSERCAO_CREDITO, HOR_INSERCAO_CREDITO`
 - **Chave de Particionamento:** `DAT_INSERCAO_CREDITO` (Formato YYYYMM)
 
 ---
@@ -82,12 +81,22 @@ Diferente das tabelas '''Fato''', as dimensões são tabelas de referência téc
 
 #### 2.2.1 🔍 Auditoria e Saneamento
 
-**Grãos em Conformidade:** `num_cpf`, `dat_insercao_credito`, `hor_insercao_credito`
+**Grãos em Conformidade:** `num_cpf`, `dw_num_ntc`, `dat_insercao_credito`, `hor_insercao_credito`
 
 **Estatísticas de Processamento:**
 * 📥 **Registros Iniciais (Bronze):** `100.213.651`
-* 💎 **Registros Mantidos (Silver):** `95.386.289`
-* ⚠️ **Registros Removidos (Duplicados):** `4.827.362` (**4.82%**)
+* 💎 **Registros Mantidos (Silver):** `95.446.983`
+* ⚠️ **Registros Removidos (Duplicados Reais):** `4.766.668` (**4.75%**)
+
+---
+
+#### 💡 Nota Arquitetural: Precisão Temporal e Unicidade por Linha
+> A combinação da alta granularidade temporal (`hor_insercao_credito`) com o identificador da linha (`dw_num_ntc`) é o que garante a integridade desta entidade.
+>
+> * **Detalhe Técnico:** O valor da hora representa os segundos decorridos desde a meia-noite (Padrão SAS/Legacy) e é processado como **BIGINT**, permitindo distinguir transações simultâneas em linhas distintas de um mesmo titular.
+> * **Impacto:** Esta estratégia permitiu identificar e remover **4.766.668 registros redundantes**, provenientes de possíveis falhas de *double ingestion* na origem, corrigindo um possível desvio de **4.7%** no faturamento total reportado.
+
+---
 
 **Otimização de Schema:**
 * ✨ **Expansão de Atributos:** O dataset saltou de **27 para 38 colunas** após a agregação de dimensões.

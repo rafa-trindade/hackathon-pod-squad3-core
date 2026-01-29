@@ -2,7 +2,6 @@
 
 - **Entidade Principal:** Cliente (`NUM_CPF`)
 - **Grão da Tabela (Unicidade):** `NUM_CPF, SAFRA, PROD`
-- **Sugestão Chave de Relacionamento (Gold):** `NUM_CPF` (Identificador Único), `SAFRA` (Eixo Temporal)
 - **Chave de Particionamento:** `SAFRA` (Formato YYYYMM)
 
 ---

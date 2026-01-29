@@ -2,7 +2,6 @@
 
 - **Entidade Principal:** Fatura do Cliente (`NUM_CPF` + `CONTRATO`)
 - **Grão da Tabela (Unicidade):** `NUM_CPF, CONTRATO, DAT_REFERENCIA, NUM_FATURA_HASH, NUM_ENT_SEQ_FATURA`
-- **Sugestão Chave de Relacionamento (Gold):** `NUM_CPF` (Identificador Único), `CONTRATO` (Vínculo de Produto), `DAT_REFERENCIA` (Eixo Temporal)
 - **Chave de Particionamento:** `DAT_REFERENCIA` (Formato YYYYMM)
 
 ---

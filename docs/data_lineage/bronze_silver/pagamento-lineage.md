@@ -1,8 +1,7 @@
 ## 💰 Visão Geral - `pagamento`
 
 - **Entidade Principal:** Pagamento do Cliente (`NUM_CPF` + `CONTRATO`)
-- **Grão da Tabela (Unicidade):** `NUM_CPF, CONTRATO, SEQ_FATURA, NUM_SUB_SEQ_FATURA`
-- **Sugestão Chave de Relacionamento (Gold):** `NUM_CPF` (Identificador Único), `CONTRATO` (Vínculo de Produto), `DAT_STATUS_FATURA` (Eixo Temporal)
+- **Grão da Tabela (Unicidade):** `NUM_CPF, CONTRATO, SEQ_FATURA, NUM_SUB_SEQ_FATURA, NUM_CREDITO_SEQ`
 - **Chave de Particionamento:** `DAT_STATUS_FATURA` (Formato YYYYMM)
 
 ---
@@ -63,12 +62,22 @@
 
 #### 2.2.1 🔍 Auditoria e Saneamento
 
-**Grãos em Conformidade:** `num_cpf`, `contrato`, `seq_fatura`, `num_sub_seq_fatura`
+**Grãos em Conformidade:** `num_cpf`, `contrato`, `seq_fatura`, `num_sub_seq_fatura`, `num_credito_seq`
 
-**Estatísticas de Processamento:**
+**Estatísticas de Processamento (Nova Baseline):**
 * 📥 **Registros Iniciais (Bronze):** `21.829.628`
-* 💎 **Registros Mantidos (Silver):** `21.567.614`
-* ⚠️ **Registros Removidos (Duplicados):** `262.014` (**1.20%**)
+* 💎 **Registros Mantidos (Silver):** `21.821.465`
+* ⚠️ **Registros Removidos (Duplicados Reais):** `8.163` (**0.04%**)
+
+---
+
+#### 💡 Nota Arquitetural: Exceção do Grão de Pagamento
+> Diferente das datas de referência de outras tabelas, a `dat_status_fatura` **não foi incluída** no grão de unicidade.
+>
+> * **Motivo:** Nesta entidade, a data reflete apenas a mudança de estado (Ex: Aberta para Paga) de um registro já existente. Incluí-la causaria a duplicidade do mesmo fato financeiro.
+> * **Impacto:** Esta lógica **evitou que 8.163 registros** obsoletos inflassem o somatório de receita, garantindo a "última verdade" de cada lançamento.
+
+---
 
 **Otimização de Schema (Colunas Excluídas):**
 * ✂️ **Colunas 100% Nulas Removidas:** `dat_atualizacao_credito`, `cod_netuno_pagamento`, `cod_desalocacao_credito`.
@@ -85,27 +94,27 @@ Para garantir que a estratégia de particionamento no S3 está correta, foi exec
 
 ```text
 📊 TABELA: PAGAMENTO
-🆔 Run ID: 20260110_150652 | Coluna: dat_status_fatura
+🆔 Run ID: 20260129 | Coluna: dat_status_fatura
 📅 Janela: 202310 a 202503
 ------------------------------------------------------------
-  📁 202310:    857,209 linhas | Min: 2023-10-01 00:00:00 | Max: 2023-10-31 00:00:00 | ✅ OK
-  📁 202311:    857,908 linhas | Min: 2023-11-01 00:00:00 | Max: 2023-11-30 00:00:00 | ✅ OK
-  📁 202312:    916,573 linhas | Min: 2023-12-01 00:00:00 | Max: 2023-12-31 00:00:00 | ✅ OK
-  📁 202401:    912,618 linhas | Min: 2024-01-01 00:00:00 | Max: 2024-01-31 00:00:00 | ✅ OK
-  📁 202402:    912,381 linhas | Min: 2024-02-01 00:00:00 | Max: 2024-02-29 00:00:00 | ✅ OK
-  📁 202403:    967,967 linhas | Min: 2024-03-01 00:00:00 | Max: 2024-03-31 00:00:00 | ✅ OK
-  📁 202404:    991,859 linhas | Min: 2024-04-01 00:00:00 | Max: 2024-04-30 00:00:00 | ✅ OK
-  📁 202405:  1,029,769 linhas | Min: 2024-05-01 00:00:00 | Max: 2024-05-31 00:00:00 | ✅ OK
-  📁 202406:    998,124 linhas | Min: 2024-06-01 00:00:00 | Max: 2024-06-30 00:00:00 | ✅ OK
-  📁 202407:  1,057,102 linhas | Min: 2024-07-01 00:00:00 | Max: 2024-07-31 00:00:00 | ✅ OK
-  📁 202408:  1,062,456 linhas | Min: 2024-08-01 00:00:00 | Max: 2024-08-31 00:00:00 | ✅ OK
-  📁 202409:  1,039,259 linhas | Min: 2024-09-01 00:00:00 | Max: 2024-09-30 00:00:00 | ✅ OK
-  📁 202410:  1,097,942 linhas | Min: 2024-10-01 00:00:00 | Max: 2024-10-31 00:00:00 | ✅ OK
-  📁 202411:  1,177,502 linhas | Min: 2024-11-01 00:00:00 | Max: 2024-11-30 00:00:00 | ✅ OK
-  📁 202412:  1,489,889 linhas | Min: 2024-12-01 00:00:00 | Max: 2024-12-31 00:00:00 | ✅ OK
-  📁 202501:  1,755,588 linhas | Min: 2025-01-01 00:00:00 | Max: 2025-01-31 00:00:00 | ✅ OK
-  📁 202502:  2,001,239 linhas | Min: 2025-02-01 00:00:00 | Max: 2025-02-28 00:00:00 | ✅ OK
-  📁 202503:  2,442,229 linhas | Min: 2025-03-01 00:00:00 | Max: 2025-03-31 00:00:00 | ✅ OK
+  📁 202310:    869,778 linhas | Min: 2023-10-01 00:00:00 | Max: 2023-10-31 00:00:00 | ✅ OK
+  📁 202311:    869,494 linhas | Min: 2023-11-01 00:00:00 | Max: 2023-11-30 00:00:00 | ✅ OK
+  📁 202312:    929,053 linhas | Min: 2023-12-01 00:00:00 | Max: 2023-12-31 00:00:00 | ✅ OK
+  📁 202401:    923,507 linhas | Min: 2024-01-01 00:00:00 | Max: 2024-01-31 00:00:00 | ✅ OK
+  📁 202402:    943,812 linhas | Min: 2024-02-01 00:00:00 | Max: 2024-02-29 00:00:00 | ✅ OK
+  📁 202403:    984,724 linhas | Min: 2024-03-01 00:00:00 | Max: 2024-03-31 00:00:00 | ✅ OK
+  📁 202404:  1,001,985 linhas | Min: 2024-04-01 00:00:00 | Max: 2024-04-30 00:00:00 | ✅ OK
+  📁 202405:  1,043,312 linhas | Min: 2024-05-01 00:00:00 | Max: 2024-05-31 00:00:00 | ✅ OK
+  📁 202406:  1,012,515 linhas | Min: 2024-06-01 00:00:00 | Max: 2024-06-30 00:00:00 | ✅ OK
+  📁 202407:  1,068,321 linhas | Min: 2024-07-01 00:00:00 | Max: 2024-07-31 00:00:00 | ✅ OK
+  📁 202408:  1,074,235 linhas | Min: 2024-08-01 00:00:00 | Max: 2024-08-31 00:00:00 | ✅ OK
+  📁 202409:  1,049,488 linhas | Min: 2024-09-01 00:00:00 | Max: 2024-09-30 00:00:00 | ✅ OK
+  📁 202410:  1,111,775 linhas | Min: 2024-10-01 00:00:00 | Max: 2024-10-31 00:00:00 | ✅ OK
+  📁 202411:  1,188,451 linhas | Min: 2024-11-01 00:00:00 | Max: 2024-11-30 00:00:00 | ✅ OK
+  📁 202412:  1,500,350 linhas | Min: 2024-12-01 00:00:00 | Max: 2024-12-31 00:00:00 | ✅ OK
+  📁 202501:  1,771,415 linhas | Min: 2025-01-01 00:00:00 | Max: 2025-01-31 00:00:00 | ✅ OK
+  📁 202502:  2,014,528 linhas | Min: 2025-02-01 00:00:00 | Max: 2025-02-28 00:00:00 | ✅ OK
+  📁 202503:  2,464,722 linhas | Min: 2025-03-01 00:00:00 | Max: 2025-03-31 00:00:00 | ✅ OK
 ```
 
 **Principais Observações Técnicas:**
