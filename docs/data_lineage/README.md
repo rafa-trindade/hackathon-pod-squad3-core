@@ -171,7 +171,7 @@ Ao final do processamento na camada Silver, todas as entidades apresentam:
 - Schema otimizado
 - Dados prontos para análises exploratórias, agregações controladas e estruturação de ativos na camada GOLD
 
-📚 **[Catálogo de Dados - Camada Silver](../data_dictionary/)**
+📚 **[Dicionário de Dados - Camada Silver](../data_dictionary/)**
 
 ---
 
