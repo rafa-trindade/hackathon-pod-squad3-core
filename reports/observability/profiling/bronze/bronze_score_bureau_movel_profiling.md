@@ -1,4 +1,4 @@
-# Relatório de Profiling: `bronze/score_bureau_movel` - `20260128`
+# Relatório de Profiling: `bronze/score_bureau_movel` - `20260129`
 
 ### 🔑 Garantia de Unicidade: `bronze/score_bureau_movel`
 - **Chave Técnica:** `num_cpf, safra, prod`
@@ -36,7 +36,7 @@
 | diretorio      |   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
 |:---------------|---------------:|:------------|----------:|-------------------------:|----------------------------:|
 | ano_mes=202410 |              1 | 636.951     |        11 |                     6.48 |                       11.01 |
-| ano_mes=202411 |              1 | 647.199     |        11 |                     6.58 |                       11.2  |
+| ano_mes=202411 |              1 | 647.199     |        11 |                     6.59 |                       11.2  |
 | ano_mes=202412 |              1 | 626.744     |        11 |                     6.38 |                       10.85 |
 | ano_mes=202501 |              1 | 648.554     |        11 |                     6.6  |                       11.23 |
 | ano_mes=202502 |              1 | 602.344     |        11 |                     6.15 |                       10.42 |
@@ -54,7 +54,7 @@
 #### Coluna: `ingestion_ts`
 | min                              | max                              |
 |:---------------------------------|:---------------------------------|
-| 2026-01-28 00:51:44.719720-03:00 | 2026-01-28 00:51:44.719720-03:00 |
+| 2026-01-29 01:47:56.641739-03:00 | 2026-01-29 01:47:56.641739-03:00 |
 
 
 
@@ -81,16 +81,16 @@
 
 | valor       |   qtd |
 |:------------|------:|
-| 7X7NZ79YWU9 |     6 |
-| U8Z9ZZ8N8XZ |     6 |
-| ZZZZZZZX7T9 |     6 |
-| Y77ZYUXU8NW |     6 |
 | 888W78UZYYT |     6 |
-| Y97YZZX88TY |     5 |
-| YY8U879X87Z |     5 |
-| XZ7ZXZW8XZX |     5 |
+| 7X7NZ79YWU9 |     6 |
+| Y77ZYUXU8NW |     6 |
+| ZZZZZZZX7T9 |     6 |
+| U8Z9ZZ8N8XZ |     6 |
 | U79ZXXNY8ZT |     5 |
-| ZUZUZZX7X88 |     5 |
+| ZNTN78ZW7XX |     5 |
+| XYUZ8ZXUUZ9 |     5 |
+| 9TZTU7YWT87 |     5 |
+| UW9TT8TU8TZ |     5 |
 
 #### Coluna: `safra`
 
@@ -165,9 +165,9 @@
 
 #### Coluna: `ingestion_ts`
 
-| valor                        |     qtd |
-|:-----------------------------|--------:|
-| 2026-01-28 00:51:44.71972-03 | 3795310 |
+| valor                         |     qtd |
+|:------------------------------|--------:|
+| 2026-01-29 01:47:56.641739-03 | 3795310 |
 
 #### Coluna: `ano_mes`
 
@@ -184,7 +184,7 @@
 
 |    valor |     qtd |
 |---------:|--------:|
-| 20260128 | 3795310 |
+| 20260129 | 3795310 |
 
 
 

@@ -1,15 +1,16 @@
-# Relatório de Profiling: `bronze/pagamento` - `20260128`
+# Relatório de Profiling: `bronze/pagamento` - `20260129`
 
 ### 🔑 Garantia de Unicidade: `bronze/pagamento`
-- **Chave Técnica:** `num_cpf, contrato, seq_fatura, num_sub_seq_fatura`
+- **Chave Técnica:** `num_cpf, contrato, seq_fatura, num_sub_seq_fatura, num_credito_seq`
 - **Tipo:** `COMPOSTA`
 
 | coluna        |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
 |:--------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
-| CHAVE_TECNICA |    23283525 |       0 |            0 | 0.0%        | 0.0%             | ALTA            |
+| CHAVE_TECNICA |    21384507 |       0 |       445121 | 0.0%        | 2.04%            | ALTA            |
 
 ### 🚩 Diagnóstico e Observações Técnicas
-* ✅ **Sucesso:** A chave técnica parece ser única para este conjunto de dados (estimativa estatística).
+* ℹ️ **Deduplicação Necessária:** Aproximação indica cerca de **445.121** (2.04%) duplicados. Na camada Silver. será obrigatório o uso de `ROW_NUMBER()` com `PARTITION BY` nas colunas da chave e `ORDER BY ingestion_ts DESC` para garantir a unicidade real.
+* ❗ **Risco de Integridade:** Não utilize esta tabela Bronze para `JOINs` diretos devido à duplicidade detectada.
 * 👻 **Otimização de Schema:** Colunas 100% nulas ou zeradas detectadas em análises anteriores devem ser avaliadas para exclusão na Silver.
 
 
@@ -100,25 +101,25 @@
 ### 📦 Volumetria: `bronze/pagamento`
 | diretorio      |   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
 |:---------------|---------------:|:------------|----------:|-------------------------:|----------------------------:|
-| ano_mes=202310 |              1 | 869.793     |        76 |                    32.15 |                       60.91 |
-| ano_mes=202311 |              1 | 869.501     |        76 |                    31.91 |                       60    |
-| ano_mes=202312 |              1 | 929.072     |        76 |                    34.14 |                       64.82 |
-| ano_mes=202401 |              1 | 923.529     |        76 |                    33.96 |                       63.65 |
-| ano_mes=202402 |              1 | 943.835     |        76 |                    34.58 |                       64.76 |
-| ano_mes=202403 |              1 | 984.772     |        76 |                    36.66 |                       68.99 |
-| ano_mes=202404 |              1 | 1.002.252   |        76 |                    66.77 |                      111.51 |
-| ano_mes=202405 |              1 | 1.043.511   |        76 |                   103.64 |                      171.36 |
-| ano_mes=202406 |              1 | 1.012.756   |        76 |                   101.02 |                      166.04 |
-| ano_mes=202407 |              1 | 1.068.676   |        76 |                   107.32 |                      176.91 |
-| ano_mes=202408 |              1 | 1.074.927   |        76 |                   107.39 |                      176.61 |
-| ano_mes=202409 |              1 | 1.050.711   |        76 |                   105.19 |                      171.46 |
-| ano_mes=202410 |              1 | 1.112.563   |        76 |                   109.9  |                      181.57 |
-| ano_mes=202411 |              1 | 1.189.482   |        76 |                   117.6  |                      192.65 |
-| ano_mes=202412 |              1 | 1.501.147   |        76 |                   145.54 |                      239.32 |
-| ano_mes=202501 |              1 | 1.771.821   |        76 |                   170.29 |                      280.26 |
-| ano_mes=202502 |              1 | 2.015.493   |        76 |                   190.5  |                      314.75 |
-| ano_mes=202503 |              1 | 2.465.787   |        76 |                   229.85 |                      381.52 |
-| TOTAL          |             18 | 21.829.628  |        76 |                  1758.39 |                     2947.06 |
+| ano_mes=202310 |              1 | 869.793     |        76 |                    32.14 |                       60.91 |
+| ano_mes=202311 |              1 | 869.501     |        76 |                    31.91 |                       59.99 |
+| ano_mes=202312 |              1 | 929.072     |        76 |                    34.13 |                       64.82 |
+| ano_mes=202401 |              1 | 923.529     |        76 |                    33.95 |                       63.66 |
+| ano_mes=202402 |              1 | 943.835     |        76 |                    34.69 |                       64.77 |
+| ano_mes=202403 |              1 | 984.772     |        76 |                    37.04 |                       70.02 |
+| ano_mes=202404 |              1 | 1.002.252   |        76 |                    66.82 |                      111.84 |
+| ano_mes=202405 |              1 | 1.043.511   |        76 |                   103.61 |                      171.37 |
+| ano_mes=202406 |              1 | 1.012.756   |        76 |                   101.08 |                      165.9  |
+| ano_mes=202407 |              1 | 1.068.676   |        76 |                   107.33 |                      176.95 |
+| ano_mes=202408 |              1 | 1.074.927   |        76 |                   107.93 |                      178.1  |
+| ano_mes=202409 |              1 | 1.050.711   |        76 |                   105.49 |                      172.83 |
+| ano_mes=202410 |              1 | 1.112.563   |        76 |                   110    |                      181.61 |
+| ano_mes=202411 |              1 | 1.189.482   |        76 |                   117.04 |                      191.1  |
+| ano_mes=202412 |              1 | 1.501.147   |        76 |                   145.38 |                      238.41 |
+| ano_mes=202501 |              1 | 1.771.821   |        76 |                   170.25 |                      279.85 |
+| ano_mes=202502 |              1 | 2.015.493   |        76 |                   190.54 |                      314.84 |
+| ano_mes=202503 |              1 | 2.465.787   |        76 |                   230.02 |                      381.81 |
+| TOTAL          |             18 | 21.829.628  |        76 |                  1759.35 |                     2948.79 |
 
 ---
 
@@ -191,7 +192,7 @@
 #### Coluna: `ingestion_ts`
 | min                              | max                              |
 |:---------------------------------|:---------------------------------|
-| 2026-01-28 00:45:45.957733-03:00 | 2026-01-28 00:45:45.957733-03:00 |
+| 2026-01-29 01:41:57.947529-03:00 | 2026-01-29 01:41:57.947529-03:00 |
 
 
 
@@ -361,8 +362,8 @@
 | 2025-02-18 18:54:48 |      186 |
 | 2025-03-12 04:19:30 |      182 |
 | 2025-02-18 18:54:49 |      169 |
-| 2025-01-08 03:40:08 |      167 |
 | 2025-02-08 05:25:18 |      167 |
+| 2025-01-08 03:40:08 |      167 |
 
 #### Coluna: `dat_baixa_atividade`
 
@@ -403,8 +404,8 @@
 | 2025-03-06 14:36:43 |     245 |
 | 2025-03-06 14:36:07 |     241 |
 | 2025-02-21 12:47:38 |     236 |
-| 2025-02-21 12:47:16 |     234 |
 | 2025-03-06 14:36:11 |     234 |
+| 2025-02-21 12:47:16 |     234 |
 | 2025-02-21 12:47:22 |     233 |
 | 2025-03-06 14:36:36 |     233 |
 | 2025-03-06 14:36:38 |     232 |
@@ -552,8 +553,8 @@
 |    2.62 |       91 |
 |    2.29 |       87 |
 |    1.97 |       84 |
-|    1.64 |       83 |
 |  120    |       83 |
+|    1.64 |       83 |
 |   18.36 |       82 |
 
 #### Coluna: `val_multa_equip_total`
@@ -567,8 +568,8 @@
 |    2.62 |       91 |
 |    2.29 |       87 |
 |    1.97 |       84 |
-|    1.64 |       83 |
 |  120    |       83 |
+|    1.64 |       83 |
 |   18.36 |       82 |
 
 #### Coluna: `val_multa_fid_item`
@@ -690,12 +691,12 @@
 | 966132196123 |      24 |
 | 966132196124 |      24 |
 | 120004027064 |      22 |
-| 966132196122 |      21 |
 | 966132196133 |      21 |
-| 913625840147 |      21 |
-| 966132196132 |      21 |
+| 966132196127 |      21 |
 | 966132196128 |      21 |
 | 966132196130 |      21 |
+| 966132196132 |      21 |
+| 966132196122 |      21 |
 
 #### Coluna: `dw_tipo_fatura`
 
@@ -1099,8 +1100,8 @@
 | Arquivo Rajada Sequencia: 24395, Registro: 00000054 |       95 |
 | Arquivo Rajada Sequencia: 11769, Registro: 00001397 |       93 |
 | Arquivo Rajada Sequencia: 11769, Registro: 00001396 |       90 |
-| Arquivo Rajada Sequencia: 11471, Registro: 00001477 |       89 |
 | Arquivo Rajada Sequencia: 24762, Registro: 00000344 |       89 |
+| Arquivo Rajada Sequencia: 11471, Registro: 00001477 |       89 |
 | Arquivo Rajada Sequencia: 24762, Registro: 00000437 |       88 |
 
 #### Coluna: `cod_metodo_pagamento`
@@ -1252,7 +1253,7 @@
 
 | valor                         |      qtd |
 |:------------------------------|---------:|
-| 2026-01-28 00:45:45.957733-03 | 21829628 |
+| 2026-01-29 01:41:57.947529-03 | 21829628 |
 
 #### Coluna: `ano_mes`
 
@@ -1273,7 +1274,7 @@
 
 |    valor |      qtd |
 |---------:|---------:|
-| 20260128 | 21829628 |
+| 20260129 | 21829628 |
 
 
 
