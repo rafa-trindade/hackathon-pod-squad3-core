@@ -1,4 +1,4 @@
-# Relatório de Profiling: `silver/score_bureau_movel` - `20260128`
+# Relatório de Profiling: `silver/score_bureau_movel` - `20260129`
 
 ### 🔑 Garantia de Unicidade: `silver/score_bureau_movel`
 - **Chave Técnica:** `num_cpf, safra, prod`
@@ -34,7 +34,7 @@
 ### 📦 Volumetria: `silver/score_bureau_movel`
 | diretorio      |   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
 |:---------------|---------------:|:------------|----------:|-------------------------:|----------------------------:|
-| ano_mes=202410 |              1 | 636.951     |        11 |                     6.48 |                       11.02 |
+| ano_mes=202410 |              1 | 636.951     |        11 |                     6.48 |                       11.01 |
 | ano_mes=202411 |              1 | 647.199     |        11 |                     6.59 |                       11.2  |
 | ano_mes=202412 |              1 | 626.744     |        11 |                     6.39 |                       10.85 |
 | ano_mes=202501 |              1 | 648.554     |        11 |                     6.6  |                       11.23 |
@@ -53,7 +53,7 @@
 #### Coluna: `ingestion_ts`
 | min                              | max                              |
 |:---------------------------------|:---------------------------------|
-| 2026-01-28 00:51:44.719720-03:00 | 2026-01-28 00:51:44.719720-03:00 |
+| 2026-01-29 01:47:56.641739-03:00 | 2026-01-29 01:47:56.641739-03:00 |
 
 
 
@@ -80,16 +80,16 @@
 
 | valor       |   qtd |
 |:------------|------:|
-| ZZZZZZZX7T9 |     6 |
-| 888W78UZYYT |     6 |
-| U8Z9ZZ8N8XZ |     6 |
 | Y77ZYUXU8NW |     6 |
+| U8Z9ZZ8N8XZ |     6 |
+| ZZZZZZZX7T9 |     6 |
 | 7X7NZ79YWU9 |     6 |
-| XYN7XZZU788 |     5 |
+| 888W78UZYYT |     6 |
+| 9TUZT8Y8XU9 |     5 |
 | ZNTN78ZW7XX |     5 |
 | 7ZNUZYNWN8Y |     5 |
-| 9TZTU7YWT87 |     5 |
-| YY8U879X87Z |     5 |
+| ZY9NYT7NXWW |     5 |
+| U79ZXXNY8ZT |     5 |
 
 #### Coluna: `safra`
 
@@ -164,15 +164,15 @@
 
 #### Coluna: `ingestion_ts`
 
-| valor                        |     qtd |
-|:-----------------------------|--------:|
-| 2026-01-28 00:51:44.71972-03 | 3795310 |
+| valor                         |     qtd |
+|:------------------------------|--------:|
+| 2026-01-29 01:47:56.641739-03 | 3795310 |
 
 #### Coluna: `run_id`
 
 |    valor |     qtd |
 |---------:|--------:|
-| 20260128 | 3795310 |
+| 20260129 | 3795310 |
 
 #### Coluna: `ano_mes`
 

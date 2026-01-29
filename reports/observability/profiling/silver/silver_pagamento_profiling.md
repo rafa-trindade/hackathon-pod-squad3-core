@@ -1,12 +1,12 @@
-# Relatório de Profiling: `silver/pagamento` - `20260128`
+# Relatório de Profiling: `silver/pagamento` - `20260129`
 
 ### 🔑 Garantia de Unicidade: `silver/pagamento`
-- **Chave Técnica:** `num_cpf, contrato, seq_fatura, num_sub_seq_fatura`
+- **Chave Técnica:** `num_cpf, contrato, seq_fatura, num_sub_seq_fatura, num_credito_seq`
 - **Tipo:** `COMPOSTA`
 
 | coluna        |   distintos |   nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
 |:--------------|------------:|--------:|-------------:|:------------|:-----------------|:----------------|
-| CHAVE_TECNICA |    21567614 |       0 |            0 | 0.0%        | 0.0%             | MÁXIMA          |
+| CHAVE_TECNICA |    21821465 |       0 |            0 | 0.0%        | 0.0%             | MÁXIMA          |
 
 ### 🚩 Diagnóstico e Observações Técnicas
 * ✅ **Sucesso:** Unicidade Garantida. O grão da tabela está preservado.
@@ -17,104 +17,104 @@
 ### 📊 Schema e Estatísticas: `silver/pagamento`
 | column_name                  | column_type              |   distintos |    nulos |   duplicados | pct_nulos   | pct_duplicados   | cardinalidade   |
 |:-----------------------------|:-------------------------|------------:|---------:|-------------:|:------------|:-----------------|:----------------|
-| num_cpf                      | VARCHAR                  |     1930320 |        0 |     19637294 | 0.0%        | 91.05%           | ALTA            |
-| contrato                     | VARCHAR                  |     2304298 |        0 |     19263316 | 0.0%        | 89.32%           | ALTA            |
-| seq_fatura                   | VARCHAR                  |         251 |        0 |     21567363 | 0.0%        | 100.0%           | BAIXA           |
-| num_sub_seq_fatura           | VARCHAR                  |        1333 |        0 |     21566281 | 0.0%        | 99.99%           | BAIXA           |
-| cod_agencia_atividade        | VARCHAR                  |        9154 | 14843071 |     21558460 | 68.82%      | 99.96%           | BAIXA           |
-| cod_alocacao_credito         | VARCHAR                  |           9 |  6017833 |     21567605 | 27.9%       | 100.0%           | BAIXA           |
-| cod_arquivo_pagamento        | VARCHAR                  |     2230500 | 18151115 |     19337114 | 84.16%      | 89.66%           | ALTA            |
-| cod_atividade                | VARCHAR                  |           5 |  6017833 |     21567609 | 27.9%       | 100.0%           | BAIXA           |
-| cod_banco_atividade          | VARCHAR                  |          37 | 13593048 |     21567577 | 63.03%      | 100.0%           | BAIXA           |
-| cod_conta_atividade          | VARCHAR                  |     2730825 |  6017833 |     18836789 | 27.9%       | 87.34%           | ALTA            |
-| cod_forma_pagamento          | VARCHAR                  |           4 |  6017833 |     21567610 | 27.9%       | 100.0%           | BAIXA           |
-| cod_fundo_atividade          | VARCHAR                  |         876 | 21560238 |     21566738 | 99.97%      | 100.0%           | BAIXA           |
-| cod_login_credito            | VARCHAR                  |        1179 | 13998890 |     21566435 | 64.91%      | 99.99%           | BAIXA           |
-| cod_login_operador_atividade | VARCHAR                  |         961 | 13992476 |     21566653 | 64.88%      | 100.0%           | BAIXA           |
-| cod_login_pagamento          | VARCHAR                  |         961 | 14316241 |     21566653 | 66.38%      | 100.0%           | BAIXA           |
-| cod_metodo_pagamento         | VARCHAR                  |           6 | 16067042 |     21567608 | 74.5%       | 100.0%           | BAIXA           |
-| cod_origem_netuno            | VARCHAR                  |      419749 | 13376257 |     21147865 | 62.02%      | 98.05%           | MEDIA           |
-| cod_razao_atividade          | VARCHAR                  |           6 |  8343997 |     21567608 | 38.69%      | 100.0%           | BAIXA           |
-| cod_tipo_fatura              | VARCHAR                  |          32 |  6017833 |     21567582 | 27.9%       | 100.0%           | BAIXA           |
-| cod_tipo_pagamento           | VARCHAR                  |           5 |  6017833 |     21567609 | 27.9%       | 100.0%           | BAIXA           |
-| dat_atividade_credito        | DATE                     |         430 |  6017833 |     21567184 | 27.9%       | 100.0%           | BAIXA           |
-| dat_atualizacao_atividade    | TIMESTAMP                |      392769 | 20478101 |     21174845 | 94.95%      | 98.18%           | MEDIA           |
-| dat_atualizacao_pagamento    | TIMESTAMP                |      149396 | 18643602 |     21418218 | 86.44%      | 99.31%           | MEDIA           |
-| dat_baixa_atividade          | DATE                     |         382 |  6017833 |     21567232 | 27.9%       | 100.0%           | BAIXA           |
-| dat_criacao_atividade        | TIMESTAMP                |     6572610 |  6017833 |     14995004 | 27.9%       | 69.53%           | ALTA            |
-| dat_criacao_credito          | TIMESTAMP                |     6657349 |  6017833 |     14910265 | 27.9%       | 69.13%           | ALTA            |
-| dat_criacao_dw               | TIMESTAMP                |       49276 |        0 |     21518338 | 0.0%        | 99.77%           | MEDIA           |
-| dat_criacao_pagamento        | TIMESTAMP                |     6572610 |  6017833 |     14995004 | 27.9%       | 69.53%           | ALTA            |
-| dat_deposito_atividade       | DATE                     |         745 |  6017833 |     21566869 | 27.9%       | 100.0%           | BAIXA           |
-| dat_status_fatura            | DATE                     |         538 |        0 |     21567076 | 0.0%        | 100.0%           | BAIXA           |
-| dat_status_pagamento         | DATE                     |         397 |  6017833 |     21567217 | 27.9%       | 100.0%           | BAIXA           |
-| dat_vencimento_credito       | DATE                     |        1330 |  6017833 |     21566284 | 27.9%       | 99.99%           | BAIXA           |
-| dsc_nome_banco_pagamento     | VARCHAR                  |          78 |  6017833 |     21567536 | 27.9%       | 100.0%           | BAIXA           |
-| dsc_pagamento                | VARCHAR                  |     2141789 | 18606890 |     19425825 | 86.27%      | 90.07%           | ALTA            |
-| dw_area                      | VARCHAR                  |          71 |        0 |     21567543 | 0.0%        | 100.0%           | BAIXA           |
-| dw_banco                     | VARCHAR                  |          55 |        0 |     21567559 | 0.0%        | 100.0%           | BAIXA           |
-| dw_forma_pagamento           | VARCHAR                  |           4 |        0 |     21567610 | 0.0%        | 100.0%           | BAIXA           |
-| dw_motivo_estorno            | VARCHAR                  |           1 |        0 |     21567613 | 0.0%        | 100.0%           | BAIXA           |
-| dw_num_cliente               | VARCHAR                  |     2954149 |        0 |     18613465 | 0.0%        | 86.3%            | ALTA            |
-| dw_tipo_fatura               | VARCHAR                  |          24 |        0 |     21567590 | 0.0%        | 100.0%           | BAIXA           |
-| dw_tipo_pagamento            | VARCHAR                  |           4 |        0 |     21567610 | 0.0%        | 100.0%           | BAIXA           |
-| dw_un_negocio                | VARCHAR                  |          10 |        0 |     21567604 | 0.0%        | 100.0%           | BAIXA           |
-| ind_status_fatura            | VARCHAR                  |           2 |        0 |     21567612 | 0.0%        | 100.0%           | BAIXA           |
-| ind_status_pagamento         | VARCHAR                  |           4 |  8810829 |     21567610 | 40.85%      | 100.0%           | BAIXA           |
-| ind_tipo_credito             | VARCHAR                  |           1 |  6017833 |     21567613 | 27.9%       | 100.0%           | BAIXA           |
-| num_agencia_pagamento        | VARCHAR                  |        9154 |        0 |     21558460 | 0.0%        | 99.96%           | BAIXA           |
-| num_agrupador_pagamento      | VARCHAR                  |      338523 | 15958331 |     21229091 | 73.99%      | 98.43%           | MEDIA           |
-| num_banco_pagamento          | VARCHAR                  |          39 |        0 |     21567575 | 0.0%        | 100.0%           | BAIXA           |
-| num_cc_pagamento             | VARCHAR                  |      325591 |        0 |     21242023 | 0.0%        | 98.49%           | MEDIA           |
-| num_conta_atividade          | VARCHAR                  |      293957 | 19241432 |     21273657 | 89.21%      | 98.64%           | MEDIA           |
-| num_credito_seq              | VARCHAR                  |         321 |        0 |     21567293 | 0.0%        | 100.0%           | BAIXA           |
-| num_fatura_pagamento         | VARCHAR                  |    12888878 |  6625067 |      8678736 | 30.72%      | 40.24%           | ALTA            |
-| num_parcela_pagamento        | VARCHAR                  |         544 | 21096039 |     21567070 | 97.81%      | 100.0%           | BAIXA           |
-| seq_arquivo_pagamento        | VARCHAR                  |        6533 | 13632149 |     21561081 | 63.21%      | 99.97%           | BAIXA           |
-| seq_entidade_atividade       | VARCHAR                  |         313 |  6017833 |     21567301 | 27.9%       | 100.0%           | BAIXA           |
-| seq_entidade_credito         | VARCHAR                  |        7916 |  6017833 |     21559698 | 27.9%       | 99.96%           | BAIXA           |
-| seq_entidade_pagamento       | VARCHAR                  |         313 |  6017833 |     21567301 | 27.9%       | 100.0%           | BAIXA           |
-| seq_fatura_credito           | VARCHAR                  |        1245 |  6017833 |     21566369 | 27.9%       | 99.99%           | BAIXA           |
-| seq_pagamento_credito        | VARCHAR                  |         313 |  6017833 |     21567301 | 27.9%       | 100.0%           | BAIXA           |
-| val_atual_pagamento          | DOUBLE                   |       68805 |  6017837 |     21498809 | 27.9%       | 99.68%           | MEDIA           |
-| val_baixa_atividade          | DOUBLE                   |       70406 |  6017833 |     21497208 | 27.9%       | 99.67%           | MEDIA           |
-| val_desconto_item            | DOUBLE                   |           1 |        0 |     21567613 | 0.0%        | 100.0%           | BAIXA           |
-| val_juros_multas_item        | DOUBLE                   |        3508 |        0 |     21564106 | 0.0%        | 99.98%           | BAIXA           |
-| val_multa_equip_item         | DOUBLE                   |        5862 |        0 |     21561752 | 0.0%        | 99.97%           | BAIXA           |
-| val_multa_equip_total        | DOUBLE                   |        5862 |        0 |     21561752 | 0.0%        | 99.97%           | BAIXA           |
-| val_multa_fid_item           | DOUBLE                   |           1 |        0 |     21567613 | 0.0%        | 100.0%           | BAIXA           |
-| val_original_pagamento       | DOUBLE                   |       63233 |  6017833 |     21504381 | 27.9%       | 99.71%           | MEDIA           |
-| val_pagamento_credito        | DOUBLE                   |       55384 |  6017833 |     21512230 | 27.9%       | 99.74%           | MEDIA           |
-| val_pagamento_fatura         | DOUBLE                   |       59667 |        0 |     21507947 | 0.0%        | 99.72%           | MEDIA           |
-| val_pagamento_item           | DOUBLE                   |       59667 |        0 |     21507947 | 0.0%        | 99.72%           | MEDIA           |
-| ingestion_ts                 | TIMESTAMP WITH TIME ZONE |           1 |        0 |     21567613 | 0.0%        | 100.0%           | BAIXA           |
-| run_id                       | BIGINT                   |           1 |        0 |     21567613 | 0.0%        | 100.0%           | BAIXA           |
-| ano_mes                      | BIGINT                   |          20 |        0 |     21567594 | 0.0%        | 100.0%           | BAIXA           |
+| num_cpf                      | VARCHAR                  |     1930320 |        0 |     19891145 | 0.0%        | 91.15%           | ALTA            |
+| contrato                     | VARCHAR                  |     2304298 |        0 |     19517167 | 0.0%        | 89.44%           | ALTA            |
+| seq_fatura                   | VARCHAR                  |         251 |        0 |     21821214 | 0.0%        | 100.0%           | BAIXA           |
+| num_sub_seq_fatura           | VARCHAR                  |        1333 |        0 |     21820132 | 0.0%        | 99.99%           | BAIXA           |
+| num_credito_seq              | VARCHAR                  |         321 |        0 |     21821144 | 0.0%        | 100.0%           | BAIXA           |
+| cod_agencia_atividade        | VARCHAR                  |        9154 | 15068999 |     21812311 | 69.06%      | 99.96%           | BAIXA           |
+| cod_alocacao_credito         | VARCHAR                  |           9 |  6118708 |     21821456 | 28.04%      | 100.0%           | BAIXA           |
+| cod_arquivo_pagamento        | VARCHAR                  |     2230500 | 18382486 |     19590965 | 84.24%      | 89.78%           | ALTA            |
+| cod_atividade                | VARCHAR                  |           5 |  6118708 |     21821460 | 28.04%      | 100.0%           | BAIXA           |
+| cod_banco_atividade          | VARCHAR                  |          37 | 13732494 |     21821428 | 62.93%      | 100.0%           | BAIXA           |
+| cod_conta_atividade          | VARCHAR                  |     2730825 |  6118708 |     19090640 | 28.04%      | 87.49%           | ALTA            |
+| cod_forma_pagamento          | VARCHAR                  |           4 |  6118708 |     21821461 | 28.04%      | 100.0%           | BAIXA           |
+| cod_fundo_atividade          | VARCHAR                  |        1601 | 21810879 |     21819864 | 99.95%      | 99.99%           | BAIXA           |
+| cod_login_credito            | VARCHAR                  |        1179 | 14215151 |     21820286 | 65.14%      | 99.99%           | BAIXA           |
+| cod_login_operador_atividade | VARCHAR                  |         971 | 14207716 |     21820494 | 65.11%      | 100.0%           | BAIXA           |
+| cod_login_pagamento          | VARCHAR                  |         971 | 14531839 |     21820494 | 66.59%      | 100.0%           | BAIXA           |
+| cod_metodo_pagamento         | VARCHAR                  |           6 | 16289031 |     21821459 | 74.65%      | 100.0%           | BAIXA           |
+| cod_origem_netuno            | VARCHAR                  |      419749 | 13557966 |     21401716 | 62.13%      | 98.08%           | MEDIA           |
+| cod_razao_atividade          | VARCHAR                  |           6 |  8445800 |     21821459 | 38.7%       | 100.0%           | BAIXA           |
+| cod_tipo_fatura              | VARCHAR                  |          32 |  6118708 |     21821433 | 28.04%      | 100.0%           | BAIXA           |
+| cod_tipo_pagamento           | VARCHAR                  |           5 |  6118708 |     21821460 | 28.04%      | 100.0%           | BAIXA           |
+| dat_atividade_credito        | DATE                     |         508 |  6118708 |     21820957 | 28.04%      | 100.0%           | BAIXA           |
+| dat_atualizacao_atividade    | TIMESTAMP                |      392769 | 20723012 |     21428696 | 94.97%      | 98.2%            | MEDIA           |
+| dat_atualizacao_pagamento    | TIMESTAMP                |      153177 | 18874345 |     21668288 | 86.49%      | 99.3%            | MEDIA           |
+| dat_baixa_atividade          | DATE                     |         382 |  6118708 |     21821083 | 28.04%      | 100.0%           | BAIXA           |
+| dat_criacao_atividade        | TIMESTAMP                |     6572610 |  6118708 |     15248855 | 28.04%      | 69.88%           | ALTA            |
+| dat_criacao_credito          | TIMESTAMP                |     6657349 |  6118708 |     15164116 | 28.04%      | 69.49%           | ALTA            |
+| dat_criacao_dw               | TIMESTAMP                |       49276 |        0 |     21772189 | 0.0%        | 99.77%           | MEDIA           |
+| dat_criacao_pagamento        | TIMESTAMP                |     6572610 |  6118708 |     15248855 | 28.04%      | 69.88%           | ALTA            |
+| dat_deposito_atividade       | DATE                     |         756 |  6118708 |     21820709 | 28.04%      | 100.0%           | BAIXA           |
+| dat_status_fatura            | DATE                     |         538 |        0 |     21820927 | 0.0%        | 100.0%           | BAIXA           |
+| dat_status_pagamento         | DATE                     |         397 |  6118708 |     21821068 | 28.04%      | 100.0%           | BAIXA           |
+| dat_vencimento_credito       | DATE                     |        1420 |  6118708 |     21820045 | 28.04%      | 99.99%           | BAIXA           |
+| dsc_nome_banco_pagamento     | VARCHAR                  |          78 |  6118708 |     21821387 | 28.04%      | 100.0%           | BAIXA           |
+| dsc_pagamento                | VARCHAR                  |     2141789 | 18840322 |     19679676 | 86.34%      | 90.18%           | ALTA            |
+| dw_area                      | VARCHAR                  |          71 |        0 |     21821394 | 0.0%        | 100.0%           | BAIXA           |
+| dw_banco                     | VARCHAR                  |          55 |        0 |     21821410 | 0.0%        | 100.0%           | BAIXA           |
+| dw_forma_pagamento           | VARCHAR                  |           4 |        0 |     21821461 | 0.0%        | 100.0%           | BAIXA           |
+| dw_motivo_estorno            | VARCHAR                  |           1 |        0 |     21821464 | 0.0%        | 100.0%           | BAIXA           |
+| dw_num_cliente               | VARCHAR                  |     2954149 |        0 |     18867316 | 0.0%        | 86.46%           | ALTA            |
+| dw_tipo_fatura               | VARCHAR                  |          24 |        0 |     21821441 | 0.0%        | 100.0%           | BAIXA           |
+| dw_tipo_pagamento            | VARCHAR                  |           4 |        0 |     21821461 | 0.0%        | 100.0%           | BAIXA           |
+| dw_un_negocio                | VARCHAR                  |          10 |        0 |     21821455 | 0.0%        | 100.0%           | BAIXA           |
+| ind_status_fatura            | VARCHAR                  |           2 |        0 |     21821463 | 0.0%        | 100.0%           | BAIXA           |
+| ind_status_pagamento         | VARCHAR                  |           4 |  8987969 |     21821461 | 41.19%      | 100.0%           | BAIXA           |
+| ind_tipo_credito             | VARCHAR                  |           1 |  6118708 |     21821464 | 28.04%      | 100.0%           | BAIXA           |
+| num_agencia_pagamento        | VARCHAR                  |        9154 |        0 |     21812311 | 0.0%        | 99.96%           | BAIXA           |
+| num_agrupador_pagamento      | VARCHAR                  |      338523 | 16102299 |     21482942 | 73.79%      | 98.45%           | MEDIA           |
+| num_banco_pagamento          | VARCHAR                  |          39 |        0 |     21821426 | 0.0%        | 100.0%           | BAIXA           |
+| num_cc_pagamento             | VARCHAR                  |      325591 |        0 |     21495874 | 0.0%        | 98.51%           | MEDIA           |
+| num_conta_atividade          | VARCHAR                  |      293957 | 19494351 |     21527508 | 89.34%      | 98.65%           | MEDIA           |
+| num_fatura_pagamento         | VARCHAR                  |    12888878 |  6837485 |      8932587 | 31.33%      | 40.93%           | ALTA            |
+| num_parcela_pagamento        | VARCHAR                  |         601 | 21267922 |     21820864 | 97.46%      | 100.0%           | BAIXA           |
+| seq_arquivo_pagamento        | VARCHAR                  |        6533 | 13775185 |     21814932 | 63.13%      | 99.97%           | BAIXA           |
+| seq_entidade_atividade       | VARCHAR                  |         313 |  6118708 |     21821152 | 28.04%      | 100.0%           | BAIXA           |
+| seq_entidade_credito         | VARCHAR                  |        7916 |  6118708 |     21813549 | 28.04%      | 99.96%           | BAIXA           |
+| seq_entidade_pagamento       | VARCHAR                  |         313 |  6118708 |     21821152 | 28.04%      | 100.0%           | BAIXA           |
+| seq_fatura_credito           | VARCHAR                  |        1245 |  6118708 |     21820220 | 28.04%      | 99.99%           | BAIXA           |
+| seq_pagamento_credito        | VARCHAR                  |         313 |  6118708 |     21821152 | 28.04%      | 100.0%           | BAIXA           |
+| val_atual_pagamento          | DOUBLE                   |       68805 |  6118713 |     21752660 | 28.04%      | 99.68%           | MEDIA           |
+| val_baixa_atividade          | DOUBLE                   |       70406 |  6118708 |     21751059 | 28.04%      | 99.68%           | MEDIA           |
+| val_desconto_item            | DOUBLE                   |           1 |        0 |     21821464 | 0.0%        | 100.0%           | BAIXA           |
+| val_juros_multas_item        | DOUBLE                   |        3886 |        0 |     21817579 | 0.0%        | 99.98%           | BAIXA           |
+| val_multa_equip_item         | DOUBLE                   |        6123 |        0 |     21815342 | 0.0%        | 99.97%           | BAIXA           |
+| val_multa_equip_total        | DOUBLE                   |        6123 |        0 |     21815342 | 0.0%        | 99.97%           | BAIXA           |
+| val_multa_fid_item           | DOUBLE                   |           1 |        0 |     21821464 | 0.0%        | 100.0%           | BAIXA           |
+| val_original_pagamento       | DOUBLE                   |       63233 |  6118708 |     21758232 | 28.04%      | 99.71%           | MEDIA           |
+| val_pagamento_credito        | DOUBLE                   |       55384 |  6118708 |     21766081 | 28.04%      | 99.75%           | MEDIA           |
+| val_pagamento_fatura         | DOUBLE                   |       59667 |        0 |     21761798 | 0.0%        | 99.73%           | MEDIA           |
+| val_pagamento_item           | DOUBLE                   |       59667 |        0 |     21761798 | 0.0%        | 99.73%           | MEDIA           |
+| ingestion_ts                 | TIMESTAMP WITH TIME ZONE |           1 |        0 |     21821464 | 0.0%        | 100.0%           | BAIXA           |
+| run_id                       | BIGINT                   |           1 |        0 |     21821464 | 0.0%        | 100.0%           | BAIXA           |
+| ano_mes                      | BIGINT                   |          20 |        0 |     21821445 | 0.0%        | 100.0%           | BAIXA           |
 
 ---
 
 ### 📦 Volumetria: `silver/pagamento`
 | diretorio      |   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
 |:---------------|---------------:|:------------|----------:|-------------------------:|----------------------------:|
-| ano_mes=202310 |              1 | 861.014     |        73 |                    32.03 |                       60.43 |
-| ano_mes=202311 |              1 | 853.726     |        73 |                    31.57 |                       59.02 |
-| ano_mes=202312 |              1 | 920.058     |        73 |                    33.85 |                       63.63 |
-| ano_mes=202401 |              1 | 907.547     |        73 |                    33.92 |                       63.67 |
-| ano_mes=202402 |              1 | 914.395     |        73 |                    33.82 |                       61.5  |
-| ano_mes=202403 |              1 | 969.448     |        73 |                    35.8  |                       66.21 |
-| ano_mes=202404 |              1 | 989.241     |        73 |                    66.48 |                      110.7  |
-| ano_mes=202405 |              1 | 1.029.916   |        73 |                   103.21 |                      170.44 |
-| ano_mes=202406 |              1 | 1.001.041   |        73 |                   100.41 |                      163.71 |
-| ano_mes=202407 |              1 | 1.055.374   |        73 |                   105.75 |                      171.68 |
-| ano_mes=202408 |              1 | 1.060.877   |        73 |                   106.02 |                      172.79 |
-| ano_mes=202409 |              1 | 1.042.116   |        73 |                   104.61 |                      170.16 |
-| ano_mes=202410 |              1 | 1.096.761   |        73 |                   108.98 |                      178.37 |
-| ano_mes=202411 |              1 | 1.177.546   |        73 |                   116.33 |                      188.64 |
-| ano_mes=202412 |              1 | 1.488.435   |        73 |                   144.44 |                      235.44 |
-| ano_mes=202501 |              1 | 1.758.264   |        73 |                   169.6  |                      277.71 |
-| ano_mes=202502 |              1 | 1.997.060   |        73 |                   188.92 |                      310.34 |
-| ano_mes=202503 |              1 | 2.444.795   |        73 |                   228.57 |                      377.98 |
-| TOTAL          |             18 | 21.567.614  |        73 |                  1744.32 |                     2902.42 |
+| ano_mes=202310 |              1 | 869.778     |        73 |                    32.13 |                       60.87 |
+| ano_mes=202311 |              1 | 869.494     |        73 |                    31.98 |                       60.47 |
+| ano_mes=202312 |              1 | 929.053     |        73 |                    33.89 |                       64.18 |
+| ano_mes=202401 |              1 | 923.507     |        73 |                    34.32 |                       64.94 |
+| ano_mes=202402 |              1 | 943.812     |        73 |                    34.28 |                       63.31 |
+| ano_mes=202403 |              1 | 984.724     |        73 |                    36.41 |                       68.31 |
+| ano_mes=202404 |              1 | 1.001.985   |        73 |                    66.85 |                      111.82 |
+| ano_mes=202405 |              1 | 1.043.312   |        73 |                   104.05 |                      171.82 |
+| ano_mes=202406 |              1 | 1.012.515   |        73 |                   100.87 |                      165.31 |
+| ano_mes=202407 |              1 | 1.068.321   |        73 |                   107.6  |                      176.82 |
+| ano_mes=202408 |              1 | 1.074.235   |        73 |                   107.54 |                      176.36 |
+| ano_mes=202409 |              1 | 1.049.488   |        73 |                   105.5  |                      172.96 |
+| ano_mes=202410 |              1 | 1.111.775   |        73 |                   110.95 |                      184.45 |
+| ano_mes=202411 |              1 | 1.188.451   |        73 |                   117.52 |                      192.07 |
+| ano_mes=202412 |              1 | 1.500.350   |        73 |                   145.04 |                      237.35 |
+| ano_mes=202501 |              1 | 1.771.415   |        73 |                   170.49 |                      279.88 |
+| ano_mes=202502 |              1 | 2.014.528   |        73 |                   190.11 |                      313.47 |
+| ano_mes=202503 |              1 | 2.464.722   |        73 |                   229.85 |                      381.42 |
+| TOTAL          |             18 | 21.821.465  |        73 |                  1759.4  |                     2945.83 |
 
 ---
 
@@ -177,12 +177,12 @@
 #### Coluna: `dat_vencimento_credito`
 | min                        | max                        |
 |:---------------------------|:---------------------------|
-| 2011-09-20T00:00:00.000000 | 2025-05-01T00:00:00.000000 |
+| 2011-09-20T00:00:00.000000 | 2025-05-05T00:00:00.000000 |
 
 #### Coluna: `ingestion_ts`
 | min                              | max                              |
 |:---------------------------------|:---------------------------------|
-| 2026-01-28 00:45:45.957733-03:00 | 2026-01-28 00:45:45.957733-03:00 |
+| 2026-01-29 01:41:57.947529-03:00 | 2026-01-29 01:41:57.947529-03:00 |
 
 
 
@@ -193,12 +193,12 @@
 #### Coluna: `val_atual_pagamento`
 |   min |         max |   media |
 |------:|------------:|--------:|
-|  0.01 | 3.40734e+06 |   95.25 |
+|  0.01 | 3.40734e+06 |   97.87 |
 
 #### Coluna: `val_baixa_atividade`
 |      min |         max |   media |
 |---------:|------------:|--------:|
-| -16803.5 | 3.40734e+06 |   94.93 |
+| -16803.5 | 3.40734e+06 |   97.33 |
 
 #### Coluna: `val_desconto_item`
 |   min |   max |   media |
@@ -208,17 +208,17 @@
 #### Coluna: `val_juros_multas_item`
 |   min |    max |   media |
 |------:|-------:|--------:|
-|     0 | 103521 |    0.55 |
+|     0 | 103521 |    0.59 |
 
 #### Coluna: `val_multa_equip_item`
 |   min |     max |   media |
 |------:|--------:|--------:|
-|     0 | 56186.4 |    0.28 |
+|     0 | 56186.4 |    0.33 |
 
 #### Coluna: `val_multa_equip_total`
 |   min |     max |   media |
 |------:|--------:|--------:|
-|     0 | 56186.4 |    0.28 |
+|     0 | 56186.4 |    0.33 |
 
 #### Coluna: `val_multa_fid_item`
 |   min |   max |   media |
@@ -228,22 +228,22 @@
 #### Coluna: `val_original_pagamento`
 |   min |         max |   media |
 |------:|------------:|--------:|
-|  0.01 | 6.28174e+06 | 1068.21 |
+|  0.01 | 6.28174e+06 | 1184.71 |
 
 #### Coluna: `val_pagamento_credito`
 |   min |         max |   media |
 |------:|------------:|--------:|
-|  0.01 | 3.40649e+06 |   57.88 |
+|  0.01 | 3.40649e+06 |   58.03 |
 
 #### Coluna: `val_pagamento_fatura`
 |   min |         max |   media |
 |------:|------------:|--------:|
-|  0.01 | 3.40652e+06 |   60.39 |
+|  0.01 | 3.40652e+06 |   61.18 |
 
 #### Coluna: `val_pagamento_item`
 |   min |         max |   media |
 |------:|------------:|--------:|
-|  0.01 | 3.40652e+06 |   60.39 |
+|  0.01 | 3.40652e+06 |   61.18 |
 
 
 
@@ -254,305 +254,320 @@
 
 | valor       |   qtd |
 |:------------|------:|
+| W8XY7ZUX88Y |   556 |
 | YNZZZ9NZ8N7 |   524 |
 | UWUUUYUX8Y8 |   467 |
 | 78W79997YZU |   438 |
-| NTTNTN9ZXXZ |   408 |
-| NZTNN8X9W9Y |   362 |
+| NTTNTN9ZXXZ |   428 |
+| NZTNN8X9W9Y |   363 |
 | WZY8NUWT888 |   356 |
 | ZUUZXTNT8ZZ |   354 |
-| WZY7XYYWNWU |   339 |
-| ZW88NWYZYZZ |   337 |
-| Z8NN9UWT87Z |   334 |
+| U8UTUYYYYZZ |   348 |
+| ZW88NWYZYZZ |   344 |
 
 #### Coluna: `contrato`
 
 |     valor |   qtd |
 |----------:|------:|
-| 820476782 |   396 |
-| 833912847 |   194 |
-| 812714097 |   189 |
-| 841649816 |   188 |
-|  46968081 |   164 |
-| 842432062 |   132 |
-|  46689941 |   126 |
-| 854258895 |   112 |
-| 854001419 |   112 |
-| 806584141 |   110 |
+| 842432062 |   506 |
+| 820476782 |   405 |
+| 841649816 |   314 |
+| 870385565 |   267 |
+| 883412299 |   255 |
+| 830274393 |   247 |
+| 883290298 |   242 |
+| 883078334 |   240 |
+| 833863447 |   234 |
+| 882122493 |   228 |
 
 #### Coluna: `seq_fatura`
 
 |   valor |     qtd |
 |--------:|--------:|
-|       1 | 2172208 |
-|       2 | 1514473 |
-|       3 | 1300282 |
-|       4 |  896205 |
-|       5 |  545114 |
-|       6 |  373048 |
-|       7 |  350300 |
-|       8 |  341216 |
-|       9 |  336624 |
-|      10 |  335366 |
+|       1 | 2176471 |
+|       2 | 1522655 |
+|       3 | 1308314 |
+|       4 |  903137 |
+|       5 |  551016 |
+|       6 |  378960 |
+|       7 |  356080 |
+|       8 |  347030 |
+|       9 |  342308 |
+|      10 |  340948 |
 
 #### Coluna: `num_sub_seq_fatura`
 
 |   valor |     qtd |
 |--------:|--------:|
-|       1 | 1907351 |
-|       2 | 1193844 |
-|       3 | 1140843 |
-|       4 |  880639 |
-|       5 |  588277 |
-|       6 |  466055 |
-|       7 |  381793 |
-|       8 |  367335 |
-|       9 |  308413 |
-|      10 |  297748 |
+|       1 | 1911099 |
+|       2 | 1199194 |
+|       3 | 1148088 |
+|       4 |  885606 |
+|       5 |  593044 |
+|       6 |  469879 |
+|       7 |  385640 |
+|       8 |  370937 |
+|       9 |  311946 |
+|      10 |  300949 |
+
+#### Coluna: `num_credito_seq`
+
+|   valor |     qtd |
+|--------:|--------:|
+|       1 | 2309401 |
+|       2 | 1654963 |
+|       3 | 1222854 |
+|       4 |  818343 |
+|       5 |  515871 |
+|       6 |  377110 |
+|       7 |  348998 |
+|       8 |  336163 |
+|       9 |  331997 |
+|      10 |  329695 |
 
 #### Coluna: `cod_agencia_atividade`
 
 | valor   |      qtd |
 |:--------|---------:|
-| NULL    | 14843071 |
-| 0000    |  1588071 |
-| 2370    |   113239 |
-| 0001    |   106911 |
-| 2271    |   101310 |
-| 2371    |    60669 |
-| 2372    |    57305 |
-| 2373    |    52567 |
-| 0105    |    25435 |
-| 3880    |    18715 |
+| NULL    | 15068999 |
+| 0000    |  1595684 |
+| 2370    |   113810 |
+| 0001    |   107370 |
+| 2271    |   101966 |
+| 2371    |    60968 |
+| 2372    |    57694 |
+| 2373    |    52830 |
+| 0105    |    25554 |
+| 3880    |    18831 |
 
 #### Coluna: `cod_alocacao_credito`
 
 | valor   |      qtd |
 |:--------|---------:|
-| PYM     | 14915127 |
-| NULL    |  6017833 |
-| CRT     |   576427 |
-| CRTW    |    44664 |
-| CRF     |     6547 |
-| FNTT    |     4947 |
-| BCK     |     1519 |
-| RFN     |      531 |
-| FNTF    |       19 |
+| PYM     | 14949057 |
+| NULL    |  6118708 |
+| CRT     |   688287 |
+| CRTW    |    48668 |
+| CRF     |     6599 |
+| FNTT    |     5501 |
+| BCK     |     4082 |
+| RFN     |      532 |
+| FNTF    |       31 |
 
 #### Coluna: `cod_arquivo_pagamento`
 
 | valor                |      qtd |
 |:---------------------|---------:|
-| NULL                 | 18151115 |
-| 6747200000000240924C |      106 |
-| 8050091012345270125C |      104 |
-| 7828091012345260225C |      101 |
-| 0698091000000260624C |       97 |
-| 2875200000000241024C |       96 |
-| 2875091012345231224C |       96 |
-| 1178200000000020524C |       95 |
-| 1099200000000130325C |       95 |
-| 4314091000000280524C |       94 |
+| NULL                 | 18382486 |
+| 6747200000000240924C |      148 |
+| 1981200000000030624C |      142 |
+| 4779200000000220824C |      128 |
+| 2875200000000241024C |      127 |
+| 5912200000000250624C |      122 |
+| 6908200000000250724C |      122 |
+| 1178200000000020524C |      117 |
+| 4878200000000090125C |      111 |
+| 8050091012345270125C |      109 |
 
 #### Coluna: `cod_atividade`
 
 | valor   |      qtd |
 |:--------|---------:|
-| PYM     | 15539185 |
-| NULL    |  6017833 |
-| FNTT    |     5753 |
-| BCK     |     4757 |
-| FNTF    |       85 |
+| PYM     | 15684592 |
+| NULL    |  6118708 |
+| BCK     |    11401 |
+| FNTT    |     6650 |
+| FNTF    |      113 |
 | RFNR    |        1 |
 
 #### Coluna: `cod_banco_atividade`
 
 | valor   |      qtd |
 |:--------|---------:|
-| NULL    | 13593048 |
-| NT1     |  1500886 |
-| 104     |  1359106 |
-| 341     |  1113300 |
-| 237     |   854097 |
-| 033     |   809447 |
-| MPG     |   703802 |
-| 001     |   595995 |
-| 1044    |   177483 |
-| 1043    |   149814 |
+| NULL    | 13732494 |
+| NT1     |  1507769 |
+| 104     |  1368072 |
+| 341     |  1116132 |
+| 237     |   855978 |
+| 033     |   811595 |
+| MPG     |   708060 |
+| 001     |   597957 |
+| 1044    |   189884 |
+| 1043    |   157926 |
 
 #### Coluna: `cod_conta_atividade`
 
 | valor     |     qtd |
 |:----------|--------:|
-| NULL      | 6017833 |
-| 966132196 |     252 |
+| NULL      | 6118708 |
+| 966132196 |     258 |
+| 103458506 |     214 |
+| 104326334 |     208 |
 | 206675794 |     194 |
-| 103458506 |     123 |
-| 594045022 |     119 |
-| 142810442 |     104 |
-| 889047530 |      93 |
-| 104326334 |      80 |
-| 828560647 |      73 |
-| 124557463 |      72 |
+| 148342547 |     180 |
+| 143796530 |     155 |
+| 147130148 |     152 |
+| 142810442 |     151 |
+| 159340518 |     149 |
 
 #### Coluna: `cod_forma_pagamento`
 
 | valor   |     qtd |
 |:--------|--------:|
-| CA      | 7213498 |
-| NULL    | 6017833 |
-| PB      | 5743852 |
-| DD      | 2326182 |
-| PA      |  266249 |
+| CA      | 7251665 |
+| NULL    | 6118708 |
+| PB      | 5857683 |
+| DD      | 2327114 |
+| PA      |  266295 |
 
 #### Coluna: `cod_fundo_atividade`
 
 | valor     |      qtd |
 |:----------|---------:|
-| NULL      | 21560238 |
-| 127291234 |     1019 |
-| 112486948 |     1009 |
-| 870146020 |      832 |
-| 102816296 |      446 |
+| NULL      | 21810879 |
+| 127291234 |     1395 |
+| 112486948 |     1029 |
+| 870146020 |      834 |
+| 102816296 |      454 |
 | 835361356 |      402 |
-| 745991108 |      231 |
-| 208728872 |      167 |
-| 106673111 |      100 |
-| 939540591 |       99 |
+| 208728872 |      255 |
+| 745991108 |      237 |
+| 772940148 |      136 |
+| 106673111 |      119 |
 
 #### Coluna: `cod_login_credito`
 
 | valor    |      qtd |
 |:---------|---------:|
-| NULL     | 13998890 |
-| 60001    |  7543417 |
-| 41002    |     9341 |
-| 41003    |     1406 |
-| 92546509 |      270 |
-| 93257890 |      268 |
-| 92597591 |      215 |
-| 94146436 |      197 |
-| 92531759 |      192 |
-| 92344014 |      180 |
+| NULL     | 14215151 |
+| 60001    |  7576496 |
+| 41002    |    12029 |
+| 41003    |     1445 |
+| 93257890 |      311 |
+| 92546509 |      291 |
+| 92597591 |      238 |
+| 92531759 |      217 |
+| 94146436 |      206 |
+| 92344014 |      183 |
 
 #### Coluna: `cod_login_operador_atividade`
 
 | valor    |      qtd |
 |:---------|---------:|
-| NULL     | 13992476 |
-| 60001    |  7551742 |
-| 41002    |     9838 |
-| 92546509 |      270 |
-| 93257890 |      268 |
-| 92597591 |      215 |
-| 94146436 |      197 |
-| 92531759 |      192 |
-| 92344014 |      180 |
-| 93278081 |      160 |
+| NULL     | 14207716 |
+| 60001    |  7585809 |
+| 41002    |    12658 |
+| 93257890 |      311 |
+| 92546509 |      291 |
+| 92597591 |      238 |
+| 92531759 |      217 |
+| 94146436 |      206 |
+| 92344014 |      183 |
+| 93278081 |      166 |
 
 #### Coluna: `cod_login_pagamento`
 
 | valor    |      qtd |
 |:---------|---------:|
-| NULL     | 14316241 |
-| 60001    |  7227977 |
-| 41002    |     9838 |
-| 92546509 |      270 |
-| 93257890 |      268 |
-| 92597591 |      215 |
-| 94146436 |      197 |
-| 92531759 |      192 |
-| 92344014 |      180 |
-| 93278081 |      160 |
+| NULL     | 14531839 |
+| 60001    |  7261686 |
+| 41002    |    12658 |
+| 93257890 |      311 |
+| 92546509 |      291 |
+| 92597591 |      238 |
+| 92531759 |      217 |
+| 94146436 |      206 |
+| 92344014 |      183 |
+| 93278081 |      166 |
 
 #### Coluna: `cod_metodo_pagamento`
 
 | valor   |      qtd |
 |:--------|---------:|
-| NULL    | 16067042 |
-| 1       |  1649831 |
-| 3       |  1529414 |
-| 5       |  1393324 |
-| 4       |   643362 |
-| 2       |   283001 |
-| 6       |     1640 |
+| NULL    | 16289031 |
+| 1       |  1657839 |
+| 3       |  1538749 |
+| 5       |  1401465 |
+| 4       |   647562 |
+| 2       |   285166 |
+| 6       |     1653 |
 
 #### Coluna: `cod_origem_netuno`
 
 | valor           |      qtd |
 |:----------------|---------:|
-| NULL            | 13376257 |
-| 848000000005490 |    32063 |
-| 848000000004990 |    31061 |
-| 848000000005989 |    25503 |
-| 848000000003480 |    17180 |
-| 848000000002990 |    16857 |
-| 848000000005480 |    16401 |
-| 848200000005490 |    16258 |
-| 848000000003490 |    16237 |
-| 848300000005490 |    16230 |
+| NULL            | 13557966 |
+| 848000000005490 |    32179 |
+| 848000000004990 |    31102 |
+| 848000000005989 |    25570 |
+| 848000000003480 |    17215 |
+| 848000000002990 |    16946 |
+| 848000000005480 |    16459 |
+| 848200000005490 |    16307 |
+| 848000000003490 |    16286 |
+| 848300000005490 |    16276 |
 
 #### Coluna: `cod_razao_atividade`
 
 | valor   |     qtd |
 |:--------|--------:|
-| NULL    | 8343997 |
-| CA      | 7212895 |
-| PB      | 5733891 |
-| PA      |  266235 |
-| FUND    |    5838 |
-| ECBBCK  |    3219 |
-| ARAUBC  |    1538 |
+| NULL    | 8445800 |
+| CA      | 7251025 |
+| PB      | 5840198 |
+| PA      |  266277 |
+| ECBBCK  |    7578 |
+| FUND    |    6763 |
+| ARAUBC  |    3823 |
 | DOCDEV  |       1 |
 
 #### Coluna: `cod_tipo_fatura`
 
 | valor   |      qtd |
 |:--------|---------:|
-| B       | 12119759 |
-| NULL    |  6017833 |
-| 21      |  2845326 |
-| PA      |   284070 |
-| P1      |    73576 |
-| T2      |    70184 |
-| 15      |    53994 |
-| FE      |    32103 |
-| 31      |    32100 |
-| 41      |    25605 |
+| B       | 12246625 |
+| NULL    |  6118708 |
+| 21      |  2868558 |
+| PA      |   284301 |
+| P1      |    73604 |
+| T2      |    70352 |
+| 15      |    54042 |
+| FE      |    34006 |
+| 31      |    32123 |
+| 41      |    25651 |
 
 #### Coluna: `cod_tipo_pagamento`
 
 | valor   |     qtd |
 |:--------|--------:|
-| O       | 7202465 |
-| NULL    | 6017833 |
-| P       | 5648286 |
-| D       | 2326182 |
-| B       |  361815 |
-| E       |   11033 |
+| O       | 7239225 |
+| NULL    | 6118708 |
+| P       | 5761759 |
+| D       | 2327114 |
+| B       |  362219 |
+| E       |   12440 |
 
 #### Coluna: `dat_atividade_credito`
 
 | valor      |     qtd |
 |:-----------|--------:|
-| NULL       | 6017833 |
-| 2025-03-11 |  236824 |
-| 2025-03-06 |  203407 |
-| 2025-02-11 |  165996 |
-| 2025-02-06 |  142446 |
-| 2025-03-18 |  141626 |
-| 2025-03-10 |  139873 |
-| 2025-03-21 |  136919 |
-| 2025-03-07 |  131870 |
-| 2025-01-07 |  127895 |
+| NULL       | 6118708 |
+| 2025-03-11 |  237679 |
+| 2025-03-06 |  208207 |
+| 2025-02-11 |  167250 |
+| 2025-02-06 |  143415 |
+| 2025-03-10 |  142717 |
+| 2025-03-18 |  142273 |
+| 2025-03-21 |  137340 |
+| 2025-03-07 |  133014 |
+| 2025-01-07 |  128799 |
 
 #### Coluna: `dat_atualizacao_atividade`
 
 | valor               |      qtd |
 |:--------------------|---------:|
-| NULL                | 20478101 |
+| NULL                | 20723012 |
 | 2025-02-18 18:54:47 |      238 |
-| 2025-02-18 18:54:52 |      224 |
+| 2025-02-18 18:54:52 |      225 |
 | 2025-02-18 18:54:51 |      218 |
 | 2025-02-18 18:54:50 |      204 |
 | 2025-02-18 18:54:48 |      186 |
@@ -565,43 +580,43 @@
 
 | valor               |      qtd |
 |:--------------------|---------:|
-| NULL                | 18643602 |
-| 2025-03-07 04:06:31 |     2533 |
-| 2025-03-12 04:06:33 |     2488 |
-| 2025-03-11 05:27:34 |     2391 |
-| 2025-03-12 04:06:32 |     2331 |
-| 2025-03-11 05:27:36 |     2299 |
-| 2025-03-11 05:27:33 |     2292 |
-| 2025-03-11 05:27:37 |     2244 |
-| 2025-03-08 05:30:28 |     2239 |
-| 2025-01-09 04:46:10 |     2213 |
+| NULL                | 18874345 |
+| 2025-03-07 04:06:31 |     2537 |
+| 2025-03-12 04:06:33 |     2492 |
+| 2025-03-11 05:27:34 |     2393 |
+| 2025-03-12 04:06:32 |     2339 |
+| 2025-03-11 05:27:36 |     2305 |
+| 2025-03-11 05:27:33 |     2297 |
+| 2025-03-11 05:27:37 |     2246 |
+| 2025-03-08 05:30:28 |     2240 |
+| 2025-01-09 04:46:10 |     2215 |
 
 #### Coluna: `dat_baixa_atividade`
 
 | valor      |     qtd |
 |:-----------|--------:|
-| NULL       | 6017833 |
-| 2025-03-11 |  236917 |
-| 2025-03-06 |  203302 |
-| 2025-02-11 |  165970 |
-| 2025-02-06 |  142387 |
-| 2025-03-18 |  141777 |
-| 2025-03-10 |  139786 |
-| 2025-03-21 |  136936 |
-| 2025-03-07 |  131933 |
-| 2025-01-07 |  127870 |
+| NULL       | 6118708 |
+| 2025-03-11 |  237842 |
+| 2025-03-06 |  207559 |
+| 2025-02-11 |  167187 |
+| 2025-02-06 |  143259 |
+| 2025-03-18 |  142501 |
+| 2025-03-10 |  142282 |
+| 2025-03-21 |  137487 |
+| 2025-03-07 |  133097 |
+| 2025-01-07 |  128727 |
 
 #### Coluna: `dat_criacao_atividade`
 
 | valor               |     qtd |
 |:--------------------|--------:|
-| NULL                | 6017833 |
+| NULL                | 6118708 |
 | 2025-03-06 14:36:18 |     250 |
 | 2025-03-06 14:36:43 |     245 |
-| 2025-03-06 14:36:07 |     240 |
+| 2025-03-06 14:36:07 |     241 |
 | 2025-02-21 12:47:38 |     236 |
-| 2025-03-06 14:36:36 |     235 |
 | 2025-02-21 12:47:16 |     235 |
+| 2025-03-06 14:36:36 |     235 |
 | 2025-03-06 14:36:11 |     234 |
 | 2025-02-21 12:47:22 |     233 |
 | 2025-03-06 14:36:38 |     232 |
@@ -610,43 +625,43 @@
 
 | valor               |     qtd |
 |:--------------------|--------:|
-| NULL                | 6017833 |
+| NULL                | 6118708 |
 | 2025-03-06 14:36:18 |     247 |
+| 2025-03-06 14:36:07 |     242 |
 | 2025-02-21 12:47:38 |     241 |
-| 2025-03-06 14:36:07 |     241 |
 | 2025-02-21 12:47:22 |     240 |
 | 2025-03-06 14:36:43 |     237 |
 | 2025-03-06 14:36:11 |     236 |
 | 2025-02-21 12:47:16 |     234 |
 | 2025-03-06 14:36:36 |     233 |
-| 2025-03-06 14:36:31 |     231 |
+| 2025-03-06 14:36:31 |     232 |
 
 #### Coluna: `dat_criacao_dw`
 
 | valor               |   qtd |
 |:--------------------|------:|
-| 2025-02-23 17:29:12 | 44307 |
-| 2025-03-03 09:59:28 | 43892 |
-| 2025-02-24 09:54:38 | 42473 |
-| 2025-03-09 11:17:51 | 41975 |
-| 2025-03-15 23:10:40 | 41568 |
-| 2025-03-09 11:17:50 | 40829 |
-| 2025-03-09 11:17:52 | 38815 |
-| 2025-03-11 06:46:19 | 38744 |
-| 2025-03-16 12:33:13 | 37901 |
-| 2025-03-15 23:10:41 | 37689 |
+| 2025-02-23 17:29:12 | 44444 |
+| 2025-03-03 09:59:28 | 44030 |
+| 2025-02-24 09:54:38 | 42553 |
+| 2025-03-09 11:17:51 | 42038 |
+| 2025-03-15 23:10:40 | 41664 |
+| 2025-03-09 11:17:50 | 40929 |
+| 2025-03-09 11:17:52 | 38849 |
+| 2025-03-11 06:46:19 | 38813 |
+| 2025-03-16 12:33:13 | 37978 |
+| 2025-03-15 23:10:41 | 37733 |
 
 #### Coluna: `dat_criacao_pagamento`
 
 | valor               |     qtd |
 |:--------------------|--------:|
-| NULL                | 6017833 |
+| NULL                | 6118708 |
 | 2025-03-06 14:36:18 |     250 |
 | 2025-03-06 14:36:43 |     245 |
-| 2025-03-06 14:36:07 |     240 |
+| 2025-03-06 14:36:07 |     241 |
 | 2025-02-21 12:47:38 |     236 |
-| 2025-02-21 12:47:16 |     234 |
 | 2025-03-06 14:36:11 |     234 |
+| 2025-02-21 12:47:16 |     234 |
 | 2025-02-21 12:47:22 |     233 |
 | 2025-03-06 14:36:36 |     233 |
 | 2025-03-06 14:36:38 |     232 |
@@ -655,268 +670,268 @@
 
 | valor      |     qtd |
 |:-----------|--------:|
-| NULL       | 6017833 |
-| 2025-03-10 |  323971 |
-| 2025-02-10 |  270898 |
-| 2025-03-05 |  192749 |
-| 2025-03-17 |  172042 |
-| 2025-01-10 |  164798 |
-| 2025-03-20 |  164613 |
-| 2025-02-17 |  148009 |
-| 2025-02-20 |  139641 |
-| 2024-12-10 |  138989 |
+| NULL       | 6118708 |
+| 2025-03-10 |  324942 |
+| 2025-02-10 |  271927 |
+| 2025-03-05 |  193489 |
+| 2025-03-17 |  172720 |
+| 2025-01-10 |  165468 |
+| 2025-03-20 |  165082 |
+| 2025-02-17 |  148653 |
+| 2025-02-20 |  140404 |
+| 2024-12-10 |  139544 |
 
 #### Coluna: `dat_status_fatura`
 
 | valor      |    qtd |
 |:-----------|-------:|
-| 2025-03-11 | 236917 |
-| 2025-03-06 | 203302 |
-| 2025-02-11 | 165970 |
-| 2025-02-06 | 142387 |
-| 2025-03-18 | 141777 |
-| 2025-03-10 | 139786 |
-| 2025-03-21 | 136936 |
-| 2025-03-07 | 131933 |
-| 2025-01-07 | 127870 |
-| 2025-02-18 | 127195 |
+| 2025-03-11 | 237842 |
+| 2025-03-06 | 207559 |
+| 2025-02-11 | 167187 |
+| 2025-02-06 | 143259 |
+| 2025-03-18 | 142501 |
+| 2025-03-10 | 142282 |
+| 2025-03-21 | 137487 |
+| 2025-03-07 | 133097 |
+| 2025-01-07 | 128727 |
+| 2025-02-18 | 127697 |
 
 #### Coluna: `dat_status_pagamento`
 
 | valor      |     qtd |
 |:-----------|--------:|
-| NULL       | 6017833 |
-| 2025-03-11 |  274005 |
-| 2025-03-06 |  199710 |
-| 2025-02-11 |  179429 |
-| 2025-03-18 |  150630 |
-| 2025-03-21 |  146281 |
-| 2025-02-06 |  143601 |
-| 2025-02-18 |  134011 |
-| 2025-03-07 |  132897 |
-| 2025-01-07 |  130100 |
+| NULL       | 6118708 |
+| 2025-03-11 |  274962 |
+| 2025-03-06 |  203953 |
+| 2025-02-11 |  180712 |
+| 2025-03-18 |  151370 |
+| 2025-03-21 |  146867 |
+| 2025-02-06 |  144461 |
+| 2025-02-18 |  134535 |
+| 2025-03-07 |  134076 |
+| 2025-01-07 |  130972 |
 
 #### Coluna: `dat_vencimento_credito`
 
 | valor      |     qtd |
 |:-----------|--------:|
-| NULL       | 6017833 |
-| 2025-03-10 |  636928 |
-| 2025-02-10 |  629394 |
-| 2025-02-17 |  392568 |
-| 2025-01-10 |  385377 |
-| 2025-02-20 |  371711 |
-| 2025-03-17 |  367902 |
-| 2025-01-15 |  353552 |
-| 2025-01-20 |  324539 |
-| 2025-03-20 |  318955 |
+| NULL       | 6118708 |
+| 2025-03-10 |  638105 |
+| 2025-02-10 |  631521 |
+| 2025-02-17 |  394087 |
+| 2025-01-10 |  386946 |
+| 2025-02-20 |  372912 |
+| 2025-03-17 |  368476 |
+| 2025-01-15 |  355297 |
+| 2025-01-20 |  326009 |
+| 2025-03-20 |  319357 |
 
 #### Coluna: `dsc_nome_banco_pagamento`
 
 | valor    |     qtd |
 |:---------|--------:|
-| CPAY-PIX | 6173576 |
-| NULL     | 6017833 |
-| NET1     | 2440708 |
-| CEF      | 1720741 |
-| ITAU     | 1113300 |
-| BRADES   |  854183 |
-| BANESPA  |  809448 |
-| MULTI-PG |  703819 |
-| BRASIL   |  596524 |
-| GEVEN1P  |  177483 |
+| CPAY-PIX | 6192692 |
+| NULL     | 6118708 |
+| NET1     | 2460974 |
+| CEF      | 1730111 |
+| ITAU     | 1116132 |
+| BRADES   |  856064 |
+| BANESPA  |  811596 |
+| MULTI-PG |  708077 |
+| BRASIL   |  598516 |
+| GEVEN1P  |  189884 |
 
 #### Coluna: `dsc_pagamento`
 
 | valor                                               |      qtd |
 |:----------------------------------------------------|---------:|
-| NULL                                                | 18606890 |
+| NULL                                                | 18840322 |
+| Arquivo Rajada Sequencia: 21987, Registro: 00000067 |      143 |
+| Arquivo Rajada Sequencia: 23862, Registro: 00000017 |      113 |
+| Arquivo Rajada Sequencia: 24142, Registro: 00000031 |       96 |
 | Arquivo Rajada Sequencia: 24395, Registro: 00000054 |       95 |
 | Arquivo Rajada Sequencia: 11769, Registro: 00001397 |       93 |
-| Arquivo Rajada Sequencia: 21987, Registro: 00000067 |       92 |
 | Arquivo Rajada Sequencia: 11769, Registro: 00001396 |       90 |
-| Arquivo Rajada Sequencia: 23862, Registro: 00000017 |       90 |
 | Arquivo Rajada Sequencia: 24762, Registro: 00000344 |       89 |
 | Arquivo Rajada Sequencia: 11471, Registro: 00001477 |       89 |
 | Arquivo Rajada Sequencia: 24762, Registro: 00000437 |       88 |
-| Arquivo Rajada Sequencia: 24142, Registro: 00000031 |       88 |
 
 #### Coluna: `dw_area`
 
 |   valor |      qtd |
 |--------:|---------:|
-|      -3 | 21227005 |
-|      36 |    71611 |
-|       1 |    48228 |
-|      22 |    15204 |
-|       6 |    12100 |
-|      23 |    11745 |
-|      52 |    11583 |
-|      19 |    10841 |
-|       7 |    10351 |
-|      27 |     7221 |
+|      -3 | 21448439 |
+|      36 |    80913 |
+|       1 |    53990 |
+|      22 |    17157 |
+|       6 |    13333 |
+|      23 |    12517 |
+|      52 |    12220 |
+|      19 |    12062 |
+|       7 |    11315 |
+|      27 |     7596 |
 
 #### Coluna: `dw_banco`
 
 |   valor |      qtd |
 |--------:|---------:|
-|      -3 | 13962385 |
-|    1368 |  1922077 |
-|    1396 |  1640745 |
-|    1376 |  1276954 |
-|    1694 |  1117803 |
-|    1341 |   921160 |
-|    1630 |   130508 |
-|    1950 |   115414 |
-|    1979 |    99887 |
-|    1364 |    79117 |
+|      -3 | 14167256 |
+|    1368 |  1953004 |
+|    1396 |  1644493 |
+|    1376 |  1279850 |
+|    1694 |  1120685 |
+|    1341 |   924334 |
+|    1630 |   131036 |
+|    1950 |   115930 |
+|    1979 |   100190 |
+|    1364 |    80760 |
 
 #### Coluna: `dw_forma_pagamento`
 
 |   valor |     qtd |
 |--------:|--------:|
-|      10 | 9329227 |
-|      14 | 8428674 |
-|      12 | 3421174 |
-|      15 |  388539 |
+|      10 | 9381140 |
+|      14 | 8628819 |
+|      12 | 3422405 |
+|      15 |  389101 |
 
 #### Coluna: `dw_motivo_estorno`
 
 |   valor |      qtd |
 |--------:|---------:|
-|      -3 | 21567614 |
+|      -3 | 21821465 |
 
 #### Coluna: `dw_num_cliente`
 
 |      valor |   qtd |
 |-----------:|------:|
-| 1088708129 |   396 |
-| 1164649466 |   302 |
-|  964129025 |   224 |
-| 1207341177 |   194 |
-| 1183101526 |   189 |
-| 1409233910 |   164 |
-|  929754533 |   132 |
-| 1123763197 |   126 |
-|  827520246 |   112 |
-| 1183800367 |   112 |
+|  929754533 |   506 |
+| 1088708129 |   405 |
+|  964129025 |   366 |
+| 1164649466 |   308 |
+| 1107929393 |   267 |
+| 1173358512 |   255 |
+| 1135100019 |   247 |
+| 1410997515 |   242 |
+| 1171695031 |   240 |
+|  962359838 |   234 |
 
 #### Coluna: `dw_tipo_fatura`
 
 |   valor |      qtd |
 |--------:|---------:|
-|      -2 | 16640232 |
-|     118 |  4069092 |
-|     146 |   419889 |
-|     137 |   107765 |
-|     184 |   101879 |
-|     117 |    84648 |
-|     122 |    49405 |
-|     124 |    39534 |
-|     167 |    36568 |
-|     116 |     8867 |
+|      -2 | 16847095 |
+|     118 |  4111139 |
+|     146 |   421120 |
+|     137 |   107949 |
+|     184 |   102420 |
+|     117 |    84804 |
+|     122 |    49512 |
+|     124 |    39632 |
+|     167 |    39118 |
+|     116 |     8888 |
 
 #### Coluna: `dw_tipo_pagamento`
 
 |   valor |     qtd |
 |--------:|--------:|
-|   30001 | 9329227 |
-|   30007 | 8428674 |
-|   30003 | 3421174 |
-|   30006 |  388539 |
+|   30001 | 9381140 |
+|   30007 | 8628819 |
+|   30003 | 3422405 |
+|   30006 |  389101 |
 
 #### Coluna: `dw_un_negocio`
 
 |   valor |     qtd |
 |--------:|--------:|
-|       5 | 4337815 |
-|       1 | 3370560 |
-|       4 | 3270062 |
-|       3 | 3053929 |
-|       6 | 1758632 |
-|       2 | 1394800 |
-|       9 | 1233661 |
-|       7 | 1153888 |
-|      10 | 1023882 |
-|       8 |  970385 |
+|       5 | 4390732 |
+|       1 | 3414722 |
+|       4 | 3310834 |
+|       3 | 3095314 |
+|       6 | 1776576 |
+|       2 | 1409021 |
+|       9 | 1244729 |
+|       7 | 1162939 |
+|      10 | 1035834 |
+|       8 |  980764 |
 
 #### Coluna: `ind_status_fatura`
 
 | valor   |      qtd |
 |:--------|---------:|
-| C       | 21488473 |
-| O       |    79141 |
+| C       | 21690118 |
+| O       |   131347 |
 
 #### Coluna: `ind_status_pagamento`
 
 | valor   |     qtd |
 |:--------|--------:|
-| R       | 9429580 |
-| NULL    | 8810829 |
-| C       | 2921623 |
-| P       |  400818 |
-| B       |    4764 |
+| R       | 9478831 |
+| NULL    | 8987969 |
+| C       | 2938452 |
+| P       |  404812 |
+| B       |   11401 |
 
 #### Coluna: `ind_tipo_credito`
 
 | valor   |      qtd |
 |:--------|---------:|
-| P       | 15549781 |
-| NULL    |  6017833 |
+| P       | 15702757 |
+| NULL    |  6118708 |
 
 #### Coluna: `num_agencia_pagamento`
 
 |   valor |      qtd |
 |--------:|---------:|
-|      -3 | 11648845 |
-|    0000 |  2176766 |
-|    2370 |   182305 |
-|    0001 |   154235 |
-|    2271 |   119214 |
-|    2371 |    99423 |
-|    2372 |    96755 |
-|    2373 |    84139 |
-|    0105 |    65889 |
-|    3880 |    29651 |
+|      -3 | 11850860 |
+|    0000 |  2187844 |
+|    2370 |   183248 |
+|    0001 |   154962 |
+|    2271 |   119988 |
+|    2371 |    99921 |
+|    2372 |    97271 |
+|    2373 |    84583 |
+|    0105 |    66351 |
+|    3880 |    30065 |
 
 #### Coluna: `num_agrupador_pagamento`
 
 | valor   |      qtd |
 |:--------|---------:|
-| NULL    | 15958331 |
-| 1       |     1723 |
-| 2       |     1713 |
-| 5       |     1524 |
-| 4       |     1510 |
-| 3       |     1501 |
-| 6       |     1442 |
-| 11      |     1380 |
-| 7       |     1351 |
-| 8       |     1345 |
+| NULL    | 16102299 |
+| 1       |     1777 |
+| 2       |     1773 |
+| 5       |     1619 |
+| 4       |     1592 |
+| 3       |     1550 |
+| 6       |     1531 |
+| 8       |     1466 |
+| 11      |     1462 |
+| 7       |     1446 |
 
 #### Coluna: `num_banco_pagamento`
 
 | valor   |     qtd |
 |:--------|--------:|
-| -3      | 9895481 |
-| NT1     | 2057435 |
-| 104     | 2024165 |
-| 341     | 1668979 |
-| 237     | 1309956 |
-| 033     | 1187248 |
-| MPG     | 1064776 |
-| 001     |  933796 |
-| 1044    |  178498 |
-| 1043    |  151061 |
+| -3      | 9958960 |
+| NT1     | 2067403 |
+| 104     | 2056889 |
+| 341     | 1672770 |
+| 237     | 1312909 |
+| 033     | 1190262 |
+| MPG     | 1075007 |
+| 001     |  937003 |
+| 1044    |  190975 |
+| 1043    |  159231 |
 
 #### Coluna: `num_cc_pagamento`
 
 |          valor |      qtd |
 |---------------:|---------:|
-|             -3 | 18146464 |
-| 00000090277515 |    10184 |
-| 00000021631574 |     4568 |
-| 00000091727328 |     2993 |
+|             -3 | 18399089 |
+| 00000090277515 |    10188 |
+| 00000021631574 |     4569 |
+| 00000091727328 |     2998 |
 | 00000028847008 |     1107 |
 | 00000055984517 |      597 |
 |       05419859 |      382 |
@@ -928,10 +943,10 @@
 
 | valor          |      qtd |
 |:---------------|---------:|
-| NULL           | 19241432 |
-| 00000090277515 |     6937 |
+| NULL           | 19494351 |
+| 00000090277515 |     6938 |
 | 00000021631574 |     3328 |
-| 00000091727328 |     2993 |
+| 00000091727328 |     2998 |
 | 00000028847008 |      385 |
 | 00000055984517 |      337 |
 | 0086800760     |      320 |
@@ -939,314 +954,299 @@
 | 05419859       |      260 |
 | 126873         |      227 |
 
-#### Coluna: `num_credito_seq`
-
-|   valor |     qtd |
-|--------:|--------:|
-|       1 | 2307394 |
-|       2 | 1649740 |
-|       3 | 1216636 |
-|       4 |  812552 |
-|       5 |  510790 |
-|       6 |  372622 |
-|       7 |  344801 |
-|       8 |  332237 |
-|       9 |  328094 |
-|      10 |  325911 |
-
 #### Coluna: `num_fatura_pagamento`
 
 | valor        |     qtd |
 |:-------------|--------:|
-| NULL         | 6625067 |
-| 966132196132 |      21 |
-| 966132196130 |      21 |
-| 966132196123 |      21 |
-| 966132196122 |      21 |
+| NULL         | 6837485 |
+| 966132196124 |      24 |
+| 966132196123 |      24 |
+| 120004027064 |      22 |
 | 966132196127 |      21 |
-| 966132196124 |      21 |
+| 966132196126 |      21 |
+| 966132196125 |      21 |
+| 966132196131 |      21 |
+| 966132196122 |      21 |
 | 913625840147 |      21 |
-| 966132196129 |      21 |
-| 966132196133 |      21 |
 
 #### Coluna: `num_parcela_pagamento`
 
 | valor   |      qtd |
 |:--------|---------:|
-| NULL    | 21096039 |
-| 423     |     8745 |
-| 458     |     7774 |
-| 424     |     6538 |
-| 463     |     5790 |
-| 459     |     5461 |
-| 464     |     5066 |
-| 471     |     4577 |
-| 470     |     4249 |
-| 477     |     4243 |
+| NULL    | 21267922 |
+| 458     |    10009 |
+| 423     |     9533 |
+| 463     |     7283 |
+| 424     |     7244 |
+| 457     |     6447 |
+| 459     |     5902 |
+| 464     |     5592 |
+| 471     |     4898 |
+| 394     |     4705 |
 
 #### Coluna: `seq_arquivo_pagamento`
 
 | valor   |      qtd |
 |:--------|---------:|
-| NULL    | 13632149 |
-| 6340    |    61316 |
-| 6285    |    51467 |
-| 5298    |    40959 |
-| 6156    |    36609 |
-| 6296    |    34754 |
-| 6328    |    31045 |
-| 6852    |    30171 |
-| 6211    |    28255 |
-| 6274    |    27708 |
+| NULL    | 13775185 |
+| 6340    |    61384 |
+| 6285    |    51660 |
+| 5298    |    41044 |
+| 6156    |    36633 |
+| 6296    |    34778 |
+| 6328    |    31106 |
+| 6852    |    30180 |
+| 6211    |    28289 |
+| 6274    |    27746 |
 
 #### Coluna: `seq_entidade_atividade`
 
 | valor   |     qtd |
 |:--------|--------:|
-| NULL    | 6017833 |
-| 1       | 2152633 |
-| 2       | 1500458 |
-| 3       | 1075118 |
-| 4       |  676475 |
-| 5       |  381316 |
-| 6       |  248747 |
-| 7       |  226642 |
-| 8       |  218323 |
-| 9       |  213290 |
+| NULL    | 6118708 |
+| 1       | 2154175 |
+| 2       | 1504674 |
+| 3       | 1079908 |
+| 4       |  680678 |
+| 5       |  384781 |
+| 6       |  251650 |
+| 7       |  229305 |
+| 8       |  220750 |
+| 9       |  215716 |
 
 #### Coluna: `seq_entidade_credito`
 
 | valor   |     qtd |
 |:--------|--------:|
-| NULL    | 6017833 |
-| 1       | 1811818 |
-| 2       | 1283279 |
-| 3       |  907054 |
-| 4       |  675650 |
-| 5       |  424803 |
-| 6       |  326970 |
-| 7       |  250492 |
-| 8       |  231433 |
-| 9       |  185088 |
+| NULL    | 6118708 |
+| 1       | 1812152 |
+| 2       | 1284693 |
+| 3       |  909897 |
+| 4       |  678525 |
+| 5       |  426873 |
+| 6       |  328799 |
+| 7       |  252152 |
+| 8       |  232967 |
+| 9       |  186381 |
 
 #### Coluna: `seq_entidade_pagamento`
 
 | valor   |     qtd |
 |:--------|--------:|
-| NULL    | 6017833 |
-| 1       | 2152633 |
-| 2       | 1500458 |
-| 3       | 1075118 |
-| 4       |  676475 |
-| 5       |  381316 |
-| 6       |  248747 |
-| 7       |  226642 |
-| 8       |  218323 |
-| 9       |  213290 |
+| NULL    | 6118708 |
+| 1       | 2154175 |
+| 2       | 1504674 |
+| 3       | 1079908 |
+| 4       |  680678 |
+| 5       |  384781 |
+| 6       |  251650 |
+| 7       |  229305 |
+| 8       |  220750 |
+| 9       |  215716 |
 
 #### Coluna: `seq_fatura_credito`
 
 | valor   |     qtd |
 |:--------|--------:|
-| NULL    | 6017833 |
-| 1       | 1781784 |
-| 2       | 1073106 |
-| 3       | 1023383 |
-| 4       |  768038 |
-| 5       |  480509 |
-| 6       |  361866 |
-| 7       |  281180 |
-| 8       |  268661 |
-| 9       |  212374 |
+| NULL    | 6118708 |
+| 1       | 1784712 |
+| 2       | 1077270 |
+| 3       | 1028816 |
+| 4       |  771411 |
+| 5       |  483618 |
+| 6       |  364200 |
+| 7       |  283579 |
+| 8       |  270856 |
+| 9       |  214520 |
 
 #### Coluna: `seq_pagamento_credito`
 
 | valor   |     qtd |
 |:--------|--------:|
-| NULL    | 6017833 |
-| 1       | 2152633 |
-| 2       | 1500458 |
-| 3       | 1075118 |
-| 4       |  676475 |
-| 5       |  381316 |
-| 6       |  248747 |
-| 7       |  226642 |
-| 8       |  218323 |
-| 9       |  213290 |
+| NULL    | 6118708 |
+| 1       | 2154175 |
+| 2       | 1504674 |
+| 3       | 1079908 |
+| 4       |  680678 |
+| 5       |  384781 |
+| 6       |  251650 |
+| 7       |  229305 |
+| 8       |  220750 |
+| 9       |  215716 |
 
 #### Coluna: `val_atual_pagamento`
 
 | valor   |     qtd |
 |:--------|--------:|
-| NULL    | 6017837 |
-| 59.89   |  343686 |
-| 34.8    |  336092 |
-| 49.9    |  327554 |
-| 54.9    |  319263 |
-| 34.9    |  264368 |
-| 29.8    |  248281 |
-| 29.9    |  243625 |
-| 54.8    |  208071 |
-| 64.9    |  143364 |
+| NULL    | 6118713 |
+| 59.89   |  344023 |
+| 34.8    |  336602 |
+| 49.9    |  327761 |
+| 54.9    |  319644 |
+| 34.9    |  264599 |
+| 29.8    |  248510 |
+| 29.9    |  243827 |
+| 54.8    |  208397 |
+| 64.9    |  143522 |
 
 #### Coluna: `val_baixa_atividade`
 
 | valor   |     qtd |
 |:--------|--------:|
-| NULL    | 6017833 |
-| 59.89   |  343686 |
-| 34.8    |  336092 |
-| 49.9    |  327554 |
-| 54.9    |  319263 |
-| 34.9    |  264368 |
-| 29.8    |  248281 |
-| 29.9    |  243622 |
-| 54.8    |  208071 |
-| 64.9    |  143364 |
+| NULL    | 6118708 |
+| 59.89   |  344023 |
+| 34.8    |  336600 |
+| 49.9    |  327761 |
+| 54.9    |  319644 |
+| 34.9    |  264599 |
+| 29.8    |  248510 |
+| 29.9    |  243820 |
+| 54.8    |  208396 |
+| 64.9    |  143522 |
 
 #### Coluna: `val_desconto_item`
 
 |   valor |      qtd |
 |--------:|---------:|
-|       0 | 21567614 |
+|       0 | 21821465 |
 
 #### Coluna: `val_juros_multas_item`
 
 |   valor |      qtd |
 |--------:|---------:|
-|    0    | 13678393 |
-|    0.13 |   126079 |
-|    0.12 |   114729 |
-|    0.09 |   101148 |
-|    0.14 |    96384 |
-|    0.1  |    96234 |
-|    0.11 |    95148 |
-|    0.08 |    93394 |
-|    0.04 |    87824 |
-|    0.05 |    73233 |
+|    0    | 13747750 |
+|    0.13 |   128431 |
+|    0.12 |   116883 |
+|    0.09 |   103289 |
+|    0.14 |    98163 |
+|    0.1  |    98033 |
+|    0.11 |    97192 |
+|    0.08 |    95501 |
+|    0.04 |    89744 |
+|    0.05 |    74809 |
 
 #### Coluna: `val_multa_equip_item`
 
 |   valor |      qtd |
 |--------:|---------:|
-|    0    | 21531043 |
-|    0.66 |      299 |
-|    1.31 |       95 |
-|    3.28 |       91 |
-|    2.62 |       90 |
-|    2.29 |       83 |
-|    1.97 |       82 |
-|  120    |       81 |
-|   18.36 |       80 |
-|    1.64 |       80 |
+|    0    | 21782344 |
+|    0.66 |      302 |
+|    1.31 |       97 |
+|    3.28 |       92 |
+|    2.62 |       91 |
+|    2.29 |       86 |
+|  120    |       83 |
+|    1.64 |       83 |
+|    1.97 |       83 |
+|   18.36 |       82 |
 
 #### Coluna: `val_multa_equip_total`
 
 |   valor |      qtd |
 |--------:|---------:|
-|    0    | 21531043 |
-|    0.66 |      299 |
-|    1.31 |       95 |
-|    3.28 |       91 |
-|    2.62 |       90 |
-|    2.29 |       83 |
-|    1.97 |       82 |
-|  120    |       81 |
-|   18.36 |       80 |
-|    1.64 |       80 |
+|    0    | 21782344 |
+|    0.66 |      302 |
+|    1.31 |       97 |
+|    3.28 |       92 |
+|    2.62 |       91 |
+|    2.29 |       86 |
+|    1.64 |       83 |
+|  120    |       83 |
+|    1.97 |       83 |
+|   18.36 |       82 |
 
 #### Coluna: `val_multa_fid_item`
 
 |   valor |      qtd |
 |--------:|---------:|
-|       0 | 21567614 |
+|       0 | 21821465 |
 
 #### Coluna: `val_original_pagamento`
 
 | valor   |     qtd |
 |:--------|--------:|
-| NULL    | 6017833 |
-| 59.89   |  343686 |
-| 34.8    |  336092 |
-| 49.9    |  327554 |
-| 54.9    |  319263 |
-| 34.9    |  264368 |
-| 29.8    |  248281 |
-| 29.9    |  243622 |
-| 54.8    |  208071 |
-| 64.9    |  143364 |
+| NULL    | 6118708 |
+| 59.89   |  344023 |
+| 34.8    |  336600 |
+| 49.9    |  327761 |
+| 54.9    |  319644 |
+| 34.9    |  264601 |
+| 29.8    |  248510 |
+| 29.9    |  243820 |
+| 54.8    |  208396 |
+| 64.9    |  143522 |
 
 #### Coluna: `val_pagamento_credito`
 
 | valor   |     qtd |
 |:--------|--------:|
-| NULL    | 6017833 |
-| 34.8    |  335947 |
-| 54.9    |  322197 |
-| 34.9    |  265638 |
-| 29.8    |  248381 |
-| 29.9    |  244338 |
-| 49.9    |  212828 |
-| 54.8    |  207966 |
-| 3.12    |  164271 |
-| 64.9    |  144005 |
+| NULL    | 6118708 |
+| 34.8    |  336318 |
+| 54.9    |  322683 |
+| 34.9    |  265856 |
+| 29.8    |  248568 |
+| 29.9    |  244578 |
+| 49.9    |  212987 |
+| 54.8    |  208201 |
+| 3.12    |  164466 |
+| 64.9    |  144239 |
 
 #### Coluna: `val_pagamento_fatura`
 
 |   valor |    qtd |
 |--------:|-------:|
-|   54.9  | 397940 |
-|   29.9  | 355834 |
-|   34.8  | 343889 |
-|   34.9  | 298272 |
-|   49.9  | 278593 |
-|   29.8  | 275663 |
-|   54.8  | 228934 |
-|   64.9  | 191410 |
-|   39.89 | 173069 |
-|   59.89 | 171685 |
+|   54.9  | 399890 |
+|   29.9  | 357058 |
+|   34.8  | 344504 |
+|   34.9  | 299089 |
+|   49.9  | 279308 |
+|   29.8  | 276180 |
+|   54.8  | 229550 |
+|   64.9  | 192482 |
+|   39.89 | 173585 |
+|   59.89 | 172394 |
 
 #### Coluna: `val_pagamento_item`
 
 |   valor |    qtd |
 |--------:|-------:|
-|   54.9  | 397940 |
-|   29.9  | 355834 |
-|   34.8  | 343889 |
-|   34.9  | 298272 |
-|   49.9  | 278593 |
-|   29.8  | 275663 |
-|   54.8  | 228934 |
-|   64.9  | 191410 |
-|   39.89 | 173069 |
-|   59.89 | 171685 |
+|   54.9  | 399890 |
+|   29.9  | 357058 |
+|   34.8  | 344504 |
+|   34.9  | 299089 |
+|   49.9  | 279308 |
+|   29.8  | 276180 |
+|   54.8  | 229550 |
+|   64.9  | 192482 |
+|   39.89 | 173585 |
+|   59.89 | 172394 |
 
 #### Coluna: `ingestion_ts`
 
 | valor                         |      qtd |
 |:------------------------------|---------:|
-| 2026-01-28 00:45:45.957733-03 | 21567614 |
+| 2026-01-29 01:41:57.947529-03 | 21821465 |
 
 #### Coluna: `run_id`
 
 |    valor |      qtd |
 |---------:|---------:|
-| 20260128 | 21567614 |
+| 20260129 | 21821465 |
 
 #### Coluna: `ano_mes`
 
 |   valor |     qtd |
 |--------:|--------:|
-|  202503 | 2444795 |
-|  202502 | 1997060 |
-|  202501 | 1758264 |
-|  202412 | 1488435 |
-|  202411 | 1177546 |
-|  202410 | 1096761 |
-|  202408 | 1060877 |
-|  202407 | 1055374 |
-|  202409 | 1042116 |
-|  202405 | 1029916 |
+|  202503 | 2464722 |
+|  202502 | 2014528 |
+|  202501 | 1771415 |
+|  202412 | 1500350 |
+|  202411 | 1188451 |
+|  202410 | 1111775 |
+|  202408 | 1074235 |
+|  202407 | 1068321 |
+|  202409 | 1049488 |
+|  202405 | 1043312 |
 
 
 
