@@ -1,4 +1,4 @@
-# 📖 Documentação de Data Lineage & Processamento de Dados
+# 📖 1. Pré-processamento e Engenharia de Dados (Data Lineage)
 
 ### 🧭 Nota de Escopo - Maturidade da Solução (PoC)
 
@@ -11,7 +11,7 @@ A **orquestração do pipeline já está definida conceitualmente** e será **mi
 
 ---
 
-## 🏗️ 1. Visão Global do Fluxo de Dados (CORE)
+## 🏗️ 1.1 Visão Global do Fluxo de Dados (CORE)
 
 Todas as entidades seguem o padrão arquitetural **Medallion (RAW → BRONZE → SILVER → GOLD)**, com responsabilidades bem definidas por camada.  
 
@@ -37,7 +37,7 @@ Entidades contempladas neste fluxo:
 
 ---
 
-## 🧬 2. Princípios Técnicos Aplicados
+## 🧬 1.2 Princípios Técnicos Aplicados
 
 Para garantir a reprodutibilidade e a confiabilidade, o Lakehouse adota os seguintes princípios em todas as etapas de processamento:
 
@@ -50,7 +50,7 @@ Para garantir a reprodutibilidade e a confiabilidade, o Lakehouse adota os segui
 
 ---
 
-## 📥 3. Camada RAW - Ingestão
+## 📥 1.3 Camada RAW - Ingestão
 
 ### Objetivo
 Garantir a **preservação integral** dos dados recebidos das fontes, sem qualquer modificação estrutural ou semântica.
@@ -64,13 +64,13 @@ Garantir a **preservação integral** dos dados recebidos das fontes, sem qualqu
 
 ---
 
-## 🥉 4. Camada BRONZE - Padronização Técnica
+## 🥉 1.4 Camada BRONZE - Padronização Técnica
 
 Este estágio é **comum a todas as entidades de negócio** e tem como objetivo a **padronização técnica**, mantendo a imutabilidade dos dados.
 
 ---
 
-### 4.1 🔁 Etapas Comuns de Processamento
+### 🔁 1.4.1 Etapas Comuns de Processamento
 
 **Entidades:** `atraso` `pagamento` `recarga` `dados_cadastrais` `score_bureau_movel` `telco`  
 
@@ -86,7 +86,7 @@ Este estágio é **comum a todas as entidades de negócio** e tem como objetivo 
 
 ---
 
-### 4.2 🧩 Tratamento Diferenciado - Dimensões Técnicas
+### 🧩 1.4.2 Tratamento Diferenciado - Dimensões Técnicas
 
 As tabelas dimensionais possuem comportamento distinto das tabelas 'Fato', pois representam **cadastros estáveis e de baixo volume**.
 
@@ -103,7 +103,7 @@ As tabelas dimensionais possuem comportamento distinto das tabelas 'Fato', pois 
 
 ---
 
-## 🥈 5. Camada SILVER - Qualidade e Enriquecimento
+## 🥈 1.5 Camada SILVER - Qualidade e Enriquecimento
 
 Na camada Silver, os dados são refinados para atender aos **requisitos de qualidade, unicidade e semântica analítica**, respeitando o grão técnico de cada entidade. A estrutura de particionamento físico por `ano_mes` é herdada da camada Bronze, garantindo a consistência organizacional do Lakehouse.
 
@@ -112,7 +112,7 @@ Na camada Silver, os dados são refinados para atender aos **requisitos de quali
 
 ---
 
-### 5.1 🎯 Estratégia de Grão e Unicidade por Entidade
+### 🎯 1.5.1 Estratégia de Grão e Unicidade por Entidade
 
 | Entidade | Grão Técnico (Unicidade) |
 | :--- | :--- |
@@ -139,7 +139,7 @@ Na camada Silver, os dados são refinados para atender aos **requisitos de quali
 
 ---
 
-### 5.2 🔀 Regras de Transformações Específicas
+### 🔀 1.5.2 Regras de Transformações Específicas
 
 Apesar do fluxo base ser comum, algumas entidades possuem **processamentos adicionais**.
 
@@ -161,7 +161,7 @@ Apesar do fluxo base ser comum, algumas entidades possuem **processamentos adici
 
 ---
 
-### 5.3 🏁 Resultado da Camada SILVER
+### 🏁 1.5.3 Resultado da Camada SILVER
 
 Ao final do processamento na camada Silver, todas as entidades apresentam:
 
@@ -175,13 +175,13 @@ Ao final do processamento na camada Silver, todas as entidades apresentam:
 
 ---
 
-## 🥇 6. Camada GOLD - Consolidação de Ativos (Expansão & Controle)
+## 🥇 1.6 Camada GOLD - Consolidação de Ativos (Expansão & Controle)
 
 A camada **GOLD** materializa os dados para Machine Learning através de ativos semânticos, versionados e auditáveis. Para garantir a **cobertura total do ecossistema** e, simultaneamente, atender às **necessidades de especialização** do projeto, a camada foi estruturada em dois conjuntos de ativos complementares: um focado na **amplitude de público (Expansão)** e outro voltado à **densidade transacional (Controle)**.
 
 ---
 
-### 6.1 🎯 Objetivos da Camada GOLD
+### 🎯 1.6.1 Objetivos da Camada GOLD
 
 * **Especialização de Target:** Isolar o público CMV para garantir que o sinal de inadimplência reflita estritamente o comportamento móvel, eliminando distorções cruzadas de produtos residenciais (NET/DTH).
 * **Visão Baseline:** Manter a paridade com o ecossistema amplo, permitindo auditorias comparativas e benchmarks de performance entre a estratégia focada e a visão geral de negócio.
@@ -189,7 +189,7 @@ A camada **GOLD** materializa os dados para Machine Learning através de ativos 
 
 ---
 
-### 6.2 📦 Ativos GOLD Disponíveis
+### 📦 1.6.2 Ativos GOLD Disponíveis
 
 A camada Gold é estruturada em dois conjuntos de ativos para atender simultaneamente à demanda de **Expansão de Mercado** e à de **Estabilidade Transacional**.
 
@@ -235,7 +235,7 @@ A camada Gold é estruturada em dois conjuntos de ativos para atender simultanea
 
 ---
 
-### 6.3 🛡️ Governança de Histórico e Versionamento (`run_id`)
+### 🛡️ 1.6.3 Governança de Histórico e Versionamento (`run_id`)
 
 A utilização do **run_id** como chave de particionamento na camada Gold transcende a organização técnica, atuando como o pilar de **Imutabilidade dos Experimentos**. Cada execução do pipeline gera um snapshot completo da ABT, preservando o estado exato das features e das Janelas de Lookback naquele instante.
 
@@ -247,7 +247,7 @@ Esta estratégia permite:
 
 ---
 
-## 🧱 7. Estrutura Física de Armazenamento (Padrão Hive)
+## 🧱 1.7 Estrutura Física de Armazenamento (Padrão Hive)
 
 A organização física segue o padrão Hive para compatibilidade e performance:
 
@@ -285,7 +285,7 @@ s3://lake/
 
 <br>
 
-# 🧪 Estruturação do Modelo Baseline: Governança Temporal (Foco CMV)
+# 🧪 2. Estruturação do Modelo Baseline e Governança Temporal
 
 > **Nota Conceitual:** A **ABT** (Analytical Base Table) é a nossa tabela final de consumo físico. Já a **estruturação do baseline** é o conjunto de premissas técnicas (como a Governança Temporal e as janelas de 30/60/90 dias) que aplicamos na construção dessa ABT para garantir que o modelo focado no produto **CMV** seja treinado com **total confiabilidade**, sem viés ou *data leakage* (vazamento de dados).
 
@@ -300,7 +300,7 @@ s3://lake/
 
 ---
 
-## ⏳ 1. Definição da Âncora Temporal (Safra)
+## ⏳ 2.1 Definição da Âncora Temporal (Safra)
 A âncora é o "ponto de observação" que separa o passado (features) do futuro (target).
 
 * **Safra:** Representa o primeiro dia do mês de geração do score de bureau. É a referência temporal absoluta para o grão da ABT e garante o alinhamento com o público-alvo CMV.
@@ -310,7 +310,7 @@ A âncora é o "ponto de observação" que separa o passado (features) do futuro
 
 ---
 
-## 📊 2. Janelas de Lookback e Agregações Históricas
+## 📊 2.2 Janelas de Lookback e Agregações Históricas
 Esta ABT utiliza uma abordagem de **Mesa Farta**. Para cada métrica estatística (Soma, Média, Mínimo, Máximo e Contagem), geramos colunas específicas para quatro horizontes temporais distintos, permitindo ao modelo identificar variações de comportamento (tendência e velocidade).
 
 | Janela | Escopo Técnico | Objetivo |
@@ -327,11 +327,11 @@ Esta ABT utiliza uma abordagem de **Mesa Farta**. Para cada métrica estatístic
 
 ---
 
-## 🧬 3. Composição e Nomenclatura dos Ativos
+## 🧬 2.3 Composição e Nomenclatura dos Ativos
 
 Para garantir que o modelo baseline tenha uma visão 360º do público CMV e interprete corretamente a origem de cada sinal, aplicamos um mapeamento rigoroso de prefixos:
 
-### 3.1 Mapeamento de Prefixos (Origens Silver)
+### 2.3.1 Mapeamento de Prefixos (Origens Silver)
 | Prefixo | Tabela Origem (Silver) | Estratégia de Captura |
 | :--- | :--- | :--- |
 | `bur_` | `silver/score_bureau_movel` | Snapshot completo de scores e atributos de Bureau CMV. |
@@ -343,7 +343,7 @@ Para garantir que o modelo baseline tenha uma visão 360º do público CMV e int
 
 🔗 **[Book de Variáveis - ABT CMV](../data_modelling/features/abt_base_cmv-book.md)**
 
-### 3.2 Padrão de Nomenclatura
+### 2.3.2 Padrão de Nomenclatura
 O padrão seguido para as features é: `{prefixo}_{métrica}_{janela/tipo}`. 
 
 **Exemplo de interpretação:**
@@ -354,7 +354,30 @@ A variável `rec_vlr_avg_l60d` refere-se ao **valor médio de recarga** nos **ú
 
 <br>
 
-## 📖 Apêndice: Glossário Geral da Documentação
+# 📉 3. Justificativa do Modelo e Métricas de Performance
+
+## 3.1 Escolha do Algoritmo Baseline
+>
+>
+>
+
+## 3.2 Justificativa da Técnica
+>
+>
+>
+
+## 3.3 Métricas de Sucesso e Avaliação
+>
+>
+>
+
+---
+
+<br>
+
+# 📚 Apêndices
+
+## 📖 A.1 Glossário Geral da Documentação
 
 - **Run ID:** Identificador único de uma execução do pipeline, garantindo o isolamento e a reprodutibilidade histórica das cargas.
 - **Partition Pruning:** Otimização que permite ler apenas as partições necessárias no S3, reduzindo drasticamente o tempo e o custo de processamento.
@@ -372,28 +395,19 @@ A variável `rec_vlr_avg_l60d` refere-se ao **valor médio de recarga** nos **ú
 
 <br>
 
-## 📚 Apêndice: Documentação Complementar
+# 📂 A.2 Documentação de Suporte e Manuais
 
-### 🏗️ Data Architecture
-📑 **[Manual de Arquitetura de Dados](../data_architecture/README.md)**  
-Descrição da arquitetura técnica da plataforma de dados, incluindo visão macro e micro, decisões de engenharia, escolha de tecnologias e seus impactos em escalabilidade, governança, confiabilidade e observabilidade.
+Nesta seção encontram-se os manuais detalhados que compõem a governança técnica e os ativos gerados pelo pipeline.
 
----
+### 🗂️ Catálogo de Dados e Modelagem
+- 📖 **[Dicionário de Variáveis (Book) - ABT CMV](../data_modelling/features/abt_base_cmv-book.md):** Definição técnica de cada feature gerada na Gold.
+- 📖 **[Dicionário de Dados - Camada Silver](../data_dictionary/):** Descrição das entidades saneadas e prontas para consumo.
 
-### 🧬 Data Lineage
-📑 **[Manual de Lineage](../data_lineage/README.md)**  
-Documentação detalhada do fluxo de dados por entidade, incluindo origem, transformações e dependências entre camadas.
+### 🏗️ Arquitetura e Infraestrutura
+- 🏗️ **[Manual de Arquitetura de Dados](../data_architecture/README.md):** Visão macro/micro e stack tecnológica.
+- 🚀 **[Estratégia de Deploy OCI (Cloud Readiness)](../data_architecture/oci-cloud-ready-strategy.md):** Plano de migração VPS -> Nuvem.
 
----
-
-### 🏛️ Data Governance
-📑 **[Manual de Governança](../data_governance/README.md)**  
-Diretrizes formais de governança aplicadas ao projeto.
-
----
-
-### 🔍 Data Observability
-📑 **[Manual de Observabilidade](../data_observability/README.md)**  
-Referência das práticas de monitoramento e saúde do pipeline.
-
-
+### 🏛️ Governança e Operação
+- 🏛️ **[Manual de Governança de Dados](../data_governance/README.md):** Políticas de privacidade, acesso e qualidade.
+- 🧬 **[Manual de Lineage](../data_lineage/README.md):** Mapeamento detalhado do fluxo de transformação.
+- 🔍 **[Manual de Observabilidade](../data_observability/README.md):** Guia de logs e saúde do pipeline.
