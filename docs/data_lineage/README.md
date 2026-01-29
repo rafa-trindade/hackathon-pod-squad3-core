@@ -357,19 +357,19 @@ A variável `rec_vlr_avg_l60d` refere-se ao **valor médio de recarga** nos **ú
 # 📉 3. Justificativa do Modelo e Métricas de Performance
 
 ## 3.1 Escolha do Algoritmo Baseline
-> .
-> .
-> .
+> .  
+> .  
+> .  
 
 ## 3.2 Justificativa da Técnica
-> .
-> .
-> .
+> .  
+> .  
+> .  
 
 ## 3.3 Métricas de Sucesso e Avaliação
-> .
-> .
-> .
+> .  
+> .  
+> .  
 
 ---
 
