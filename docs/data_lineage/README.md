@@ -82,7 +82,7 @@ Este estágio é **comum a todas as entidades de negócio** e tem como objetivo 
 | 1 | **Normalization (Lowercase)** | Conversão de todos os nomes de colunas para minúsculo, eliminando ambiguidades de *case-sensitivity*. |
 | 2 | **Tipagem Forte** | Aplicação de `CAST` explícito baseada no profiling da origem. |
 | 3 | **Metadados Técnicos** | Inclusão de colunas técnicas (`ingestion_ts` `run_id`) para rastreabilidade e auditoria. |
-| 4 | **Particionamento Técnico** | Criação da coluna técnica `ano_mes = YYYYMM` derivada da data de referência principal da entidade. |
+| 4 | **Particionamento Técnico** | Criação da coluna técnica `ano_mes` derivada da data de referência principal da entidade. |
 
 ---
 
