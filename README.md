@@ -48,7 +48,6 @@ Repositório de desenvolvimento, documentação e implementação técnica de so
 > * 📑 **Main Document:** [`Estratégia de Pré-processamento e Baseline (Master Lineage)`](docs/data_lineage/README.md)
 > * 📁 **Fluxo de Refino:** [`Refino Técnico (Bronze → Silver)`](docs/data_lineage/bronze_silver/)
 > * 📁 **Estratégia Gold:** [`Amplitude e Densidade (Silver → Gold)`](docs/data_lineage/gold/)
-> * 📑 **Evidências de Auditoria:** [`Integridade de Partição`](reports/observability/integrity/) | [`Profiling de Atributos`](reports/observability/profiling/)
 
 ---
 
