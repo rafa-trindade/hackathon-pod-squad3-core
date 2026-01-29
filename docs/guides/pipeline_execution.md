@@ -11,6 +11,7 @@ Para garantir **performance**, **estabilidade** e **reprodutibilidade**, recomen
 - **CPU:** ≥ **6 vCPUs** (ou Cores físicos)
 - **Memória RAM:** ≥ **12 GB**
 - **Armazenamento:** ≥ **100 GB SSD** (Preferencialmente **NVMe**)
+  - `PIPELINE_MAX_RUNS=1`
 
 
 ### 🔍 Justificativa Técnica
