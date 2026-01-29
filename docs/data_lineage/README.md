@@ -375,7 +375,6 @@ A variável `rec_vlr_avg_l60d` refere-se ao **valor médio de recarga** nos **ú
 
 <br>
 
-# 📚 Apêndices
 
 ## 📖 A.1 Glossário Geral da Documentação
 
