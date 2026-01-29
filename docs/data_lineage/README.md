@@ -115,13 +115,27 @@ Na camada Silver, os dados são refinados para atender aos **requisitos de quali
 ### 5.1 🎯 Estratégia de Grão e Unicidade por Entidade
 
 | Entidade | Grão Técnico (Unicidade) |
-|---|---|
+| :--- | :--- |
 | **Atraso** | `num_cpf, contrato, dat_referencia, num_fatura_hash, num_ent_seq_fatura` |
-| **Recarga** | `num_cpf, dat_insercao_credito, hor_insercao_credito` |
-| **Pagamento** | `num_cpf, contrato, seq_fatura, num_sub_seq_fatura` |
+| **Recarga** | `num_cpf, dw_num_ntc, dat_insercao_credito, hor_insercao_credito` |
+| **Pagamento** | `num_cpf, contrato, seq_fatura, num_sub_seq_fatura, num_credito_seq` |
 | **Dados Cadastrais** | `num_cpf, safra, prod` |
 | **Score Bureau** | `num_cpf, safra, prod` |
 | **Telco** | `num_cpf, safra, prod` |
+
+---
+
+#### 💡 Notas de Arquitetura e Governança de Dados
+
+> **Exceção Estratégica: Pagamento**  
+> Diferente das datas de referência de outras tabelas, a `dat_status_fatura` **não foi incluída** no grão de unicidade.  
+> * **Motivo:** Nesta entidade, a data reflete apenas a mudança de estado (Ex: Aberta para Paga) de um registro já existente. Incluí-la causaria a duplicidade do mesmo fato financeiro.
+> * **Impacto:** Esta lógica **evitou que 8.163 registros** obsoletos inflassem o somatório de receita, garantindo a "última verdade" de cada lançamento.
+>
+> **Precisão Temporal e Identificação de Linha: Recarga**
+> A combinação da alta granularidade temporal (`hor_insercao_credito`) com o identificador da linha (`dw_num_ntc`) é o que garante a integridade desta entidade.
+> * **Detalhe Técnico:** O valor da hora representa os segundos decorridos desde a meia-noite (Padrão SAS/Legacy) e é processado como **BIGINT**, permitindo distinguir transações simultâneas em linhas distintas de um mesmo titular.
+> * **Impacto:** Esta estratégia permitiu identificar e remover **4.766.668 registros redundantes**, provenientes de possíveis falhas de *double ingestion* na origem, corrigindo um possível desvio de **4.7%** no faturamento total reportado.
 
 ---
 
