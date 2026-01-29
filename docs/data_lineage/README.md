@@ -378,6 +378,8 @@ A variável `rec_vlr_avg_l60d` refere-se ao **valor médio de recarga** nos **ú
 
 ## 📖 A.1 Glossário Geral da Documentação
 
+Nesta seção, detalhamos os principais conceitos técnicos e terminologias aplicadas no Lakehouse, visando o alinhamento entre as frentes de Engenharia, Ciência de Dados e Negócio.
+
 - **Run ID:** Identificador único de uma execução do pipeline, garantindo o isolamento e a reprodutibilidade histórica das cargas.
 - **Partition Pruning:** Otimização que permite ler apenas as partições necessárias no S3, reduzindo drasticamente o tempo e o custo de processamento.
 - **Point-in-Time Join:** Técnica de cruzamento de dados que respeita a linha do tempo, garantindo que o modelo use apenas dados disponíveis no momento exato do evento.
