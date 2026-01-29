@@ -376,7 +376,7 @@ def run():
     with open(QUALITY_REPORT_PATH, "w") as f: 
         f.write(report_log)
 
-    con.execute(f"COPY (SELECT * FROM work_db.gold_step1 ORDER BY ano_mes) TO '{GOLD_PATH}' (FORMAT PARQUET, PARTITION_BY (ano_mes))")
+    con.execute(f"COPY (SELECT * FROM work_db.gold_step1 ORDER BY ano_mes) TO '{GOLD_PATH}' (FORMAT PARQUET, PARTITION_BY (ano_mes), OVERWRITE_OR_IGNORE 1)")
     
     con.execute("DETACH work_db")
     if os.path.exists(WORK_DB_PATH): os.remove(WORK_DB_PATH)
