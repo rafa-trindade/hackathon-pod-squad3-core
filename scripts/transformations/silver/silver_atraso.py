@@ -129,7 +129,11 @@ def run():
             SELECT * FROM {step1_table} t WHERE NOT EXISTS (SELECT 1 FROM work_db.chaves_duplicadas d WHERE {' AND '.join([f't.{c} = d.{c}' for c in chave_tecnica_cols])})
             UNION ALL
             SELECT * EXCLUDE(row_num) FROM (
-                SELECT t.*, ROW_NUMBER() OVER(PARTITION BY {", ".join([f"t.{c}" for c in chave_tecnica_cols])} ORDER BY ingestion_ts DESC) as row_num
+                SELECT t.*, 
+                       ROW_NUMBER() OVER(
+                           PARTITION BY {", ".join([f"t.{c}" for c in chave_tecnica_cols])} 
+                           ORDER BY t.ingestion_ts DESC, t.dat_referencia DESC
+                       ) as row_num
                 FROM {step1_table} t JOIN work_db.chaves_duplicadas d ON {' AND '.join([f't.{c} = d.{c}' for c in chave_tecnica_cols])}
             ) WHERE row_num = 1
         """)

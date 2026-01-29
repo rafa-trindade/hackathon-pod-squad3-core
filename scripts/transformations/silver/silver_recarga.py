@@ -34,16 +34,18 @@ keys_to_clean = {
         'replace': [], 
         'default': '0'
     },
-    
+    'dw_num_ntc': {
+        'replace': [], 
+        'default': '0'
+    },
     'dat_insercao_credito': {
         'replace': [], 
         'default': '1900-01-01'
     },
-
     'hor_insercao_credito': {
         'replace': [], 
-        'default': '00:00:00'
-    },
+        'default': 0
+    }
 }
 
 def run():
@@ -119,7 +121,11 @@ def run():
             SELECT * FROM {step1_table} t WHERE NOT EXISTS (SELECT 1 FROM work_db.chaves_duplicadas d WHERE {' AND '.join([f't.{c} = d.{c}' for c in chave_tecnica_cols])})
             UNION ALL
             SELECT * EXCLUDE(row_num) FROM (
-                SELECT t.*, ROW_NUMBER() OVER(PARTITION BY {", ".join([f"t.{c}" for c in chave_tecnica_cols])} ORDER BY ingestion_ts DESC) as row_num
+                SELECT t.*, 
+                       ROW_NUMBER() OVER(
+                           PARTITION BY {", ".join([f"t.{c}" for c in chave_tecnica_cols])} 
+                           ORDER BY t.ingestion_ts DESC, t.dat_insercao_credito DESC, t.hor_insercao_credito DESC
+                       ) as row_num
                 FROM {step1_table} t JOIN work_db.chaves_duplicadas d ON {' AND '.join([f't.{c} = d.{c}' for c in chave_tecnica_cols])}
             ) WHERE row_num = 1
         """)

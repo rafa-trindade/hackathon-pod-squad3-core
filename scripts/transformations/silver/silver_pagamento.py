@@ -46,6 +46,10 @@ keys_to_clean = {
     'num_sub_seq_fatura': {
         'replace': [], 
         'default': '0'
+    },
+    'num_credito_seq': {
+        'replace': [], 
+        'default': '0'
     }
 }
 
@@ -143,7 +147,6 @@ def run():
             SELECT {chave_cols_str} FROM {step1_table} 
             GROUP BY {chave_cols_str} HAVING COUNT(*) > 1
         """)
-
         con.execute(f"""
             CREATE TABLE work_db.silver_{TABLE_NAME}_step2 AS
             SELECT * FROM {step1_table} t
@@ -154,7 +157,10 @@ def run():
             UNION ALL
             SELECT * EXCLUDE(row_num) FROM (
                 SELECT t.*, 
-                       ROW_NUMBER() OVER(PARTITION BY {", ".join([f"t.{c}" for c in chave_tecnica_cols])} ORDER BY ingestion_ts DESC) as row_num
+                       ROW_NUMBER() OVER(
+                           PARTITION BY {", ".join([f"t.{c}" for c in chave_tecnica_cols])} 
+                           ORDER BY ingestion_ts DESC, dat_status_fatura DESC
+                       ) as row_num
                 FROM {step1_table} t
                 JOIN work_db.chaves_duplicadas d ON {' AND '.join([f't.{c} = d.{c}' for c in chave_tecnica_cols])}
             ) WHERE row_num = 1

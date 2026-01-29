@@ -148,7 +148,10 @@ def run():
             UNION ALL
             SELECT * EXCLUDE(row_num) FROM (
                 SELECT t.*, 
-                       ROW_NUMBER() OVER(PARTITION BY {", ".join([f"t.{c}" for c in chave_tecnica_cols])} ORDER BY ingestion_ts DESC) as row_num
+                       ROW_NUMBER() OVER(
+                           PARTITION BY {", ".join([f"t.{c}" for c in chave_tecnica_cols])} 
+                           ORDER BY ingestion_ts DESC, safra DESC
+                       ) as row_num
                 FROM {step1_table} t
                 JOIN work_db.chaves_duplicadas d ON {' AND '.join([f't.{c} = d.{c}' for c in chave_tecnica_cols])}
             ) WHERE row_num = 1
