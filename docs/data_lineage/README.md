@@ -394,7 +394,7 @@ A variável `rec_vlr_avg_l60d` refere-se ao **valor médio de recarga** nos **ú
 
 <br>
 
-# 📂 A.2 Documentação de Suporte e Manuais
+# 📚 A.2 Apêndices e Documentação de Suporte
 
 Nesta seção encontram-se os manuais detalhados que compõem a governança técnica e os ativos gerados pelo pipeline.
 
