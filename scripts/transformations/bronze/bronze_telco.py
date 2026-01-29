@@ -169,7 +169,8 @@ def run():
         TO '{BRONZE_PATH}'
         (
             FORMAT PARQUET,
-            PARTITION_BY (ano_mes)
+            PARTITION_BY (ano_mes),
+            OVERWRITE_OR_IGNORE 1
         )
     """)
 
