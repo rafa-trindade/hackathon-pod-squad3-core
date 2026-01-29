@@ -184,15 +184,15 @@
 | valor       |   qtd |
 |:------------|------:|
 | 888W78UZYYT |     6 |
-| XNW79U9Z7WN |     5 |
-| ZW8Z8ZXWW7Z |     5 |
-| ZNTN78ZW7XX |     5 |
-| 7ZU8NNN7XUN |     5 |
-| T9ZYTXZ7WYZ |     5 |
 | XYN7XZZU788 |     5 |
+| ZYWUTZXXTU8 |     5 |
+| Y97YZZX88TY |     5 |
+| YY7ZZNNN8TY |     5 |
+| ZZUNWZYXXTZ |     5 |
+| WXXT7WUX8Y9 |     5 |
+| 8T9NWWT8TUZ |     5 |
+| ZWZT9ZZUZU8 |     5 |
 | ZYNYYUWWTZN |     5 |
-| XNXXWZZ97TZ |     5 |
-| UW7X8YWN88T |     5 |
 
 #### Coluna: `SAFRA`
 
