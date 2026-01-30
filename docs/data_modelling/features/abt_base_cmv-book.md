@@ -30,12 +30,12 @@ Este documento é o dicionário de referência da Analytical Base Table (ABT) fo
 
 | Prefixo | Tabela Origem (Silver) | Estratégia de Captura |
 | :--- | :--- | :--- |
-| `bur_` | `silver/score_bureau_movel` | **Âncora Principal:** Snapshot de scores e atributos de Bureau. |
-| `cad_` | `silver/dados_cadastrais` | Snapshot de atributos demográficos (Point-in-Time). |
-| `tel_` | `silver/telco` | Variáveis de comportamento de rede (Exclui dados NET/DTH). |
-| `rec_` | `silver/recarga` | Agregações estatísticas sincronizadas com a safra Bureau. |
-| `pag_` | `silver/pagamento` | Agregações estatísticas sincronizadas com a safra Bureau. |
-| `atr_` | `silver/atraso` | Agregações estatísticas sincronizadas com a safra Bureau. |
+| `bur_` | `silver/score_bureau_movel` | **Âncora Principal:** Snapshot completo de scores e bureaus externos CMV. |
+| `cad_` | `silver/dados_cadastrais` | Snapshot completo de atributos demográficos e cadastrais. |
+| `tel_` | `silver/telco` | Snapshot completo de variáveis de rede e consumo móvel. |
+| `rec_` | `silver/recarga` | Agregações estatísticas sobre histórico de créditos. |
+| `pag_` | `silver/pagamento` | AAgregações estatísticas sobre liquidação de faturas. |
+| `atr_` | `silver/atraso` | Agregações estatísticas sobre histórico de inadimplência. |
 
 ---
 
