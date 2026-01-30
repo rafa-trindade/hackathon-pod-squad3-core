@@ -1,3 +1,5 @@
+![header](../images/data_lineage/header_lineage.png)
+
 # 📖 1. Pré-processamento e Engenharia de Dados (Data Lineage)
 
 ### 🧭 Nota de Escopo - Maturidade da Solução (PoC)
@@ -92,7 +94,7 @@ As tabelas dimensionais possuem comportamento distinto das tabelas 'Fato', pois 
 
 **Entidades:** `atraso_dim` `recarga_dim`
 
-**Origens:** `s3://lake/raw/{dimensao}/*.csv`  
+**Origem:** `s3://lake/raw/{dimensao}/*.csv`  
 **Destinos:** `s3://lake/bronze/{dimensao}/*.parquet`
 
 | Regra | Descrição | Justificativa |
@@ -293,7 +295,7 @@ s3://lake/
 
 ## 📉 Visão Geral
 
-- **Entidade Principal:** Analytical Base Table (ABT) para Modelagem de Crédito CMV.
+- **Entidade Principal:** `abt_base_cmv` para Modelagem de Crédito CMV.
 - **Grão da Tabela (Unicidade):** `num_cpf, safra, prod`
 - **Âncora de Seleção:** `gold/labels_fpd_bureau` (Público restrito ao Score de Bureau Móvel)
 - **Chave de Particionamento:** `ano_mes` (Derivado da `safra`)
