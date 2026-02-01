@@ -70,7 +70,7 @@ Repositório de desenvolvimento, documentação e implementação técnica de so
 
 ### 📓 Data Science & Modeling
 > 📁 [`notebooks/*`](notebooks/)  
-> **Centraliza** o ciclo de inteligência analítica baseado no framework **CRISP-DM**. **Diagnostica** o perfil do público-alvo através de análises exploratórias profundas e **materializa** os algoritmos de Credit Scoring, integrando a descoberta de insights com a construção, treinamento e serialização de modelos preditivos (**artefatos .pkl**) para garantir o suporte técnico às decisões de negócio.
+> **Integra** o ciclo de inteligência analítica desde a exploração até a modelagem. **Diagnostica** o perfil de risco do público-alvo e **materializa** algoritmos de Credit Scoring através de artefatos serializados (**`.pkl`**), provendo suporte técnico e estatístico para as decisões estratégicas de negócio.
 >
 > * 📑 **Notebooks:** [`Análise Exploratória (EDA)`](notebooks/eda/01_estudo_publico_alvo_cmv.ipynb) | [`Modelagem & Serialização (Modeling)`](notebooks/modeling/)
 
