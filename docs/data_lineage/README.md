@@ -289,26 +289,21 @@ s3://lake/
 
 # 🧪 2. Estruturação do Modelo Baseline e Governança Temporal
 
-> **Nota Conceitual:** A **ABT** (Analytical Base Table) é a nossa tabela final de consumo físico. Já a **estruturação do baseline** é o conjunto de premissas técnicas (como a Governança Temporal e as janelas de 30/60/90 dias) que aplicamos na construção dessa ABT para garantir que o modelo focado no produto **CMV** seja treinado com **total confiabilidade**, sem viés ou *data leakage* (vazamento de dados).
+> **Nota Conceitual:** A **ABT** (Analytical Base Table) é a nossa tabela final de consumo físico. Já a **estruturação do baseline** é o conjunto de técnicas e estatísticas aplicadas na construção desta tabela para garantir que o modelo focado no produto **CMV** seja treinado com **total confiabilidade**, sem viés ou *data leakage*.
 
 ---
 
-## 📉 Visão Geral
+## 📉 2.1 Definição da Analytical Base Table (ABT) e Âncora Temporal
+A ABT constitui o ativo final de modelagem, consolidando o passado (features) e o futuro (target) sob rigorosa governança temporal para garantir o alinhamento com o público-alvo CMV.
 
-- **Entidade Principal:** `abt_base_cmv` para Modelagem de Crédito CMV.
-- **Grão da Tabela (Unicidade):** `num_cpf, safra, prod`
-- **Âncora de Seleção:** `gold/labels_fpd_bureau` (Público restrito ao Score de Bureau Móvel)
-- **Chave de Particionamento:** `ano_mes` (Derivado da `safra`)
-
----
-
-## ⏳ 2.1 Definição da Âncora Temporal (Safra)
-A âncora é o "ponto de observação" que separa o passado (features) do futuro (target).
-
-* **Safra:** Representa o primeiro dia do mês de geração do score de bureau. É a referência temporal absoluta para o grão da ABT e garante o alinhamento com o público-alvo CMV.
-* **Ponto de Corte (Cutoff):** Para cada registro, o sistema isola o universo de dados. Apenas eventos com data **estritamente inferior** à **Safra** são elegíveis para a criação de features.
-* **Maturidade de Ingestão (Público Alvo):** A captura da **Safra** via Bureau garante que estamos observando apenas o público CMV, evitando a inclusão de produtos residenciais (NET/DTH) que poderiam distorcer as métricas de performance do modelo.
-* **Objetivo:** Garantir que o modelo seja treinado exatamente com as informações que estariam disponíveis no momento da decisão de crédito no Bureau.
+- **Entidade Principal:** `abt_base_cmv` (Público restrito ao Score de Bureau Móvel).
+- **Grão da Tabela (Unicidade):** `num_cpf` + `safra` + `prod`.
+- **Âncora de Seleção:** `gold/labels_fpd_bureau` (Target FPD consolidado).
+- **Chave de Particionamento:** `ano_mes` (Derivado da Safra para otimização de leitura).
+- **Volumetria Robustecida:** 2.633.900 registros (2.565.985 CPFs únicos).
+- **Janela de Observação:** 6 safras mensais (Outubro/2024 a Março/2025).
+- **Target (FPD):** *First Payment Default* (Bad Rate médio de 21.23%, estável ao longo do período).
+- **Odds (Good:Bad):** 3.71:1.
 
 ---
 
@@ -358,43 +353,93 @@ A variável `rec_vlr_avg_l60d` refere-se ao **valor médio de recarga** nos **ú
 
 # 📉 3. Justificativa do Modelo e Métricas de Performance
 
+> **Nota de Metodologia:** Esta seção detalha as decisões estatísticas para a criação do modelo inicial. A escolha das métricas e do algoritmo baseline segue os padrões da indústria de **Credit Scoring**, visando equilibrar o poder de separação de risco com a necessidade de explicar as decisões de crédito ao negócio.
+
 ## 3.1 Escolha do Algoritmo Baseline
-> .  
-> .  
-> .  
 
-## 3.2 Justificativa da Técnica
-> .  
-> .  
-> .  
+O modelo baseline será estruturado via **Regressão Logística com discretização WoE (Weight of Evidence)**.
+- **Justificativa:** Esta escolha prioriza a **interpretabilidade** e a **estabilidade** dos coeficientes. O uso de WoE permite capturar relações não-lineares observadas nas curvas de risco e tratar valores nulos de forma robusta, facilitando a validação da monotonicidade conforme exigido em Scorecards de crédito (Siddiqi, 2017).
 
-## 3.3 Métricas de Sucesso e Avaliação
-> .  
-> .  
-> .  
+---
+
+## 3.2 Justificativa da Técnica (Poder Preditivo Univariado)
+
+A técnica baseia-se na identificação de variáveis com alto valor de informação (IV) e Gini. A análise exploratória confirmou o potencial discriminatório da ABT gerada:
+- **Principal Preditor:** `bur_score_02` (Gini=43.1% | IV=0.6048 - classificação "Muito Forte").
+- **Complementaridade Comportamental:** Variáveis como `pag_vlr_total_geral` (Gini 22%) e `atr_vlr_acumulado_geral` (Gini 15%) provaram ser os melhores complementos ao bureau, adicionando sinais de engajamento financeiro interno.
+- **Diferencial de Interação:** A combinação dos scores de bureau em matriz bidimensional amplifica a separação, permitindo identificar nichos de baixíssimo risco (Bad Rate de 6.4%).
+
+---
+
+## 3.3 Métricas de Sucesso e Avaliação Iniciais
+
+Para validar o desempenho inicial do baseline na Banca de Qualificação, definem-se as seguintes metas indicativas:
+- **Discriminação:** Gini > 40% (Desenvolvimento) e KS > 30% para garantir separação clara entre bons e maus pagadores.
+- **Estabilidade:** PSI (Population Stability Index) < 0.25 entre safras para assegurar que o modelo não sofra com volatilidade temporal.
+- **Ordenação:** Verificação de monotonicidade (Bad Rate decrescente conforme o aumento do score).
+- **Negócio:** Redução de Bad Rate na aprovação comparado à base "Sem Filtro" e análise de Swap-In/Out.
+
+---
+
+<br>
+
+# 🚀 4. Simulação de Impacto e Política Recomendada (Baseline)
+
+O estudo de público-alvo permitiu simular uma política de crédito simples baseada na combinação de Bureau e Comportamento interno.
+
+### Regra Recomendada (Elegibilidade):
+`(bur_score_02 >= 550) AND (idade >= 25 OR bur_score_02 >= 650) AND (pag_vlr_total_geral >= 500)`
+
+### Impacto Estimado na Base:
+- **Redução de Risco:** Estimativa de redução de Bad Rate em **~33%** (de 21% para ~14%).
+- **Cobertura:** Manutenção de **~65% de aprovação** da base prospectada.
+- **Eficiência:** O decil 10 (melhores scores) apresenta um risco **6x menor** que o decil 1, validando o poder de ordenação do baseline.
+
+---
+
+<br>
+
+### 🚀 Roadmap - Da Qualificação à Banca Final (Fases CRISP-DM)
+
+Abaixo detalhamos o plano de evolução do projeto, saindo desta PoC Core para a entrega final escalável:
+
+| Fase CRISP-DM | Atividade Crítica | Entregável |
+| :--- | :--- | :--- |
+| **1. Data Preparation** | Discretização WoE das variáveis Tier 1 e 2 e Split temporal (Train/Test/OOT). | Dataset transformado e auditado. |
+| **2. Modeling** | Desenvolvimento do Scorecard (Regressão Logística) e testes avançados (XGBoost/LightGBM). | Modelos comparativos e .pkl final. |
+| **3. Evaluation** | Validação *Out-of-Time* (safras Fev/Mar 2025) e análise de ganho incremental (Swap-In/Out). | Relatório de performance e estabilidade. |
+| **4. Deployment** | Migração do processamento Core para orquestração Apache Airflow dentro da OCI. | Pipeline produtivo em nuvem. |
 
 ---
 
 <br>
 
 
-## 📖 A.1 Glossário Geral da Documentação
+## 📖 A.1 Glossário Geral da Documentação (Engenharia & Analytics)
 
-Nesta seção, detalhamos os principais conceitos técnicos e terminologias aplicadas no Lakehouse, visando o alinhamento entre as frentes de Engenharia, Ciência de Dados e Negócio.
+Nesta seção, detalhamos os principais conceitos técnicos e terminologias aplicadas no Lakehouse, visando o alinhamento total entre as frentes de Engenharia, Ciência de Dados e Negócio.
 
-- **Run ID:** Identificador único de uma execução do pipeline, garantindo o isolamento e a reprodutibilidade histórica das cargas.
-- **Partition Pruning:** Otimização que permite ler apenas as partições necessárias no S3, reduzindo drasticamente o tempo e o custo de processamento.
-- **Point-in-Time Join:** Técnica de cruzamento de dados que respeita a linha do tempo, garantindo que o modelo use apenas dados disponíveis no momento exato do evento.
-- **Safra (Observação):** O ponto fixo no tempo (mês/ano) que define o grão temporal da tabela e separa o passado (features) do futuro (target). Para o produto CMV, a base consolidada apresenta uma volumetria robusta de **~2.6M de registros**, garantindo significância estatística para o treinamento.
-- **Target (Alvo):** A variável resposta (o fenômeno) que o modelo tenta prever (neste caso, o `fpd` - *First Payment Default*).
-- **ABT (Analytical Base Table):** Tabela consolidada com variáveis (features) pronta para o treinamento de modelos de Machine Learning.
-- **Lookback Window (Janela de Retrocesso):** O período de tempo (30, 60, 90 dias) que o modelo "olha para trás" a partir da **Safra** para calcular comportamentos.
-- **Drift (Desvio):** Mudança no comportamento ou na distribuição dos dados ao longo do tempo, que pode degradar a performance do modelo.
-- **Data Leakage (Vazamento de Dados):** Erro onde informações do futuro são usadas indevidamente no treino. Nossa governança elimina esse risco via **Point-in-Time Join**.
-- **Maturidade (D+4):** Tempo de espera técnica necessário para garantir que todos os eventos do mês anterior foram devidamente consolidados no Lake antes da geração da Gold.
-- **Mesa Farta:** Abordagem de *Feature Engineering* que consiste em gerar o máximo de variáveis e combinações temporais para que o algoritmo identifique as melhores correlações.
-- **Densidade de Sinal:** Percentual de preenchimento das variáveis agrupadas por origem (`tel` `rec` `pag`). Máxima no ativo de controle (99.9%).
-- **Observability Layer (Camada de Observabilidade):** Zona de armazenamento dedicada ao histórico de logs, auditorias e profilings, isolada das camadas de dados de negócio (Medallion) para garantir a governança técnica.
+### 🏗️ Domínio de Engenharia de Dados
+* **Run ID:** Identificador único de uma execução do pipeline, garantindo o isolamento, a rastreabilidade e a reprodutibilidade histórica das cargas.
+* **Partition Pruning:** Otimização que permite ler apenas as partições necessárias no S3 (via chaves `ano_mes`), reduzindo drasticamente o tempo e o custo de processamento.
+* **ABT (Analytical Base Table):** Tabela final consolidada com variáveis (features) estruturada por safra, pronta para o treinamento de modelos de Machine Learning.
+* **Maturidade (D+4):** Tempo de espera técnica necessário para garantir que todos os eventos do mês anterior foram consolidados no Lake antes da geração da camada Gold.
+* **Point-in-Time Join:** Técnica de cruzamento de dados que respeita a linha do tempo, garantindo que o modelo use apenas dados disponíveis no momento exato do evento, eliminando o risco de **Data Leakage** (vazamento de dados do futuro).
+* **Observability Layer:** Zona de armazenamento dedicada ao histórico de logs, auditorias e profilings, isolada das camadas de negócio para garantir a governança técnica.
+
+---
+
+### 🧪 Domínio de Analytics & Credit Scoring
+* **Safra (Observação):** Ponto fixo no tempo (mês/ano) que define o grão da tabela. Para o produto CMV, a base consolidada apresenta **2.633.900 registros**.
+* **FPD (First Payment Default):** Variável resposta (Target) que identifica a inadimplência no primeiro pagamento após a migração para o plano controle.
+* **Bad Rate:** Taxa de inadimplência, calculada pela razão entre clientes inadimplentes (Bad) e o volume total da base analisada.
+* **Gini / AUC:** Métricas de poder discriminatório do modelo (Meta > 40%). Refletem a capacidade do algoritmo de separar bons de maus pagadores.
+* **KS (Kolmogorov-Smirnov):** Estatística que mede a distância máxima entre as distribuições acumuladas de clientes adimplentes e inadimplentes (Meta > 30%).
+* **IV (Information Value):** Métrica que define o poder preditivo individual de uma variável (Ex: `bur_score_02` possui IV de 0.60, classificado como "Muito Forte").
+* **WoE (Weight of Evidence):** Técnica de transformação de variáveis para discretizar faixas de risco e garantir a monotonicidade do modelo.
+* **PSI (Population Stability Index):** Métrica de monitoramento de estabilidade da distribuição dos dados entre diferentes safras ou períodos (Meta < 0.25).
+* **OOT (Out-of-Time):** Validação do modelo em um período futuro (Ex: Fev/25 e Mar/25), não utilizado no treino, para testar a robustez em dados reais.
+* **Mesa Farta:** Abordagem de *Feature Engineering* consistente em gerar o máximo de variáveis estatísticas em janelas de **Lookback** (30, 60, 90 dias) para identificar as melhores correlações.
 
 <br>
 
