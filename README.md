@@ -15,6 +15,58 @@ Repositório de desenvolvimento, documentação e implementação técnica de so
 
 ---
 
+## Roadmap — Da Qualificação à Banca Final  
+
+## Fases CRISP-DM
+
+Abaixo detalhamos o plano de evolução do projeto, partindo desta **PoC Core** até a **entrega final escalável**, seguindo a metodologia **CRISP-DM**.
+
+---
+
+## Roadmap do Projeto
+
+| Fase CRISP-DM | Atividade | Entregável | Dependência | Status |
+|---------------|-----------|------------|-------------|--------|
+| Entendimento | Estudo de Público-Alvo | Notebook de EDA | Notebook de EDA | ✅ Concluído |
+| Preparação | Discretização WoE das variáveis selecionadas | Dataset transformado | EDA / Estudo de Público | ⏳ Pendente |
+| Preparação | Tratamento de missings (categoria especial) | Dataset limpo | EDA / Estudo de Público | ⏳ Pendente |
+| Preparação | Split temporal (train / test / OOT) | Conjuntos definidos | Estabilidade de safras verificada | ⏳ Pendente |
+| Modelagem | Modelo baseline (Regressão Logística) | Modelo v1.0 | Data Preparation | ⏳ Pendente |
+| Modelagem | Feature Selection (Stepwise, LASSO, Boruta) | Variáveis finais | Modelo baseline | ⏳ Pendente |
+| Modelagem | Modelos avançados (XGBoost, LightGBM) | Comparativo de performance | Feature Selection | ⏳ Pendente |
+| Avaliação | Métricas de performance (Gini, KS, AUC) | Report de métricas | Modelo final | ⏳ Pendente |
+| Avaliação | Validação Out-of-Time (OOT) | Estabilidade confirmada | Modelo final | ⏳ Pendente |
+| Avaliação | Análise de Swap-In / Swap-Out | Ganho incremental de receita | Política de crédito definida | ⏳ Pendente |
+| Implementação | Documentação técnica completa | Documento final da solução | Avaliação concluída | ⏳ Pendente |
+| Implementação | Scorecard interpretável | Tabela de pontos para negócio | Modelo aprovado | ⏳ Pendente |
+
+---
+
+## Objetivos Estratégicos — Fase 2
+
+### 🎯 Refinamento do Scorecard
+Evoluir da **PoC** para um **modelo produtivo**, com:
+- Discretização **WoE**
+- Alta **interpretabilidade**
+- Conformidade com as exigências do negócio e governança de risco
+
+### ⚔️ Benchmark Challenger
+- Avaliar algoritmos de **Gradient Boosting** (XGBoost, LightGBM)
+- Desafiar o modelo baseline
+- Maximizar métricas de performance, especialmente **Gini**
+
+### ☁️ Deploy Cloud Native
+- Migrar a execução **Core** para um ambiente orquestrado
+- Utilizar **Airflow / OCI**
+- Implementação conforme especificações do repositório de **Ops**
+
+---
+
+> Este roadmap garante uma transição estruturada da experimentação para produção, equilibrando **performance, interpretabilidade e escalabilidade**.
+
+
+---
+
 ## 📚 Mapeamento de Documentação (*Project Hub*)
 
 ### 📅 Gestão e Planejamento do Projeto
