@@ -432,13 +432,11 @@ Nesta seção, detalhamos os principais conceitos técnicos e terminologias apli
 
 Nesta seção encontram-se os manuais detalhados que compõem a governança técnica e os ativos gerados pelo pipeline.
 
-### 🗂️ Catálogo de Dados e Modelagem
-- 📖 **[Dicionário de Variáveis (Book) - ABT CMV](../data_modelling/features/abt_base_cmv-book.md):** Definição técnica de cada feature gerada na Gold.
-- 📖 **[Dicionário de Dados - Camada Silver](../data_dictionary/):** Descrição das entidades saneadas e prontas para consumo.
-
 ### 🏗️ Arquitetura e Infraestrutura
 - 🏗️ **[Manual de Arquitetura de Dados](../data_architecture/README.md):** Visão macro/micro e stack tecnológica.
 - 🚀 **[Estratégia de Deploy OCI (Cloud Readiness)](../data_architecture/oci-cloud-ready-strategy.md):** Plano de migração VPS -> Nuvem.
+
+---
 
 ### 🏛️ Governança e Operação
 - 🏛️ **[Manual de Governança de Dados](../data_governance/README.md):** Políticas de privacidade, acesso e qualidade.
@@ -447,17 +445,42 @@ Nesta seção encontram-se os manuais detalhados que compõem a governança téc
 
 ---
 
-<br>
-
-## 🧭 A.3 Roadmap - Da Qualificação à Banca Final (Fases CRISP-DM)
-
-Abaixo detalhamos o plano de evolução do projeto, saindo desta PoC Core para a entrega final escalável:
-
-| Fase CRISP-DM | Atividade Crítica | Entregável |
-| :--- | :--- | :--- |
-| **1. Data Preparation** | Discretização WoE das variáveis Tier 1 e 2 e Split temporal (Train/Test/OOT). | Dataset transformado e auditado. |
-| **2. Modeling** | Desenvolvimento do Scorecard (Regressão Logística) e testes avançados (XGBoost/LightGBM). | Modelos comparativos e .pkl final. |
-| **3. Evaluation** | Validação *Out-of-Time* (safras Fev/Mar 2025) e análise de ganho incremental (Swap-In/Out). | Relatório de performance e estabilidade. |
-| **4. Deployment** | Migração do processamento Core para orquestração Apache Airflow dentro da OCI. | Pipeline produtivo em nuvem. |
+### 📓 Notebooks e Inteligência Analítica
+- 📓 **[Análise Exploratória (EDA)](../../notebooks/eda/01_estudo_publico_alvo_cmv.ipynb):** Estudo aprofundado do público-alvo, diagnóstico de risco e validação de hipóteses.
+- 🧪 **[Modelagem Estatística (Modeling)](../../notebooks/modeling/):** Experimentos de algoritmos e script de treinamento para geração dos artefatos serializados (.pkl).
 
 ---
+
+### 🗂️ Catálogo de Dados
+- 📖 **[Dicionário de Variáveis (Book) - ABT CMV](../data_modelling/features/abt_base_cmv-book.md):** Definição técnica de cada feature gerada na Gold.
+- 📖 **[Dicionário de Dados - Camada Silver](../data_dictionary/):** Descrição das entidades saneadas e prontas para consumo.
+
+---
+
+<br>
+
+## 🧭 A.3 Roadmap Detalhado - Próximos Passos (Framework CRISP-DM)
+
+Esta seção detalha o plano de trabalho para a Fase 2, estabelecendo a sequência lógica e as dependências técnicas entre a Engenharia e a Ciência de Dados até a entrega final.
+
+| Fase CRISP-DM | Atividade | Entregável | Dependência |
+| :--- | :--- | :--- | :--- |
+| **Data Understanding** | Estudo de Público-Alvo | Notebook de EDA | - |
+| **Data Preparation** | Discretização WoE das variáveis selecionadas | Dataset transformado | EDA / Estudo de Público |
+| **Data Preparation** | Tratamento de missings (categoria especial) | Dataset limpo | EDA / Estudo de Público |
+| **Data Preparation** | Split temporal (train/test/OOT) | Conjuntos definidos | Estabilidade de safras verificada |
+| **Modeling** | Modelo baseline (Regressão Logística) | Modelo v1.0 | Data Preparation |
+| **Modeling** | Feature selection (Stepwise, LASSO, Boruta) | Variáveis finais | Modelo baseline |
+| **Modeling** | Modelos avançados (XGBoost, LightGBM) | Comparativo de performance | Feature selection |
+| **Evaluation** | Métricas de performance (Gini, KS, AUC) | Report de métricas | Modelo final |
+| **Evaluation** | Validação out-of-time (OOT) | Estabilidade confirmada | Modelo final |
+| **Evaluation** | Análise de Swap-In/Out | Ganho incremental de receita | Política de crédito definida |
+| **Deployment** | Documentação técnica completa | Documento final da solução | Avaliação concluída |
+| **Deployment** | Scorecard interpretável | Tabela de pontos para negócio | Modelo aprovado |
+
+---
+
+### 🎯 Objetivos Estratégicos (Fase 2)
+* **Refinamento do Scorecard:** Evoluir da PoC para um modelo produtivo com discretização WoE, garantindo a interpretabilidade exigida pelo negócio.
+* **Benchmark Challenger:** Testar algoritmos de Gradient Boosting para desafiar a performance do baseline e maximizar o Gini.
+* **Deploy Cloud Native:** Migrar a execução Core para o ecossistema orquestrado (Airflow/OCI) conforme detalhado no repositório de Ops.
