@@ -15,9 +15,7 @@ Repositório de desenvolvimento, documentação e implementação técnica de so
 
 ---
 
-## Roadmap - Da Qualificação à Banca Final  
-
-## Fases CRISP-DM
+## Fases CRISP-DM - Da Qualificação à Banca Final  
 
 Abaixo detalhamos o plano de evolução do projeto, partindo desta **PoC Core** até a **entrega final escalável**, seguindo a metodologia **CRISP-DM**.
 
