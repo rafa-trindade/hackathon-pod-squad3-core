@@ -13,8 +13,9 @@ O planejamento do projeto foi estruturado combinando as boas práticas do **PMBO
 ### Gestão do Fluxo (Kanban)
 A gestão das atividades é realizada por meio de quadros Kanban no **GitHub Projects**, integrando planejamento, execução e versionamento em um único ecossistema. Para garantir a especialização técnica e a fluidez das entregas, dividimos a gestão em dois projetos distintos:
 
-* **Data & Analytics - Squad 3:** Focado no ciclo de vida da ciência de dados e modelos de ML.
-* **Data Engineering - Squad 3:** Focado na infraestrutura de processamento, orquestração e sustentação do Data Lake.
+* **Data & Analytics - Squad 3:** Focado no ciclo de vida de inteligência analítica, exploração de dados e desenvolvimento de modelos de Machine Learning.
+* **Data Engineering - Squad 3 (CORE):** Focado na engine de processamento, implementação da arquitetura medalhão e gestão de conexões de alta performance.
+* **Data Engineering - Squad 3 (OPS):** Focado em infraestrutura como código (IaC), automação de ambientes, orquestração de pipelines e estratégias de Cloud Readiness.
 
 O uso desses quadros possibilita:
 * Controle visual detalhado das tarefas (*To Do, In Progress, Done*).
