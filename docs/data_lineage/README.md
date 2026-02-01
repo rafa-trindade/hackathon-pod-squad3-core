@@ -300,9 +300,9 @@ A ABT constitui o ativo final de modelagem, consolidando o passado (features) e 
 - **Grão da Tabela (Unicidade):** `num_cpf` + `safra` + `prod`.
 - **Âncora de Seleção:** `gold/labels_fpd_bureau` (Target FPD consolidado).
 - **Chave de Particionamento:** `ano_mes` (Derivado da Safra para otimização de leitura).
-- **Volumetria Robustecida:** 2.633.900 registros (2.565.985 CPFs únicos).
-- **Janela de Observação:** 6 safras mensais (Outubro/2024 a Março/2025).
-- **Target (FPD):** *First Payment Default* (Bad Rate médio de 21.23%, estável ao longo do período).
+- **Volumetria:** 2.633.900 registros (2.565.985 CPFs únicos).
+- **Janela de Observação:** 6 safras (Out/24 a Mar/25).
+- **Estabilidade:** Bad Rate médio de 21.23% com desvio máximo entre safras de apenas 1.22 p.p.
 - **Odds (Good:Bad):** 3.71:1.
 
 ---
