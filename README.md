@@ -68,6 +68,14 @@ Repositório de desenvolvimento, documentação e implementação técnica de so
 
 ---
 
+### 📓 Data Science & Modeling
+> 📁 [`notebooks/*`](notebooks/)  
+> **Centraliza** o ciclo de inteligência analítica baseado no framework **CRISP-DM**. **Diagnostica** o perfil do público-alvo através de análises exploratórias profundas e **materializa** os algoritmos de Credit Scoring, integrando a descoberta de insights com a construção, treinamento e serialização de modelos preditivos (**artefatos .pkl**) para garantir o suporte técnico às decisões de negócio.
+>
+> * 📑 **Notebooks:** [`Análise Exploratória (EDA)`](notebooks/eda/01_estudo_publico_alvo_cmv.ipynb) | [`Modelagem & Serialização (Modeling)`](notebooks/modeling/)
+
+---
+
 ### 🔍 Data Observability
 > 📁 [`docs/data_observability/`](docs/data_observability/)  
 > **Monitora** a saúde do ecossistema através de métricas de *Freshness*, *Volume*, *Distribution* e *Schema*. **Garante** resiliência operacional através de protocolos de *Health Check* de safras e auditoria de densidade para assegurar a riqueza de informação para Machine Learning.
