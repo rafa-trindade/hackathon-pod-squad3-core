@@ -15,7 +15,7 @@ Repositório de desenvolvimento, documentação e implementação técnica de so
 
 ---
 
-## Roadmap — Da Qualificação à Banca Final  
+## Roadmap - Da Qualificação à Banca Final  
 
 ## Fases CRISP-DM
 
@@ -42,7 +42,7 @@ Abaixo detalhamos o plano de evolução do projeto, partindo desta **PoC Core** 
 
 ---
 
-## Objetivos Estratégicos — Fase 2
+## Objetivos Estratégicos - Fase 2
 
 ### 🎯 Refinamento do Scorecard
 Evoluir da **PoC** para um **modelo produtivo**, com:
