@@ -8,8 +8,8 @@ Repositório de desenvolvimento, documentação e implementação técnica de so
 
 ### 🔗 Ecossistema Squad 3
 
-* **Repositório 1 de 2 (Core):** [hackathon-pod-squad3-core](https://github.com/rafa-trindade/hackathon-pod-squad3-core) – _Engine de processamento, arquitetura medalhão e gestão de performance com governança de dados nativa._
-* **Repositório 2 de 2 (Ops):** [hackathon-pod-squad3-ops](https://github.com/rafa-trindade/hackathon-pod-squad3-ops) – _Infraestrutura como código (IaC), orquestração de pipelines e estratégias de Cloud Readiness._
+* **Repositório 1 de 2 (Core):** [hackathon-pod-squad3-core](https://github.com/rafa-trindade/hackathon-pod-squad3-core) - _Engine de processamento, arquitetura medalhão e gestão de performance com governança de dados nativa._
+* **Repositório 2 de 2 (Ops):** [hackathon-pod-squad3-ops](https://github.com/rafa-trindade/hackathon-pod-squad3-ops) - _Infraestrutura como código (IaC), orquestração de pipelines e estratégias de Cloud Readiness._
 
 > 🔐 O Core define **o que** a arquitetura executa.  
 > ⚙️ O Ops define **como e onde** ela é executada.
@@ -20,7 +20,7 @@ Repositório de desenvolvimento, documentação e implementação técnica de so
 
 >A governança das atividades é realizada por meio de quadros Kanban no **GitHub Projects**, integrando planejamento execução e versionamento. Esta divisão garante especialização técnica e transparência no progresso das frentes:   
 >
-> 🚦 **Quadros de Execução:** [`squad3-analytics`](https://github.com/users/rafa-trindade/projects/6) | [`squad3-core`](https://github.com/users/rafa-trindade/projects/4) | [`squad3-ops`](https://github.com/users/rafa-trindade/projects/8)
+> 🚦 **Backlogs de Desenvolvimento:** [`squad3-analytics`](https://github.com/users/rafa-trindade/projects/6) | [`squad3-core`](https://github.com/users/rafa-trindade/projects/4) | [`squad3-ops`](https://github.com/users/rafa-trindade/projects/8)
 
 ---
 
