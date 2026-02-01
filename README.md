@@ -18,16 +18,15 @@ Repositório de desenvolvimento, documentação e implementação técnica de so
 
 ### 📋 Governança Operacional (Gestão de Backlog)
 
-A governança das atividades é realizada por meio de quadros Kanban no **GitHub Projects**, integrando planejamento, execução e versionamento. Esta divisão garante especialização técnica e transparência no progresso das frentes:
-
-> 🧬 **Data & Analytics:** [`🔗squad3-analytics`](https://github.com/users/rafa-trindade/projects/6)    
-> ⚡ **Data Engineering:** [`🔗squad3-core`](https://github.com/users/rafa-trindade/projects/4) [`🔗squad3-ops`](https://github.com/users/rafa-trindade/projects/8)
+>A governança das atividades é realizada por meio de quadros Kanban no **GitHub Projects**, integrando planejamento, >execução e versionamento. Esta divisão garante especialização técnica e transparência no progresso das frentes:
+>
+> 🎯 **Quadros de Gestão:** [`squad3-analytics`](https://github.com/users/rafa-trindade/projects/6) | [`squad3-core`](https://github.com/users/rafa-trindade/projects/4) | [`squad3-ops`](https://github.com/users/rafa-trindade/projects/8)
 
 ---
 
 ## 📚 Mapeamento de Documentação (*Project Hub*)
 
-### 📅 Gestão e Planejamento do Projeto
+### 📅 Plano de Execução
 > 📁 [`docs/project_plan/*`](docs/project_plan/)  
 > **Consolida** a visão estratégica e operacional do projeto, integrando o contexto de negócio, objetivos e plano de trabalho da Squad. **Define** o cronograma de entregas, as métricas de sucesso e as responsabilidades de cada frente sob uma abordagem híbrida de governança e agilidade.
 >
