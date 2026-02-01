@@ -399,23 +399,8 @@ O estudo de público-alvo permitiu simular uma política de crédito simples bas
 
 <br>
 
-## 🧭 A.1 Roadmap - Da Qualificação à Banca Final (Fases CRISP-DM)
 
-Abaixo detalhamos o plano de evolução do projeto, saindo desta PoC Core para a entrega final escalável:
-
-| Fase CRISP-DM | Atividade Crítica | Entregável |
-| :--- | :--- | :--- |
-| **1. Data Preparation** | Discretização WoE das variáveis Tier 1 e 2 e Split temporal (Train/Test/OOT). | Dataset transformado e auditado. |
-| **2. Modeling** | Desenvolvimento do Scorecard (Regressão Logística) e testes avançados (XGBoost/LightGBM). | Modelos comparativos e .pkl final. |
-| **3. Evaluation** | Validação *Out-of-Time* (safras Fev/Mar 2025) e análise de ganho incremental (Swap-In/Out). | Relatório de performance e estabilidade. |
-| **4. Deployment** | Migração do processamento Core para orquestração Apache Airflow dentro da OCI. | Pipeline produtivo em nuvem. |
-
----
-
-<br>
-
-
-## 📖 A.2 Glossário Geral da Documentação (Engenharia & Analytics)
+## 📖 A.1 Glossário Geral da Documentação (Engenharia & Analytics)
 
 Nesta seção, detalhamos os principais conceitos técnicos e terminologias aplicadas no Lakehouse, visando o alinhamento total entre as frentes de Engenharia, Ciência de Dados e Negócio.
 
@@ -443,7 +428,7 @@ Nesta seção, detalhamos os principais conceitos técnicos e terminologias apli
 
 <br>
 
-## 📚 A.3 Apêndices e Documentação de Suporte
+## 📚 A.2 Apêndices e Documentação de Suporte
 
 Nesta seção encontram-se os manuais detalhados que compõem a governança técnica e os ativos gerados pelo pipeline.
 
@@ -459,3 +444,20 @@ Nesta seção encontram-se os manuais detalhados que compõem a governança téc
 - 🏛️ **[Manual de Governança de Dados](../data_governance/README.md):** Políticas de privacidade, acesso e qualidade.
 - 🧬 **[Manual de Lineage](../data_lineage/README.md):** Mapeamento detalhado do fluxo de transformação.
 - 🔍 **[Manual de Observabilidade](../data_observability/README.md):** Guia de logs e saúde do pipeline.
+
+---
+
+<br>
+
+## 🧭 A.3 Roadmap - Da Qualificação à Banca Final (Fases CRISP-DM)
+
+Abaixo detalhamos o plano de evolução do projeto, saindo desta PoC Core para a entrega final escalável:
+
+| Fase CRISP-DM | Atividade Crítica | Entregável |
+| :--- | :--- | :--- |
+| **1. Data Preparation** | Discretização WoE das variáveis Tier 1 e 2 e Split temporal (Train/Test/OOT). | Dataset transformado e auditado. |
+| **2. Modeling** | Desenvolvimento do Scorecard (Regressão Logística) e testes avançados (XGBoost/LightGBM). | Modelos comparativos e .pkl final. |
+| **3. Evaluation** | Validação *Out-of-Time* (safras Fev/Mar 2025) e análise de ganho incremental (Swap-In/Out). | Relatório de performance e estabilidade. |
+| **4. Deployment** | Migração do processamento Core para orquestração Apache Airflow dentro da OCI. | Pipeline produtivo em nuvem. |
+
+---
