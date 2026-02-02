@@ -22,7 +22,7 @@ Repositório de desenvolvimento, documentação e implementação técnica de so
 > 📁 [`docs/project_plan/*`](docs/project_plan/)  
 > **Consolida** a visão estratégica e operacional do projeto, integrando o contexto de negócio, objetivos e plano de trabalho da Squad. **Define** o cronograma de entregas, as métricas de sucesso e as responsabilidades de cada frente sob uma abordagem híbrida de governança e agilidade.
 >
-> * 🚦 **Backlogs de Desenvolvimento:** [`squad3-analytics`](https://github.com/users/rafa-trindade/projects/6) | [`squad3-core`](https://github.com/users/rafa-trindade/projects/4) | [`squad3-ops`](https://github.com/users/rafa-trindade/projects/8)
+> * 🚦 **Backlogs de Desenvolvimento:** [`squad3-analytics`](https://github.com/users/rafa-trindade/projects/6) | [`squad3-engineering-core`](https://github.com/users/rafa-trindade/projects/4) | [`squad3-engineering-ops`](https://github.com/users/rafa-trindade/projects/8)
 > * 📑 **Documentação:** [`Entendimento`](docs/project_plan/01-entendimento-problema.md) | [`Abordagem`](docs/project_plan/02-abordagem-tecnica.md) | [`Plano de Trabalho`](docs/project_plan/03-plano-trabalho.md) | [`Cronograma`](docs/project_plan/04-cronograma.md) | [`Riscos`](docs/project_plan/05-riscos-dependencias.md) | [`Métricas`](docs/project_plan/06-metricas-sucesso.md)
 
 ---
