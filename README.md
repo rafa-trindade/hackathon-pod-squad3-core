@@ -16,21 +16,14 @@ Repositório de desenvolvimento, documentação e implementação técnica de so
 
 ---
 
-### 📋 Governança Operacional (Gestão de Backlog)
-
->A governança das atividades é realizada por meio de quadros Kanban no **GitHub Projects**, integrando planejamento execução e versionamento. Esta divisão garante especialização técnica e transparência no progresso das frentes:   
->
-> 🚦 **Backlogs de Desenvolvimento:** [`squad3-analytics`](https://github.com/users/rafa-trindade/projects/6) | [`squad3-core`](https://github.com/users/rafa-trindade/projects/4) | [`squad3-ops`](https://github.com/users/rafa-trindade/projects/8)
-
----
-
 ## 📚 Mapeamento de Documentação (*Project Hub*)
 
-### 📅 Plano de Execução
+### 📅 Gestão e Planejamento do Projeto
 > 📁 [`docs/project_plan/*`](docs/project_plan/)  
 > **Consolida** a visão estratégica e operacional do projeto, integrando o contexto de negócio, objetivos e plano de trabalho da Squad. **Define** o cronograma de entregas, as métricas de sucesso e as responsabilidades de cada frente sob uma abordagem híbrida de governança e agilidade.
 >
-> * 📑 **Documentos:** [`Entendimento`](docs/project_plan/01-entendimento-problema.md) | [`Abordagem`](docs/project_plan/02-abordagem-tecnica.md) | [`Plano de Trabalho`](docs/project_plan/03-plano-trabalho.md) | [`Cronograma`](docs/project_plan/04-cronograma.md) | [`Riscos`](docs/project_plan/05-riscos-dependencias.md) | [`Métricas`](docs/project_plan/06-metricas-sucesso.md)
+> * 🚦 **Backlogs de Desenvolvimento:** [`squad3-analytics`](https://github.com/users/rafa-trindade/projects/6) | [`squad3-core`](https://github.com/users/rafa-trindade/projects/4) | [`squad3-ops`](https://github.com/users/rafa-trindade/projects/8)
+> * 📑 **Documentação:** [`Entendimento`](docs/project_plan/01-entendimento-problema.md) | [`Abordagem`](docs/project_plan/02-abordagem-tecnica.md) | [`Plano de Trabalho`](docs/project_plan/03-plano-trabalho.md) | [`Cronograma`](docs/project_plan/04-cronograma.md) | [`Riscos`](docs/project_plan/05-riscos-dependencias.md) | [`Métricas`](docs/project_plan/06-metricas-sucesso.md)
 
 ---
 
@@ -38,7 +31,7 @@ Repositório de desenvolvimento, documentação e implementação técnica de so
 > 📁 [`docs/data_architecture/*`](docs/data_architecture/)  
 > **Define** uma stack **Cloud-Ready** orquestrada em ambiente VPS via **Docker** e **Airflow**. **Implementa** MinIO para storage Medallion (S3-API), DuckDB para processamento vetorial e PostgreSQL para o Data Warehouse. **Garante** a entrega de valor via **Modelos (.pkl)** versionados e relatórios analíticos, com suporte a **DataViz (Streamlit)** e estratégia de migração nativa para **OCI**.
 >
-> * 📑 **Documentos:** [`Arquitetura Técnica (Macro & Micro)`](docs/data_architecture/README.md) | [`Estratégia de Migração (VPS → OCI)`](docs/data_architecture/oci-cloud-ready-strategy.md)
+> * 📑 **Documentação:** [`Arquitetura Técnica (Macro & Micro)`](docs/data_architecture/README.md) | [`Estratégia de Migração (VPS → OCI)`](docs/data_architecture/oci-cloud-ready-strategy.md)
 
 ---
 
