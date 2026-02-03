@@ -82,7 +82,7 @@ Repositório de desenvolvimento, documentação e implementação técnica de so
 > 📁 [`docs/data_observability/`](docs/data_observability/)  
 > **Materializa** a observabilidade através de artefatos gerados em tempo de execução. Garante a governança e transparência do pipeline, mantendo registros históricos de integridade, qualidade e diagnósticos estatísticos para auditoria técnica.
 >
-> * 📁 [`Relatórios de Observabilidade`](reports/observability/) - Centraliza as evidências de integridade física (`integrity`), diagnósticos estatísticos (`profiling`), relatórios de contratos de dados (`quality`) e análise exploratória de público (`eda`).
+> * 📁 [`Relatórios de Observabilidade`](reports/observability/) - Centraliza as evidências de integridade física (`integrity`), diagnósticos estatísticos (`profiling`), relatórios de contratos de dados (`quality`) e análise de público (`eda`).
 
 ---
 
