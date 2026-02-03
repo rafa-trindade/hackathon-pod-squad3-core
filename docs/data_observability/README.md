@@ -43,8 +43,6 @@ A observabilidade de dados garante a transparência e a saúde do fluxo de infor
 * **Isolamento de Erros:** A estrutura de `run_id` permite que o Lineage seja "versionado" - sabemos exatamente qual versão do código gerou qual versão do dado.
 * **Evidência Persistente:** O vínculo entre código e dado é selado pela persistência do log de execução original junto aos dados no Data Lake, garantindo que o rastro técnico nunca se perca.
 
-
-
 ## 🛠️ Implementação da Confiabilidade (Reliability)
 
 A confiabilidade é sustentada pelo **Protocolo de Execução Segura**:
@@ -56,11 +54,12 @@ A confiabilidade é sustentada pelo **Protocolo de Execução Segura**:
 
 A observabilidade é materializada através de artefatos gerados em tempo de execução. Para garantir a governança, estes arquivos são mantidos em última versão local e **historicamente no Data Lake** em `s3://lake/observability/reports/run_id={id}/`:
 
-- **Master Pipeline Log:** [Disponível no S3] - Registro sequencial técnico (caixa-preta) de todas as etapas do pipeline.
+- **Master Pipeline Log:** [`reports/observability/integrity/`](../../bin/reports/pipeline_run_20260129.log) - Registro sequencial técnico (caixa-preta) de todas as etapas do pipeline.
 - **Integridade de Partições:** [`reports/observability/integrity/`](../../reports/observability/integrity/) - Validação física e cross-check cronológico.
 - **Qualidade de Pipeline (Safra/Overlap):** [`reports/observability/quality/pipeline/`](../../reports/observability/quality/pipeline/) - Auditoria de volumetria e match de chaves.
 - **Diagnósticos Estatísticos:** [`reports/observability/profiling/`](../../reports/observability/profiling/) - Saúde estatística e distribuição (Data Discovery).
 - **Contratos de Dados (Pandera):** [`reports/observability/quality/pandera/`](../../reports/observability/quality/pandera/) - Validação de schemas e regras.
+- **Diagnóstico de Público (EDA):** [`reports/observability/eda/`](../../reports/observability/eda/) - Artefatos analíticos (tabelas e figuras) que fundamentam o estudo do perfil de risco e público-alvo.
 
 ## 🧭 Navegação de Observabilidade no Data Lake
 
