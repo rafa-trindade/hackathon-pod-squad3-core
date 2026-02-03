@@ -27,7 +27,7 @@ A arquitetura separa a **engine de processamento** da **sustentação de infraes
 
 ---
 
-## 📚 Mapeamento de Documentação (*Core*)
+## 📚 Mapeamento de Documentação (*CORE*)
 
 ### 📅 Gestão e Planejamento do Projeto
 > 📁 [`docs/project_plan/*`](docs/project_plan/)  
