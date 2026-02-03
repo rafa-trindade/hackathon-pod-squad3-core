@@ -30,7 +30,7 @@ A arquitetura separa a **engine de processamento** da **sustentação de infraes
 
 ---
 
-## 📖 Navegação Técnica (Documentação *Core*)
+## 📖 Navegação Técnica (Documentação)
 
 ### 📅 Gestão e Planejamento do Projeto
 > 📁 [`docs/project_plan/*`](docs/project_plan/)  
