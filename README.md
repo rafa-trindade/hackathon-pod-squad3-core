@@ -16,7 +16,7 @@ Repositório de desenvolvimento, documentação e implementação técnica de so
 
 ---
 
-### 🔄 O Ciclo de Vida: Do Core ao Ops
+### 🔄 O Ciclo de Vida: Do `Core` ao `Ops`
 
 A arquitetura separa a **engine de processamento** da **sustentação de infraestrutura**, aplicando estratégias de **Cloud Readiness** para garantir escalabilidade, governança e alta disponibilidade:
 
