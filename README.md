@@ -80,9 +80,9 @@ Repositório de desenvolvimento, documentação e implementação técnica de so
 
 ### 🔍 Data Observability
 > 📁 [`docs/data_observability/`](docs/data_observability/)  
-> **Monitora** a saúde do ecossistema através de métricas de *Freshness*, *Volume*, *Distribution* e *Schema*. **Garante** resiliência operacional através de protocolos de *Health Check* de safras e auditoria de densidade para assegurar a riqueza de informação para Machine Learning.
+> **Materializa** a observabilidade através de artefatos gerados em tempo de execução. Garante a governança e transparência do pipeline, mantendo registros históricos de integridade, qualidade e diagnósticos estatísticos para auditoria técnica.
 >
-> * 📁 [`Relatórios de Observabilidade`](reports/observability/) - Centraliza as evidências de integridade física (`integrity`), diagnósticos estatísticos (`profiling`) e relatórios de contratos de dados (`quality`).
+> * 📁 [`Relatórios de Observabilidade`](reports/observability/) - Centraliza as evidências de integridade física (`integrity`), diagnósticos estatísticos (`profiling`), relatórios de contratos de dados (`quality`) e análise exploratória de público (`eda`).
 
 ---
 
