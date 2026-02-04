@@ -1,95 +1,98 @@
-# 🏛️ Data Architecture - Estratégia de Execução Cloud Ready na OCI
+# 🏛️ Data Architecture - Estratégia de Cloud Readiness (OCI Execution)
 
-Este documento descreve como a arquitetura de dados do projeto, concebida desde sua origem como **cloud ready**, é executada em ambiente de nuvem, utilizando a **Oracle Cloud Infrastructure (OCI)** como plataforma de execução.
-
-## 🎯 1. Visão Geral da Estratégia
-
-A execução da arquitetura em nuvem é orientada por princípios de portabilidade, governança e separação de responsabilidades, permitindo que o mesmo modelo de dados e processamento opere de forma consistente em diferentes ambientes.
-
-Essa abordagem assegura:
-
-- Portabilidade entre ambientes (on-prem e cloud)
-- Separação clara de responsabilidades
-- Governança e observabilidade aplicadas via código
-- Escalabilidade e eficiência operacional em Object Storage
-
-Nesse contexto, a plataforma de execução sustenta a operação da arquitetura de forma consistente e governada.
+Este documento detalha a implementação da arquitetura de dados do Squad 3, concebida sob o paradigma **Cloud Ready**. Aqui, a infraestrutura da **Oracle Cloud Infrastructure (OCI)** atua como a plataforma de execução para o motor de governança e processamento.
 
 ---
 
-### **Por que a Separação Core vs Ops?**
-Para atingir maturidade arquitetural e prontidão para nuvem, o ecossistema foi dividido em dois repositórios com responsabilidades bem definidas:
-1. **`hackathon-pod-squad3-core`:** Concentra a engine de processamento e a governança de dados, aplicando as políticas de qualidade, modelagem e padronização da arquitetura medalhão. É projetado para ser agnóstico à infraestrutura, garantindo portabilidade entre ambientes on-prem e cloud.
-2. **`hackathon-pod-squad3-ops`:** Responsável pela sustentação operacional da plataforma, incluindo infraestrutura como código (IaC), orquestração dos pipelines e ingestão de dados, viabilizando a execução do Core em ambientes de nuvem.
+## 🎯 1. Visão Geral da Estratégia: Core & Ops
 
-A estratégia de "Cloud Ready" não se limita a mover arquivos; trata-se de garantir que o código seja **portável, resiliente e governado**. 
+Para atingir a máxima maturidade arquitetural, separamos a **Inteligência** da **Sustentação**. Essa separação permite que o motor de dados seja agnóstico, enquanto a operação é otimizada para a nuvem através de pilares de **Cloud Readiness**.
 
----
+* **🧠 Core (The Engine):** Responsável pela lógica de negócio e transformação. Atua como o **Worker** que executa a arquitetura Medallion e garante a integridade dos dados através de processamento vetorial (DuckDB). É o motor de execução agnóstico à infraestrutura, onde residem os contratos de dados e as regras de qualidade.
+* **🏗️ Ops (The Platform):** Responsável pelo **Provisionamento (IaC)** via Terraform, **Orquestração** via Airflow e **Ingestão Híbrida**. É o que viabiliza a execução do Core com segurança e escalabilidade.
 
-## 🛠️ 2. Fases da Operação em Nuvem
 
-A execução do projeto na OCI é dividida em quatro fases críticas:
-
-### **Fase 1: Provisionamento de Infraestrutura (IaC)**
-
-- **Objetivo:** Criar o ambiente de forma imutável na OCI utilizando Terraform.  
-- **Storage:** Bucket `lake-squad3` no Object Storage (S3-Compatible).  
-- **Compute:** Instância Flex (OCI E4) para hospedagem do Airflow via Docker.  
-- **IAM & Security:** Configuração de *Dynamic Groups*, permitindo acesso ao storage via identidade nativa.  
+> 💡 **Decisão Estratégia de Não-Lock-in:** Optamos pelo deploy via **Docker Compose dentro de OCI Compute**. Isso garante portabilidade total: podemos migrar todo o ecossistema para qualquer nuvem ou ambiente local apenas alterando o arquivo de composição.
 
 ---
 
-### **Fase 2: Orquestração e Bootstrap**
+## 🛠️ 2. Fases do Ciclo de Vida Operacional
 
-- **Repositório responsável:** `-ops` gerencia o ciclo de vida do pipeline.  
-- **Task Bootstrap:** Airflow realiza `git clone` do repositório `-core` para garantir a execução da versão mais recente.  
-- **Preparação do ambiente:** Instalação dinâmica de dependências (DuckDB, Pandera, Boto3, etc.)  
+A execução na OCI foi estruturada em um pipeline de 4 fases automatizadas:
 
----
+### **Fase 1: Provisionamento Imutável (Terraform)**
+Toda a infraestrutura é erguida via código, garantindo reprodutibilidade:
+- **Networking:** VCN isolada com Subnets e Security Lists (Portas 22/8080).
+- **Identity (IAM):** RBAC via grupos e políticas nativas.
+- **Storage:** Bucket `lake-squad3` configurado com acesso S3-Compatible.
 
-### **Fase 3: Ingestão Cloud Ready**
+### **Fase 2: Bootstrap & Integração (Cloud-Init + Docker)**
+No momento do boot da instância, o script `cloud-init.sh` prepara o ambiente:
+- Instalação automatizada da stack Docker.
+- Criação dos caminhos de persistência (`/home/opc/app/`).
+- O **Core é montado como um volume persistente** dentro dos containers do Airflow, fundindo a lógica de negócio à capacidade de escala da nuvem.
 
-- **Objetivo:** Ingestão representativa de dados de origem legada, reproduzindo condições reais de volume, formato e acoplamento.  
-- **Execução:** Script consome dados brutos da camada `RAW` da VPS (MinIO) e replica para o `RAW` do OCI Object Storage.  
+### **Fase 3: Ingestão Híbrida (The Data Bridge)**
+A **`dag_ingestion_bridge`** executa o script de migração que conecta o legado à nuvem:
+- **Fluxo:** MinIO (VPS) ➔ OCI Object Storage (Raw).
+- **Eficiência:** Transferência via streaming (`upload_fileobj`), otimizando memória e I/O da instância.
 
----
-
-### **Fase 4: Execução do Pipeline**
-
-- **Camadas processadas:** Bronze, Silver e Gold, já em ambiente Oracle.  
-- **Transformações:** DuckDB utiliza o acesso S3-compatível para executar SQL vetorizado diretamente sobre o Object Storage.  
-- **Benefícios:**  
-  - Reduz a necessidade de materialização prévia de dados  
-  - Garante execução eficiente com baixa latência
-
-
-## 🛡️ 3. Governança e Observabilidade (Cloud Ready)
-
-A arquitetura transporta os pilares desenvolvidos na Prova de Conceito para a OCI, garantindo que a nuvem opere sob o paradigma de **Policy & Observability as Code**:
-
-- Políticas de qualidade, retenção e particionamento definidas e executadas via código.
-- Evidências de observabilidade geradas automaticamente pelo pipeline.
-- Logs e relatórios versionados e persistidos no Object Storage.
-- Rastreabilidade garantida por execução (`run_id`).
-- Comportamento operacional idêntico on-prem e cloud.
+### **Fase 4: Orquestração do Core Pipeline**
+Com os dados na nuvem, o Airflow aciona as DAGs de processamento:
+- **`dag_core_bootstrap`:** Sincroniza o repositório Core, instala dependências e injeta variáveis de ambiente (`.env`) dinamicamente.
+- **`dag_core_pipeline`:** Dispara o motor DuckDB para transformar as camadas Bronze, Silver e Gold diretamente sobre o Object Storage.
 
 ---
 
-### 🔗 Ecossistema Squad 3
-* **Repositório 1 de 2 (Core):** [hackathon-pod-squad3-core](https://github.com/rafa-trindade/hackathon-pod-squad3-core) - _Engine de processamento e Governança de Dados (arquitetura medalhão)._
-* **Repositório 2 de 2 (Ops):** [hackathon-pod-squad3-ops](https://github.com/rafa-trindade/hackathon-pod-squad3-ops) - _Infraestrutura (IaC), Orquestração e Ingestão de Dados (Cloud Readiness)._
+## 🛡️ 3. Governança e Observabilidade (Policy as Code)
 
-> 🔐 O Core define **o que** a arquitetura executa.  
-> ⚙️ O Ops define **como e onde** ela é executada.
+A arquitetura transporta os pilares de **Cloud Readiness** para a nuvem de forma nativa:
+
+- **Rastreabilidade:** Cada execução gera um `run_id` único, persistido em logs no Object Storage.
+- **Lifecycle & Retenção:** Implementação de políticas de retenção automatizadas para as camadas Medallion, garantindo a limpeza de dados temporários e a conformidade com o ciclo de vida definido via código.
+- **Identidade:** Uso de *Instance Principals* para que a VM acesse o Storage sem a necessidade de chaves fixas no código (Segurança nativa OCI).
+- **Versionamento Dinâmico:** Garantia de que a plataforma de execução (Ops) sempre utiliza a versão estável mais recente do motor de processamento (Core) via Bootstrap automatizado.
 
 ---
 
-## 📌 Nota de Escopo
+## 🛠️ Stack & Estratégia de Hardware (Sandbox vs Prod)
 
-> Este documento descreve exclusivamente a **estratégia de execução em nuvem** da arquitetura de dados do projeto, utilizando a **Oracle Cloud Infrastructure (OCI)** como plataforma de execução.  
->
-> Decisões arquiteturais estruturais são definidas no documento principal de arquitetura (`docs/data_architecture/README.md`) e, quando relacionadas à execução e portabilidade de serviços, no repositório de operações (`-ops`).  
->
-> A OCI é adotada como ambiente de execução da arquitetura **cloud ready**. 
->
-> Variações na utilização de serviços nativos são tratadas como **decisões operacionais de execução**, documentadas e versionadas no repositório (`-ops`), sem modificar o **desenho arquitetural lógico** definido no Core.
+Atualmente, a infraestrutura de **Sandbox** está **100% consolidada** via código (IaC). Toda a camada de governança, segurança e rede já foi provisionada com sucesso. O deploy da instância de computação encontra-se aguardando disponibilidade de slots de hardware ARM no pool **Always Free** da Oracle na região `sa-saopaulo-1`.
+
+---
+
+### **Fase 1: Sandbox & Testes (Atual)**
+* **Shape:** `VM.Standard.A1.Flex` (ARM Ampere)
+* **Recursos:** 4 OCPUs | 24GB RAM
+* **Custo:** Always Free Tier (OCI)
+
+---
+
+| Recurso | Status | Descrição |
+| :--- | :---: | :--- |
+| **Identity (IAM)** | 🟢 | Usuários e grupos do Squad 3 com políticas RBAC ativas. |
+| **Networking** | 🟢 | VCN e Subnets configuradas para isolamento de tráfego. |
+| **Object Storage** | 🟢 | Bucket `lake-squad3` operacional (Camadas Medallion). |
+| **Compute Instance**| 🟡 | Aguardando disponibilidade ARM (A1.Flex) no Free Tier OCI. |
+| **Data Bridge** | 🟢 | Script de ingestão Raw (MinIO → OCI) finalizado e testado. |
+
+---
+
+### **Fase 2: Produção Oficial (Patrocinado)**
+* **Shape:** `VM.Standard.E4.Flex` (AMD EPYC™)
+* **Recursos:** 8 OCPUs | 64GB RAM (Escalável)
+* **Objetivo:** Alta performance para o motor DuckDB e paralelismo total de DAGs.
+
+---
+
+## 📂 Organização Cloud Path (VM OCI)
+
+Para garantir a separação de responsabilidades no sistema de arquivos da VM:
+
+- **⚙️ Camada Ops:** `/home/opc/app/hackathon-pod-squad3-ops/` (Docker, DAGs, IaC).
+- **🔐 Camada Core:** `/home/opc/app/hackathon-pod-squad3-core/` (DuckDB, Regras de Negócio).
+- **⚡ Temp Path:** `/mnt/nvme/duckdb_temp` (Processamento vetorizado de alta performance).
+
+---
+
+> 🔗 **Ecossistema:** [Core Repo](https://github.com/rafa-trindade/hackathon-pod-squad3-core) | [Ops Repo](https://github.com/rafa-trindade/hackathon-pod-squad3-ops)
