@@ -85,14 +85,24 @@ Atualmente, a infraestrutura de **Sandbox** está **100% consolidada** via códi
 
 ---
 
-## 📂 Organização Cloud Path (VM OCI)
+## 📂 Localização dos Projetos na VM (Cloud Path)
 
-Para garantir a separação de responsabilidades no sistema de arquivos da VM:
+Após o provisionamento e o bootstrap via `cloud-init`, os projetos são organizados para garantir a separação entre orquestração e processamento:
 
-- **⚙️ Camada Ops:** `/home/opc/app/hackathon-pod-squad3-ops/` (Docker, DAGs, IaC).
-- **🔐 Camada Core:** `/home/opc/app/hackathon-pod-squad3-core/` (DuckDB, Regras de Negócio).
-- **⚡ Temp Path:** `/mnt/nvme/duckdb_temp` (Processamento vetorizado de alta performance).
+* **📍 Raiz da Aplicação:** `/home/opc/app/`
+* **⚙️ Camada Ops (Orquestração):** `/home/opc/app/hackathon-pod-squad3-ops/`
+    * _Residência de Dockerfiles, Airflow DAGs e scripts de ingestão._
+* **🔐 Camada Core (Processamento):** `/home/opc/app/hackathon-pod-squad3-core/`
+    * _Residência do motor DuckDB e regras de governança (Medallion)._
+* **⚡ Temp Path:** `/mnt/nvme/duckdb_temp`
+    * _Diretório temporário em NVMe dedicado a operações intermediárias do DuckDB (spill, sort, joins pesados)._
 
 ---
 
-> 🔗 **Ecossistema:** [Core Repo](https://github.com/rafa-trindade/hackathon-pod-squad3-core) | [Ops Repo](https://github.com/rafa-trindade/hackathon-pod-squad3-ops)
+### 🔗 Ecossistema Squad 3
+
+* **Repositório 1 de 2 (Core):** [hackathon-pod-squad3-core](https://github.com/rafa-trindade/hackathon-pod-squad3-core) - _Engine de processamento, arquitetura medalhão e gestão de performance com governança de dados nativa._
+* **Repositório 2 de 2 (Ops):** [hackathon-pod-squad3-ops](https://github.com/rafa-trindade/hackathon-pod-squad3-ops) - _Infraestrutura como código (IaC), orquestração de pipelines e estratégias de Cloud Readiness._
+
+> 🔐 O Core define **o que** a arquitetura executa.  
+> ⚙️ O Ops define **como e onde** ela é executada.
