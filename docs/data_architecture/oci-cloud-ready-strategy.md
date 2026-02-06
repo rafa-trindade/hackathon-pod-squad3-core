@@ -1,6 +1,6 @@
 # 🏛️ Data Architecture - Estratégia de Cloud Readiness (OCI Execution)
 
-Este documento detalha a implementação da arquitetura de dados do Squad 3, concebida sob o paradigma **Cloud Ready**. Aqui, a infraestrutura da **Oracle Cloud Infrastructure (OCI)** atua como a plataforma de execução para o motor de governança e processamento.
+Este documento detalha a implementação da arquitetura de dados do **Squad 3**, concebida sob o paradigma **Cloud Ready**. A infraestrutura da **Oracle Cloud Infrastructure (OCI)** atua como a plataforma de execução otimizada para o motor de governança e processamento DuckDB.
 
 ---
 
@@ -8,50 +8,52 @@ Este documento detalha a implementação da arquitetura de dados do Squad 3, con
 
 Para atingir a máxima maturidade arquitetural, separamos a **Inteligência** da **Sustentação**. Essa separação permite que o motor de dados seja agnóstico, enquanto a operação é otimizada para a nuvem através de pilares de **Cloud Readiness**.
 
-* **🧠 Core (The Engine):** Responsável pela lógica de negócio e transformação. Atua como o **Worker** que executa a arquitetura Medallion e garante a integridade dos dados através de processamento vetorial (DuckDB). É o motor de execução agnóstico à infraestrutura, onde residem os contratos de dados e as regras de qualidade.
-* **🏗️ Ops (The Platform):** Responsável pelo **Provisionamento (IaC)** via Terraform, **Orquestração** via Airflow e **Ingestão Híbrida**. É o que viabiliza a execução do Core com segurança e escalabilidade.
+*   **🧠 Core (The Engine):** Responsável pela lógica de negócio e transformação. Atua como o **Worker** que executa a arquitetura Medallion e garante a integridade dos dados através de processamento vetorial (DuckDB). É o motor de execução agnóstico à infraestrutura, onde residem os contratos de dados e as regras de qualidade.
+*   **🏗️ Ops (The Platform):** Responsável pelo **Provisionamento (IaC)** via Terraform, **Orquestração** via Airflow e **Ingestão Híbrida**. É o que viabiliza a execução do Core com segurança e escalabilidade.
 
+![OCI](../images/data_architecture/cloud_readiness_oci.png) 
 
-> 💡 **Decisão Estratégia de Não-Lock-in:** Optamos pelo deploy via **Docker Compose dentro de OCI Compute**. Isso garante portabilidade total: podemos migrar todo o ecossistema para qualquer nuvem ou ambiente local apenas alterando o arquivo de composição.
+> 💡 **Nota de Decisão Arquitetural (Cloud Readiness):** 
+> Embora a OCI ofereça serviços gerenciados como *OCI Container Instances* e *OKE (Kubernetes)*, optamos estrategicamente pela execução via **Docker Compose dentro de OCI Compute**. Esta decisão foi tomada para garantir a **Portabilidade Total (Cloud Readiness)**: a solução não possui "lock-in" com serviços proprietários de orquestração da nuvem, permitindo que todo o ecossistema (Airflow + Workers + Ingestão) seja migrado para qualquer provedor Cloud ou ambiente On-premises apenas movendo o arquivo de composição, mantendo a simplicidade operacional sem sacrificar o isolamento de processos.
 
 ---
 
 ## 🛠️ 2. Fases do Ciclo de Vida Operacional
 
-A execução na OCI foi estruturada em um pipeline de 4 fases automatizadas:
+A execução na OCI foi estruturada em um pipeline de 4 fases totalmente automatizadas:
 
 ### **Fase 1: Provisionamento Imutável (Terraform)**
 Toda a infraestrutura é erguida via código, garantindo reprodutibilidade:
-- **Networking:** VCN isolada com Subnets e Security Lists (Portas 22/8080).
-- **Identity (IAM):** RBAC via grupos e políticas nativas.
-- **Storage:** Bucket `lake-squad3` configurado com acesso S3-Compatible.
+*   **Networking:** VCN isolada com Subnets públicas e Security Lists configuradas para acesso administrativo (SSH) e operacional (Airflow Webserver).
+*   **Identity (IAM):** Implementação de **Dynamic Groups** e **Instance Principals**, permitindo que a VM gerencie objetos no Bucket sem chaves fixas.
+*   **Storage:** Bucket `lake-squad3` configurado com API S3-Compatible para integração nativa com DuckDB e Boto3.
 
 ### **Fase 2: Bootstrap & Integração (Cloud-Init + Docker)**
 No momento do boot da instância, o script `cloud-init.sh` prepara o ambiente:
-- Instalação automatizada da stack Docker.
-- Criação dos caminhos de persistência (`/home/opc/app/`).
-- O **Core é montado como um volume persistente** dentro dos containers do Airflow, fundindo a lógica de negócio à capacidade de escala da nuvem.
+*   **Stack Docker:** Instalação automatizada do Docker Engine e Docker Compose Plugin para arquitetura ARM64.
+*   **Performance Path:** Criação do diretório `/mnt/nvme/duckdb_temp` no host com permissões otimizadas para o motor DuckDB.
+*   **Volume Mapping:** O Core é montado como um volume persistente, permitindo atualizações de lógica sem necessidade de redeploy da infraestrutura.
 
 ### **Fase 3: Ingestão Híbrida (The Data Bridge)**
 A **`dag_ingestion_bridge`** executa o script de migração que conecta o legado à nuvem:
-- **Fluxo:** MinIO (VPS) ➔ OCI Object Storage (Raw).
-- **Eficiência:** Transferência via streaming (`upload_fileobj`), otimizando memória e I/O da instância.
+*   **Fluxo:** MinIO (VPS) ➔ OCI Object Storage (Raw).
+*   **Tecnologia:** Uso de `upload_fileobj` para transferência via streaming, minimizando o footprint de memória e maximizando o throughput de rede.
 
-### **Fase 4: Orquestração do Core Pipeline**
-Com os dados na nuvem, o Airflow aciona as DAGs de processamento:
-- **`dag_core_bootstrap`:** Sincroniza o repositório Core, instala dependências e injeta variáveis de ambiente (`.env`) dinamicamente.
-- **`dag_core_pipeline`:** Dispara o motor DuckDB para transformar as camadas Bronze, Silver e Gold diretamente sobre o Object Storage.
+### **Fase 4: Orquestração & Injeção de Ambiente**
+O Airflow assume o papel de maestro, garantindo a harmonia entre os repositórios:
+*   **`dag_core_bootstrap`**: Sincroniza o repositório Core e realiza a **Injeção Dinâmica de Variáveis**. Ela traduz as configurações do Ops para o formato esperado pelo Core, gerando o arquivo `.env` automaticamente.
+*   **`dag_core_pipeline`**: Dispara o script unificado `/bin/run_pipeline.sh` do Core, processando as camadas Bronze, Silver e Gold.
 
 ---
 
-## 🛡️ 3. Governança e Observabilidade (Policy as Code)
+## 🛡️ 3. Governança e Segurança (Policy as Code)
 
 A arquitetura transporta os pilares de **Cloud Readiness** para a nuvem de forma nativa:
 
-- **Rastreabilidade:** Cada execução gera um `run_id` único, persistido em logs no Object Storage.
-- **Lifecycle & Retenção:** Implementação de políticas de retenção automatizadas para as camadas Medallion, garantindo a limpeza de dados temporários e a conformidade com o ciclo de vida definido via código.
-- **Identidade:** Uso de *Instance Principals* para que a VM acesse o Storage sem a necessidade de chaves fixas no código (Segurança nativa OCI).
-- **Versionamento Dinâmico:** Garantia de que a plataforma de execução (Ops) sempre utiliza a versão estável mais recente do motor de processamento (Core) via Bootstrap automatizado.
+*   **Segurança Zero-Trust:** Uso de *Instance Principals*. A identidade da VM é sua própria credencial de acesso ao Data Lake.
+*   **Otimização de Hardware:** Configuração dinâmica de `memory_limit` e `threads` no DuckDB via variáveis de ambiente, aproveitando os 24GB de RAM e 4 OCPUs da instância ARM.
+*   **Persistência de Performance:** Mapeamento de volume para o diretório temporário do DuckDB, garantindo que operações de "spill-to-disk" ocorram em alta velocidade e não saturem o container.
+*   **Isolamento de Processos:** Separação clara entre logs de orquestração (Airflow) e logs de processamento (Core/DuckDB).
 
 ---
 
@@ -68,13 +70,16 @@ Atualmente, a infraestrutura de **Sandbox** está **100% consolidada** via códi
 
 ---
 
+## 📈 4. Status da Infraestrutura (Sandbox)
+
 | Recurso | Status | Descrição |
 | :--- | :---: | :--- |
-| **Identity (IAM)** | 🟢 | Usuários e grupos do Squad 3 com políticas RBAC ativas. |
-| **Networking** | 🟢 | VCN e Subnets configuradas para isolamento de tráfego. |
+| **Identity (IAM)** | 🟢 | Dynamic Groups e Políticas de Instance Principal ativos. |
+| **Networking** | 🟢 | VCN, Subnets e Security Lists provisionadas via Terraform. |
 | **Object Storage** | 🟢 | Bucket `lake-squad3` operacional (Camadas Medallion). |
-| **Compute Instance**| 🟡 | Aguardando disponibilidade ARM (A1.Flex) no Free Tier OCI. |
-| **Data Bridge** | 🟢 | Script de ingestão Raw (MinIO → OCI) finalizado e testado. |
+| **Compute Instance**| 🟢 | Configurada com Cloud-Init para Docker e DuckDB Temp. |
+| **Data Bridge** | 🟢 | Script de ingestão Raw (MinIO → OCI) validado e funcional. |
+| **Orchestration** | 🟢 | Airflow configurado com injeção dinâmica de `.env` para o Core. |
 
 ---
 
