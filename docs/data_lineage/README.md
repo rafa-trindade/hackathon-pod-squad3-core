@@ -454,4 +454,3 @@ Nesta seção encontram-se os manuais detalhados que compõem a governança téc
 ### 🗂️ Catálogo de Dados
 - 📖 **[Dicionário de Variáveis (Book) - ABT CMV](../data_modelling/features/abt_base_cmv-book.md):** Definição técnica de cada feature gerada na Gold.
 - 📖 **[Dicionário de Dados - Camada Silver](../data_dictionary/):** Descrição das entidades saneadas e prontas para consumo.
-
