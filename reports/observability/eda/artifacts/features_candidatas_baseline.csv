@@ -1,0 +1,21 @@
+rank,feature,dominio,gini,iv,pct_missing,status,motivo
+1,bur_score_02,bur_,43.071951379483366,0.6048401896284045,0.0007122517939177619,🟢 CANDIDATA,Aprovada — poder preditivo + baixa redundância
+2,bur_score_01,bur_,36.024833865112946,0.4161172279242482,0.006709442271916166,🔴 EXCLUIR,Redundante com bur_score_02 (ρ=0.73)
+3,pag_vlr_total_geral,pag_,22.033675937684592,0.17600496569018467,0.7016082615133452,🟢 CANDIDATA,Aprovada — poder preditivo + baixa redundância
+4,tel_var_31,tel_,16.90301043572795,0.09923039731560022,0.5034762139792703,🟢 CANDIDATA,Aprovada — poder preditivo + baixa redundância
+5,cad_var_05,cad_,15.079428410691165,0.07211108610543326,0.035588291127225835,🟢 CANDIDATA,Aprovada — poder preditivo + baixa redundância
+6,atr_vlr_acumulado_geral,atr_,14.986697687830318,0.10787264224626976,0.6815027146057178,🟢 CANDIDATA,Aprovada — poder preditivo + baixa redundância
+7,tel_var_28,tel_,13.3743642619502,0.06104892455903691,0.5034762139792703,🟢 CANDIDATA,Aprovada — poder preditivo + baixa redundância
+8,pag_dias_desde_ultimo_pagamento,pag_,13.072898976821378,0.09875855113801617,0.7016082615133452,🟢 CANDIDATA,Aprovada — poder preditivo + baixa redundância
+9,cad_var_02,cad_,12.850594465401777,0.08832772648485006,0.9421921864915145,🟢 CANDIDATA,Aprovada — poder preditivo + baixa redundância
+10,tel_var_50,tel_,11.357443748400954,0.04687398328763176,0.5034762139792703,🔴 EXCLUIR,Redundante com tel_var_28 (ρ=0.76)
+11,pag_qtd_faturas_l90d,pag_,10.755407159094199,0.011185518336629821,0.0,🟢 CANDIDATA,Aprovada — poder preditivo + baixa redundância
+12,pag_qtd_faturas_l60d,pag_,10.738819262641686,0.010754882372122203,0.0,🔴 EXCLUIR,Redundante com pag_qtd_faturas_l90d (ρ=0.98)
+13,pag_qtd_faturas_geral,pag_,10.724862104778987,0.06706455464296038,0.0,🔴 EXCLUIR,Redundante com pag_qtd_faturas_l90d (ρ=0.95)
+14,pag_flag_sem_pagamento_l60d,pag_,10.337807345166405,0.0,0.0,🔴 EXCLUIR,Redundante com pag_qtd_faturas_l60d (ρ=-0.99)
+15,rec_dias_desde_primeira,rec_,10.142359057734375,0.037804170101395855,0.2816986218155587,🟢 CANDIDATA,Aprovada — poder preditivo + baixa redundância
+16,pag_flag_sem_pagamento_l30d,pag_,10.129958508753667,0.0,0.0,🔴 EXCLUIR,Redundante com pag_qtd_faturas_l60d (ρ=-0.91)
+17,pag_flag_sem_pagamento_l90d,pag_,10.067414330341663,0.0,0.0,🔴 EXCLUIR,Redundante com pag_qtd_faturas_l90d (ρ=-0.99)
+18,pag_qtd_faturas_l30d,pag_,10.034417752915648,0.010131182424799722,0.0,🔴 EXCLUIR,Redundante com pag_flag_sem_pagamento_l30d (ρ=-0.99)
+19,pag_vlr_avg_geral,pag_,10.011797666199307,0.033877563793524586,0.7016082615133452,🟢 CANDIDATA,Aprovada — poder preditivo + baixa redundância
+20,rec_qtd_canais_distintos,rec_,9.806082748983158,0.035070321229404136,0.0,🟢 CANDIDATA,Aprovada — poder preditivo + baixa redundância
