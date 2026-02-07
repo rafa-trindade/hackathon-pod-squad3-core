@@ -37,7 +37,7 @@ A arquitetura separa a **engine de processamento** da **sustentação de infraes
 
 ---
 
-## 📖 Navegação Técnica (Documentação)
+## 📖 Navegação Técnica (Documentação e Artefatos)
 
 ### 📅 Gestão e Planejamento do Projeto
 > 📁 [`docs/project_plan/*`](docs/project_plan/)  
@@ -92,10 +92,13 @@ A arquitetura separa a **engine de processamento** da **sustentação de infraes
 ---
 
 ### 📊 Analytics & Statistical Modeling
-> 📁 [`notebooks/*`](notebooks/)  
+> 📁 [`notebooks/*`](notebooks/) | 📁 [`models/*`](models/)  
 > **Integra e Documenta** o ciclo de inteligência analítica desde a exploração até a modelagem. **Diagnostica** o perfil de risco do público-alvo e **materializa** algoritmos de Credit Scoring através de artefatos serializados (**`.pkl`**), provendo suporte técnico e estatístico para as decisões estratégicas de negócio.
 >
-> * 📑 **Notebooks:** [`Análise Exploratória (EDA)`](notebooks/eda/01_estudo_publico_alvo_cmv.ipynb) | [`Modelagem & Serialização (Modeling)`](notebooks/modeling/)
+> * 📑 **Estudo Público Alvo (EDA):** [`01_estudo_publico_alvo_cmv.ipynb`](notebooks/eda/01_estudo_publico_alvo_cmv.ipynb)
+> * 📑 **Modelagem & Baseline Scorecard:** [`02_modelo_baseline_behavior.ipynb`](notebooks/modeling/02_modelo_baseline_behavior.ipynb)
+> * 📦 **Model Registry (Artefatos):** [`behavior_baseline_woe_v1.pkl`](models/behavior_baseline_woe_v1.pkl) | [`behavior_baseline_simple_v1.pkl`](models/behavior_baseline_simple_v1.pkl)
+
 
 ---
 
