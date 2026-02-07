@@ -445,12 +445,6 @@ Nesta seção encontram-se os manuais detalhados que compõem a governança téc
 
 ---
 
-### 📓 Notebooks e Inteligência Analítica
-- 📓 **[Análise Exploratória (EDA)](../../notebooks/eda/01_estudo_publico_alvo_cmv.ipynb):** Estudo aprofundado do público-alvo, diagnóstico de risco e validação de hipóteses.
-- 🧪 **[Modelagem Estatística (Modeling)](../../notebooks/modeling/):** Experimentos de algoritmos e script de treinamento para geração dos artefatos serializados (.pkl).
-
----
-
 ### 🗂️ Catálogo de Dados
 - 📖 **[Dicionário de Variáveis (Book) - ABT CMV](../data_modelling/features/abt_base_cmv-book.md):** Definição técnica de cada feature gerada na Gold.
 - 📖 **[Dicionário de Dados - Camada Silver](../data_dictionary/):** Descrição das entidades saneadas e prontas para consumo.
