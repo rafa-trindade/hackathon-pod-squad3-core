@@ -92,7 +92,7 @@ A arquitetura separa a **engine de processamento** da **sustentação de infraes
 ---
 
 ### 📊 Analytics & Statistical Modeling
-> 📁 [`notebooks/*`](notebooks/) | 📁 [`models/*`](models/)  
+> 📁 [`notebooks/*`](notebooks/) | 📁 [`models/*.pkl`](models/)  
 > **Integra e Documenta** o ciclo de inteligência analítica desde a exploração até a modelagem. **Diagnostica** o perfil de risco do público-alvo e **materializa** algoritmos de Credit Scoring através de artefatos serializados (**`.pkl`**), provendo suporte técnico e estatístico para as decisões estratégicas de negócio.
 >
 > * 📑 **Estudo Público Alvo (EDA):** [`01_estudo_publico_alvo_cmv.ipynb`](notebooks/eda/01_estudo_publico_alvo_cmv.ipynb)
