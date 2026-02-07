@@ -1,0 +1,10 @@
+feature,woe_col,psi,tipo,status
+rec_dias_desde_ultima,rec_dias_desde_ultima_woe,0.014981281352806734,CORE,🟢 Estável
+atr_vlr_acumulado_geral,atr_vlr_acumulado_geral_woe,0.011360642637917421,CORE,🟢 Estável
+rec_vlr_avg_geral,rec_vlr_avg_geral_woe,0.004436416223172698,CORE,🟢 Estável
+bur_score_01,bur_score_01_woe,0.003594296695679229,INVESTIGAR,🟢 Estável
+bur_score_02,bur_score_02_woe,0.0017879810228025,CORE,🟢 Estável
+pag_dias_desde_ultimo_pagamento,pag_dias_desde_ultimo_pagamento_woe,0.0014771560091456422,CORE,🟢 Estável
+tel_var_28,tel_var_28_woe,0.0013307410317929757,INVESTIGAR,🟢 Estável
+rec_ratio_vlr_l30d_l60d,rec_ratio_vlr_l30d_l60d_woe,0.0008681688538201277,INVESTIGAR,🟢 Estável
+cad_var_02,cad_var_02_woe,3.267213994238648e-05,CORE,🟢 Estável
