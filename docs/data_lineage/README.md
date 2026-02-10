@@ -6,7 +6,11 @@
 
 Nesta fase, a solução é apresentada como uma **Prova de Conceito (PoC)** com **execução linear na arquitetura Core**, cujo objetivo é evidenciar o fluxo lógico, a governança aplicada e a reprodutibilidade dos dados dentro de um framework de **Cloud Readiness**.
 
-A **orquestração do pipeline já está definida conceitualmente** e será **migrada para o Apache Airflow na entrega final (Fase 2)**, que consiste na **implementação e deploy na nuvem OCI (Oracle Cloud Infrastructure)**, sem necessidade de alteração nos scripts de processamento que já residem no **Core**. A implementação técnica dessa infraestrutura (Terraform, Docker e Airflow) pode ser acompanhada no repositório dedicado de **Ops**:
+A orquestração do pipeline evoluiu para a **Fase 2.1**, encontrando-se operacional em
+ambiente de Sandbox na nuvem **OCI (Oracle Cloud Infrastructure)**. O deploy realizado no Free Tier
+validou a portabilidade do Core e a infraestrutura (Terraform, Docker e Airflow) sem necessidade de
+alteração nos scripts de processamento. A implementação completa pode ser acompanhada no
+repositório dedicado de **Ops**.
 
 - 🚀 **[Repositório de Orquestração & Infraestrutura (Ops)](https://github.com/rafa-trindade/hackathon-pod-squad3-ops)**  
 - 📑 **[Estratégia de Migração e Cloud Readiness (VPS → OCI)](../data_architecture/oci-cloud-ready-strategy.md)**
