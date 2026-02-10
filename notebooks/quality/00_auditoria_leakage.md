@@ -1,6 +1,6 @@
 # Auditoria de Vazamento (Target Leakage)
 
-Data: Janeiro/2026  
+Data: Fevereiro/2026  
 Artefato: T1.2 – Auditoria de Vazamento e Validação AS-OF  
 Responsável: Squad DS
 
@@ -22,7 +22,7 @@ Esta auditoria é um pré-requisito para:
 
 ## 2. Base Analisada
 
-- Tabela: `gold/abt_base_prod`
+- Tabela: `gold/abt_base_cmv`
 - Origem: Camada Gold do Data Lake
 - Grão: `num_cpf + safra + prod`
 - Target: `FPD` (First Payment Default)
