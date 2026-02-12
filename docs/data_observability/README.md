@@ -8,7 +8,7 @@ Este documento mapeia como as práticas implementadas no projeto se consolidam n
 > Acompanhe a saúde do ecossistema em tempo real através da nossa interface dedicada.
 
 <div align="center">
-  <video src="../images/data_observability/demo_painel.webm" width="100%" loop muted autoplay></video>
+  <video src="https://raw.githubusercontent.com/rafa-trindade/hackathon-pod-squad3-core/main/docs/images/data_observability/demo_painel.webm" width="100%" loop muted autoplay playsinline></video>
   <p><i>Demonstração da interface de observabilidade em tempo real</i></p>
 </div>
 
