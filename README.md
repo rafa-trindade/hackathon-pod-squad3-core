@@ -106,6 +106,7 @@ A arquitetura separa a **engine de processamento** da **sustentação de infraes
 > 📁 [`docs/data_observability/`](docs/data_observability/)  
 > **Materializa** a observabilidade através de artefatos gerados em tempo de execução. Garante a governança e transparência do pipeline, mantendo registros históricos de integridade, qualidade e diagnósticos estatísticos para auditoria técnica.
 >
+>* 🌐 **Painel Squad 3:** [Painel de Observabilidade (Streamlit)](http://54.39.98.107:8501/) — _Interface interativa para monitoramento de saúde dos dados e execução do pipeline em tempo real._
 > * 📁 [`Relatórios de Observabilidade`](reports/observability/) - Centraliza as evidências de integridade física (`integrity`), diagnósticos estatísticos (`profiling`), relatórios de contratos de dados (`quality`) e análise de público (`eda`).
 
 ---
