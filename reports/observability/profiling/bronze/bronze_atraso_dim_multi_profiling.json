@@ -1,0 +1,202 @@
+{
+    "report_type": "Profiling",
+    "source_file": "bronze_atraso_dim_multi_profiling.md",
+    "sections": [
+        {
+            "header": "📄 Arquivo: `tipo_faturamento.parquet`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `tipo_faturamento.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "tipo_faturamento.parquet",
+                            "Registros": "72",
+                            "Colunas": "4"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 20)  - `tipo_faturamento.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "dw_tipo_faturamento": "32527",
+                            "dsc_tipo_faturamento": "Refund",
+                            "dsc_tipo_faturamento_abrev": "REFUND",
+                            "cod_dsc_tipo_faturamento": "R"
+                        },
+                        {
+                            "dw_tipo_faturamento": "32528",
+                            "dsc_tipo_faturamento": "Credit",
+                            "dsc_tipo_faturamento_abrev": "CREDIT",
+                            "cod_dsc_tipo_faturamento": "C"
+                        },
+                        {
+                            "dw_tipo_faturamento": "32529",
+                            "dsc_tipo_faturamento": "Claro",
+                            "dsc_tipo_faturamento_abrev": "SERVICE",
+                            "cod_dsc_tipo_faturamento": "B"
+                        },
+                        {
+                            "dw_tipo_faturamento": "32530",
+                            "dsc_tipo_faturamento": "Service Deposit",
+                            "dsc_tipo_faturamento_abrev": "DEPOSIT",
+                            "cod_dsc_tipo_faturamento": "D"
+                        },
+                        {
+                            "dw_tipo_faturamento": "32531",
+                            "dsc_tipo_faturamento": "Reversal",
+                            "dsc_tipo_faturamento_abrev": "REVERSAL",
+                            "cod_dsc_tipo_faturamento": "RV"
+                        },
+                        {
+                            "dw_tipo_faturamento": "32532",
+                            "dsc_tipo_faturamento": "Reversed Print Doc",
+                            "dsc_tipo_faturamento_abrev": "REVRSPRT",
+                            "cod_dsc_tipo_faturamento": "RP"
+                        },
+                        {
+                            "dw_tipo_faturamento": "32533",
+                            "dsc_tipo_faturamento": "ENCARGO DE EQUIPAMENTO",
+                            "dsc_tipo_faturamento_abrev": "EQUIP",
+                            "cod_dsc_tipo_faturamento": "Q"
+                        },
+                        {
+                            "dw_tipo_faturamento": "32534",
+                            "dsc_tipo_faturamento": "Payment Arrangement",
+                            "dsc_tipo_faturamento_abrev": "PA",
+                            "cod_dsc_tipo_faturamento": "PA"
+                        },
+                        {
+                            "dw_tipo_faturamento": "32535",
+                            "dsc_tipo_faturamento": "EASYTONE",
+                            "dsc_tipo_faturamento_abrev": "EASYTONE",
+                            "cod_dsc_tipo_faturamento": "35"
+                        },
+                        {
+                            "dw_tipo_faturamento": "32536",
+                            "dsc_tipo_faturamento": "CMBRIDGE",
+                            "dsc_tipo_faturamento_abrev": "CMBRIDGE",
+                            "cod_dsc_tipo_faturamento": "49"
+                        },
+                        {
+                            "dw_tipo_faturamento": "32537",
+                            "dsc_tipo_faturamento": "TELCOM65",
+                            "dsc_tipo_faturamento_abrev": "TELCOM65",
+                            "cod_dsc_tipo_faturamento": "65"
+                        },
+                        {
+                            "dw_tipo_faturamento": "32538",
+                            "dsc_tipo_faturamento": "PA EASYTONE",
+                            "dsc_tipo_faturamento_abrev": "PA35",
+                            "cod_dsc_tipo_faturamento": "PE"
+                        },
+                        {
+                            "dw_tipo_faturamento": "32539",
+                            "dsc_tipo_faturamento": "PA CAMBRIDGE",
+                            "dsc_tipo_faturamento_abrev": "PA49",
+                            "cod_dsc_tipo_faturamento": "PC"
+                        },
+                        {
+                            "dw_tipo_faturamento": "32540",
+                            "dsc_tipo_faturamento": "PA TELECOM 65",
+                            "dsc_tipo_faturamento_abrev": "PA65",
+                            "cod_dsc_tipo_faturamento": "PT"
+                        },
+                        {
+                            "dw_tipo_faturamento": "32541",
+                            "dsc_tipo_faturamento": "Embratel 21",
+                            "dsc_tipo_faturamento_abrev": "EBT",
+                            "cod_dsc_tipo_faturamento": "21"
+                        },
+                        {
+                            "dw_tipo_faturamento": "32542",
+                            "dsc_tipo_faturamento": "Telefonica 15",
+                            "dsc_tipo_faturamento_abrev": "TLFONICA",
+                            "cod_dsc_tipo_faturamento": "15"
+                        },
+                        {
+                            "dw_tipo_faturamento": "32543",
+                            "dsc_tipo_faturamento": "Telemar 31",
+                            "dsc_tipo_faturamento_abrev": "TELEMAR",
+                            "cod_dsc_tipo_faturamento": "31"
+                        },
+                        {
+                            "dw_tipo_faturamento": "32544",
+                            "dsc_tipo_faturamento": "CTBC 12",
+                            "dsc_tipo_faturamento_abrev": "CTBC",
+                            "cod_dsc_tipo_faturamento": "12"
+                        },
+                        {
+                            "dw_tipo_faturamento": "32545",
+                            "dsc_tipo_faturamento": "BRT 14",
+                            "dsc_tipo_faturamento_abrev": "BRT",
+                            "cod_dsc_tipo_faturamento": "14"
+                        },
+                        {
+                            "dw_tipo_faturamento": "32546",
+                            "dsc_tipo_faturamento": "Intelig 23",
+                            "dsc_tipo_faturamento_abrev": "INTELIG",
+                            "cod_dsc_tipo_faturamento": "23"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `tipo_faturamento.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "dw_tipo_faturamento",
+                            "tipo": "VARCHAR",
+                            "distintos": "72",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "dsc_tipo_faturamento",
+                            "tipo": "VARCHAR",
+                            "distintos": "69",
+                            "nulos": "0",
+                            "pct_distintos": "95.83%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "dsc_tipo_faturamento_abrev",
+                            "tipo": "VARCHAR",
+                            "distintos": "65",
+                            "nulos": "3",
+                            "pct_distintos": "90.28%",
+                            "pct_nulos": "4.17%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "cod_dsc_tipo_faturamento",
+                            "tipo": "VARCHAR",
+                            "distintos": "70",
+                            "nulos": "0",
+                            "pct_distintos": "97.22%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "title": "Relatório de Profiling: `bronze/atraso_dim`"
+}

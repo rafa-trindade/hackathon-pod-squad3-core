@@ -1,0 +1,228 @@
+{
+    "report_type": "Pipeline Quality",
+    "tests": [
+        {
+            "test": "Volumetria Dimensão",
+            "status": "INFO",
+            "obs": "5899 registros"
+        },
+        {
+            "test": "Chave Técnica",
+            "status": "INFO",
+            "obs": "cod_canal_aquisicao"
+        },
+        {
+            "test": "Match de Tipagem Chave Técnica",
+            "status": "PASS",
+            "obs": "Fato: VARCHAR - Dim: VARCHAR"
+        },
+        {
+            "test": "Integridade de Chave (Fato)",
+            "status": "PASS",
+            "obs": "0 registros órfãos"
+        },
+        {
+            "test": "Volumetria Dimensão",
+            "status": "INFO",
+            "obs": "9 registros"
+        },
+        {
+            "test": "Chave Técnica",
+            "status": "INFO",
+            "obs": "dw_forma_pagamento"
+        },
+        {
+            "test": "Match de Tipagem Chave Técnica",
+            "status": "PASS",
+            "obs": "Fato: VARCHAR - Dim: VARCHAR"
+        },
+        {
+            "test": "Integridade de Chave (Fato)",
+            "status": "PASS",
+            "obs": "0 registros órfãos"
+        },
+        {
+            "test": "Volumetria Dimensão",
+            "status": "INFO",
+            "obs": "550 registros"
+        },
+        {
+            "test": "Chave Técnica",
+            "status": "INFO",
+            "obs": "dw_instituicao"
+        },
+        {
+            "test": "Match de Tipagem Chave Técnica",
+            "status": "PASS",
+            "obs": "Fato: VARCHAR - Dim: VARCHAR"
+        },
+        {
+            "test": "Integridade de Chave (Fato)",
+            "status": "WARN",
+            "obs": "4 registros órfãos"
+        },
+        {
+            "test": "Volumetria Dimensão",
+            "status": "INFO",
+            "obs": "293743 registros"
+        },
+        {
+            "test": "Chave Técnica",
+            "status": "INFO",
+            "obs": "dw_plano_tarifacao"
+        },
+        {
+            "test": "Match de Tipagem Chave Técnica",
+            "status": "PASS",
+            "obs": "Fato: VARCHAR - Dim: VARCHAR"
+        },
+        {
+            "test": "Integridade de Chave (Fato)",
+            "status": "PASS",
+            "obs": "0 registros órfãos"
+        },
+        {
+            "test": "Volumetria Dimensão",
+            "status": "INFO",
+            "obs": "28 registros"
+        },
+        {
+            "test": "Chave Técnica",
+            "status": "INFO",
+            "obs": "cod_plataforma_atu"
+        },
+        {
+            "test": "Match de Tipagem Chave Técnica",
+            "status": "PASS",
+            "obs": "Fato: VARCHAR - Dim: VARCHAR"
+        },
+        {
+            "test": "Integridade de Chave (Fato)",
+            "status": "PASS",
+            "obs": "0 registros órfãos"
+        },
+        {
+            "test": "Volumetria Dimensão",
+            "status": "INFO",
+            "obs": "15 registros"
+        },
+        {
+            "test": "Chave Técnica",
+            "status": "INFO",
+            "obs": "cod_promocao"
+        },
+        {
+            "test": "Match de Tipagem Chave Técnica",
+            "status": "PASS",
+            "obs": "Fato: VARCHAR - Dim: VARCHAR"
+        },
+        {
+            "test": "Integridade de Chave (Fato)",
+            "status": "WARN",
+            "obs": "1 registros órfãos"
+        },
+        {
+            "test": "Volumetria Dimensão",
+            "status": "INFO",
+            "obs": "25 registros"
+        },
+        {
+            "test": "Chave Técnica",
+            "status": "INFO",
+            "obs": "cod_status_plataforma"
+        },
+        {
+            "test": "Match de Tipagem Chave Técnica",
+            "status": "PASS",
+            "obs": "Fato: VARCHAR - Dim: VARCHAR"
+        },
+        {
+            "test": "Integridade de Chave (Fato)",
+            "status": "WARN",
+            "obs": "8 registros órfãos"
+        },
+        {
+            "test": "Volumetria Dimensão",
+            "status": "INFO",
+            "obs": "10 registros"
+        },
+        {
+            "test": "Chave Técnica",
+            "status": "INFO",
+            "obs": "cod_tecnologia_dw"
+        },
+        {
+            "test": "Match de Tipagem Chave Técnica",
+            "status": "PASS",
+            "obs": "Fato: VARCHAR - Dim: VARCHAR"
+        },
+        {
+            "test": "Integridade de Chave (Fato)",
+            "status": "PASS",
+            "obs": "0 registros órfãos"
+        },
+        {
+            "test": "Volumetria Dimensão",
+            "status": "INFO",
+            "obs": "12 registros"
+        },
+        {
+            "test": "Chave Técnica",
+            "status": "INFO",
+            "obs": "cod_tipo_credito"
+        },
+        {
+            "test": "Match de Tipagem Chave Técnica",
+            "status": "PASS",
+            "obs": "Fato: VARCHAR - Dim: VARCHAR"
+        },
+        {
+            "test": "Integridade de Chave (Fato)",
+            "status": "PASS",
+            "obs": "0 registros órfãos"
+        },
+        {
+            "test": "Volumetria Dimensão",
+            "status": "INFO",
+            "obs": "22 registros"
+        },
+        {
+            "test": "Chave Técnica",
+            "status": "INFO",
+            "obs": "dw_tipo_insercao"
+        },
+        {
+            "test": "Match de Tipagem Chave Técnica",
+            "status": "PASS",
+            "obs": "Fato: VARCHAR - Dim: VARCHAR"
+        },
+        {
+            "test": "Integridade de Chave (Fato)",
+            "status": "WARN",
+            "obs": "3 registros órfãos"
+        },
+        {
+            "test": "Volumetria Dimensão",
+            "status": "INFO",
+            "obs": "5 registros"
+        },
+        {
+            "test": "Chave Técnica",
+            "status": "INFO",
+            "obs": "dw_tipo_recarga"
+        },
+        {
+            "test": "Match de Tipagem Chave Técnica",
+            "status": "PASS",
+            "obs": "Fato: VARCHAR - Dim: VARCHAR"
+        },
+        {
+            "test": "Integridade de Chave (Fato)",
+            "status": "PASS",
+            "obs": "0 registros órfãos"
+        }
+    ],
+    "title": "",
+    "run_id": "",
+    "final_result": "SUCCESS"
+}

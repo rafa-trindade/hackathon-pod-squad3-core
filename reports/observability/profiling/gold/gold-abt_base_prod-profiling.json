@@ -1,0 +1,1885 @@
+{
+    "report_type": "Profiling",
+    "source_file": "gold-abt_base_prod-profiling.md",
+    "sections": [
+        {
+            "header": "⚙️ Sumário Técnico do Dataset: `abt_base_prod`",
+            "content": [],
+            "metadata": {
+                "Volume de Registros (N)": "1.321.168",
+                "Cardinalidade (CPF)": "1.272.095",
+                "Grão Definido": "num_cpf, safra, prod"
+            }
+        },
+        {
+            "header": "🎯 Distribuição da Variável Alvo (Target): `abt_base_prod`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "fpd": "False",
+                            "frequencia": "1006838",
+                            "percentual": "76.21%"
+                        },
+                        {
+                            "fpd": "True",
+                            "frequencia": "314330",
+                            "percentual": "23.79%"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔑 Verificação de Chave Técnica: `abt_base_prod`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "pk_distintos": "1321168",
+                            "duplicatas_reais": "0",
+                            "pct_duplicidade": "0.0%"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Perfil de Missings por Feature: `abt_base_prod`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "column_name": "num_cpf",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "safra",
+                            "column_type": "DATE",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "prod",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "fpd",
+                            "column_type": "BOOLEAN",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "rec_qtd_l30d",
+                            "column_type": "BIGINT",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "rec_qtd_l60d",
+                            "column_type": "BIGINT",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "rec_qtd_l90d",
+                            "column_type": "BIGINT",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "rec_qtd_geral",
+                            "column_type": "BIGINT",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "rec_vlr_total_l30d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "18.73%"
+                        },
+                        {
+                            "column_name": "rec_vlr_total_l60d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "8.02%"
+                        },
+                        {
+                            "column_name": "rec_vlr_total_l90d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "4.59%"
+                        },
+                        {
+                            "column_name": "rec_vlr_total_geral",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "2.96%"
+                        },
+                        {
+                            "column_name": "rec_vlr_avg_l30d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "18.73%"
+                        },
+                        {
+                            "column_name": "rec_vlr_avg_l60d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "8.02%"
+                        },
+                        {
+                            "column_name": "rec_vlr_avg_l90d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "4.59%"
+                        },
+                        {
+                            "column_name": "rec_vlr_avg_geral",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "2.96%"
+                        },
+                        {
+                            "column_name": "rec_vlr_min_l30d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "18.73%"
+                        },
+                        {
+                            "column_name": "rec_vlr_min_l60d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "8.02%"
+                        },
+                        {
+                            "column_name": "rec_vlr_min_l90d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "4.59%"
+                        },
+                        {
+                            "column_name": "rec_vlr_min_geral",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "2.96%"
+                        },
+                        {
+                            "column_name": "rec_vlr_max_l30d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "18.73%"
+                        },
+                        {
+                            "column_name": "rec_vlr_max_l60d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "8.02%"
+                        },
+                        {
+                            "column_name": "rec_vlr_max_l90d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "4.59%"
+                        },
+                        {
+                            "column_name": "rec_vlr_max_geral",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "2.96%"
+                        },
+                        {
+                            "column_name": "rec_dat_primeira",
+                            "column_type": "DATE",
+                            "pct_missing": "2.96%"
+                        },
+                        {
+                            "column_name": "rec_dat_ultima",
+                            "column_type": "DATE",
+                            "pct_missing": "2.96%"
+                        },
+                        {
+                            "column_name": "rec_qtd_canais_distintos",
+                            "column_type": "BIGINT",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "rec_dias_desde_ultima",
+                            "column_type": "BIGINT",
+                            "pct_missing": "2.96%"
+                        },
+                        {
+                            "column_name": "rec_dias_desde_primeira",
+                            "column_type": "BIGINT",
+                            "pct_missing": "2.96%"
+                        },
+                        {
+                            "column_name": "rec_vlr_std_l30d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "39.83%"
+                        },
+                        {
+                            "column_name": "rec_vlr_std_l60d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "18.42%"
+                        },
+                        {
+                            "column_name": "rec_vlr_std_l90d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "11.17%"
+                        },
+                        {
+                            "column_name": "rec_vlr_std_geral",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "4.65%"
+                        },
+                        {
+                            "column_name": "rec_vlr_coef_var_l30d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "46.97%"
+                        },
+                        {
+                            "column_name": "rec_vlr_coef_var_l60d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "27.83%"
+                        },
+                        {
+                            "column_name": "rec_vlr_coef_var_l90d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "20.6%"
+                        },
+                        {
+                            "column_name": "rec_ratio_qtd_l30d_l60d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "8.02%"
+                        },
+                        {
+                            "column_name": "rec_ratio_qtd_l60d_l90d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "4.59%"
+                        },
+                        {
+                            "column_name": "rec_ratio_vlr_l30d_l60d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "30.53%"
+                        },
+                        {
+                            "column_name": "rec_ratio_vlr_l60d_l90d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "20.52%"
+                        },
+                        {
+                            "column_name": "rec_flag_sem_recarga_l30d",
+                            "column_type": "INTEGER",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "rec_flag_sem_recarga_l60d",
+                            "column_type": "INTEGER",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "rec_flag_sem_recarga_l90d",
+                            "column_type": "INTEGER",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "pag_vlr_total_l30d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "85.17%"
+                        },
+                        {
+                            "column_name": "pag_vlr_total_l60d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "81.4%"
+                        },
+                        {
+                            "column_name": "pag_vlr_total_l90d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "80.05%"
+                        },
+                        {
+                            "column_name": "pag_vlr_total_geral",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "77.74%"
+                        },
+                        {
+                            "column_name": "pag_vlr_avg_l30d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "85.17%"
+                        },
+                        {
+                            "column_name": "pag_vlr_avg_l60d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "81.4%"
+                        },
+                        {
+                            "column_name": "pag_vlr_avg_l90d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "80.05%"
+                        },
+                        {
+                            "column_name": "pag_vlr_avg_geral",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "77.74%"
+                        },
+                        {
+                            "column_name": "pag_vlr_min_l30d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "85.17%"
+                        },
+                        {
+                            "column_name": "pag_vlr_min_l60d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "81.4%"
+                        },
+                        {
+                            "column_name": "pag_vlr_min_l90d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "80.05%"
+                        },
+                        {
+                            "column_name": "pag_vlr_min_geral",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "77.74%"
+                        },
+                        {
+                            "column_name": "pag_vlr_max_l30d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "85.17%"
+                        },
+                        {
+                            "column_name": "pag_vlr_max_l60d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "81.4%"
+                        },
+                        {
+                            "column_name": "pag_vlr_max_l90d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "80.05%"
+                        },
+                        {
+                            "column_name": "pag_vlr_max_geral",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "77.74%"
+                        },
+                        {
+                            "column_name": "pag_qtd_faturas_l30d",
+                            "column_type": "BIGINT",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "pag_qtd_faturas_l60d",
+                            "column_type": "BIGINT",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "pag_qtd_faturas_l90d",
+                            "column_type": "BIGINT",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "pag_qtd_faturas_geral",
+                            "column_type": "BIGINT",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "pag_qtd_vezes_com_juros",
+                            "column_type": "BIGINT",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "pag_dias_desde_ultimo_pagamento",
+                            "column_type": "BIGINT",
+                            "pct_missing": "77.74%"
+                        },
+                        {
+                            "column_name": "pag_ticket_medio_l30d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "85.17%"
+                        },
+                        {
+                            "column_name": "pag_ticket_medio_l60d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "81.4%"
+                        },
+                        {
+                            "column_name": "pag_ticket_medio_l90d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "80.05%"
+                        },
+                        {
+                            "column_name": "pag_ticket_medio_geral",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "77.74%"
+                        },
+                        {
+                            "column_name": "pag_share_faturas_com_juros_l30d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "85.17%"
+                        },
+                        {
+                            "column_name": "pag_share_faturas_com_juros_l60d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "81.4%"
+                        },
+                        {
+                            "column_name": "pag_share_faturas_com_juros_l90d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "80.05%"
+                        },
+                        {
+                            "column_name": "pag_share_faturas_com_juros_geral",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "77.74%"
+                        },
+                        {
+                            "column_name": "pag_vlr_std_l30d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "93.77%"
+                        },
+                        {
+                            "column_name": "pag_vlr_std_l60d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "85.04%"
+                        },
+                        {
+                            "column_name": "pag_vlr_std_l90d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "82.24%"
+                        },
+                        {
+                            "column_name": "pag_flag_sem_pagamento_l30d",
+                            "column_type": "INTEGER",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "pag_flag_sem_pagamento_l60d",
+                            "column_type": "INTEGER",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "pag_flag_sem_pagamento_l90d",
+                            "column_type": "INTEGER",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "atr_vlr_max_l30d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "89.09%"
+                        },
+                        {
+                            "column_name": "atr_vlr_max_l60d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "77.75%"
+                        },
+                        {
+                            "column_name": "atr_vlr_max_l90d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "76.47%"
+                        },
+                        {
+                            "column_name": "atr_vlr_max_geral",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "74.56%"
+                        },
+                        {
+                            "column_name": "atr_vlr_acumulado_l30d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "89.09%"
+                        },
+                        {
+                            "column_name": "atr_vlr_acumulado_l60d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "77.75%"
+                        },
+                        {
+                            "column_name": "atr_vlr_acumulado_l90d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "76.47%"
+                        },
+                        {
+                            "column_name": "atr_vlr_acumulado_geral",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "74.56%"
+                        },
+                        {
+                            "column_name": "atr_qtd_faturas_atrasadas_l30d",
+                            "column_type": "BIGINT",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "atr_qtd_faturas_atrasadas_l60d",
+                            "column_type": "BIGINT",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "atr_qtd_faturas_atrasadas_l90d",
+                            "column_type": "BIGINT",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "atr_qtd_faturas_atrasadas_geral",
+                            "column_type": "BIGINT",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "atr_dat_ultima_ref",
+                            "column_type": "DATE",
+                            "pct_missing": "74.56%"
+                        },
+                        {
+                            "column_name": "atr_dias_desde_ultimo_atraso",
+                            "column_type": "BIGINT",
+                            "pct_missing": "74.56%"
+                        },
+                        {
+                            "column_name": "atr_ticket_medio_l30d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "89.09%"
+                        },
+                        {
+                            "column_name": "atr_ticket_medio_l60d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "77.75%"
+                        },
+                        {
+                            "column_name": "atr_ticket_medio_l90d",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "76.47%"
+                        },
+                        {
+                            "column_name": "atr_ticket_medio_geral",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "74.56%"
+                        },
+                        {
+                            "column_name": "atr_flag_recorrente_l30d",
+                            "column_type": "INTEGER",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "atr_flag_recorrente_l60d",
+                            "column_type": "INTEGER",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "atr_flag_recorrente_l90d",
+                            "column_type": "INTEGER",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "atr_flag_atraso_l30d",
+                            "column_type": "INTEGER",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "atr_flag_atraso_l60d",
+                            "column_type": "INTEGER",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "atr_flag_atraso_l90d",
+                            "column_type": "INTEGER",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "bur_flag_mig2",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.92%"
+                        },
+                        {
+                            "column_name": "bur_score_01",
+                            "column_type": "INTEGER",
+                            "pct_missing": "1.64%"
+                        },
+                        {
+                            "column_name": "bur_score_02",
+                            "column_type": "INTEGER",
+                            "pct_missing": "0.97%"
+                        },
+                        {
+                            "column_name": "cad_cep_3_digitos",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "5.9%"
+                        },
+                        {
+                            "column_name": "cad_datadenascimento",
+                            "column_type": "DATE",
+                            "pct_missing": "0.15%"
+                        },
+                        {
+                            "column_name": "cad_flag_mig2",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.92%"
+                        },
+                        {
+                            "column_name": "cad_statusrf",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.11%"
+                        },
+                        {
+                            "column_name": "cad_var_02",
+                            "column_type": "INTEGER",
+                            "pct_missing": "94.42%"
+                        },
+                        {
+                            "column_name": "cad_var_03",
+                            "column_type": "INTEGER",
+                            "pct_missing": "6.58%"
+                        },
+                        {
+                            "column_name": "cad_var_04",
+                            "column_type": "INTEGER",
+                            "pct_missing": "0.11%"
+                        },
+                        {
+                            "column_name": "cad_var_05",
+                            "column_type": "INTEGER",
+                            "pct_missing": "4.24%"
+                        },
+                        {
+                            "column_name": "cad_var_06",
+                            "column_type": "INTEGER",
+                            "pct_missing": "80.83%"
+                        },
+                        {
+                            "column_name": "cad_var_07",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "83.3%"
+                        },
+                        {
+                            "column_name": "cad_var_08",
+                            "column_type": "INTEGER",
+                            "pct_missing": "80.83%"
+                        },
+                        {
+                            "column_name": "cad_var_09",
+                            "column_type": "INTEGER",
+                            "pct_missing": "53.38%"
+                        },
+                        {
+                            "column_name": "cad_var_10",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "98.89%"
+                        },
+                        {
+                            "column_name": "cad_var_11",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "98.95%"
+                        },
+                        {
+                            "column_name": "cad_var_12",
+                            "column_type": "DATE",
+                            "pct_missing": "38.33%"
+                        },
+                        {
+                            "column_name": "cad_var_13",
+                            "column_type": "DATE",
+                            "pct_missing": "84.62%"
+                        },
+                        {
+                            "column_name": "cad_var_14",
+                            "column_type": "INTEGER",
+                            "pct_missing": "92.27%"
+                        },
+                        {
+                            "column_name": "cad_var_15",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "82.39%"
+                        },
+                        {
+                            "column_name": "cad_var_16",
+                            "column_type": "INTEGER",
+                            "pct_missing": "82.39%"
+                        },
+                        {
+                            "column_name": "cad_var_17",
+                            "column_type": "INTEGER",
+                            "pct_missing": "82.39%"
+                        },
+                        {
+                            "column_name": "cad_var_18",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "80.83%"
+                        },
+                        {
+                            "column_name": "cad_var_19",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "53.38%"
+                        },
+                        {
+                            "column_name": "cad_var_20",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "98.71%"
+                        },
+                        {
+                            "column_name": "cad_var_21",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "38.33%"
+                        },
+                        {
+                            "column_name": "cad_var_22",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "92.27%"
+                        },
+                        {
+                            "column_name": "cad_var_23",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "82.39%"
+                        },
+                        {
+                            "column_name": "cad_var_24",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "38.33%"
+                        },
+                        {
+                            "column_name": "cad_var_25",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "10.33%"
+                        },
+                        {
+                            "column_name": "tel_flag_mig2",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.92%"
+                        },
+                        {
+                            "column_name": "tel_var_26",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_27",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_28",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_29",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_30",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_31",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_32",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_33",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_34",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_35",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_36",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_37",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_38",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_39",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_40",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_41",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_42",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_43",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_44",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_45",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_46",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_47",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_48",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_49",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_50",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_51",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_52",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_53",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_54",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_55",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_56",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_57",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_58",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_59",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_60",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_61",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_62",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_63",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_64",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_65",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_66",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_67",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_68",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_69",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_70",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_71",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_72",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_73",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_74",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_75",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_76",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_77",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.09%"
+                        },
+                        {
+                            "column_name": "tel_var_78",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "tel_var_79",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "tel_var_80",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "tel_var_81",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "tel_var_82",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "tel_var_83",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "tel_var_84",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "tel_var_85",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "tel_var_86",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "tel_var_87",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "tel_var_88",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "tel_var_89",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "tel_var_90",
+                            "column_type": "DOUBLE",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "tel_var_91",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "tel_var_92",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "tel_var_93",
+                            "column_type": "VARCHAR",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "run_id",
+                            "column_type": "BIGINT",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "ingestion_ts",
+                            "column_type": "TIMESTAMP WITH TIME ZONE",
+                            "pct_missing": "0.0%"
+                        },
+                        {
+                            "column_name": "ano_mes",
+                            "column_type": "BIGINT",
+                            "pct_missing": "0.0%"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🚩 Detecção de Anomalias Financeiras (Outliers > 3σ): `abt_base_prod`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Feature": "rec_qtd_l30d",
+                            "Max Value": "260,00",
+                            "Threshold (3σ)": "12,22",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_qtd_l60d",
+                            "Max Value": "511,00",
+                            "Threshold (3σ)": "22,22",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_qtd_l90d",
+                            "Max Value": "738,00",
+                            "Threshold (3σ)": "31,98",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_qtd_geral",
+                            "Max Value": "3.387,00",
+                            "Threshold (3σ)": "131,36",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_vlr_total_l30d",
+                            "Max Value": "50.000,00",
+                            "Threshold (3σ)": "236,37",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_vlr_total_l60d",
+                            "Max Value": "50.060,00",
+                            "Threshold (3σ)": "359,79",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_vlr_total_l90d",
+                            "Max Value": "75.100,00",
+                            "Threshold (3σ)": "536,07",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_vlr_total_geral",
+                            "Max Value": "425.000,00",
+                            "Threshold (3σ)": "2.970,43",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_vlr_avg_l30d",
+                            "Max Value": "8.338,33",
+                            "Threshold (3σ)": "58,10",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_vlr_avg_l60d",
+                            "Max Value": "8.338,33",
+                            "Threshold (3σ)": "51,65",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_vlr_avg_l90d",
+                            "Max Value": "8.336,67",
+                            "Threshold (3σ)": "48,81",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_vlr_avg_geral",
+                            "Max Value": "11.000,80",
+                            "Threshold (3σ)": "67,96",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_vlr_min_l30d",
+                            "Max Value": "109,76",
+                            "Threshold (3σ)": "32,58",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_vlr_min_l60d",
+                            "Max Value": "100,00",
+                            "Threshold (3σ)": "25,14",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_vlr_min_l90d",
+                            "Max Value": "100,00",
+                            "Threshold (3σ)": "20,65",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_vlr_min_geral",
+                            "Max Value": "100,00",
+                            "Threshold (3σ)": "12,00",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_vlr_max_l30d",
+                            "Max Value": "25.000,00",
+                            "Threshold (3σ)": "151,65",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_vlr_max_l60d",
+                            "Max Value": "25.000,00",
+                            "Threshold (3σ)": "179,04",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_vlr_max_l90d",
+                            "Max Value": "25.000,00",
+                            "Threshold (3σ)": "177,47",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_vlr_max_geral",
+                            "Max Value": "25.000,00",
+                            "Threshold (3σ)": "269,92",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_qtd_canais_distintos",
+                            "Max Value": "38,00",
+                            "Threshold (3σ)": "11,47",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_dias_desde_ultima",
+                            "Max Value": "515,00",
+                            "Threshold (3σ)": "90,65",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_vlr_std_l30d",
+                            "Max Value": "14.429,43",
+                            "Threshold (3σ)": "92,71",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_vlr_std_l60d",
+                            "Max Value": "12.906,07",
+                            "Threshold (3σ)": "82,46",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_vlr_std_l90d",
+                            "Max Value": "12.497,50",
+                            "Threshold (3σ)": "76,55",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_vlr_std_geral",
+                            "Max Value": "12.664,85",
+                            "Threshold (3σ)": "108,27",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_vlr_coef_var_l30d",
+                            "Max Value": "16,12",
+                            "Threshold (3σ)": "2,86",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_vlr_coef_var_l60d",
+                            "Max Value": "20,54",
+                            "Threshold (3σ)": "3,01",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_vlr_coef_var_l90d",
+                            "Max Value": "26,12",
+                            "Threshold (3σ)": "3,13",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_flag_sem_recarga_l60d",
+                            "Max Value": "1,00",
+                            "Threshold (3σ)": "0,89",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "rec_flag_sem_recarga_l90d",
+                            "Max Value": "1,00",
+                            "Threshold (3σ)": "0,67",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_vlr_total_l30d",
+                            "Max Value": "139.017,45",
+                            "Threshold (3σ)": "1.472,99",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_vlr_total_l60d",
+                            "Max Value": "328.986,24",
+                            "Threshold (3σ)": "2.811,17",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_vlr_total_l90d",
+                            "Max Value": "328.986,24",
+                            "Threshold (3σ)": "3.436,23",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_vlr_total_geral",
+                            "Max Value": "869.165,45",
+                            "Threshold (3σ)": "13.645,57",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_vlr_avg_l30d",
+                            "Max Value": "46.339,15",
+                            "Threshold (3σ)": "680,78",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_vlr_avg_l60d",
+                            "Max Value": "54.831,04",
+                            "Threshold (3σ)": "650,09",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_vlr_avg_l90d",
+                            "Max Value": "54.831,04",
+                            "Threshold (3σ)": "645,96",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_vlr_avg_geral",
+                            "Max Value": "42.651,46",
+                            "Threshold (3σ)": "621,85",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_vlr_min_l30d",
+                            "Max Value": "34.646,53",
+                            "Threshold (3σ)": "584,13",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_vlr_min_l60d",
+                            "Max Value": "34.646,53",
+                            "Threshold (3σ)": "511,78",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_vlr_min_l90d",
+                            "Max Value": "34.646,53",
+                            "Threshold (3σ)": "485,39",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_vlr_min_geral",
+                            "Max Value": "15.599,98",
+                            "Threshold (3σ)": "195,37",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_vlr_max_l30d",
+                            "Max Value": "86.117,29",
+                            "Threshold (3σ)": "1.006,75",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_vlr_max_l60d",
+                            "Max Value": "89.194,82",
+                            "Threshold (3σ)": "1.032,50",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_vlr_max_l90d",
+                            "Max Value": "89.194,82",
+                            "Threshold (3σ)": "1.117,32",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_vlr_max_geral",
+                            "Max Value": "89.194,82",
+                            "Threshold (3σ)": "1.381,58",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_qtd_faturas_l30d",
+                            "Max Value": "30,00",
+                            "Threshold (3σ)": "1,97",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_qtd_faturas_l60d",
+                            "Max Value": "30,00",
+                            "Threshold (3σ)": "3,39",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_qtd_faturas_l90d",
+                            "Max Value": "33,00",
+                            "Threshold (3σ)": "4,84",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_qtd_faturas_geral",
+                            "Max Value": "88,00",
+                            "Threshold (3σ)": "20,52",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_qtd_vezes_com_juros",
+                            "Max Value": "268,00",
+                            "Threshold (3σ)": "16,45",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_dias_desde_ultimo_pagamento",
+                            "Max Value": "516,00",
+                            "Threshold (3σ)": "192,92",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_ticket_medio_l30d",
+                            "Max Value": "55.836,25",
+                            "Threshold (3σ)": "819,15",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_ticket_medio_l60d",
+                            "Max Value": "69.502,51",
+                            "Threshold (3σ)": "831,75",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_ticket_medio_l90d",
+                            "Max Value": "54.831,04",
+                            "Threshold (3σ)": "743,94",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_ticket_medio_geral",
+                            "Max Value": "47.706,70",
+                            "Threshold (3σ)": "790,98",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_share_faturas_com_juros_l30d",
+                            "Max Value": "6,00",
+                            "Threshold (3σ)": "2,35",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_share_faturas_com_juros_l60d",
+                            "Max Value": "6,00",
+                            "Threshold (3σ)": "2,26",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_share_faturas_com_juros_l90d",
+                            "Max Value": "5,33",
+                            "Threshold (3σ)": "2,19",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_share_faturas_com_juros_geral",
+                            "Max Value": "6,43",
+                            "Threshold (3σ)": "2,01",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_vlr_std_l30d",
+                            "Max Value": "37.761,36",
+                            "Threshold (3σ)": "598,13",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_vlr_std_l60d",
+                            "Max Value": "38.206,48",
+                            "Threshold (3σ)": "410,99",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "pag_vlr_std_l90d",
+                            "Max Value": "33.218,60",
+                            "Threshold (3σ)": "390,14",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "atr_vlr_max_l30d",
+                            "Max Value": "509.114,06",
+                            "Threshold (3σ)": "4.217,37",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "atr_vlr_max_l60d",
+                            "Max Value": "509.114,06",
+                            "Threshold (3σ)": "3.043,15",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "atr_vlr_max_l90d",
+                            "Max Value": "509.114,06",
+                            "Threshold (3σ)": "2.988,05",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "atr_vlr_max_geral",
+                            "Max Value": "509.114,06",
+                            "Threshold (3σ)": "3.024,04",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "atr_vlr_acumulado_l30d",
+                            "Max Value": "3.439.561,25",
+                            "Threshold (3σ)": "27.365,30",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "atr_vlr_acumulado_l60d",
+                            "Max Value": "6.879.122,50",
+                            "Threshold (3σ)": "38.286,95",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "atr_vlr_acumulado_l90d",
+                            "Max Value": "10.318.683,75",
+                            "Threshold (3σ)": "55.990,50",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "atr_vlr_acumulado_geral",
+                            "Max Value": "55.931.388,30",
+                            "Threshold (3σ)": "293.518,65",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "atr_qtd_faturas_atrasadas_l30d",
+                            "Max Value": "57,00",
+                            "Threshold (3σ)": "2,35",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "atr_qtd_faturas_atrasadas_l60d",
+                            "Max Value": "111,00",
+                            "Threshold (3σ)": "3,57",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "atr_qtd_faturas_atrasadas_l90d",
+                            "Max Value": "111,00",
+                            "Threshold (3σ)": "4,69",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "atr_qtd_faturas_atrasadas_geral",
+                            "Max Value": "250,00",
+                            "Threshold (3σ)": "20,83",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "atr_dias_desde_ultimo_atraso",
+                            "Max Value": "517,00",
+                            "Threshold (3σ)": "237,83",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "atr_ticket_medio_l30d",
+                            "Max Value": "163.788,63",
+                            "Threshold (3σ)": "1.418,37",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "atr_ticket_medio_l60d",
+                            "Max Value": "327.577,26",
+                            "Threshold (3σ)": "1.980,23",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "atr_ticket_medio_l90d",
+                            "Max Value": "491.365,89",
+                            "Threshold (3σ)": "2.844,63",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "atr_ticket_medio_geral",
+                            "Max Value": "2.663.399,44",
+                            "Threshold (3σ)": "14.343,44",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "atr_flag_recorrente_l30d",
+                            "Max Value": "1,00",
+                            "Threshold (3σ)": "0,63",
+                            "Status": "⚠️ Outlier Detected"
+                        },
+                        {
+                            "Feature": "atr_flag_recorrente_l60d",
+                            "Max Value": "1,00",
+                            "Threshold (3σ)": "0,99",
+                            "Status": "⚠️ Outlier Detected"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📦 Volumetria: `abt_base_prod`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "diretorio": "ano_mes=202410",
+                            "qtd_arquivos": "1",
+                            "registros": "207.953",
+                            "colunas": "206",
+                            "tamanho_comprimido_mib": "35.54",
+                            "tamanho_descomprimido_mib": "45.43"
+                        },
+                        {
+                            "diretorio": "ano_mes=202411",
+                            "qtd_arquivos": "1",
+                            "registros": "231.824",
+                            "colunas": "206",
+                            "tamanho_comprimido_mib": "38.69",
+                            "tamanho_descomprimido_mib": "50.55"
+                        },
+                        {
+                            "diretorio": "ano_mes=202412",
+                            "qtd_arquivos": "1",
+                            "registros": "232.984",
+                            "colunas": "206",
+                            "tamanho_comprimido_mib": "39.21",
+                            "tamanho_descomprimido_mib": "50.09"
+                        },
+                        {
+                            "diretorio": "ano_mes=202501",
+                            "qtd_arquivos": "1",
+                            "registros": "226.446",
+                            "colunas": "206",
+                            "tamanho_comprimido_mib": "38.95",
+                            "tamanho_descomprimido_mib": "50.56"
+                        },
+                        {
+                            "diretorio": "ano_mes=202502",
+                            "qtd_arquivos": "1",
+                            "registros": "208.731",
+                            "colunas": "206",
+                            "tamanho_comprimido_mib": "35.48",
+                            "tamanho_descomprimido_mib": "45.48"
+                        },
+                        {
+                            "diretorio": "ano_mes=202503",
+                            "qtd_arquivos": "1",
+                            "registros": "213.230",
+                            "colunas": "206",
+                            "tamanho_comprimido_mib": "37.7",
+                            "tamanho_descomprimido_mib": "48.47"
+                        },
+                        {
+                            "diretorio": "TOTAL",
+                            "qtd_arquivos": "6",
+                            "registros": "1.321.168",
+                            "colunas": "206",
+                            "tamanho_comprimido_mib": "225.57",
+                            "tamanho_descomprimido_mib": "290.58"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📅 Estabilidade de Safras (Volumetria Mensal)",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "safra": "2024-10-01 00:00:00",
+                            "qtd_registros": "207953",
+                            "representatividade": "15.74%"
+                        },
+                        {
+                            "safra": "2024-11-01 00:00:00",
+                            "qtd_registros": "231824",
+                            "representatividade": "17.55%"
+                        },
+                        {
+                            "safra": "2024-12-01 00:00:00",
+                            "qtd_registros": "232984",
+                            "representatividade": "17.63%"
+                        },
+                        {
+                            "safra": "2025-01-01 00:00:00",
+                            "qtd_registros": "226446",
+                            "representatividade": "17.14%"
+                        },
+                        {
+                            "safra": "2025-02-01 00:00:00",
+                            "qtd_registros": "208731",
+                            "representatividade": "15.8%"
+                        },
+                        {
+                            "safra": "2025-03-01 00:00:00",
+                            "qtd_registros": "213230",
+                            "representatividade": "16.14%"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📶 Densidade de Sinal (Percentual de nulos médio por Prefixo)",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "prefixo": "rec_",
+                            "qtd_features": "39",
+                            "pct_missing_medio": "9.8%",
+                            "densidade_sinal": "90.2%"
+                        },
+                        {
+                            "prefixo": "pag_",
+                            "qtd_features": "36",
+                            "pct_missing_medio": "63.47%",
+                            "densidade_sinal": "36.53%"
+                        },
+                        {
+                            "prefixo": "atr_",
+                            "qtd_features": "24",
+                            "pct_missing_medio": "45.95%",
+                            "densidade_sinal": "54.05%"
+                        },
+                        {
+                            "prefixo": "bur_",
+                            "qtd_features": "3",
+                            "pct_missing_medio": "1.18%",
+                            "densidade_sinal": "98.82%"
+                        },
+                        {
+                            "prefixo": "tel_",
+                            "qtd_features": "69",
+                            "pct_missing_medio": "0.08%",
+                            "densidade_sinal": "99.92%"
+                        },
+                        {
+                            "prefixo": "cad_",
+                            "qtd_features": "28",
+                            "pct_missing_medio": "55.91%",
+                            "densidade_sinal": "44.09%"
+                        },
+                        {
+                            "prefixo": "outros",
+                            "qtd_features": "4",
+                            "pct_missing_medio": "0.0%",
+                            "densidade_sinal": "100.0%"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "💳 Perfil de Risco (Taxa de FPD por Produto)",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "prod": "CMV",
+                            "total_cpfs": "1308974",
+                            "qtd_bad": "310555",
+                            "fpd_rate": "23.73%"
+                        },
+                        {
+                            "prod": "NET",
+                            "total_cpfs": "10043",
+                            "qtd_bad": "2626",
+                            "fpd_rate": "26.15%"
+                        },
+                        {
+                            "prod": "DTH",
+                            "total_cpfs": "2151",
+                            "qtd_bad": "1149",
+                            "fpd_rate": "53.42%"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📈 Top 15 Variáveis com Maior Correlação (Pearson) com Target",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "feature": "bur_score_02",
+                            "correlacao": "-0.292252"
+                        },
+                        {
+                            "feature": "bur_score_01",
+                            "correlacao": "-0.2177"
+                        },
+                        {
+                            "feature": "tel_var_28",
+                            "correlacao": "0.0998143"
+                        },
+                        {
+                            "feature": "cad_var_05",
+                            "correlacao": "-0.0920755"
+                        },
+                        {
+                            "feature": "pag_qtd_faturas_geral",
+                            "correlacao": "-0.09079"
+                        },
+                        {
+                            "feature": "pag_dias_desde_ultimo_pagamento",
+                            "correlacao": "0.0897205"
+                        },
+                        {
+                            "feature": "tel_var_31",
+                            "correlacao": "0.0879407"
+                        },
+                        {
+                            "feature": "atr_dias_desde_ultimo_atraso",
+                            "correlacao": "-0.0805903"
+                        },
+                        {
+                            "feature": "pag_flag_sem_pagamento_l30d",
+                            "correlacao": "0.0792001"
+                        },
+                        {
+                            "feature": "pag_qtd_faturas_l90d",
+                            "correlacao": "-0.0789317"
+                        },
+                        {
+                            "feature": "cad_var_02",
+                            "correlacao": "0.0778389"
+                        },
+                        {
+                            "feature": "pag_flag_sem_pagamento_l60d",
+                            "correlacao": "0.0771396"
+                        },
+                        {
+                            "feature": "tel_var_30",
+                            "correlacao": "0.0770578"
+                        },
+                        {
+                            "feature": "pag_flag_sem_pagamento_l90d",
+                            "correlacao": "0.0750013"
+                        },
+                        {
+                            "feature": "tel_var_50",
+                            "correlacao": "0.0749363"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Sumário Estatístico dos Scores de Bureau",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "feature": "bur_score_01",
+                            "min": "0",
+                            "p25": "554",
+                            "median": "587",
+                            "avg": "586.877",
+                            "p75": "621",
+                            "max": "778",
+                            "std": "57.3987"
+                        },
+                        {
+                            "feature": "bur_score_02",
+                            "min": "1",
+                            "p25": "557",
+                            "median": "622",
+                            "avg": "627.528",
+                            "p75": "697",
+                            "max": "917",
+                            "std": "96.1777"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "title": "Relatório de Profiling: `gold/abt_base_prod` - `20260212`"
+}

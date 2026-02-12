@@ -1,0 +1,43 @@
+{
+    "report_type": "Pipeline Quality",
+    "tests": [
+        {
+            "test": "Status Geral",
+            "status": "✅",
+            "obs": "ABT Gerada com Sucesso"
+        },
+        {
+            "test": "📋 RELATÓRIO TÉCNICO ABT - abt_base_prod | RUN",
+            "status": "INFO",
+            "obs": "20260212"
+        },
+        {
+            "test": "✅ Status",
+            "status": "INFO",
+            "obs": "ABT Gerada com Sucesso"
+        },
+        {
+            "test": "📊 Variáveis",
+            "status": "INFO",
+            "obs": "206 colunas"
+        },
+        {
+            "test": "📈 Volumetria",
+            "status": "INFO",
+            "obs": "1,321,168 registros"
+        },
+        {
+            "test": "👤 Cardinalidade",
+            "status": "INFO",
+            "obs": "1,272,095 CPFs únicos"
+        },
+        {
+            "test": "📌 Grão da Tabela",
+            "status": "INFO",
+            "obs": "CPF + SAFRA + PROD"
+        }
+    ],
+    "title": "abt_base_prod",
+    "run_id": "20260212",
+    "final_result": "SUCCESS"
+}

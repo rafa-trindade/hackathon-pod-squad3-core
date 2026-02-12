@@ -1,0 +1,5196 @@
+{
+    "report_type": "Profiling",
+    "source_file": "silver_telco_profiling.md",
+    "sections": [
+        {
+            "header": "🔑 Garantia de Unicidade: `silver/telco`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "CHAVE_TECNICA",
+                            "distintos": "1367104",
+                            "nulos": "0",
+                            "duplicados": "0",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "0.0%",
+                            "cardinalidade": "MÁXIMA"
+                        }
+                    ]
+                }
+            ],
+            "metadata": {
+                "Chave Técnica": "num_cpf, safra, prod",
+                "Tipo": "COMPOSTA"
+            }
+        },
+        {
+            "header": "🚩 Diagnóstico e Observações Técnicas",
+            "content": [
+                {
+                    "type": "text",
+                    "data": "✅ Sucesso: Unicidade Garantida. O grão da tabela está preservado.\n\n\n---"
+                }
+            ]
+        },
+        {
+            "header": "📊 Schema e Estatísticas: `silver/telco`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "column_name": "num_cpf",
+                            "column_type": "VARCHAR",
+                            "distintos": "1187719",
+                            "nulos": "0",
+                            "duplicados": "179385",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "13.12%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "column_name": "safra",
+                            "column_type": "DATE",
+                            "distintos": "6",
+                            "nulos": "0",
+                            "duplicados": "1367098",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "prod",
+                            "column_type": "VARCHAR",
+                            "distintos": "3",
+                            "nulos": "0",
+                            "duplicados": "1367101",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "flag_instalacao",
+                            "column_type": "BOOLEAN",
+                            "distintos": "2",
+                            "nulos": "0",
+                            "duplicados": "1367102",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "flag_mig2",
+                            "column_type": "VARCHAR",
+                            "distintos": "3",
+                            "nulos": "58130",
+                            "duplicados": "1367101",
+                            "pct_nulos": "4.25%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "fpd",
+                            "column_type": "BOOLEAN",
+                            "distintos": "2",
+                            "nulos": "45936",
+                            "duplicados": "1367102",
+                            "pct_nulos": "3.36%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_26",
+                            "column_type": "VARCHAR",
+                            "distintos": "7",
+                            "nulos": "1295",
+                            "duplicados": "1367097",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_27",
+                            "column_type": "VARCHAR",
+                            "distintos": "7",
+                            "nulos": "1295",
+                            "duplicados": "1367097",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_28",
+                            "column_type": "DOUBLE",
+                            "distintos": "853",
+                            "nulos": "1295",
+                            "duplicados": "1366251",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.94%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_29",
+                            "column_type": "DOUBLE",
+                            "distintos": "70",
+                            "nulos": "1295",
+                            "duplicados": "1367034",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.99%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_30",
+                            "column_type": "DOUBLE",
+                            "distintos": "119",
+                            "nulos": "1295",
+                            "duplicados": "1366985",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.99%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_31",
+                            "column_type": "DOUBLE",
+                            "distintos": "7761",
+                            "nulos": "1295",
+                            "duplicados": "1359343",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.43%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "column_name": "var_32",
+                            "column_type": "DOUBLE",
+                            "distintos": "7761",
+                            "nulos": "1295",
+                            "duplicados": "1359343",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.43%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "column_name": "var_33",
+                            "column_type": "DOUBLE",
+                            "distintos": "7761",
+                            "nulos": "1295",
+                            "duplicados": "1359343",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.43%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "column_name": "var_34",
+                            "column_type": "DOUBLE",
+                            "distintos": "7761",
+                            "nulos": "1295",
+                            "duplicados": "1359343",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.43%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "column_name": "var_35",
+                            "column_type": "DOUBLE",
+                            "distintos": "7761",
+                            "nulos": "1295",
+                            "duplicados": "1359343",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.43%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "column_name": "var_36",
+                            "column_type": "DOUBLE",
+                            "distintos": "107",
+                            "nulos": "1295",
+                            "duplicados": "1366997",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.99%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_37",
+                            "column_type": "DOUBLE",
+                            "distintos": "56",
+                            "nulos": "1295",
+                            "duplicados": "1367048",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_38",
+                            "column_type": "DOUBLE",
+                            "distintos": "7761",
+                            "nulos": "1295",
+                            "duplicados": "1359343",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.43%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "column_name": "var_39",
+                            "column_type": "DOUBLE",
+                            "distintos": "7761",
+                            "nulos": "1295",
+                            "duplicados": "1359343",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.43%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "column_name": "var_40",
+                            "column_type": "DOUBLE",
+                            "distintos": "7761",
+                            "nulos": "1295",
+                            "duplicados": "1359343",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.43%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "column_name": "var_41",
+                            "column_type": "DOUBLE",
+                            "distintos": "7761",
+                            "nulos": "1295",
+                            "duplicados": "1359343",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.43%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "column_name": "var_42",
+                            "column_type": "DOUBLE",
+                            "distintos": "109",
+                            "nulos": "1295",
+                            "duplicados": "1366995",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.99%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_43",
+                            "column_type": "DOUBLE",
+                            "distintos": "109",
+                            "nulos": "1295",
+                            "duplicados": "1366995",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.99%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_44",
+                            "column_type": "DOUBLE",
+                            "distintos": "7761",
+                            "nulos": "1295",
+                            "duplicados": "1359343",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.43%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "column_name": "var_45",
+                            "column_type": "DOUBLE",
+                            "distintos": "16",
+                            "nulos": "1295",
+                            "duplicados": "1367088",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_46",
+                            "column_type": "DOUBLE",
+                            "distintos": "42",
+                            "nulos": "1295",
+                            "duplicados": "1367062",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_47",
+                            "column_type": "DOUBLE",
+                            "distintos": "1124",
+                            "nulos": "1295",
+                            "duplicados": "1365980",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.92%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_48",
+                            "column_type": "DOUBLE",
+                            "distintos": "2989",
+                            "nulos": "1295",
+                            "duplicados": "1364115",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.78%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "column_name": "var_49",
+                            "column_type": "DOUBLE",
+                            "distintos": "7006",
+                            "nulos": "1295",
+                            "duplicados": "1360098",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.49%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "column_name": "var_50",
+                            "column_type": "DOUBLE",
+                            "distintos": "6164",
+                            "nulos": "1295",
+                            "duplicados": "1360940",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.55%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "column_name": "var_51",
+                            "column_type": "DOUBLE",
+                            "distintos": "1179",
+                            "nulos": "1295",
+                            "duplicados": "1365925",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.91%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_52",
+                            "column_type": "DOUBLE",
+                            "distintos": "7761",
+                            "nulos": "1295",
+                            "duplicados": "1359343",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.43%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "column_name": "var_53",
+                            "column_type": "DOUBLE",
+                            "distintos": "32",
+                            "nulos": "1295",
+                            "duplicados": "1367072",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_54",
+                            "column_type": "DOUBLE",
+                            "distintos": "7761",
+                            "nulos": "1295",
+                            "duplicados": "1359343",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.43%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "column_name": "var_55",
+                            "column_type": "DOUBLE",
+                            "distintos": "42",
+                            "nulos": "1295",
+                            "duplicados": "1367062",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_56",
+                            "column_type": "DOUBLE",
+                            "distintos": "90",
+                            "nulos": "1295",
+                            "duplicados": "1367014",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.99%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_57",
+                            "column_type": "DOUBLE",
+                            "distintos": "23",
+                            "nulos": "1295",
+                            "duplicados": "1367081",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_58",
+                            "column_type": "DOUBLE",
+                            "distintos": "643",
+                            "nulos": "1295",
+                            "duplicados": "1366461",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.95%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_59",
+                            "column_type": "DOUBLE",
+                            "distintos": "7761",
+                            "nulos": "1295",
+                            "duplicados": "1359343",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.43%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "column_name": "var_60",
+                            "column_type": "DOUBLE",
+                            "distintos": "7761",
+                            "nulos": "1295",
+                            "duplicados": "1359343",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.43%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "column_name": "var_61",
+                            "column_type": "DOUBLE",
+                            "distintos": "4449",
+                            "nulos": "1295",
+                            "duplicados": "1362655",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.67%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "column_name": "var_62",
+                            "column_type": "DOUBLE",
+                            "distintos": "144",
+                            "nulos": "1295",
+                            "duplicados": "1366960",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.99%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_63",
+                            "column_type": "DOUBLE",
+                            "distintos": "7761",
+                            "nulos": "1295",
+                            "duplicados": "1359343",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.43%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "column_name": "var_64",
+                            "column_type": "VARCHAR",
+                            "distintos": "27",
+                            "nulos": "1295",
+                            "duplicados": "1367077",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_65",
+                            "column_type": "VARCHAR",
+                            "distintos": "245",
+                            "nulos": "1295",
+                            "duplicados": "1366859",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.98%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_66",
+                            "column_type": "VARCHAR",
+                            "distintos": "59",
+                            "nulos": "1295",
+                            "duplicados": "1367045",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_67",
+                            "column_type": "VARCHAR",
+                            "distintos": "65",
+                            "nulos": "1295",
+                            "duplicados": "1367039",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_68",
+                            "column_type": "DOUBLE",
+                            "distintos": "7311",
+                            "nulos": "1295",
+                            "duplicados": "1359793",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.47%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "column_name": "var_69",
+                            "column_type": "DOUBLE",
+                            "distintos": "3400",
+                            "nulos": "1295",
+                            "duplicados": "1363704",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "99.75%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "column_name": "var_70",
+                            "column_type": "DOUBLE",
+                            "distintos": "23",
+                            "nulos": "1295",
+                            "duplicados": "1367081",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_71",
+                            "column_type": "DOUBLE",
+                            "distintos": "23",
+                            "nulos": "1295",
+                            "duplicados": "1367081",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_72",
+                            "column_type": "DOUBLE",
+                            "distintos": "23",
+                            "nulos": "1295",
+                            "duplicados": "1367081",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_73",
+                            "column_type": "VARCHAR",
+                            "distintos": "11",
+                            "nulos": "1295",
+                            "duplicados": "1367093",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_74",
+                            "column_type": "VARCHAR",
+                            "distintos": "14",
+                            "nulos": "1295",
+                            "duplicados": "1367090",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_75",
+                            "column_type": "VARCHAR",
+                            "distintos": "12",
+                            "nulos": "1295",
+                            "duplicados": "1367092",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_76",
+                            "column_type": "VARCHAR",
+                            "distintos": "12",
+                            "nulos": "1295",
+                            "duplicados": "1367092",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_77",
+                            "column_type": "VARCHAR",
+                            "distintos": "9",
+                            "nulos": "1295",
+                            "duplicados": "1367095",
+                            "pct_nulos": "0.09%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_78",
+                            "column_type": "VARCHAR",
+                            "distintos": "16",
+                            "nulos": "0",
+                            "duplicados": "1367088",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_79",
+                            "column_type": "VARCHAR",
+                            "distintos": "13",
+                            "nulos": "0",
+                            "duplicados": "1367091",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_80",
+                            "column_type": "VARCHAR",
+                            "distintos": "13",
+                            "nulos": "0",
+                            "duplicados": "1367091",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_81",
+                            "column_type": "VARCHAR",
+                            "distintos": "96",
+                            "nulos": "0",
+                            "duplicados": "1367008",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.99%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_82",
+                            "column_type": "DOUBLE",
+                            "distintos": "953",
+                            "nulos": "0",
+                            "duplicados": "1366151",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.93%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_83",
+                            "column_type": "VARCHAR",
+                            "distintos": "14",
+                            "nulos": "0",
+                            "duplicados": "1367090",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_84",
+                            "column_type": "VARCHAR",
+                            "distintos": "16",
+                            "nulos": "0",
+                            "duplicados": "1367088",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_85",
+                            "column_type": "VARCHAR",
+                            "distintos": "16",
+                            "nulos": "0",
+                            "duplicados": "1367088",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_86",
+                            "column_type": "VARCHAR",
+                            "distintos": "17",
+                            "nulos": "0",
+                            "duplicados": "1367087",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_87",
+                            "column_type": "VARCHAR",
+                            "distintos": "13",
+                            "nulos": "0",
+                            "duplicados": "1367091",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_88",
+                            "column_type": "VARCHAR",
+                            "distintos": "13",
+                            "nulos": "0",
+                            "duplicados": "1367091",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_89",
+                            "column_type": "VARCHAR",
+                            "distintos": "96",
+                            "nulos": "0",
+                            "duplicados": "1367008",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.99%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_90",
+                            "column_type": "DOUBLE",
+                            "distintos": "1412",
+                            "nulos": "0",
+                            "duplicados": "1365692",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.9%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "column_name": "var_91",
+                            "column_type": "VARCHAR",
+                            "distintos": "16",
+                            "nulos": "0",
+                            "duplicados": "1367088",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_92",
+                            "column_type": "VARCHAR",
+                            "distintos": "16",
+                            "nulos": "0",
+                            "duplicados": "1367088",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "var_93",
+                            "column_type": "VARCHAR",
+                            "distintos": "14",
+                            "nulos": "0",
+                            "duplicados": "1367090",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "ingestion_ts",
+                            "column_type": "TIMESTAMP WITH TIME ZONE",
+                            "distintos": "1",
+                            "nulos": "0",
+                            "duplicados": "1367103",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "run_id",
+                            "column_type": "BIGINT",
+                            "distintos": "1",
+                            "nulos": "0",
+                            "duplicados": "1367103",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "ano_mes",
+                            "column_type": "BIGINT",
+                            "distintos": "6",
+                            "nulos": "0",
+                            "duplicados": "1367098",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📦 Volumetria: `silver/telco`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "diretorio": "ano_mes=202410",
+                            "qtd_arquivos": "1",
+                            "registros": "219.860",
+                            "colunas": "77",
+                            "tamanho_comprimido_mib": "14.45",
+                            "tamanho_descomprimido_mib": "20.18"
+                        },
+                        {
+                            "diretorio": "ano_mes=202411",
+                            "qtd_arquivos": "1",
+                            "registros": "240.520",
+                            "colunas": "77",
+                            "tamanho_comprimido_mib": "15.98",
+                            "tamanho_descomprimido_mib": "23.42"
+                        },
+                        {
+                            "diretorio": "ano_mes=202412",
+                            "qtd_arquivos": "1",
+                            "registros": "241.453",
+                            "colunas": "77",
+                            "tamanho_comprimido_mib": "16.1",
+                            "tamanho_descomprimido_mib": "23.45"
+                        },
+                        {
+                            "diretorio": "ano_mes=202501",
+                            "qtd_arquivos": "1",
+                            "registros": "233.710",
+                            "colunas": "77",
+                            "tamanho_comprimido_mib": "15.8",
+                            "tamanho_descomprimido_mib": "22.63"
+                        },
+                        {
+                            "diretorio": "ano_mes=202502",
+                            "qtd_arquivos": "1",
+                            "registros": "214.665",
+                            "colunas": "77",
+                            "tamanho_comprimido_mib": "14.07",
+                            "tamanho_descomprimido_mib": "19.76"
+                        },
+                        {
+                            "diretorio": "ano_mes=202503",
+                            "qtd_arquivos": "1",
+                            "registros": "216.896",
+                            "colunas": "77",
+                            "tamanho_comprimido_mib": "14.54",
+                            "tamanho_descomprimido_mib": "20.98"
+                        },
+                        {
+                            "diretorio": "TOTAL",
+                            "qtd_arquivos": "6",
+                            "registros": "1.367.104",
+                            "colunas": "77",
+                            "tamanho_comprimido_mib": "90.94",
+                            "tamanho_descomprimido_mib": "130.43"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📅 Range de Datas: `silver/telco`",
+            "content": []
+        },
+        {
+            "header": "Coluna: `safra`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "2024-10-01T00:00:00.000000",
+                            "max": "2025-03-01T00:00:00.000000"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `ingestion_ts`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "2026-02-12 00:56:36.659605-03:00",
+                            "max": "2026-02-12 00:56:36.659605-03:00"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔢 Range de Valores Numéricos: `silver/telco`",
+            "content": []
+        },
+        {
+            "header": "Coluna: `var_28`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "111.67"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_29`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "209.18"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_30`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "124.56"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_31`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "80.95"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_32`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "133.36"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_33`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "99.86"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_34`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "158.53"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_35`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "128.34"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_36`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "235.3"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_37`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "238.62"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_38`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "244.72"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_39`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "234.2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_40`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "123.05"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_41`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "102.34"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_42`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "2",
+                            "max": "308",
+                            "media": "190.62"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_43`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "2",
+                            "max": "308",
+                            "media": "189.24"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_44`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "182.02"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_45`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "87.11"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_46`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "73.98"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_47`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "234.01"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_48`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "86.68"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_49`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "185.37"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_50`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "77.49"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_51`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "198.88"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_52`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "197.74"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_53`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "95.97"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_54`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "97.47"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_55`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "83.79"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_56`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "98.4"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_57`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "106.68"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_58`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "163"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_59`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "194.23"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_60`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "215.11"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_61`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "139.84"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_62`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "135.05"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_63`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "131.56"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_68`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "81.99"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_69`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "23.84",
+                            "max": "308",
+                            "media": "98.53"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_70`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "172.81"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_71`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "237.87"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_72`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "146.41"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_82`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "308",
+                            "media": "263.39"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_90`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "1.0056e+11",
+                            "media": "212586"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔟 Distribuição de Valores (Top 10): `silver/telco`",
+            "content": []
+        },
+        {
+            "header": "Coluna: `num_cpf`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "888W78UZYYT",
+                            "qtd": "6"
+                        },
+                        {
+                            "valor": "UW7X8YWN88T",
+                            "qtd": "5"
+                        },
+                        {
+                            "valor": "7ZU8NNN7XUN",
+                            "qtd": "5"
+                        },
+                        {
+                            "valor": "78YYWZT9TN8",
+                            "qtd": "5"
+                        },
+                        {
+                            "valor": "8NYZZZUWTYW",
+                            "qtd": "5"
+                        },
+                        {
+                            "valor": "ZUZUZZX7X88",
+                            "qtd": "5"
+                        },
+                        {
+                            "valor": "XNXXWZZ97TZ",
+                            "qtd": "5"
+                        },
+                        {
+                            "valor": "T9ZYTXZ7WYZ",
+                            "qtd": "5"
+                        },
+                        {
+                            "valor": "YW99TTN98UN",
+                            "qtd": "5"
+                        },
+                        {
+                            "valor": "XNW79U9Z7WN",
+                            "qtd": "5"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `safra`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "2024-12-01",
+                            "qtd": "241453"
+                        },
+                        {
+                            "valor": "2024-11-01",
+                            "qtd": "240520"
+                        },
+                        {
+                            "valor": "2025-01-01",
+                            "qtd": "233710"
+                        },
+                        {
+                            "valor": "2024-10-01",
+                            "qtd": "219860"
+                        },
+                        {
+                            "valor": "2025-03-01",
+                            "qtd": "216896"
+                        },
+                        {
+                            "valor": "2025-02-01",
+                            "qtd": "214665"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `prod`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "CMV",
+                            "qtd": "1346917"
+                        },
+                        {
+                            "valor": "NET",
+                            "qtd": "16209"
+                        },
+                        {
+                            "valor": "DTH",
+                            "qtd": "3978"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `flag_instalacao`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "true",
+                            "qtd": "1321168"
+                        },
+                        {
+                            "valor": "false",
+                            "qtd": "45936"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `flag_mig2`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "PRE",
+                            "qtd": "1290526"
+                        },
+                        {
+                            "valor": "NULL",
+                            "qtd": "58130"
+                        },
+                        {
+                            "valor": "Aquisição",
+                            "qtd": "18362"
+                        },
+                        {
+                            "valor": "FLEX",
+                            "qtd": "86"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `fpd`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "false",
+                            "qtd": "1006838"
+                        },
+                        {
+                            "valor": "true",
+                            "qtd": "314330"
+                        },
+                        {
+                            "valor": "NULL",
+                            "qtd": "45936"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_26`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "1",
+                            "qtd": "1175310"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "121642"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62223"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4794"
+                        },
+                        {
+                            "valor": "NULL",
+                            "qtd": "1295"
+                        },
+                        {
+                            "valor": "308",
+                            "qtd": "1071"
+                        },
+                        {
+                            "valor": "302",
+                            "qtd": "386"
+                        },
+                        {
+                            "valor": "307",
+                            "qtd": "381"
+                        },
+                        {
+                            "valor": "306",
+                            "qtd": "2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_27`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "1",
+                            "qtd": "963673"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "333279"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62223"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4794"
+                        },
+                        {
+                            "valor": "NULL",
+                            "qtd": "1295"
+                        },
+                        {
+                            "valor": "308",
+                            "qtd": "1071"
+                        },
+                        {
+                            "valor": "302",
+                            "qtd": "386"
+                        },
+                        {
+                            "valor": "307",
+                            "qtd": "381"
+                        },
+                        {
+                            "valor": "306",
+                            "qtd": "2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_28`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "474931"
+                        },
+                        {
+                            "valor": "304",
+                            "qtd": "360978"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "100",
+                            "qtd": "42225"
+                        },
+                        {
+                            "valor": "5.71",
+                            "qtd": "10167"
+                        },
+                        {
+                            "valor": "71.43",
+                            "qtd": "9728"
+                        },
+                        {
+                            "valor": "6.43",
+                            "qtd": "8248"
+                        },
+                        {
+                            "valor": "7.14",
+                            "qtd": "7607"
+                        },
+                        {
+                            "valor": "79.25",
+                            "qtd": "6702"
+                        },
+                        {
+                            "valor": "15",
+                            "qtd": "6578"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_29`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "796407"
+                        },
+                        {
+                            "valor": "24.49",
+                            "qtd": "116358"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "46647"
+                        },
+                        {
+                            "valor": "46.21",
+                            "qtd": "36674"
+                        },
+                        {
+                            "valor": "35.84",
+                            "qtd": "30502"
+                        },
+                        {
+                            "valor": "6.24",
+                            "qtd": "19716"
+                        },
+                        {
+                            "valor": "63.51",
+                            "qtd": "17374"
+                        },
+                        {
+                            "valor": "18.53",
+                            "qtd": "17025"
+                        },
+                        {
+                            "valor": "30.27",
+                            "qtd": "16454"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_30`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "364503"
+                        },
+                        {
+                            "valor": "28.37",
+                            "qtd": "120486"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "84584"
+                        },
+                        {
+                            "valor": "12.44",
+                            "qtd": "65343"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "32.15",
+                            "qtd": "56600"
+                        },
+                        {
+                            "valor": "52.51",
+                            "qtd": "39197"
+                        },
+                        {
+                            "valor": "4.16",
+                            "qtd": "37912"
+                        },
+                        {
+                            "valor": "35.84",
+                            "qtd": "33211"
+                        },
+                        {
+                            "valor": "24.49",
+                            "qtd": "31568"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_31`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "320440"
+                        },
+                        {
+                            "valor": "304",
+                            "qtd": "201387"
+                        },
+                        {
+                            "valor": "100",
+                            "qtd": "147748"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "0.01",
+                            "qtd": "27940"
+                        },
+                        {
+                            "valor": "0.02",
+                            "qtd": "14313"
+                        },
+                        {
+                            "valor": "0.03",
+                            "qtd": "10344"
+                        },
+                        {
+                            "valor": "0.04",
+                            "qtd": "7955"
+                        },
+                        {
+                            "valor": "0.05",
+                            "qtd": "6455"
+                        },
+                        {
+                            "valor": "0.06",
+                            "qtd": "5475"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_32`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "389066"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "161250"
+                        },
+                        {
+                            "valor": "100",
+                            "qtd": "70854"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "99.99",
+                            "qtd": "9654"
+                        },
+                        {
+                            "valor": "99.98",
+                            "qtd": "5304"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4855"
+                        },
+                        {
+                            "valor": "99.97",
+                            "qtd": "3725"
+                        },
+                        {
+                            "valor": "99.96",
+                            "qtd": "3000"
+                        },
+                        {
+                            "valor": "99.95",
+                            "qtd": "2526"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_33`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "224548"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "197020"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "100",
+                            "qtd": "60396"
+                        },
+                        {
+                            "valor": "99.99",
+                            "qtd": "8691"
+                        },
+                        {
+                            "valor": "3.95",
+                            "qtd": "6099"
+                        },
+                        {
+                            "valor": "15.67",
+                            "qtd": "5242"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4855"
+                        },
+                        {
+                            "valor": "99.98",
+                            "qtd": "4831"
+                        },
+                        {
+                            "valor": "99.97",
+                            "qtd": "3502"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_34`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "531118"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "161095"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "100",
+                            "qtd": "58042"
+                        },
+                        {
+                            "valor": "99.99",
+                            "qtd": "8372"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4855"
+                        },
+                        {
+                            "valor": "99.98",
+                            "qtd": "4404"
+                        },
+                        {
+                            "valor": "99.97",
+                            "qtd": "3259"
+                        },
+                        {
+                            "valor": "99.96",
+                            "qtd": "2551"
+                        },
+                        {
+                            "valor": "99.95",
+                            "qtd": "2142"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_35`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "384468"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "199034"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "100",
+                            "qtd": "47678"
+                        },
+                        {
+                            "valor": "99.99",
+                            "qtd": "7729"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4855"
+                        },
+                        {
+                            "valor": "99.98",
+                            "qtd": "4299"
+                        },
+                        {
+                            "valor": "99.97",
+                            "qtd": "2962"
+                        },
+                        {
+                            "valor": "99.96",
+                            "qtd": "2381"
+                        },
+                        {
+                            "valor": "99.95",
+                            "qtd": "1979"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_36`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "955157"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "48153"
+                        },
+                        {
+                            "valor": "58.27",
+                            "qtd": "45559"
+                        },
+                        {
+                            "valor": "59.43",
+                            "qtd": "42814"
+                        },
+                        {
+                            "valor": "51.64",
+                            "qtd": "28209"
+                        },
+                        {
+                            "valor": "30.32",
+                            "qtd": "17701"
+                        },
+                        {
+                            "valor": "57.13",
+                            "qtd": "17543"
+                        },
+                        {
+                            "valor": "28.24",
+                            "qtd": "16781"
+                        },
+                        {
+                            "valor": "14.04",
+                            "qtd": "11734"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_37`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "955157"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "55669"
+                        },
+                        {
+                            "valor": "80.05",
+                            "qtd": "47344"
+                        },
+                        {
+                            "valor": "9.97",
+                            "qtd": "43181"
+                        },
+                        {
+                            "valor": "19.74",
+                            "qtd": "26862"
+                        },
+                        {
+                            "valor": "29.13",
+                            "qtd": "22878"
+                        },
+                        {
+                            "valor": "37.99",
+                            "qtd": "19098"
+                        },
+                        {
+                            "valor": "76.16",
+                            "qtd": "18848"
+                        },
+                        {
+                            "valor": "71.63",
+                            "qtd": "18356"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_38`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304.0",
+                            "qtd": "997410"
+                        },
+                        {
+                            "valor": "0.0",
+                            "qtd": "96308"
+                        },
+                        {
+                            "valor": "303.0",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "100.0",
+                            "qtd": "22695"
+                        },
+                        {
+                            "valor": "301.0",
+                            "qtd": "4855"
+                        },
+                        {
+                            "valor": "99.99",
+                            "qtd": "2215"
+                        },
+                        {
+                            "valor": "0.01",
+                            "qtd": "1339"
+                        },
+                        {
+                            "valor": "NULL",
+                            "qtd": "1295"
+                        },
+                        {
+                            "valor": "99.98",
+                            "qtd": "1198"
+                        },
+                        {
+                            "valor": "308.0",
+                            "qtd": "1071"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_39`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304.0",
+                            "qtd": "955157"
+                        },
+                        {
+                            "valor": "0.0",
+                            "qtd": "109458"
+                        },
+                        {
+                            "valor": "303.0",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "100.0",
+                            "qtd": "12597"
+                        },
+                        {
+                            "valor": "301.0",
+                            "qtd": "4855"
+                        },
+                        {
+                            "valor": "0.01",
+                            "qtd": "1941"
+                        },
+                        {
+                            "valor": "99.99",
+                            "qtd": "1427"
+                        },
+                        {
+                            "valor": "0.02",
+                            "qtd": "1311"
+                        },
+                        {
+                            "valor": "NULL",
+                            "qtd": "1295"
+                        },
+                        {
+                            "valor": "308.0",
+                            "qtd": "1071"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_40`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "370310"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "137646"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "100",
+                            "qtd": "23212"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4855"
+                        },
+                        {
+                            "valor": "99.99",
+                            "qtd": "4734"
+                        },
+                        {
+                            "valor": "10.63",
+                            "qtd": "3038"
+                        },
+                        {
+                            "valor": "99.98",
+                            "qtd": "2622"
+                        },
+                        {
+                            "valor": "5.33",
+                            "qtd": "2083"
+                        },
+                        {
+                            "valor": "99.97",
+                            "qtd": "1965"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_41`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "201387"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "171574"
+                        },
+                        {
+                            "valor": "100",
+                            "qtd": "95940"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "99.99",
+                            "qtd": "14166"
+                        },
+                        {
+                            "valor": "22.78",
+                            "qtd": "8847"
+                        },
+                        {
+                            "valor": "99.98",
+                            "qtd": "7694"
+                        },
+                        {
+                            "valor": "11.54",
+                            "qtd": "6850"
+                        },
+                        {
+                            "valor": "99.97",
+                            "qtd": "5608"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4855"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_42`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "673794"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "4",
+                            "qtd": "31374"
+                        },
+                        {
+                            "valor": "95.79",
+                            "qtd": "27824"
+                        },
+                        {
+                            "valor": "7.98",
+                            "qtd": "20104"
+                        },
+                        {
+                            "valor": "15.86",
+                            "qtd": "16581"
+                        },
+                        {
+                            "valor": "5.99",
+                            "qtd": "14998"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "14679"
+                        },
+                        {
+                            "valor": "11.94",
+                            "qtd": "11974"
+                        },
+                        {
+                            "valor": "13.91",
+                            "qtd": "11410"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_43`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "673794"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "4",
+                            "qtd": "31202"
+                        },
+                        {
+                            "valor": "95.79",
+                            "qtd": "20468"
+                        },
+                        {
+                            "valor": "7.98",
+                            "qtd": "18487"
+                        },
+                        {
+                            "valor": "5.99",
+                            "qtd": "15542"
+                        },
+                        {
+                            "valor": "15.86",
+                            "qtd": "15161"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "15110"
+                        },
+                        {
+                            "valor": "9.97",
+                            "qtd": "14579"
+                        },
+                        {
+                            "valor": "13.91",
+                            "qtd": "12239"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_44`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "677720"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "100",
+                            "qtd": "23085"
+                        },
+                        {
+                            "valor": "99.99",
+                            "qtd": "5530"
+                        },
+                        {
+                            "valor": "1.07",
+                            "qtd": "5181"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4855"
+                        },
+                        {
+                            "valor": "0.8",
+                            "qtd": "3149"
+                        },
+                        {
+                            "valor": "99.98",
+                            "qtd": "2911"
+                        },
+                        {
+                            "valor": "99.97",
+                            "qtd": "2039"
+                        },
+                        {
+                            "valor": "0.54",
+                            "qtd": "1956"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_45`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0.0",
+                            "qtd": "611004"
+                        },
+                        {
+                            "valor": "76.16",
+                            "qtd": "483578"
+                        },
+                        {
+                            "valor": "304.0",
+                            "qtd": "201387"
+                        },
+                        {
+                            "valor": "303.0",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "301.0",
+                            "qtd": "4855"
+                        },
+                        {
+                            "valor": "NULL",
+                            "qtd": "1295"
+                        },
+                        {
+                            "valor": "308.0",
+                            "qtd": "1071"
+                        },
+                        {
+                            "valor": "46.21",
+                            "qtd": "606"
+                        },
+                        {
+                            "valor": "307.0",
+                            "qtd": "381"
+                        },
+                        {
+                            "valor": "302.0",
+                            "qtd": "319"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_46`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "681775"
+                        },
+                        {
+                            "valor": "35.84",
+                            "qtd": "218330"
+                        },
+                        {
+                            "valor": "304",
+                            "qtd": "201387"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "63.51",
+                            "qtd": "47033"
+                        },
+                        {
+                            "valor": "46.21",
+                            "qtd": "40543"
+                        },
+                        {
+                            "valor": "12.44",
+                            "qtd": "26235"
+                        },
+                        {
+                            "valor": "70.39",
+                            "qtd": "18487"
+                        },
+                        {
+                            "valor": "55.46",
+                            "qtd": "13310"
+                        },
+                        {
+                            "valor": "80.93",
+                            "qtd": "11311"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_47`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "866639"
+                        },
+                        {
+                            "valor": "100",
+                            "qtd": "242443"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "49215"
+                        },
+                        {
+                            "valor": "50",
+                            "qtd": "17856"
+                        },
+                        {
+                            "valor": "91.67",
+                            "qtd": "15312"
+                        },
+                        {
+                            "valor": "66.67",
+                            "qtd": "11552"
+                        },
+                        {
+                            "valor": "75",
+                            "qtd": "8621"
+                        },
+                        {
+                            "valor": "80",
+                            "qtd": "7330"
+                        },
+                        {
+                            "valor": "83.33",
+                            "qtd": "6220"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_48`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "634769"
+                        },
+                        {
+                            "valor": "304",
+                            "qtd": "240457"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "100",
+                            "qtd": "11975"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4855"
+                        },
+                        {
+                            "valor": "6.93",
+                            "qtd": "4544"
+                        },
+                        {
+                            "valor": "6.66",
+                            "qtd": "4205"
+                        },
+                        {
+                            "valor": "6.1",
+                            "qtd": "3633"
+                        },
+                        {
+                            "valor": "3.61",
+                            "qtd": "3298"
+                        },
+                        {
+                            "valor": "5.55",
+                            "qtd": "3260"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_49`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304.0",
+                            "qtd": "611194"
+                        },
+                        {
+                            "valor": "100.0",
+                            "qtd": "439105"
+                        },
+                        {
+                            "valor": "0.0",
+                            "qtd": "201197"
+                        },
+                        {
+                            "valor": "303.0",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "301.0",
+                            "qtd": "4855"
+                        },
+                        {
+                            "valor": "NULL",
+                            "qtd": "1295"
+                        },
+                        {
+                            "valor": "308.0",
+                            "qtd": "1071"
+                        },
+                        {
+                            "valor": "85.94",
+                            "qtd": "544"
+                        },
+                        {
+                            "valor": "66.67",
+                            "qtd": "445"
+                        },
+                        {
+                            "valor": "72.73",
+                            "qtd": "435"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_50`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "633021"
+                        },
+                        {
+                            "valor": "304",
+                            "qtd": "238923"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "100",
+                            "qtd": "30302"
+                        },
+                        {
+                            "valor": "50",
+                            "qtd": "11965"
+                        },
+                        {
+                            "valor": "33.33",
+                            "qtd": "10312"
+                        },
+                        {
+                            "valor": "25",
+                            "qtd": "9312"
+                        },
+                        {
+                            "valor": "8.33",
+                            "qtd": "7993"
+                        },
+                        {
+                            "valor": "16.67",
+                            "qtd": "7630"
+                        },
+                        {
+                            "valor": "20",
+                            "qtd": "7568"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_51`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "808899"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "414223"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "96.95",
+                            "qtd": "15527"
+                        },
+                        {
+                            "valor": "88.29",
+                            "qtd": "7839"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4855"
+                        },
+                        {
+                            "valor": "77.85",
+                            "qtd": "4730"
+                        },
+                        {
+                            "valor": "68.23",
+                            "qtd": "3296"
+                        },
+                        {
+                            "valor": "99.23",
+                            "qtd": "2742"
+                        },
+                        {
+                            "valor": "60.08",
+                            "qtd": "2629"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_52`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304.0",
+                            "qtd": "808960"
+                        },
+                        {
+                            "valor": "0.0",
+                            "qtd": "414273"
+                        },
+                        {
+                            "valor": "303.0",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "301.0",
+                            "qtd": "4855"
+                        },
+                        {
+                            "valor": "100.0",
+                            "qtd": "2916"
+                        },
+                        {
+                            "valor": "NULL",
+                            "qtd": "1295"
+                        },
+                        {
+                            "valor": "308.0",
+                            "qtd": "1071"
+                        },
+                        {
+                            "valor": "46.21",
+                            "qtd": "739"
+                        },
+                        {
+                            "valor": "90.51",
+                            "qtd": "636"
+                        },
+                        {
+                            "valor": "63.51",
+                            "qtd": "495"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_53`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "50",
+                            "qtd": "578155"
+                        },
+                        {
+                            "valor": "304",
+                            "qtd": "201387"
+                        },
+                        {
+                            "valor": "73.11",
+                            "qtd": "100425"
+                        },
+                        {
+                            "valor": "11.92",
+                            "qtd": "70465"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "26.89",
+                            "qtd": "55436"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "52494"
+                        },
+                        {
+                            "valor": "88.08",
+                            "qtd": "46146"
+                        },
+                        {
+                            "valor": "0.09",
+                            "qtd": "29989"
+                        },
+                        {
+                            "valor": "0.67",
+                            "qtd": "26401"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_54`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "50",
+                            "qtd": "557324"
+                        },
+                        {
+                            "valor": "304",
+                            "qtd": "201387"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "18079"
+                        },
+                        {
+                            "valor": "100",
+                            "qtd": "10294"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4855"
+                        },
+                        {
+                            "valor": "42.07",
+                            "qtd": "3597"
+                        },
+                        {
+                            "valor": "0.01",
+                            "qtd": "3347"
+                        },
+                        {
+                            "valor": "53.99",
+                            "qtd": "1967"
+                        },
+                        {
+                            "valor": "0.02",
+                            "qtd": "1924"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_55`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "409807"
+                        },
+                        {
+                            "valor": "304",
+                            "qtd": "201387"
+                        },
+                        {
+                            "valor": "24.49",
+                            "qtd": "185131"
+                        },
+                        {
+                            "valor": "35.84",
+                            "qtd": "174310"
+                        },
+                        {
+                            "valor": "55.46",
+                            "qtd": "74342"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "46.21",
+                            "qtd": "59682"
+                        },
+                        {
+                            "valor": "63.51",
+                            "qtd": "54687"
+                        },
+                        {
+                            "valor": "70.39",
+                            "qtd": "32611"
+                        },
+                        {
+                            "valor": "76.16",
+                            "qtd": "27827"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_56`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "459005"
+                        },
+                        {
+                            "valor": "100",
+                            "qtd": "225532"
+                        },
+                        {
+                            "valor": "304",
+                            "qtd": "201387"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "24.49",
+                            "qtd": "15975"
+                        },
+                        {
+                            "valor": "19.74",
+                            "qtd": "15335"
+                        },
+                        {
+                            "valor": "80.05",
+                            "qtd": "14317"
+                        },
+                        {
+                            "valor": "33.64",
+                            "qtd": "14092"
+                        },
+                        {
+                            "valor": "78.18",
+                            "qtd": "13127"
+                        },
+                        {
+                            "valor": "29.13",
+                            "qtd": "12358"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_57`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "100",
+                            "qtd": "447923"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "339982"
+                        },
+                        {
+                            "valor": "304",
+                            "qtd": "201387"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "91.67",
+                            "qtd": "53910"
+                        },
+                        {
+                            "valor": "83.33",
+                            "qtd": "49506"
+                        },
+                        {
+                            "valor": "75",
+                            "qtd": "34252"
+                        },
+                        {
+                            "valor": "66.67",
+                            "qtd": "29748"
+                        },
+                        {
+                            "valor": "58.33",
+                            "qtd": "26068"
+                        },
+                        {
+                            "valor": "50",
+                            "qtd": "23454"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_58`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "100",
+                            "qtd": "484514"
+                        },
+                        {
+                            "valor": "304",
+                            "qtd": "483092"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "65426"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "0.01",
+                            "qtd": "11880"
+                        },
+                        {
+                            "valor": "0.02",
+                            "qtd": "6819"
+                        },
+                        {
+                            "valor": "0.03",
+                            "qtd": "5028"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4855"
+                        },
+                        {
+                            "valor": "0.04",
+                            "qtd": "3807"
+                        },
+                        {
+                            "valor": "0.06",
+                            "qtd": "2567"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_59`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "718152"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "66218"
+                        },
+                        {
+                            "valor": "16.67",
+                            "qtd": "64345"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "100",
+                            "qtd": "54954"
+                        },
+                        {
+                            "valor": "83.33",
+                            "qtd": "11881"
+                        },
+                        {
+                            "valor": "33.33",
+                            "qtd": "9963"
+                        },
+                        {
+                            "valor": "66.67",
+                            "qtd": "6936"
+                        },
+                        {
+                            "valor": "50",
+                            "qtd": "6694"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4855"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_60`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "801848"
+                        },
+                        {
+                            "valor": "100",
+                            "qtd": "81639"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "54676"
+                        },
+                        {
+                            "valor": "99.99",
+                            "qtd": "8383"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4855"
+                        },
+                        {
+                            "valor": "99.98",
+                            "qtd": "4482"
+                        },
+                        {
+                            "valor": "99.97",
+                            "qtd": "3057"
+                        },
+                        {
+                            "valor": "99.96",
+                            "qtd": "2498"
+                        },
+                        {
+                            "valor": "99.95",
+                            "qtd": "2051"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_61`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "100",
+                            "qtd": "406169"
+                        },
+                        {
+                            "valor": "304",
+                            "qtd": "309642"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "65110"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "50",
+                            "qtd": "31202"
+                        },
+                        {
+                            "valor": "66.67",
+                            "qtd": "25553"
+                        },
+                        {
+                            "valor": "83.33",
+                            "qtd": "23249"
+                        },
+                        {
+                            "valor": "80",
+                            "qtd": "19893"
+                        },
+                        {
+                            "valor": "75",
+                            "qtd": "19397"
+                        },
+                        {
+                            "valor": "33.33",
+                            "qtd": "12532"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_62`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "365613"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "59307"
+                        },
+                        {
+                            "valor": "48.15",
+                            "qtd": "51495"
+                        },
+                        {
+                            "valor": "42.19",
+                            "qtd": "30111"
+                        },
+                        {
+                            "valor": "44.22",
+                            "qtd": "24165"
+                        },
+                        {
+                            "valor": "46.21",
+                            "qtd": "23471"
+                        },
+                        {
+                            "valor": "37.99",
+                            "qtd": "22292"
+                        },
+                        {
+                            "valor": "40.11",
+                            "qtd": "17231"
+                        },
+                        {
+                            "valor": "35.84",
+                            "qtd": "15868"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_63`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "318264"
+                        },
+                        {
+                            "valor": "76.16",
+                            "qtd": "184931"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "65003"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "100",
+                            "qtd": "9196"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4855"
+                        },
+                        {
+                            "valor": "68.23",
+                            "qtd": "2325"
+                        },
+                        {
+                            "valor": "76.17",
+                            "qtd": "2243"
+                        },
+                        {
+                            "valor": "76.18",
+                            "qtd": "1493"
+                        },
+                        {
+                            "valor": "99.99",
+                            "qtd": "1414"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_64`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "525966"
+                        },
+                        {
+                            "valor": "32.15",
+                            "qtd": "261152"
+                        },
+                        {
+                            "valor": "304",
+                            "qtd": "143463"
+                        },
+                        {
+                            "valor": "58.28",
+                            "qtd": "126379"
+                        },
+                        {
+                            "valor": "76.16",
+                            "qtd": "71688"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "87.01",
+                            "qtd": "44270"
+                        },
+                        {
+                            "valor": "93.11",
+                            "qtd": "29479"
+                        },
+                        {
+                            "valor": "96.4",
+                            "qtd": "20532"
+                        },
+                        {
+                            "valor": "100",
+                            "qtd": "15112"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_65`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "1017492"
+                        },
+                        {
+                            "valor": "304",
+                            "qtd": "211573"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "100",
+                            "qtd": "7804"
+                        },
+                        {
+                            "valor": "99.99",
+                            "qtd": "7412"
+                        },
+                        {
+                            "valor": "99.75",
+                            "qtd": "7300"
+                        },
+                        {
+                            "valor": "98.66",
+                            "qtd": "6513"
+                        },
+                        {
+                            "valor": "96.4",
+                            "qtd": "5453"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4855"
+                        },
+                        {
+                            "valor": "93.11",
+                            "qtd": "4484"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_66`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "9.97",
+                            "qtd": "263166"
+                        },
+                        {
+                            "valor": "304",
+                            "qtd": "218776"
+                        },
+                        {
+                            "valor": "19.74",
+                            "qtd": "171008"
+                        },
+                        {
+                            "valor": "29.13",
+                            "qtd": "121440"
+                        },
+                        {
+                            "valor": "37.99",
+                            "qtd": "90576"
+                        },
+                        {
+                            "valor": "46.21",
+                            "qtd": "73380"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "53.7",
+                            "qtd": "58138"
+                        },
+                        {
+                            "valor": "60.44",
+                            "qtd": "45618"
+                        },
+                        {
+                            "valor": "66.4",
+                            "qtd": "37127"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_67`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "46.21",
+                            "qtd": "288381"
+                        },
+                        {
+                            "valor": "76.16",
+                            "qtd": "197465"
+                        },
+                        {
+                            "valor": "304",
+                            "qtd": "143463"
+                        },
+                        {
+                            "valor": "90.51",
+                            "qtd": "112826"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "96.4",
+                            "qtd": "59579"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "44408"
+                        },
+                        {
+                            "valor": "72.43",
+                            "qtd": "36787"
+                        },
+                        {
+                            "valor": "98.66",
+                            "qtd": "31288"
+                        },
+                        {
+                            "valor": "88.89",
+                            "qtd": "27735"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_68`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "554750"
+                        },
+                        {
+                            "valor": "304",
+                            "qtd": "143463"
+                        },
+                        {
+                            "valor": "99.99",
+                            "qtd": "75516"
+                        },
+                        {
+                            "valor": "100",
+                            "qtd": "72040"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "93.11",
+                            "qtd": "37370"
+                        },
+                        {
+                            "valor": "99.75",
+                            "qtd": "32017"
+                        },
+                        {
+                            "valor": "97.68",
+                            "qtd": "26072"
+                        },
+                        {
+                            "valor": "80.45",
+                            "qtd": "14706"
+                        },
+                        {
+                            "valor": "98.66",
+                            "qtd": "14419"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_69`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "53.79",
+                            "qtd": "387026"
+                        },
+                        {
+                            "valor": "304",
+                            "qtd": "187871"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "57.44",
+                            "qtd": "31140"
+                        },
+                        {
+                            "valor": "23.84",
+                            "qtd": "28709"
+                        },
+                        {
+                            "valor": "46.3",
+                            "qtd": "25359"
+                        },
+                        {
+                            "valor": "55.52",
+                            "qtd": "22618"
+                        },
+                        {
+                            "valor": "48.36",
+                            "qtd": "20647"
+                        },
+                        {
+                            "valor": "41.72",
+                            "qtd": "17017"
+                        },
+                        {
+                            "valor": "50.29",
+                            "qtd": "16994"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_70`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "100",
+                            "qtd": "513296"
+                        },
+                        {
+                            "valor": "304",
+                            "qtd": "495994"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "51205"
+                        },
+                        {
+                            "valor": "91.67",
+                            "qtd": "37905"
+                        },
+                        {
+                            "valor": "25",
+                            "qtd": "22766"
+                        },
+                        {
+                            "valor": "33.33",
+                            "qtd": "22390"
+                        },
+                        {
+                            "valor": "50",
+                            "qtd": "22080"
+                        },
+                        {
+                            "valor": "41.67",
+                            "qtd": "21400"
+                        },
+                        {
+                            "valor": "75",
+                            "qtd": "20970"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_71`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "903125"
+                        },
+                        {
+                            "valor": "100",
+                            "qtd": "182351"
+                        },
+                        {
+                            "valor": "91.67",
+                            "qtd": "63252"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "33512"
+                        },
+                        {
+                            "valor": "25",
+                            "qtd": "17606"
+                        },
+                        {
+                            "valor": "83.33",
+                            "qtd": "16694"
+                        },
+                        {
+                            "valor": "33.33",
+                            "qtd": "13013"
+                        },
+                        {
+                            "valor": "66.67",
+                            "qtd": "11465"
+                        },
+                        {
+                            "valor": "41.67",
+                            "qtd": "10854"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_72`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "100",
+                            "qtd": "836941"
+                        },
+                        {
+                            "valor": "304",
+                            "qtd": "285400"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62276"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "30003"
+                        },
+                        {
+                            "valor": "91.67",
+                            "qtd": "20028"
+                        },
+                        {
+                            "valor": "75",
+                            "qtd": "18766"
+                        },
+                        {
+                            "valor": "83.33",
+                            "qtd": "16591"
+                        },
+                        {
+                            "valor": "66.67",
+                            "qtd": "15729"
+                        },
+                        {
+                            "valor": "50",
+                            "qtd": "15268"
+                        },
+                        {
+                            "valor": "58.33",
+                            "qtd": "14826"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_73`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "878051"
+                        },
+                        {
+                            "valor": "1000",
+                            "qtd": "213330"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "153460"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62223"
+                        },
+                        {
+                            "valor": "1001",
+                            "qtd": "38485"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "10279"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4794"
+                        },
+                        {
+                            "valor": "1002",
+                            "qtd": "3347"
+                        },
+                        {
+                            "valor": "NULL",
+                            "qtd": "1295"
+                        },
+                        {
+                            "valor": "308",
+                            "qtd": "1071"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_74`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "1072991"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "86676"
+                        },
+                        {
+                            "valor": "3",
+                            "qtd": "71689"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62223"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "60659"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4794"
+                        },
+                        {
+                            "valor": "4",
+                            "qtd": "3791"
+                        },
+                        {
+                            "valor": "NULL",
+                            "qtd": "1295"
+                        },
+                        {
+                            "valor": "5",
+                            "qtd": "1074"
+                        },
+                        {
+                            "valor": "308",
+                            "qtd": "1071"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_75`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "1091381"
+                        },
+                        {
+                            "valor": "5",
+                            "qtd": "91014"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62223"
+                        },
+                        {
+                            "valor": "4",
+                            "qtd": "40081"
+                        },
+                        {
+                            "valor": "3",
+                            "qtd": "31322"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "23731"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "19423"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4794"
+                        },
+                        {
+                            "valor": "NULL",
+                            "qtd": "1295"
+                        },
+                        {
+                            "valor": "308",
+                            "qtd": "1071"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_76`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "1091381"
+                        },
+                        {
+                            "valor": "5",
+                            "qtd": "120394"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62223"
+                        },
+                        {
+                            "valor": "4",
+                            "qtd": "33585"
+                        },
+                        {
+                            "valor": "3",
+                            "qtd": "26115"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "18895"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "6582"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4794"
+                        },
+                        {
+                            "valor": "NULL",
+                            "qtd": "1295"
+                        },
+                        {
+                            "valor": "308",
+                            "qtd": "1071"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_77`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "1091381"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "187803"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "62223"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "17768"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4794"
+                        },
+                        {
+                            "valor": "NULL",
+                            "qtd": "1295"
+                        },
+                        {
+                            "valor": "308",
+                            "qtd": "1071"
+                        },
+                        {
+                            "valor": "302",
+                            "qtd": "386"
+                        },
+                        {
+                            "valor": "307",
+                            "qtd": "381"
+                        },
+                        {
+                            "valor": "306",
+                            "qtd": "2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_78`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "1092713"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "81310"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "61652"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "47919"
+                        },
+                        {
+                            "valor": "3",
+                            "qtd": "42897"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "32220"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4423"
+                        },
+                        {
+                            "valor": "4",
+                            "qtd": "1403"
+                        },
+                        {
+                            "valor": "308",
+                            "qtd": "1387"
+                        },
+                        {
+                            "valor": "307",
+                            "qtd": "410"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_79`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "1092713"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "108327"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "71200"
+                        },
+                        {
+                            "valor": "3",
+                            "qtd": "39947"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "32220"
+                        },
+                        {
+                            "valor": "4",
+                            "qtd": "9294"
+                        },
+                        {
+                            "valor": "5",
+                            "qtd": "6568"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4423"
+                        },
+                        {
+                            "valor": "308",
+                            "qtd": "1387"
+                        },
+                        {
+                            "valor": "307",
+                            "qtd": "410"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_80`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "879961"
+                        },
+                        {
+                            "valor": "6",
+                            "qtd": "286292"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "131090"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "32220"
+                        },
+                        {
+                            "valor": "5",
+                            "qtd": "14679"
+                        },
+                        {
+                            "valor": "3",
+                            "qtd": "6963"
+                        },
+                        {
+                            "valor": "4",
+                            "qtd": "5551"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4423"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "3608"
+                        },
+                        {
+                            "valor": "308",
+                            "qtd": "1387"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_81`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "1092713"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "64276"
+                        },
+                        {
+                            "valor": "100",
+                            "qtd": "49428"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "32220"
+                        },
+                        {
+                            "valor": "50",
+                            "qtd": "12004"
+                        },
+                        {
+                            "valor": "86",
+                            "qtd": "11001"
+                        },
+                        {
+                            "valor": "33",
+                            "qtd": "10331"
+                        },
+                        {
+                            "valor": "17",
+                            "qtd": "7952"
+                        },
+                        {
+                            "valor": "14",
+                            "qtd": "7095"
+                        },
+                        {
+                            "valor": "29",
+                            "qtd": "6479"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_82`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "1092713"
+                        },
+                        {
+                            "valor": "299",
+                            "qtd": "38344"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "32220"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "27286"
+                        },
+                        {
+                            "valor": "1.01",
+                            "qtd": "16759"
+                        },
+                        {
+                            "valor": "298",
+                            "qtd": "14859"
+                        },
+                        {
+                            "valor": "1.02",
+                            "qtd": "11402"
+                        },
+                        {
+                            "valor": "0.99",
+                            "qtd": "10107"
+                        },
+                        {
+                            "valor": "1.03",
+                            "qtd": "8676"
+                        },
+                        {
+                            "valor": "1.04",
+                            "qtd": "6197"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_83`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "1092713"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "70037"
+                        },
+                        {
+                            "valor": "6",
+                            "qtd": "48551"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "42645"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "32220"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "25425"
+                        },
+                        {
+                            "valor": "3",
+                            "qtd": "18354"
+                        },
+                        {
+                            "valor": "5",
+                            "qtd": "15465"
+                        },
+                        {
+                            "valor": "4",
+                            "qtd": "14954"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4423"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_84`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "1092713"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "96549"
+                        },
+                        {
+                            "valor": "3",
+                            "qtd": "64335"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "32220"
+                        },
+                        {
+                            "valor": "4",
+                            "qtd": "26206"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "24488"
+                        },
+                        {
+                            "valor": "5",
+                            "qtd": "19789"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4423"
+                        },
+                        {
+                            "valor": "6",
+                            "qtd": "4057"
+                        },
+                        {
+                            "valor": "308",
+                            "qtd": "1387"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_85`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "879961"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "158329"
+                        },
+                        {
+                            "valor": "3",
+                            "qtd": "144083"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "52290"
+                        },
+                        {
+                            "valor": "4",
+                            "qtd": "50079"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "32220"
+                        },
+                        {
+                            "valor": "5",
+                            "qtd": "31928"
+                        },
+                        {
+                            "valor": "6",
+                            "qtd": "11264"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4423"
+                        },
+                        {
+                            "valor": "308",
+                            "qtd": "1387"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_86`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "895379"
+                        },
+                        {
+                            "valor": "3",
+                            "qtd": "155141"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "137394"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "57028"
+                        },
+                        {
+                            "valor": "4",
+                            "qtd": "34774"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "33235"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "32889"
+                        },
+                        {
+                            "valor": "5",
+                            "qtd": "11983"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4423"
+                        },
+                        {
+                            "valor": "6",
+                            "qtd": "2381"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_87`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "895384"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "177907"
+                        },
+                        {
+                            "valor": "3",
+                            "qtd": "116897"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "81139"
+                        },
+                        {
+                            "valor": "4",
+                            "qtd": "36375"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "33235"
+                        },
+                        {
+                            "valor": "5",
+                            "qtd": "18744"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4423"
+                        },
+                        {
+                            "valor": "308",
+                            "qtd": "1387"
+                        },
+                        {
+                            "valor": "6",
+                            "qtd": "681"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_88`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "877322"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "307573"
+                        },
+                        {
+                            "valor": "6",
+                            "qtd": "81194"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "33235"
+                        },
+                        {
+                            "valor": "5",
+                            "qtd": "32138"
+                        },
+                        {
+                            "valor": "3",
+                            "qtd": "11689"
+                        },
+                        {
+                            "valor": "4",
+                            "qtd": "10589"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "6622"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4423"
+                        },
+                        {
+                            "valor": "308",
+                            "qtd": "1387"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_89`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "895379"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "131847"
+                        },
+                        {
+                            "valor": "100",
+                            "qtd": "94440"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "33235"
+                        },
+                        {
+                            "valor": "17",
+                            "qtd": "18009"
+                        },
+                        {
+                            "valor": "50",
+                            "qtd": "17452"
+                        },
+                        {
+                            "valor": "33",
+                            "qtd": "15914"
+                        },
+                        {
+                            "valor": "86",
+                            "qtd": "14203"
+                        },
+                        {
+                            "valor": "14",
+                            "qtd": "13450"
+                        },
+                        {
+                            "valor": "29",
+                            "qtd": "10795"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_90`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "895379"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "33235"
+                        },
+                        {
+                            "valor": "299",
+                            "qtd": "24675"
+                        },
+                        {
+                            "valor": "298",
+                            "qtd": "18084"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "8966"
+                        },
+                        {
+                            "valor": "1.02",
+                            "qtd": "8681"
+                        },
+                        {
+                            "valor": "1.01",
+                            "qtd": "8591"
+                        },
+                        {
+                            "valor": "1.03",
+                            "qtd": "8115"
+                        },
+                        {
+                            "valor": "1.04",
+                            "qtd": "7800"
+                        },
+                        {
+                            "valor": "0.99",
+                            "qtd": "7684"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_91`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "895384"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "149688"
+                        },
+                        {
+                            "valor": "5",
+                            "qtd": "73692"
+                        },
+                        {
+                            "valor": "6",
+                            "qtd": "73313"
+                        },
+                        {
+                            "valor": "3",
+                            "qtd": "67148"
+                        },
+                        {
+                            "valor": "4",
+                            "qtd": "45572"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "33235"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "20047"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4423"
+                        },
+                        {
+                            "valor": "7",
+                            "qtd": "1724"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_92`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "877322"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "318461"
+                        },
+                        {
+                            "valor": "3",
+                            "qtd": "48936"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "33235"
+                        },
+                        {
+                            "valor": "4",
+                            "qtd": "23225"
+                        },
+                        {
+                            "valor": "5",
+                            "qtd": "22375"
+                        },
+                        {
+                            "valor": "6",
+                            "qtd": "18412"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "16515"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4423"
+                        },
+                        {
+                            "valor": "308",
+                            "qtd": "1387"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `var_93`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "304",
+                            "qtd": "895379"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "150897"
+                        },
+                        {
+                            "valor": "6",
+                            "qtd": "84588"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "69649"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "42171"
+                        },
+                        {
+                            "valor": "303",
+                            "qtd": "33235"
+                        },
+                        {
+                            "valor": "3",
+                            "qtd": "31679"
+                        },
+                        {
+                            "valor": "4",
+                            "qtd": "27184"
+                        },
+                        {
+                            "valor": "5",
+                            "qtd": "25580"
+                        },
+                        {
+                            "valor": "301",
+                            "qtd": "4423"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `ingestion_ts`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "2026-02-12 00:56:36.659605-03",
+                            "qtd": "1367104"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `run_id`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "20260212",
+                            "qtd": "1367104"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `ano_mes`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "202412",
+                            "qtd": "241453"
+                        },
+                        {
+                            "valor": "202411",
+                            "qtd": "240520"
+                        },
+                        {
+                            "valor": "202501",
+                            "qtd": "233710"
+                        },
+                        {
+                            "valor": "202410",
+                            "qtd": "219860"
+                        },
+                        {
+                            "valor": "202503",
+                            "qtd": "216896"
+                        },
+                        {
+                            "valor": "202502",
+                            "qtd": "214665"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "title": "Relatório de Profiling: `silver/telco` - `20260212`"
+}

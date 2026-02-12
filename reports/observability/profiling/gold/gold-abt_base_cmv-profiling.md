@@ -1,4 +1,4 @@
-# Relatório de Profiling: `gold/abt_base_cmv` - `20260129`
+# Relatório de Profiling: `gold/abt_base_cmv` - `20260212`
 
 ### ⚙️ Sumário Técnico do Dataset: `abt_base_cmv`
 
@@ -64,11 +64,11 @@
 | rec_vlr_std_geral                 | DOUBLE                   | 29.6%         |
 | rec_vlr_coef_var_l30d             | DOUBLE                   | 69.59%        |
 | rec_vlr_coef_var_l60d             | DOUBLE                   | 57.5%         |
-| rec_vlr_coef_var_l90d             | DOUBLE                   | 52.79%        |
+| rec_vlr_coef_var_l90d             | DOUBLE                   | 52.8%         |
 | rec_ratio_qtd_l30d_l60d           | DOUBLE                   | 33.85%        |
 | rec_ratio_qtd_l60d_l90d           | DOUBLE                   | 31.11%        |
-| rec_ratio_vlr_l30d_l60d           | DOUBLE                   | 59.01%        |
-| rec_ratio_vlr_l60d_l90d           | DOUBLE                   | 52.7%         |
+| rec_ratio_vlr_l30d_l60d           | DOUBLE                   | 59.02%        |
+| rec_ratio_vlr_l60d_l90d           | DOUBLE                   | 52.71%        |
 | rec_flag_sem_recarga_l30d         | INTEGER                  | 0.0%          |
 | rec_flag_sem_recarga_l60d         | INTEGER                  | 0.0%          |
 | rec_flag_sem_recarga_l90d         | INTEGER                  | 0.0%          |
@@ -249,14 +249,14 @@
 | rec_vlr_total_l30d                | 50.000,00     | 242,92           | ⚠️ Outlier Detected |
 | rec_vlr_total_l60d                | 50.109,80     | 399,18           | ⚠️ Outlier Detected |
 | rec_vlr_total_l90d                | 75.164,70     | 588,25           | ⚠️ Outlier Detected |
-| rec_vlr_total_geral               | 425.000,00    | 3.079,35         | ⚠️ Outlier Detected |
+| rec_vlr_total_geral               | 425.000,00    | 3.079,36         | ⚠️ Outlier Detected |
 | rec_vlr_avg_l30d                  | 12.500,00     | 70,02            | ⚠️ Outlier Detected |
 | rec_vlr_avg_l60d                  | 12.500,00     | 65,13            | ⚠️ Outlier Detected |
 | rec_vlr_avg_l90d                  | 12.500,00     | 63,02            | ⚠️ Outlier Detected |
 | rec_vlr_avg_geral                 | 12.500,00     | 80,36            | ⚠️ Outlier Detected |
 | rec_vlr_min_l30d                  | 109,84        | 36,45            | ⚠️ Outlier Detected |
 | rec_vlr_min_l60d                  | 109,84        | 30,93            | ⚠️ Outlier Detected |
-| rec_vlr_min_l90d                  | 109,84        | 27,48            | ⚠️ Outlier Detected |
+| rec_vlr_min_l90d                  | 109,84        | 27,47            | ⚠️ Outlier Detected |
 | rec_vlr_min_geral                 | 100,00        | 19,92            | ⚠️ Outlier Detected |
 | rec_vlr_max_l30d                  | 25.000,00     | 183,82           | ⚠️ Outlier Detected |
 | rec_vlr_max_l60d                  | 25.000,00     | 195,52           | ⚠️ Outlier Detected |
@@ -269,7 +269,7 @@
 | rec_vlr_std_l90d                  | 13.693,06     | 87,93            | ⚠️ Outlier Detected |
 | rec_vlr_std_geral                 | 12.729,38     | 113,47           | ⚠️ Outlier Detected |
 | rec_vlr_coef_var_l30d             | 16,12         | 2,89             | ⚠️ Outlier Detected |
-| rec_vlr_coef_var_l60d             | 20,54         | 3,10             | ⚠️ Outlier Detected |
+| rec_vlr_coef_var_l60d             | 20,54         | 3,09             | ⚠️ Outlier Detected |
 | rec_vlr_coef_var_l90d             | 26,12         | 3,25             | ⚠️ Outlier Detected |
 | pag_vlr_total_l30d                | 438.467,35    | 2.608,05         | ⚠️ Outlier Detected |
 | pag_vlr_total_l60d                | 979.673,73    | 5.207,82         | ⚠️ Outlier Detected |
@@ -296,7 +296,7 @@
 | pag_ticket_medio_l30d             | 438.467,35    | 2.083,42         | ⚠️ Outlier Detected |
 | pag_ticket_medio_l60d             | 122.459,22    | 1.221,23         | ⚠️ Outlier Detected |
 | pag_ticket_medio_l90d             | 122.459,22    | 1.225,07         | ⚠️ Outlier Detected |
-| pag_ticket_medio_geral            | 181.269,36    | 1.408,01         | ⚠️ Outlier Detected |
+| pag_ticket_medio_geral            | 181.269,35    | 1.408,01         | ⚠️ Outlier Detected |
 | pag_share_faturas_com_juros_l30d  | 8,00          | 2,49             | ⚠️ Outlier Detected |
 | pag_share_faturas_com_juros_l60d  | 7,00          | 2,41             | ⚠️ Outlier Detected |
 | pag_share_faturas_com_juros_l90d  | 7,33          | 2,33             | ⚠️ Outlier Detected |
@@ -328,13 +328,13 @@
 ### 📦 Volumetria: `abt_base_cmv`
 | diretorio      |   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
 |:---------------|---------------:|:------------|----------:|-------------------------:|----------------------------:|
-| ano_mes=202410 |              1 | 426.104     |       207 |                    59.31 |                       76.43 |
-| ano_mes=202411 |              1 | 454.572     |       207 |                    61.99 |                       79.54 |
-| ano_mes=202412 |              1 | 445.154     |       207 |                    63.44 |                       81.22 |
-| ano_mes=202501 |              1 | 452.621     |       207 |                    62.88 |                       80.25 |
-| ano_mes=202502 |              1 | 419.453     |       207 |                    58.58 |                       74.99 |
-| ano_mes=202503 |              1 | 435.996     |       207 |                    64.26 |                       82.21 |
-| TOTAL          |              6 | 2.633.900   |       207 |                   370.46 |                      474.64 |
+| ano_mes=202410 |              1 | 426.104     |       207 |                    59.35 |                       76.44 |
+| ano_mes=202411 |              1 | 454.572     |       207 |                    62    |                       79.62 |
+| ano_mes=202412 |              1 | 445.154     |       207 |                    63.45 |                       81.23 |
+| ano_mes=202501 |              1 | 452.621     |       207 |                    62.82 |                       80.13 |
+| ano_mes=202502 |              1 | 419.453     |       207 |                    58.53 |                       74.93 |
+| ano_mes=202503 |              1 | 435.996     |       207 |                    64.22 |                       82.19 |
+| TOTAL          |              6 | 2.633.900   |       207 |                   370.37 |                      474.54 |
 
 ---
 

@@ -1,0 +1,1806 @@
+{
+    "report_type": "Profiling",
+    "source_file": "raw_recarga_profiling.md",
+    "sections": [
+        {
+            "header": "📦 Volumetria: `raw/recarga`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "qtd_arquivos": "10",
+                            "registros": "100.213.651",
+                            "colunas": "24",
+                            "tamanho_comprimido_mib": "3104.31",
+                            "tamanho_descomprimido_mib": "5222.09"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🧬 Schema: `raw/recarga`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "column_name": "NUM_CPF",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DW_NUM_NTC",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DAT_INSERCAO_CREDITO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "HOR_INSERCAO_CREDITO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DW_NUM_CLIENTE",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "COD_TECNOLOGIA_DW",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "COD_CANAL_AQUISICAO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "COD_TIPO_CREDITO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "COD_PROMOCAO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "VAL_CREDITO_INSERIDO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "VAL_BONUS",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "VAL_REAL",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "COD_PLATAFORMA_ATU",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "COD_STATUS_PLATAFORMA",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "IND_METODO_PAGAMENTO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DW_PLANO_TARIFACAO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DW_TIPO_RECARGA",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DW_TIPO_INSERCAO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DW_FORMA_PAGAMENTO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DW_INSTITUICAO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "COD_GRUPO_CARTAO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DSC_GRUPO_CARTAO_WPP",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "FLAG_SOS",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "VALOR_SOS",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📅 Campos de Data: `raw/recarga`",
+            "content": []
+        },
+        {
+            "header": "✅ Datas com tipagem (DATE / TIMESTAMP)",
+            "content": [
+                {
+                    "type": "text",
+                    "data": "> ⚠️ Nenhuma coluna DATE ou TIMESTAMP encontrada."
+                }
+            ]
+        },
+        {
+            "header": "⚠️ Possíveis campos de data/hora sem tipagem (inferido pelo nome)",
+            "content": [
+                {
+                    "type": "text",
+                    "data": "- `DAT_INSERCAO_CREDITO`\n- `HOR_INSERCAO_CREDITO`\n\n\n---"
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas por Coluna: `raw/recarga`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "NUM_CPF",
+                            "distintos": "3077601",
+                            "nulos": "0",
+                            "duplicados": "97136050",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "96.93%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "DW_NUM_NTC",
+                            "distintos": "5211901",
+                            "nulos": "0",
+                            "duplicados": "95001750",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "94.8%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DAT_INSERCAO_CREDITO",
+                            "distintos": "548",
+                            "nulos": "0",
+                            "duplicados": "100213103",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "HOR_INSERCAO_CREDITO",
+                            "distintos": "86400",
+                            "nulos": "0",
+                            "duplicados": "100127251",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.91%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DW_NUM_CLIENTE",
+                            "distintos": "7607360",
+                            "nulos": "0",
+                            "duplicados": "92606291",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "92.41%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "COD_TECNOLOGIA_DW",
+                            "distintos": "1",
+                            "nulos": "0",
+                            "duplicados": "100213650",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "COD_CANAL_AQUISICAO",
+                            "distintos": "138",
+                            "nulos": "0",
+                            "duplicados": "100213513",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "COD_TIPO_CREDITO",
+                            "distintos": "2",
+                            "nulos": "0",
+                            "duplicados": "100213649",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "COD_PROMOCAO",
+                            "distintos": "1",
+                            "nulos": "2152012",
+                            "duplicados": "100213650",
+                            "pct_nulos": "2.15%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "VAL_CREDITO_INSERIDO",
+                            "distintos": "4626",
+                            "nulos": "0",
+                            "duplicados": "100209025",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "VAL_BONUS",
+                            "distintos": "75925",
+                            "nulos": "0",
+                            "duplicados": "100137726",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.92%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "VAL_REAL",
+                            "distintos": "51845",
+                            "nulos": "0",
+                            "duplicados": "100161806",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.95%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "COD_PLATAFORMA_ATU",
+                            "distintos": "13",
+                            "nulos": "0",
+                            "duplicados": "100213638",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "COD_STATUS_PLATAFORMA",
+                            "distintos": "17",
+                            "nulos": "0",
+                            "duplicados": "100213634",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "IND_METODO_PAGAMENTO",
+                            "distintos": "2",
+                            "nulos": "0",
+                            "duplicados": "100213649",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DW_PLANO_TARIFACAO",
+                            "distintos": "97",
+                            "nulos": "2152012",
+                            "duplicados": "100213554",
+                            "pct_nulos": "2.15%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DW_TIPO_RECARGA",
+                            "distintos": "3",
+                            "nulos": "2152012",
+                            "duplicados": "100213648",
+                            "pct_nulos": "2.15%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DW_TIPO_INSERCAO",
+                            "distintos": "11",
+                            "nulos": "0",
+                            "duplicados": "100213640",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DW_FORMA_PAGAMENTO",
+                            "distintos": "2",
+                            "nulos": "0",
+                            "duplicados": "100213649",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DW_INSTITUICAO",
+                            "distintos": "137",
+                            "nulos": "0",
+                            "duplicados": "100213514",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "COD_GRUPO_CARTAO",
+                            "distintos": "250",
+                            "nulos": "0",
+                            "duplicados": "100213401",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DSC_GRUPO_CARTAO_WPP",
+                            "distintos": "23",
+                            "nulos": "0",
+                            "duplicados": "100213628",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "FLAG_SOS",
+                            "distintos": "2",
+                            "nulos": "0",
+                            "duplicados": "100213649",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "VALOR_SOS",
+                            "distintos": "5",
+                            "nulos": "93679237",
+                            "duplicados": "100213646",
+                            "pct_nulos": "93.48%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔟 Distribuição de Valores (Top 10): `raw/recarga`",
+            "content": []
+        },
+        {
+            "header": "Coluna: `NUM_CPF`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "XYT9U8X778W",
+                            "qtd": "6703"
+                        },
+                        {
+                            "valor": "ZW797ZWZYT8",
+                            "qtd": "5608"
+                        },
+                        {
+                            "valor": "Z9WWUTT77XZ",
+                            "qtd": "4878"
+                        },
+                        {
+                            "valor": "Z9YXUZYU7WX",
+                            "qtd": "4873"
+                        },
+                        {
+                            "valor": "UUWUWZXX879",
+                            "qtd": "4755"
+                        },
+                        {
+                            "valor": "Z78YXX78YX7",
+                            "qtd": "4732"
+                        },
+                        {
+                            "valor": "XZNYZZNU7ZN",
+                            "qtd": "4296"
+                        },
+                        {
+                            "valor": "X8YXWUN97XY",
+                            "qtd": "4272"
+                        },
+                        {
+                            "valor": "ZX9YWXZT779",
+                            "qtd": "4253"
+                        },
+                        {
+                            "valor": "Z7ZWZ9XY7XW",
+                            "qtd": "4081"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_NUM_NTC`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "648397569",
+                            "qtd": "3690"
+                        },
+                        {
+                            "valor": "667413637",
+                            "qtd": "3377"
+                        },
+                        {
+                            "valor": "652990493",
+                            "qtd": "3249"
+                        },
+                        {
+                            "valor": "664947860",
+                            "qtd": "3212"
+                        },
+                        {
+                            "valor": "739629381",
+                            "qtd": "2762"
+                        },
+                        {
+                            "valor": "643133488",
+                            "qtd": "2687"
+                        },
+                        {
+                            "valor": "748935078",
+                            "qtd": "2684"
+                        },
+                        {
+                            "valor": "104291891",
+                            "qtd": "2683"
+                        },
+                        {
+                            "valor": "590415338",
+                            "qtd": "2640"
+                        },
+                        {
+                            "valor": "678572382",
+                            "qtd": "2614"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_INSERCAO_CREDITO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "21MAR2025:00:00:00",
+                            "qtd": "528198"
+                        },
+                        {
+                            "valor": "21FEB2025:00:00:00",
+                            "qtd": "441769"
+                        },
+                        {
+                            "valor": "04DEC2024:00:00:00",
+                            "qtd": "428262"
+                        },
+                        {
+                            "valor": "03FEB2025:00:00:00",
+                            "qtd": "424966"
+                        },
+                        {
+                            "valor": "03JAN2025:00:00:00",
+                            "qtd": "408187"
+                        },
+                        {
+                            "valor": "21JAN2025:00:00:00",
+                            "qtd": "407850"
+                        },
+                        {
+                            "valor": "03MAR2025:00:00:00",
+                            "qtd": "402542"
+                        },
+                        {
+                            "valor": "21DEC2024:00:00:00",
+                            "qtd": "386298"
+                        },
+                        {
+                            "valor": "03DEC2024:00:00:00",
+                            "qtd": "372600"
+                        },
+                        {
+                            "valor": "21NOV2024:00:00:00",
+                            "qtd": "366077"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `HOR_INSERCAO_CREDITO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "54211",
+                            "qtd": "9176"
+                        },
+                        {
+                            "valor": "54204",
+                            "qtd": "9175"
+                        },
+                        {
+                            "valor": "54207",
+                            "qtd": "9166"
+                        },
+                        {
+                            "valor": "54209",
+                            "qtd": "9118"
+                        },
+                        {
+                            "valor": "54208",
+                            "qtd": "9068"
+                        },
+                        {
+                            "valor": "54212",
+                            "qtd": "9038"
+                        },
+                        {
+                            "valor": "54203",
+                            "qtd": "9016"
+                        },
+                        {
+                            "valor": "54210",
+                            "qtd": "8994"
+                        },
+                        {
+                            "valor": "54205",
+                            "qtd": "8972"
+                        },
+                        {
+                            "valor": "54206",
+                            "qtd": "8955"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_NUM_CLIENTE`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "-2",
+                            "qtd": "18665"
+                        },
+                        {
+                            "valor": "1139798979",
+                            "qtd": "3676"
+                        },
+                        {
+                            "valor": "1164497165",
+                            "qtd": "3367"
+                        },
+                        {
+                            "valor": "1145635585",
+                            "qtd": "3249"
+                        },
+                        {
+                            "valor": "1161777754",
+                            "qtd": "3208"
+                        },
+                        {
+                            "valor": "1403189723",
+                            "qtd": "2762"
+                        },
+                        {
+                            "valor": "1415985368",
+                            "qtd": "2684"
+                        },
+                        {
+                            "valor": "1189777104",
+                            "qtd": "2683"
+                        },
+                        {
+                            "valor": "1053401384",
+                            "qtd": "2626"
+                        },
+                        {
+                            "valor": "1178119367",
+                            "qtd": "2614"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `COD_TECNOLOGIA_DW`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "GSM",
+                            "qtd": "100213651"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `COD_CANAL_AQUISICAO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "-3",
+                            "qtd": "63971179"
+                        },
+                        {
+                            "valor": "-2",
+                            "qtd": "7165424"
+                        },
+                        {
+                            "valor": "16307",
+                            "qtd": "6667945"
+                        },
+                        {
+                            "valor": "17627",
+                            "qtd": "2328698"
+                        },
+                        {
+                            "valor": "17537",
+                            "qtd": "2249915"
+                        },
+                        {
+                            "valor": "16357",
+                            "qtd": "1269216"
+                        },
+                        {
+                            "valor": "16167",
+                            "qtd": "1100536"
+                        },
+                        {
+                            "valor": "16187",
+                            "qtd": "1058023"
+                        },
+                        {
+                            "valor": "15987",
+                            "qtd": "1042243"
+                        },
+                        {
+                            "valor": "17621",
+                            "qtd": "1008240"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `COD_TIPO_CREDITO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "PE",
+                            "qtd": "100213634"
+                        },
+                        {
+                            "valor": "CV",
+                            "qtd": "17"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `COD_PROMOCAO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "-1",
+                            "qtd": "98061639"
+                        },
+                        {
+                            "valor": "2152012",
+                            "qtd": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_CREDITO_INSERIDO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "61496530"
+                        },
+                        {
+                            "valor": "20",
+                            "qtd": "12049955"
+                        },
+                        {
+                            "valor": "30",
+                            "qtd": "5998131"
+                        },
+                        {
+                            "valor": "25",
+                            "qtd": "4251971"
+                        },
+                        {
+                            "valor": "5",
+                            "qtd": "3953519"
+                        },
+                        {
+                            "valor": "15",
+                            "qtd": "2934362"
+                        },
+                        {
+                            "valor": "10",
+                            "qtd": "2294876"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "1833733"
+                        },
+                        {
+                            "valor": "35",
+                            "qtd": "1192585"
+                        },
+                        {
+                            "valor": "12",
+                            "qtd": "633109"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_BONUS`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "46229965"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "11381611"
+                        },
+                        {
+                            "valor": "-1",
+                            "qtd": "9846605"
+                        },
+                        {
+                            "valor": "84300",
+                            "qtd": "5471647"
+                        },
+                        {
+                            "valor": "390",
+                            "qtd": "3914551"
+                        },
+                        {
+                            "valor": "10000",
+                            "qtd": "3784101"
+                        },
+                        {
+                            "valor": "80500",
+                            "qtd": "2941259"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "2149815"
+                        },
+                        {
+                            "valor": "42200",
+                            "qtd": "1482313"
+                        },
+                        {
+                            "valor": "-2",
+                            "qtd": "1419799"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_REAL`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "12327702"
+                        },
+                        {
+                            "valor": "20",
+                            "qtd": "12151630"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "11911243"
+                        },
+                        {
+                            "valor": "-1",
+                            "qtd": "10313575"
+                        },
+                        {
+                            "valor": "30",
+                            "qtd": "6715228"
+                        },
+                        {
+                            "valor": "84300",
+                            "qtd": "5471647"
+                        },
+                        {
+                            "valor": "5",
+                            "qtd": "4450635"
+                        },
+                        {
+                            "valor": "25",
+                            "qtd": "4364326"
+                        },
+                        {
+                            "valor": "390",
+                            "qtd": "3914555"
+                        },
+                        {
+                            "valor": "10000",
+                            "qtd": "3784101"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `COD_PLATAFORMA_ATU`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "PREPG",
+                            "qtd": "69182083"
+                        },
+                        {
+                            "valor": "AUTOC",
+                            "qtd": "26999142"
+                        },
+                        {
+                            "valor": "FLEXD",
+                            "qtd": "2076381"
+                        },
+                        {
+                            "valor": "CTLFC",
+                            "qtd": "1918277"
+                        },
+                        {
+                            "valor": "POSPG",
+                            "qtd": "34384"
+                        },
+                        {
+                            "valor": "MVNOD",
+                            "qtd": "2044"
+                        },
+                        {
+                            "valor": "POSRI",
+                            "qtd": "518"
+                        },
+                        {
+                            "valor": "POSTL",
+                            "qtd": "388"
+                        },
+                        {
+                            "valor": "POSBL",
+                            "qtd": "295"
+                        },
+                        {
+                            "valor": "PRECN",
+                            "qtd": "53"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `COD_STATUS_PLATAFORMA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "A",
+                            "qtd": "95844056"
+                        },
+                        {
+                            "valor": "ZB1",
+                            "qtd": "4294201"
+                        },
+                        {
+                            "valor": "ZB2",
+                            "qtd": "35402"
+                        },
+                        {
+                            "valor": "-3",
+                            "qtd": "29945"
+                        },
+                        {
+                            "valor": "NDF",
+                            "qtd": "4841"
+                        },
+                        {
+                            "valor": "COL",
+                            "qtd": "2544"
+                        },
+                        {
+                            "valor": "PRE",
+                            "qtd": "718"
+                        },
+                        {
+                            "valor": "C",
+                            "qtd": "603"
+                        },
+                        {
+                            "valor": "ST",
+                            "qtd": "416"
+                        },
+                        {
+                            "valor": "U",
+                            "qtd": "298"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `IND_METODO_PAGAMENTO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "A",
+                            "qtd": "100213603"
+                        },
+                        {
+                            "valor": "M",
+                            "qtd": "48"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_PLANO_TARIFACAO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "541200",
+                            "qtd": "54703155"
+                        },
+                        {
+                            "valor": "668900",
+                            "qtd": "13044915"
+                        },
+                        {
+                            "valor": "607690",
+                            "qtd": "11176911"
+                        },
+                        {
+                            "valor": "599100",
+                            "qtd": "8081156"
+                        },
+                        {
+                            "valor": "369889",
+                            "qtd": "2929151"
+                        },
+                        {
+                            "valor": "2152012",
+                            "qtd": ""
+                        },
+                        {
+                            "valor": "567020",
+                            "qtd": "1911080"
+                        },
+                        {
+                            "valor": "393401",
+                            "qtd": "1812407"
+                        },
+                        {
+                            "valor": "606235",
+                            "qtd": "1048407"
+                        },
+                        {
+                            "valor": "608480",
+                            "qtd": "963468"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_TIPO_RECARGA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "-2",
+                            "qtd": "93509722"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "4551844"
+                        },
+                        {
+                            "valor": "2152012",
+                            "qtd": ""
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "73"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_TIPO_INSERCAO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "-2",
+                            "qtd": "93509722"
+                        },
+                        {
+                            "valor": "3",
+                            "qtd": "2784827"
+                        },
+                        {
+                            "valor": "21",
+                            "qtd": "2736570"
+                        },
+                        {
+                            "valor": "19",
+                            "qtd": "650651"
+                        },
+                        {
+                            "valor": "99",
+                            "qtd": "531540"
+                        },
+                        {
+                            "valor": "18",
+                            "qtd": "113"
+                        },
+                        {
+                            "valor": "22",
+                            "qtd": "94"
+                        },
+                        {
+                            "valor": "4",
+                            "qtd": "73"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "34"
+                        },
+                        {
+                            "valor": "10",
+                            "qtd": "26"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_FORMA_PAGAMENTO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "-2",
+                            "qtd": "98061639"
+                        },
+                        {
+                            "valor": "10",
+                            "qtd": "2152012"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_INSTITUICAO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "-1",
+                            "qtd": "63655482"
+                        },
+                        {
+                            "valor": "-2",
+                            "qtd": "7574882"
+                        },
+                        {
+                            "valor": "14433",
+                            "qtd": "6715184"
+                        },
+                        {
+                            "valor": "14472",
+                            "qtd": "2317689"
+                        },
+                        {
+                            "valor": "14475",
+                            "qtd": "2205879"
+                        },
+                        {
+                            "valor": "14211",
+                            "qtd": "1283028"
+                        },
+                        {
+                            "valor": "14427",
+                            "qtd": "1063639"
+                        },
+                        {
+                            "valor": "14434",
+                            "qtd": "1047880"
+                        },
+                        {
+                            "valor": "13934",
+                            "qtd": "969168"
+                        },
+                        {
+                            "valor": "14452",
+                            "qtd": "932084"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `COD_GRUPO_CARTAO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "UB",
+                            "qtd": "11706356"
+                        },
+                        {
+                            "valor": "WT",
+                            "qtd": "10813756"
+                        },
+                        {
+                            "valor": "PY",
+                            "qtd": "8748579"
+                        },
+                        {
+                            "valor": "I8",
+                            "qtd": "6007706"
+                        },
+                        {
+                            "valor": "UD",
+                            "qtd": "5983895"
+                        },
+                        {
+                            "valor": "IW",
+                            "qtd": "4278141"
+                        },
+                        {
+                            "valor": "UC",
+                            "qtd": "4248697"
+                        },
+                        {
+                            "valor": "FW",
+                            "qtd": "3914541"
+                        },
+                        {
+                            "valor": "FV",
+                            "qtd": "3828598"
+                        },
+                        {
+                            "valor": "G6",
+                            "qtd": "3703976"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DSC_GRUPO_CARTAO_WPP`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "NaoSeAplica",
+                            "qtd": "61563241"
+                        },
+                        {
+                            "valor": "Rec.Online",
+                            "qtd": "27752653"
+                        },
+                        {
+                            "valor": "AtivPromocao",
+                            "qtd": "6007710"
+                        },
+                        {
+                            "valor": "-2",
+                            "qtd": "3601656"
+                        },
+                        {
+                            "valor": "ChipPre+R$30",
+                            "qtd": "662041"
+                        },
+                        {
+                            "valor": "ForcaZB2",
+                            "qtd": "531540"
+                        },
+                        {
+                            "valor": "ChipPre+R$25",
+                            "qtd": "94010"
+                        },
+                        {
+                            "valor": "Pl. Controle",
+                            "qtd": "241"
+                        },
+                        {
+                            "valor": "PCT LDN ILIM",
+                            "qtd": "227"
+                        },
+                        {
+                            "valor": "Pacote SMS",
+                            "qtd": "139"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `FLAG_SOS`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "93679237"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "6534414"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VALOR_SOS`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "93679237",
+                            "qtd": ""
+                        },
+                        {
+                            "valor": "5",
+                            "qtd": "4092483"
+                        },
+                        {
+                            "valor": "10",
+                            "qtd": "1629266"
+                        },
+                        {
+                            "valor": "20",
+                            "qtd": "366642"
+                        },
+                        {
+                            "valor": "15",
+                            "qtd": "324685"
+                        },
+                        {
+                            "valor": "3",
+                            "qtd": "121338"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📏 Comprimento de Strings: `raw/recarga`",
+            "content": []
+        },
+        {
+            "header": "Coluna: `NUM_CPF`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "11",
+                            "avg_len": "11",
+                            "max_len": "11"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_NUM_NTC`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "8",
+                            "avg_len": "9",
+                            "max_len": "9"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_INSERCAO_CREDITO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "18",
+                            "avg_len": "18",
+                            "max_len": "18"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `HOR_INSERCAO_CREDITO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "5.49",
+                            "max_len": "6"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_NUM_CLIENTE`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "2",
+                            "avg_len": "9.92",
+                            "max_len": "10"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `COD_TECNOLOGIA_DW`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "3",
+                            "avg_len": "3",
+                            "max_len": "3"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `COD_CANAL_AQUISICAO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "2",
+                            "avg_len": "2.79",
+                            "max_len": "5"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `COD_TIPO_CREDITO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "2",
+                            "avg_len": "2",
+                            "max_len": "2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `COD_PROMOCAO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "2",
+                            "avg_len": "2",
+                            "max_len": "2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_CREDITO_INSERIDO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "4.26",
+                            "max_len": "8"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_BONUS`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "4.92",
+                            "max_len": "9"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_REAL`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "5.2",
+                            "max_len": "9"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `COD_PLATAFORMA_ATU`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "4",
+                            "avg_len": "5",
+                            "max_len": "5"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `COD_STATUS_PLATAFORMA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "1.09",
+                            "max_len": "3"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `IND_METODO_PAGAMENTO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "1",
+                            "max_len": "1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_PLANO_TARIFACAO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "6",
+                            "avg_len": "6",
+                            "max_len": "6"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_TIPO_RECARGA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "1.95",
+                            "max_len": "2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_TIPO_INSERCAO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "1.97",
+                            "max_len": "2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_FORMA_PAGAMENTO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "2",
+                            "avg_len": "2",
+                            "max_len": "2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_INSTITUICAO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "2",
+                            "avg_len": "2.87",
+                            "max_len": "5"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `COD_GRUPO_CARTAO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "2",
+                            "avg_len": "2",
+                            "max_len": "2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DSC_GRUPO_CARTAO_WPP`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "2",
+                            "avg_len": "10.45",
+                            "max_len": "12"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `FLAG_SOS`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "1",
+                            "max_len": "1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VALOR_SOS`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "1.36",
+                            "max_len": "2"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "title": "Relatório de Profiling: `raw/recarga`"
+}

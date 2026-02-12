@@ -1,0 +1,3930 @@
+{
+    "report_type": "Profiling",
+    "source_file": "raw_atraso_profiling.md",
+    "sections": [
+        {
+            "header": "📦 Volumetria: `raw/atraso`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "qtd_arquivos": "10",
+                            "registros": "31.611.316",
+                            "colunas": "50",
+                            "tamanho_comprimido_mib": "4307.73",
+                            "tamanho_descomprimido_mib": "6358.9"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🧬 Schema: `raw/atraso`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "column_name": "NUM_CPF",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DAT_REFERENCIA",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "NUM_FATURA_HASH",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "NUM_ENT_SEQ_FATURA",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "CONTRATO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DW_UN_NEGOCIO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DW_HIS_PONTO_VENDA_COMTA",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DW_NUM_CLIENTE",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DW_AREA",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DW_CICLO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DW_TIPO_CLIENTE_CONTA",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DW_OFERTA",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DW_FAIXA_AGING_FATURA",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DW_FAIXA_AGING_DIVIDA",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DW_FAIXA_TEMPO_BASE",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DW_FAIXA_AGING_PROX_FECH",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DW_TIPO_FATURAMENTO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "COD_PLATAFORMA",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DAT_CRIACAO_REGISTRO_TRANS",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DAT_ALTERACAO_REGISTRO_TRANS",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DAT_CANCELAMENTO_FAT",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DAT_ORIGINAL_VCTO_FAT",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DAT_ALTERACAO_VCTO_FAT",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DAT_CRIACAO_FAT",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DAT_VENCIMENTO_FAT",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DAT_STATUS_FAT",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DAT_MIN_VENCIMENTO_FAT",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "NUM_BILL_SEQ_FAT",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "NUM_SEQ_ACORDO_FAT",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "IND_ISENCAO_COB_FAT",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "IND_WO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "IND_PDD",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "IND_PCCR",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "IND_ACA",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "IND_PRIMEIRA_FAT",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "IND_FRAUDE",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "VAL_FAT_LIQUIDO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "VAL_FAT_BRUTO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "VAL_FAT_CREDITO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "VAL_FAT_AJUSTE",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "VAL_FAT_BRUTO_BC",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "VAL_FAT_PAGAMENTO_BRUTO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "VAL_FAT_ABERTO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "VAL_FAT_ABERTO_LIQ",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "VAL_MULTA_JUROS",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "VAL_MULTA_CANCELAMENTO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "VAL_PARC_APARELHO_LIQ",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "VAL_FAT_LIQ_JM_MC",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DAT_ATIVACAO_CONTA_CLI",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "DAT_CRIACAO_DW",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📅 Campos de Data: `raw/atraso`",
+            "content": []
+        },
+        {
+            "header": "✅ Datas com tipagem (DATE / TIMESTAMP)",
+            "content": [
+                {
+                    "type": "text",
+                    "data": "> ⚠️ Nenhuma coluna DATE ou TIMESTAMP encontrada."
+                }
+            ]
+        },
+        {
+            "header": "⚠️ Possíveis campos de data/hora sem tipagem (inferido pelo nome)",
+            "content": [
+                {
+                    "type": "text",
+                    "data": "- `DAT_ALTERACAO_REGISTRO_TRANS`\n- `DAT_ALTERACAO_VCTO_FAT`\n- `DAT_ATIVACAO_CONTA_CLI`\n- `DAT_CANCELAMENTO_FAT`\n- `DAT_CRIACAO_DW`\n- `DAT_CRIACAO_FAT`\n- `DAT_CRIACAO_REGISTRO_TRANS`\n- `DAT_MIN_VENCIMENTO_FAT`\n- `DAT_ORIGINAL_VCTO_FAT`\n- `DAT_REFERENCIA`\n- `DAT_STATUS_FAT`\n- `DAT_VENCIMENTO_FAT`\n\n\n---"
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas por Coluna: `raw/atraso`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "NUM_CPF",
+                            "distintos": "2095944",
+                            "nulos": "0",
+                            "duplicados": "29515372",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "93.37%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DAT_REFERENCIA",
+                            "distintos": "18",
+                            "nulos": "0",
+                            "duplicados": "31611298",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "NUM_FATURA_HASH",
+                            "distintos": "15633144",
+                            "nulos": "0",
+                            "duplicados": "15978172",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "50.55%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "NUM_ENT_SEQ_FATURA",
+                            "distintos": "1183",
+                            "nulos": "0",
+                            "duplicados": "31610133",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "CONTRATO",
+                            "distintos": "2961912",
+                            "nulos": "0",
+                            "duplicados": "28649404",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "90.63%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DW_UN_NEGOCIO",
+                            "distintos": "10",
+                            "nulos": "0",
+                            "duplicados": "31611306",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DW_HIS_PONTO_VENDA_COMTA",
+                            "distintos": "76810",
+                            "nulos": "0",
+                            "duplicados": "31534506",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.76%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "DW_NUM_CLIENTE",
+                            "distintos": "3084554",
+                            "nulos": "0",
+                            "duplicados": "28526762",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "90.24%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DW_AREA",
+                            "distintos": "69",
+                            "nulos": "0",
+                            "duplicados": "31611247",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DW_CICLO",
+                            "distintos": "47",
+                            "nulos": "0",
+                            "duplicados": "31611269",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DW_TIPO_CLIENTE_CONTA",
+                            "distintos": "35",
+                            "nulos": "0",
+                            "duplicados": "31611281",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DW_OFERTA",
+                            "distintos": "1144",
+                            "nulos": "0",
+                            "duplicados": "31610172",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DW_FAIXA_AGING_FATURA",
+                            "distintos": "24",
+                            "nulos": "0",
+                            "duplicados": "31611292",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DW_FAIXA_AGING_DIVIDA",
+                            "distintos": "16",
+                            "nulos": "0",
+                            "duplicados": "31611300",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DW_FAIXA_TEMPO_BASE",
+                            "distintos": "7",
+                            "nulos": "0",
+                            "duplicados": "31611309",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DW_FAIXA_AGING_PROX_FECH",
+                            "distintos": "17",
+                            "nulos": "0",
+                            "duplicados": "31611299",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DW_TIPO_FATURAMENTO",
+                            "distintos": "27",
+                            "nulos": "0",
+                            "duplicados": "31611289",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "COD_PLATAFORMA",
+                            "distintos": "14",
+                            "nulos": "0",
+                            "duplicados": "31611302",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DAT_CRIACAO_REGISTRO_TRANS",
+                            "distintos": "3133554",
+                            "nulos": "0",
+                            "duplicados": "28477762",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "90.09%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DAT_ALTERACAO_REGISTRO_TRANS",
+                            "distintos": "3407394",
+                            "nulos": "214",
+                            "duplicados": "28203922",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "89.22%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DAT_CANCELAMENTO_FAT",
+                            "distintos": "0",
+                            "nulos": "31611316",
+                            "duplicados": "31611316",
+                            "pct_nulos": "100.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DAT_ORIGINAL_VCTO_FAT",
+                            "distintos": "2317",
+                            "nulos": "1121787",
+                            "duplicados": "31608999",
+                            "pct_nulos": "3.55%",
+                            "pct_duplicados": "99.99%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DAT_ALTERACAO_VCTO_FAT",
+                            "distintos": "760",
+                            "nulos": "31523457",
+                            "duplicados": "31610556",
+                            "pct_nulos": "99.72%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DAT_CRIACAO_FAT",
+                            "distintos": "2546",
+                            "nulos": "0",
+                            "duplicados": "31608770",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.99%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DAT_VENCIMENTO_FAT",
+                            "distintos": "2301",
+                            "nulos": "0",
+                            "duplicados": "31609015",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.99%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DAT_STATUS_FAT",
+                            "distintos": "2823",
+                            "nulos": "1075903",
+                            "duplicados": "31608493",
+                            "pct_nulos": "3.4%",
+                            "pct_duplicados": "99.99%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DAT_MIN_VENCIMENTO_FAT",
+                            "distintos": "1853",
+                            "nulos": "0",
+                            "duplicados": "31609463",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.99%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "NUM_BILL_SEQ_FAT",
+                            "distintos": "256",
+                            "nulos": "0",
+                            "duplicados": "31611060",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "NUM_SEQ_ACORDO_FAT",
+                            "distintos": "71",
+                            "nulos": "0",
+                            "duplicados": "31611245",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "IND_ISENCAO_COB_FAT",
+                            "distintos": "4",
+                            "nulos": "0",
+                            "duplicados": "31611312",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "IND_WO",
+                            "distintos": "3",
+                            "nulos": "0",
+                            "duplicados": "31611313",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "IND_PDD",
+                            "distintos": "3",
+                            "nulos": "0",
+                            "duplicados": "31611313",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "IND_PCCR",
+                            "distintos": "4",
+                            "nulos": "0",
+                            "duplicados": "31611312",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "IND_ACA",
+                            "distintos": "3",
+                            "nulos": "0",
+                            "duplicados": "31611313",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "IND_PRIMEIRA_FAT",
+                            "distintos": "2",
+                            "nulos": "0",
+                            "duplicados": "31611314",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "IND_FRAUDE",
+                            "distintos": "2",
+                            "nulos": "0",
+                            "duplicados": "31611314",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "VAL_FAT_LIQUIDO",
+                            "distintos": "69378",
+                            "nulos": "0",
+                            "duplicados": "31541938",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.78%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "VAL_FAT_BRUTO",
+                            "distintos": "78592",
+                            "nulos": "0",
+                            "duplicados": "31532724",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.75%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "VAL_FAT_CREDITO",
+                            "distintos": "26236",
+                            "nulos": "0",
+                            "duplicados": "31585080",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.92%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "VAL_FAT_AJUSTE",
+                            "distintos": "8581",
+                            "nulos": "0",
+                            "duplicados": "31602735",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.97%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "VAL_FAT_BRUTO_BC",
+                            "distintos": "68671",
+                            "nulos": "0",
+                            "duplicados": "31542645",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.78%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "VAL_FAT_PAGAMENTO_BRUTO",
+                            "distintos": "20777",
+                            "nulos": "0",
+                            "duplicados": "31590539",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.93%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "VAL_FAT_ABERTO",
+                            "distintos": "70108",
+                            "nulos": "0",
+                            "duplicados": "31541208",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.78%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "VAL_FAT_ABERTO_LIQ",
+                            "distintos": "69158",
+                            "nulos": "0",
+                            "duplicados": "31542158",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.78%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "VAL_MULTA_JUROS",
+                            "distintos": "5403",
+                            "nulos": "0",
+                            "duplicados": "31605913",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.98%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "VAL_MULTA_CANCELAMENTO",
+                            "distintos": "10668",
+                            "nulos": "0",
+                            "duplicados": "31600648",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.97%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "VAL_PARC_APARELHO_LIQ",
+                            "distintos": "553",
+                            "nulos": "0",
+                            "duplicados": "31610763",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "VAL_FAT_LIQ_JM_MC",
+                            "distintos": "66040",
+                            "nulos": "0",
+                            "duplicados": "31545276",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.79%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "DAT_ATIVACAO_CONTA_CLI",
+                            "distintos": "7487",
+                            "nulos": "0",
+                            "duplicados": "31603829",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.98%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DAT_CRIACAO_DW",
+                            "distintos": "199410",
+                            "nulos": "0",
+                            "duplicados": "31411906",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "99.37%",
+                            "cardinalidade": "MEDIA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔟 Distribuição de Valores (Top 10): `raw/atraso`",
+            "content": []
+        },
+        {
+            "header": "Coluna: `NUM_CPF`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "ZN98N87WNXX",
+                            "qtd": "3584"
+                        },
+                        {
+                            "valor": "ZYTYXT8YXZ7",
+                            "qtd": "2952"
+                        },
+                        {
+                            "valor": "NY88TWWYW87",
+                            "qtd": "1970"
+                        },
+                        {
+                            "valor": "UNWTTZN88NU",
+                            "qtd": "1890"
+                        },
+                        {
+                            "valor": "X7TYTTZW8YN",
+                            "qtd": "1881"
+                        },
+                        {
+                            "valor": "X9U8NWN78N8",
+                            "qtd": "1844"
+                        },
+                        {
+                            "valor": "ZTNTN9UYTXX",
+                            "qtd": "1418"
+                        },
+                        {
+                            "valor": "9TZUTUT7TZZ",
+                            "qtd": "1350"
+                        },
+                        {
+                            "valor": "Y8U7XYTU8T9",
+                            "qtd": "1233"
+                        },
+                        {
+                            "valor": "UWW97YYZ9ZU",
+                            "qtd": "1103"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_REFERENCIA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "01MAR2025:00:00:00",
+                            "qtd": "4394665"
+                        },
+                        {
+                            "valor": "01FEB2025:00:00:00",
+                            "qtd": "3643289"
+                        },
+                        {
+                            "valor": "01JAN2025:00:00:00",
+                            "qtd": "3018681"
+                        },
+                        {
+                            "valor": "01DEC2024:00:00:00",
+                            "qtd": "2444916"
+                        },
+                        {
+                            "valor": "01NOV2024:00:00:00",
+                            "qtd": "1883050"
+                        },
+                        {
+                            "valor": "01OCT2024:00:00:00",
+                            "qtd": "1683363"
+                        },
+                        {
+                            "valor": "01SEP2024:00:00:00",
+                            "qtd": "1510312"
+                        },
+                        {
+                            "valor": "01AUG2024:00:00:00",
+                            "qtd": "1397247"
+                        },
+                        {
+                            "valor": "01JUL2024:00:00:00",
+                            "qtd": "1318087"
+                        },
+                        {
+                            "valor": "01DEC2023:00:00:00",
+                            "qtd": "1252111"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `NUM_FATURA_HASH`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+                            "qtd": "1075903"
+                        },
+                        {
+                            "valor": "d62379c48ce480322c400adcbb1f59cf4196d4c627a6fae49c3ea53eeb2c7e6d",
+                            "qtd": "126"
+                        },
+                        {
+                            "valor": "dd68070a1f03c7746ec0ada0aece9eee84c38ddc6d3d23049c544a853e0743a8",
+                            "qtd": "108"
+                        },
+                        {
+                            "valor": "5e554a259c4ab7e7278f111ffd3cb1f4c650f5302aa6098883804eb7ae847f1a",
+                            "qtd": "108"
+                        },
+                        {
+                            "valor": "b8b2bf7948343f22cd785bb1e707b7a696d8ecd5eee4d9c15a0671fbe80ae1ac",
+                            "qtd": "108"
+                        },
+                        {
+                            "valor": "6b53a7549882a4e145ee262750a7ccf5c0f04958d01dc3c29985e2798460a407",
+                            "qtd": "108"
+                        },
+                        {
+                            "valor": "ca8c68370c2a68c83527905d145ec30efbe0a95e0b5b9d4a30d4723639372f96",
+                            "qtd": "108"
+                        },
+                        {
+                            "valor": "2286794687ca5566d774c712d44c8672394f8ced25815023b1a5d37d9e7f56d6",
+                            "qtd": "108"
+                        },
+                        {
+                            "valor": "f85a2590dc90b7085a6911fadb58616e91e9b5124bd8b41ee204bdd33a5b6ba6",
+                            "qtd": "108"
+                        },
+                        {
+                            "valor": "422d0fe5a6f20b7a921d6d1d333fd26b002f771cc59fae7659f638e554c59bb7",
+                            "qtd": "108"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `NUM_ENT_SEQ_FATURA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "1",
+                            "qtd": "3622614"
+                        },
+                        {
+                            "valor": "3",
+                            "qtd": "1798730"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "1744786"
+                        },
+                        {
+                            "valor": "4",
+                            "qtd": "1430372"
+                        },
+                        {
+                            "valor": "5",
+                            "qtd": "1001250"
+                        },
+                        {
+                            "valor": "6",
+                            "qtd": "866619"
+                        },
+                        {
+                            "valor": "7",
+                            "qtd": "694051"
+                        },
+                        {
+                            "valor": "8",
+                            "qtd": "650143"
+                        },
+                        {
+                            "valor": "9",
+                            "qtd": "541344"
+                        },
+                        {
+                            "valor": "10",
+                            "qtd": "507448"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `CONTRATO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "832370173",
+                            "qtd": "3582"
+                        },
+                        {
+                            "valor": "843837549",
+                            "qtd": "2952"
+                        },
+                        {
+                            "valor": "827450936",
+                            "qtd": "1969"
+                        },
+                        {
+                            "valor": "832040386",
+                            "qtd": "1890"
+                        },
+                        {
+                            "valor": "822974440",
+                            "qtd": "1881"
+                        },
+                        {
+                            "valor": "833912847",
+                            "qtd": "1837"
+                        },
+                        {
+                            "valor": "846007545",
+                            "qtd": "1350"
+                        },
+                        {
+                            "valor": "882711546",
+                            "qtd": "1233"
+                        },
+                        {
+                            "valor": "842432062",
+                            "qtd": "1098"
+                        },
+                        {
+                            "valor": "851965102",
+                            "qtd": "1098"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_UN_NEGOCIO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "5",
+                            "qtd": "5674372"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "4948185"
+                        },
+                        {
+                            "valor": "3",
+                            "qtd": "4768595"
+                        },
+                        {
+                            "valor": "4",
+                            "qtd": "4646757"
+                        },
+                        {
+                            "valor": "6",
+                            "qtd": "2811457"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "2042652"
+                        },
+                        {
+                            "valor": "9",
+                            "qtd": "1802755"
+                        },
+                        {
+                            "valor": "10",
+                            "qtd": "1726876"
+                        },
+                        {
+                            "valor": "8",
+                            "qtd": "1595073"
+                        },
+                        {
+                            "valor": "7",
+                            "qtd": "1594594"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_HIS_PONTO_VENDA_COMTA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "9863292",
+                            "qtd": "1762903"
+                        },
+                        {
+                            "valor": "-2",
+                            "qtd": "1349111"
+                        },
+                        {
+                            "valor": "10428694",
+                            "qtd": "997120"
+                        },
+                        {
+                            "valor": "9479205",
+                            "qtd": "996170"
+                        },
+                        {
+                            "valor": "9980298",
+                            "qtd": "421378"
+                        },
+                        {
+                            "valor": "1890100",
+                            "qtd": "364336"
+                        },
+                        {
+                            "valor": "805397",
+                            "qtd": "359233"
+                        },
+                        {
+                            "valor": "-3",
+                            "qtd": "345439"
+                        },
+                        {
+                            "valor": "9987244",
+                            "qtd": "318925"
+                        },
+                        {
+                            "valor": "10064668",
+                            "qtd": "310864"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_NUM_CLIENTE`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "852163736",
+                            "qtd": "3582"
+                        },
+                        {
+                            "valor": "937160046",
+                            "qtd": "2952"
+                        },
+                        {
+                            "valor": "814166959",
+                            "qtd": "1969"
+                        },
+                        {
+                            "valor": "699626807",
+                            "qtd": "1881"
+                        },
+                        {
+                            "valor": "1207341177",
+                            "qtd": "1837"
+                        },
+                        {
+                            "valor": "524092608",
+                            "qtd": "1422"
+                        },
+                        {
+                            "valor": "1439218861",
+                            "qtd": "1365"
+                        },
+                        {
+                            "valor": "947775947",
+                            "qtd": "1350"
+                        },
+                        {
+                            "valor": "1170659040",
+                            "qtd": "1233"
+                        },
+                        {
+                            "valor": "929754533",
+                            "qtd": "1098"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_AREA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "36",
+                            "qtd": "4955241"
+                        },
+                        {
+                            "valor": "-3",
+                            "qtd": "3544643"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "3524438"
+                        },
+                        {
+                            "valor": "22",
+                            "qtd": "1219844"
+                        },
+                        {
+                            "valor": "23",
+                            "qtd": "1091959"
+                        },
+                        {
+                            "valor": "52",
+                            "qtd": "993495"
+                        },
+                        {
+                            "valor": "7",
+                            "qtd": "922672"
+                        },
+                        {
+                            "valor": "6",
+                            "qtd": "917979"
+                        },
+                        {
+                            "valor": "19",
+                            "qtd": "844227"
+                        },
+                        {
+                            "valor": "27",
+                            "qtd": "768378"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_CICLO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "29",
+                            "qtd": "1967108"
+                        },
+                        {
+                            "valor": "61",
+                            "qtd": "1547850"
+                        },
+                        {
+                            "valor": "101",
+                            "qtd": "1404525"
+                        },
+                        {
+                            "valor": "65",
+                            "qtd": "1389746"
+                        },
+                        {
+                            "valor": "74",
+                            "qtd": "1339012"
+                        },
+                        {
+                            "valor": "77",
+                            "qtd": "1281125"
+                        },
+                        {
+                            "valor": "28",
+                            "qtd": "1217233"
+                        },
+                        {
+                            "valor": "25",
+                            "qtd": "1175556"
+                        },
+                        {
+                            "valor": "66",
+                            "qtd": "1147670"
+                        },
+                        {
+                            "valor": "75",
+                            "qtd": "1123173"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_TIPO_CLIENTE_CONTA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "6",
+                            "qtd": "21020227"
+                        },
+                        {
+                            "valor": "52",
+                            "qtd": "4346840"
+                        },
+                        {
+                            "valor": "367",
+                            "qtd": "2310244"
+                        },
+                        {
+                            "valor": "792",
+                            "qtd": "1254105"
+                        },
+                        {
+                            "valor": "293",
+                            "qtd": "802000"
+                        },
+                        {
+                            "valor": "532",
+                            "qtd": "624647"
+                        },
+                        {
+                            "valor": "-1",
+                            "qtd": "496599"
+                        },
+                        {
+                            "valor": "31",
+                            "qtd": "329250"
+                        },
+                        {
+                            "valor": "309",
+                            "qtd": "238014"
+                        },
+                        {
+                            "valor": "822",
+                            "qtd": "67034"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_OFERTA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "-3",
+                            "qtd": "2252102"
+                        },
+                        {
+                            "valor": "-2",
+                            "qtd": "1484945"
+                        },
+                        {
+                            "valor": "160585",
+                            "qtd": "1479823"
+                        },
+                        {
+                            "valor": "155057",
+                            "qtd": "1466190"
+                        },
+                        {
+                            "valor": "159099",
+                            "qtd": "1316984"
+                        },
+                        {
+                            "valor": "154953",
+                            "qtd": "1296950"
+                        },
+                        {
+                            "valor": "159051",
+                            "qtd": "1274537"
+                        },
+                        {
+                            "valor": "160733",
+                            "qtd": "1240211"
+                        },
+                        {
+                            "valor": "159079",
+                            "qtd": "1183876"
+                        },
+                        {
+                            "valor": "154968",
+                            "qtd": "1075260"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_FAIXA_AGING_FATURA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "277",
+                            "qtd": "17693100"
+                        },
+                        {
+                            "valor": "278",
+                            "qtd": "6476688"
+                        },
+                        {
+                            "valor": "279",
+                            "qtd": "2037163"
+                        },
+                        {
+                            "valor": "280",
+                            "qtd": "1293182"
+                        },
+                        {
+                            "valor": "281",
+                            "qtd": "849732"
+                        },
+                        {
+                            "valor": "282",
+                            "qtd": "595868"
+                        },
+                        {
+                            "valor": "283",
+                            "qtd": "436294"
+                        },
+                        {
+                            "valor": "290",
+                            "qtd": "364942"
+                        },
+                        {
+                            "valor": "292",
+                            "qtd": "325566"
+                        },
+                        {
+                            "valor": "284",
+                            "qtd": "286518"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_FAIXA_AGING_DIVIDA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "261",
+                            "qtd": "15112702"
+                        },
+                        {
+                            "valor": "262",
+                            "qtd": "7342787"
+                        },
+                        {
+                            "valor": "263",
+                            "qtd": "2345438"
+                        },
+                        {
+                            "valor": "264",
+                            "qtd": "1564580"
+                        },
+                        {
+                            "valor": "265",
+                            "qtd": "1093425"
+                        },
+                        {
+                            "valor": "266",
+                            "qtd": "833388"
+                        },
+                        {
+                            "valor": "267",
+                            "qtd": "659050"
+                        },
+                        {
+                            "valor": "274",
+                            "qtd": "520264"
+                        },
+                        {
+                            "valor": "268",
+                            "qtd": "483738"
+                        },
+                        {
+                            "valor": "269",
+                            "qtd": "375720"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_FAIXA_TEMPO_BASE`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "356",
+                            "qtd": "12547987"
+                        },
+                        {
+                            "valor": "352",
+                            "qtd": "5349573"
+                        },
+                        {
+                            "valor": "355",
+                            "qtd": "5118869"
+                        },
+                        {
+                            "valor": "354",
+                            "qtd": "4077334"
+                        },
+                        {
+                            "valor": "353",
+                            "qtd": "4017582"
+                        },
+                        {
+                            "valor": "-1",
+                            "qtd": "496599"
+                        },
+                        {
+                            "valor": "-3",
+                            "qtd": "3372"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_FAIXA_AGING_PROX_FECH`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "303",
+                            "qtd": "14018379"
+                        },
+                        {
+                            "valor": "304",
+                            "qtd": "6681653"
+                        },
+                        {
+                            "valor": "305",
+                            "qtd": "2291153"
+                        },
+                        {
+                            "valor": "306",
+                            "qtd": "1504443"
+                        },
+                        {
+                            "valor": "302",
+                            "qtd": "1457585"
+                        },
+                        {
+                            "valor": "307",
+                            "qtd": "1060024"
+                        },
+                        {
+                            "valor": "308",
+                            "qtd": "833517"
+                        },
+                        {
+                            "valor": "309",
+                            "qtd": "628549"
+                        },
+                        {
+                            "valor": "315",
+                            "qtd": "570893"
+                        },
+                        {
+                            "valor": "-1",
+                            "qtd": "496599"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_TIPO_FATURAMENTO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "32529",
+                            "qtd": "24596826"
+                        },
+                        {
+                            "valor": "32541",
+                            "qtd": "5723595"
+                        },
+                        {
+                            "valor": "33523",
+                            "qtd": "519147"
+                        },
+                        {
+                            "valor": "32534",
+                            "qtd": "252803"
+                        },
+                        {
+                            "valor": "33541",
+                            "qtd": "117374"
+                        },
+                        {
+                            "valor": "32542",
+                            "qtd": "109262"
+                        },
+                        {
+                            "valor": "32548",
+                            "qtd": "85179"
+                        },
+                        {
+                            "valor": "32543",
+                            "qtd": "67247"
+                        },
+                        {
+                            "valor": "32556",
+                            "qtd": "55726"
+                        },
+                        {
+                            "valor": "32569",
+                            "qtd": "38498"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `COD_PLATAFORMA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "AUTOC",
+                            "qtd": "17230902"
+                        },
+                        {
+                            "valor": "POSPG",
+                            "qtd": "10963007"
+                        },
+                        {
+                            "valor": "-2",
+                            "qtd": "2271850"
+                        },
+                        {
+                            "valor": "PREPG",
+                            "qtd": "748188"
+                        },
+                        {
+                            "valor": "POSBL",
+                            "qtd": "240839"
+                        },
+                        {
+                            "valor": "FLEXD",
+                            "qtd": "63540"
+                        },
+                        {
+                            "valor": "-3",
+                            "qtd": "46901"
+                        },
+                        {
+                            "valor": "CTLFC",
+                            "qtd": "42179"
+                        },
+                        {
+                            "valor": "POSTL",
+                            "qtd": "2470"
+                        },
+                        {
+                            "valor": "M2MS",
+                            "qtd": "930"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_CRIACAO_REGISTRO_TRANS`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "28SEP2023:00:00:00",
+                            "qtd": "102890"
+                        },
+                        {
+                            "valor": "26NOV2023:00:00:00",
+                            "qtd": "95302"
+                        },
+                        {
+                            "valor": "26SEP2023:00:00:00",
+                            "qtd": "94988"
+                        },
+                        {
+                            "valor": "25OCT2023:00:00:00",
+                            "qtd": "94887"
+                        },
+                        {
+                            "valor": "25NOV2023:00:00:00",
+                            "qtd": "91472"
+                        },
+                        {
+                            "valor": "29SEP2023:00:00:00",
+                            "qtd": "88330"
+                        },
+                        {
+                            "valor": "23NOV2023:00:00:00",
+                            "qtd": "83161"
+                        },
+                        {
+                            "valor": "26OCT2023:00:00:00",
+                            "qtd": "83049"
+                        },
+                        {
+                            "valor": "27OCT2023:00:00:00",
+                            "qtd": "79861"
+                        },
+                        {
+                            "valor": "10NOV2023:00:00:00",
+                            "qtd": "77142"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_ALTERACAO_REGISTRO_TRANS`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "28NOV2023:00:00:00",
+                            "qtd": "90100"
+                        },
+                        {
+                            "valor": "10NOV2023:00:00:00",
+                            "qtd": "81464"
+                        },
+                        {
+                            "valor": "25OCT2023:00:00:00",
+                            "qtd": "78276"
+                        },
+                        {
+                            "valor": "26NOV2023:00:00:00",
+                            "qtd": "76114"
+                        },
+                        {
+                            "valor": "23NOV2023:00:00:00",
+                            "qtd": "75654"
+                        },
+                        {
+                            "valor": "25NOV2023:00:00:00",
+                            "qtd": "75279"
+                        },
+                        {
+                            "valor": "22DEC2023:00:00:00",
+                            "qtd": "74914"
+                        },
+                        {
+                            "valor": "22NOV2023:00:00:00",
+                            "qtd": "71565"
+                        },
+                        {
+                            "valor": "09DEC2023:00:00:00",
+                            "qtd": "70050"
+                        },
+                        {
+                            "valor": "26OCT2023:00:00:00",
+                            "qtd": "68987"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_CANCELAMENTO_FAT`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "31611316",
+                            "qtd": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_ORIGINAL_VCTO_FAT`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "1121787",
+                            "qtd": ""
+                        },
+                        {
+                            "valor": "15JAN2025:00:00:00",
+                            "qtd": "644505"
+                        },
+                        {
+                            "valor": "10FEB2025:00:00:00",
+                            "qtd": "639876"
+                        },
+                        {
+                            "valor": "15FEB2025:00:00:00",
+                            "qtd": "633685"
+                        },
+                        {
+                            "valor": "10JAN2025:00:00:00",
+                            "qtd": "619734"
+                        },
+                        {
+                            "valor": "10MAR2025:00:00:00",
+                            "qtd": "604634"
+                        },
+                        {
+                            "valor": "15DEC2024:00:00:00",
+                            "qtd": "604212"
+                        },
+                        {
+                            "valor": "15MAR2025:00:00:00",
+                            "qtd": "552868"
+                        },
+                        {
+                            "valor": "10DEC2024:00:00:00",
+                            "qtd": "537212"
+                        },
+                        {
+                            "valor": "15NOV2024:00:00:00",
+                            "qtd": "515760"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_ALTERACAO_VCTO_FAT`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "31523457",
+                            "qtd": ""
+                        },
+                        {
+                            "valor": "14NOV2024:00:00:00",
+                            "qtd": "21087"
+                        },
+                        {
+                            "valor": "22NOV2023:00:00:00",
+                            "qtd": "2520"
+                        },
+                        {
+                            "valor": "12AUG2024:00:00:00",
+                            "qtd": "1666"
+                        },
+                        {
+                            "valor": "10NOV2023:00:00:00",
+                            "qtd": "1238"
+                        },
+                        {
+                            "valor": "12DEC2023:00:00:00",
+                            "qtd": "1137"
+                        },
+                        {
+                            "valor": "27NOV2023:00:00:00",
+                            "qtd": "850"
+                        },
+                        {
+                            "valor": "11OCT2023:00:00:00",
+                            "qtd": "840"
+                        },
+                        {
+                            "valor": "13MAY2024:00:00:00",
+                            "qtd": "816"
+                        },
+                        {
+                            "valor": "27AUG2018:00:00:00",
+                            "qtd": "810"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_CRIACAO_FAT`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "27FEB2025:00:00:00",
+                            "qtd": "535664"
+                        },
+                        {
+                            "valor": "26NOV2024:00:00:00",
+                            "qtd": "430478"
+                        },
+                        {
+                            "valor": "28JAN2025:00:00:00",
+                            "qtd": "430282"
+                        },
+                        {
+                            "valor": "25DEC2024:00:00:00",
+                            "qtd": "428644"
+                        },
+                        {
+                            "valor": "27DEC2024:00:00:00",
+                            "qtd": "398355"
+                        },
+                        {
+                            "valor": "26FEB2025:00:00:00",
+                            "qtd": "390841"
+                        },
+                        {
+                            "valor": "25JAN2025:00:00:00",
+                            "qtd": "383974"
+                        },
+                        {
+                            "valor": "27NOV2024:00:00:00",
+                            "qtd": "339436"
+                        },
+                        {
+                            "valor": "28DEC2024:00:00:00",
+                            "qtd": "316845"
+                        },
+                        {
+                            "valor": "26OCT2024:00:00:00",
+                            "qtd": "315338"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_VENCIMENTO_FAT`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "10FEB2025:00:00:00",
+                            "qtd": "926196"
+                        },
+                        {
+                            "valor": "10MAR2025:00:00:00",
+                            "qtd": "848971"
+                        },
+                        {
+                            "valor": "15JAN2025:00:00:00",
+                            "qtd": "647428"
+                        },
+                        {
+                            "valor": "17FEB2025:00:00:00",
+                            "qtd": "644302"
+                        },
+                        {
+                            "valor": "10JAN2025:00:00:00",
+                            "qtd": "622295"
+                        },
+                        {
+                            "valor": "16DEC2024:00:00:00",
+                            "qtd": "608559"
+                        },
+                        {
+                            "valor": "17MAR2025:00:00:00",
+                            "qtd": "554254"
+                        },
+                        {
+                            "valor": "10DEC2024:00:00:00",
+                            "qtd": "539820"
+                        },
+                        {
+                            "valor": "18NOV2024:00:00:00",
+                            "qtd": "517653"
+                        },
+                        {
+                            "valor": "12AUG2024:00:00:00",
+                            "qtd": "496002"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_STATUS_FAT`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "1075903",
+                            "qtd": ""
+                        },
+                        {
+                            "valor": "27FEB2025:00:00:00",
+                            "qtd": "535067"
+                        },
+                        {
+                            "valor": "28JAN2025:00:00:00",
+                            "qtd": "433158"
+                        },
+                        {
+                            "valor": "25DEC2024:00:00:00",
+                            "qtd": "426693"
+                        },
+                        {
+                            "valor": "26NOV2024:00:00:00",
+                            "qtd": "426590"
+                        },
+                        {
+                            "valor": "27DEC2024:00:00:00",
+                            "qtd": "402503"
+                        },
+                        {
+                            "valor": "26FEB2025:00:00:00",
+                            "qtd": "390467"
+                        },
+                        {
+                            "valor": "25JAN2025:00:00:00",
+                            "qtd": "383531"
+                        },
+                        {
+                            "valor": "27NOV2024:00:00:00",
+                            "qtd": "337232"
+                        },
+                        {
+                            "valor": "28SEP2024:00:00:00",
+                            "qtd": "332855"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_MIN_VENCIMENTO_FAT`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "10FEB2025:00:00:00",
+                            "qtd": "877698"
+                        },
+                        {
+                            "valor": "10MAR2025:00:00:00",
+                            "qtd": "710293"
+                        },
+                        {
+                            "valor": "15JAN2025:00:00:00",
+                            "qtd": "621238"
+                        },
+                        {
+                            "valor": "10JAN2025:00:00:00",
+                            "qtd": "610760"
+                        },
+                        {
+                            "valor": "17FEB2025:00:00:00",
+                            "qtd": "596412"
+                        },
+                        {
+                            "valor": "16DEC2024:00:00:00",
+                            "qtd": "579042"
+                        },
+                        {
+                            "valor": "10DEC2024:00:00:00",
+                            "qtd": "520409"
+                        },
+                        {
+                            "valor": "10JUN2024:00:00:00",
+                            "qtd": "509469"
+                        },
+                        {
+                            "valor": "12AUG2024:00:00:00",
+                            "qtd": "506237"
+                        },
+                        {
+                            "valor": "18NOV2024:00:00:00",
+                            "qtd": "484517"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `NUM_BILL_SEQ_FAT`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "1",
+                            "qtd": "4082744"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "2282121"
+                        },
+                        {
+                            "valor": "3",
+                            "qtd": "2111113"
+                        },
+                        {
+                            "valor": "4",
+                            "qtd": "1404737"
+                        },
+                        {
+                            "valor": "5",
+                            "qtd": "956813"
+                        },
+                        {
+                            "valor": "6",
+                            "qtd": "762806"
+                        },
+                        {
+                            "valor": "7",
+                            "qtd": "704599"
+                        },
+                        {
+                            "valor": "8",
+                            "qtd": "635146"
+                        },
+                        {
+                            "valor": "9",
+                            "qtd": "590163"
+                        },
+                        {
+                            "valor": "10",
+                            "qtd": "562407"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `NUM_SEQ_ACORDO_FAT`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "-2",
+                            "qtd": "27362822"
+                        },
+                        {
+                            "valor": "-3",
+                            "qtd": "3572475"
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "192679"
+                        },
+                        {
+                            "valor": "2",
+                            "qtd": "113230"
+                        },
+                        {
+                            "valor": "3",
+                            "qtd": "75216"
+                        },
+                        {
+                            "valor": "4",
+                            "qtd": "53651"
+                        },
+                        {
+                            "valor": "5",
+                            "qtd": "40730"
+                        },
+                        {
+                            "valor": "6",
+                            "qtd": "32699"
+                        },
+                        {
+                            "valor": "7",
+                            "qtd": "26156"
+                        },
+                        {
+                            "valor": "8",
+                            "qtd": "22270"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `IND_ISENCAO_COB_FAT`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "-2",
+                            "qtd": "28026258"
+                        },
+                        {
+                            "valor": "N",
+                            "qtd": "3580722"
+                        },
+                        {
+                            "valor": "Y",
+                            "qtd": "3442"
+                        },
+                        {
+                            "valor": "S",
+                            "qtd": "894"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `IND_WO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "R",
+                            "qtd": "29460247"
+                        },
+                        {
+                            "valor": "W",
+                            "qtd": "1654470"
+                        },
+                        {
+                            "valor": "-1",
+                            "qtd": "496599"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `IND_PDD`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "N",
+                            "qtd": "28352241"
+                        },
+                        {
+                            "valor": "S",
+                            "qtd": "2762476"
+                        },
+                        {
+                            "valor": "-1",
+                            "qtd": "496599"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `IND_PCCR`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "C",
+                            "qtd": "30233363"
+                        },
+                        {
+                            "valor": "W",
+                            "qtd": "880334"
+                        },
+                        {
+                            "valor": "-1",
+                            "qtd": "496599"
+                        },
+                        {
+                            "valor": "A",
+                            "qtd": "1020"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `IND_ACA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "N",
+                            "qtd": "31526541"
+                        },
+                        {
+                            "valor": "S",
+                            "qtd": "84612"
+                        },
+                        {
+                            "valor": "A",
+                            "qtd": "163"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `IND_PRIMEIRA_FAT`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "N",
+                            "qtd": "27528572"
+                        },
+                        {
+                            "valor": "S",
+                            "qtd": "4082744"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `IND_FRAUDE`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "N",
+                            "qtd": "31554040"
+                        },
+                        {
+                            "valor": "S",
+                            "qtd": "57276"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_FAT_LIQUIDO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "34.8",
+                            "qtd": "664222"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "467711"
+                        },
+                        {
+                            "valor": "54.9",
+                            "qtd": "440074"
+                        },
+                        {
+                            "valor": "54.8",
+                            "qtd": "430210"
+                        },
+                        {
+                            "valor": "29.8",
+                            "qtd": "374464"
+                        },
+                        {
+                            "valor": "29.9",
+                            "qtd": "321551"
+                        },
+                        {
+                            "valor": "34.9",
+                            "qtd": "276177"
+                        },
+                        {
+                            "valor": "49.9",
+                            "qtd": "275673"
+                        },
+                        {
+                            "valor": "49.8",
+                            "qtd": "251736"
+                        },
+                        {
+                            "valor": "3.12",
+                            "qtd": "217100"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_FAT_BRUTO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "54.9",
+                            "qtd": "376812"
+                        },
+                        {
+                            "valor": "64.9",
+                            "qtd": "216671"
+                        },
+                        {
+                            "valor": "34.9",
+                            "qtd": "161696"
+                        },
+                        {
+                            "valor": "29.9",
+                            "qtd": "140989"
+                        },
+                        {
+                            "valor": "5.59",
+                            "qtd": "126943"
+                        },
+                        {
+                            "valor": "6.25",
+                            "qtd": "95534"
+                        },
+                        {
+                            "valor": "54.22",
+                            "qtd": "85325"
+                        },
+                        {
+                            "valor": "64.23",
+                            "qtd": "81540"
+                        },
+                        {
+                            "valor": "105.86",
+                            "qtd": "74643"
+                        },
+                        {
+                            "valor": "5.91",
+                            "qtd": "74342"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_FAT_CREDITO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "11433827"
+                        },
+                        {
+                            "valor": "4.32",
+                            "qtd": "253948"
+                        },
+                        {
+                            "valor": "4.31",
+                            "qtd": "215136"
+                        },
+                        {
+                            "valor": "4.34",
+                            "qtd": "196933"
+                        },
+                        {
+                            "valor": "4.28",
+                            "qtd": "145584"
+                        },
+                        {
+                            "valor": "12.92",
+                            "qtd": "139498"
+                        },
+                        {
+                            "valor": "2.47",
+                            "qtd": "138570"
+                        },
+                        {
+                            "valor": "8.66",
+                            "qtd": "134456"
+                        },
+                        {
+                            "valor": "4.35",
+                            "qtd": "130058"
+                        },
+                        {
+                            "valor": "49.09",
+                            "qtd": "124480"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_FAT_AJUSTE`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "31456117"
+                        },
+                        {
+                            "valor": "0.01",
+                            "qtd": "6281"
+                        },
+                        {
+                            "valor": "0.03",
+                            "qtd": "3595"
+                        },
+                        {
+                            "valor": "0.04",
+                            "qtd": "3466"
+                        },
+                        {
+                            "valor": "0.02",
+                            "qtd": "3389"
+                        },
+                        {
+                            "valor": "0.05",
+                            "qtd": "2610"
+                        },
+                        {
+                            "valor": "0.08",
+                            "qtd": "2455"
+                        },
+                        {
+                            "valor": "0.06",
+                            "qtd": "2132"
+                        },
+                        {
+                            "valor": "12.9",
+                            "qtd": "2006"
+                        },
+                        {
+                            "valor": "4.99",
+                            "qtd": "1837"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_FAT_BRUTO_BC`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "34.8",
+                            "qtd": "663297"
+                        },
+                        {
+                            "valor": "54.9",
+                            "qtd": "446296"
+                        },
+                        {
+                            "valor": "54.8",
+                            "qtd": "431789"
+                        },
+                        {
+                            "valor": "29.8",
+                            "qtd": "375735"
+                        },
+                        {
+                            "valor": "29.9",
+                            "qtd": "333255"
+                        },
+                        {
+                            "valor": "49.9",
+                            "qtd": "280431"
+                        },
+                        {
+                            "valor": "34.9",
+                            "qtd": "278405"
+                        },
+                        {
+                            "valor": "49.8",
+                            "qtd": "252489"
+                        },
+                        {
+                            "valor": "3.12",
+                            "qtd": "217214"
+                        },
+                        {
+                            "valor": "64.9",
+                            "qtd": "209822"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_FAT_PAGAMENTO_BRUTO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "30830578"
+                        },
+                        {
+                            "valor": "0.01",
+                            "qtd": "17790"
+                        },
+                        {
+                            "valor": "20",
+                            "qtd": "8350"
+                        },
+                        {
+                            "valor": "0.03",
+                            "qtd": "7614"
+                        },
+                        {
+                            "valor": "0.04",
+                            "qtd": "7495"
+                        },
+                        {
+                            "valor": "0.02",
+                            "qtd": "6640"
+                        },
+                        {
+                            "valor": "0.05",
+                            "qtd": "6243"
+                        },
+                        {
+                            "valor": "0.08",
+                            "qtd": "5863"
+                        },
+                        {
+                            "valor": "30",
+                            "qtd": "5601"
+                        },
+                        {
+                            "valor": "0.07",
+                            "qtd": "4997"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_FAT_ABERTO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "34.8",
+                            "qtd": "661687"
+                        },
+                        {
+                            "valor": "54.9",
+                            "qtd": "434382"
+                        },
+                        {
+                            "valor": "54.8",
+                            "qtd": "426999"
+                        },
+                        {
+                            "valor": "29.8",
+                            "qtd": "369322"
+                        },
+                        {
+                            "valor": "29.9",
+                            "qtd": "323764"
+                        },
+                        {
+                            "valor": "49.9",
+                            "qtd": "273328"
+                        },
+                        {
+                            "valor": "34.9",
+                            "qtd": "272972"
+                        },
+                        {
+                            "valor": "49.8",
+                            "qtd": "249415"
+                        },
+                        {
+                            "valor": "3.12",
+                            "qtd": "217226"
+                        },
+                        {
+                            "valor": "64.9",
+                            "qtd": "203130"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_FAT_ABERTO_LIQ`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "1617486"
+                        },
+                        {
+                            "valor": "54.9",
+                            "qtd": "880527"
+                        },
+                        {
+                            "valor": "34.8",
+                            "qtd": "661414"
+                        },
+                        {
+                            "valor": "29.9",
+                            "qtd": "621158"
+                        },
+                        {
+                            "valor": "34.9",
+                            "qtd": "590109"
+                        },
+                        {
+                            "valor": "64.9",
+                            "qtd": "451093"
+                        },
+                        {
+                            "valor": "54.8",
+                            "qtd": "428680"
+                        },
+                        {
+                            "valor": "49.9",
+                            "qtd": "376634"
+                        },
+                        {
+                            "valor": "29.8",
+                            "qtd": "371238"
+                        },
+                        {
+                            "valor": "39.89",
+                            "qtd": "318124"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_MULTA_JUROS`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "19369833"
+                        },
+                        {
+                            "valor": "0.13",
+                            "qtd": "193826"
+                        },
+                        {
+                            "valor": "0.12",
+                            "qtd": "164311"
+                        },
+                        {
+                            "valor": "0.14",
+                            "qtd": "149868"
+                        },
+                        {
+                            "valor": "0.11",
+                            "qtd": "135495"
+                        },
+                        {
+                            "valor": "0.09",
+                            "qtd": "134783"
+                        },
+                        {
+                            "valor": "0.1",
+                            "qtd": "130038"
+                        },
+                        {
+                            "valor": "0.08",
+                            "qtd": "122094"
+                        },
+                        {
+                            "valor": "0.04",
+                            "qtd": "108261"
+                        },
+                        {
+                            "valor": "0.15",
+                            "qtd": "104981"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_MULTA_CANCELAMENTO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "31115884"
+                        },
+                        {
+                            "valor": "110.47",
+                            "qtd": "2015"
+                        },
+                        {
+                            "valor": "108.16",
+                            "qtd": "1900"
+                        },
+                        {
+                            "valor": "105.86",
+                            "qtd": "1756"
+                        },
+                        {
+                            "valor": "0.66",
+                            "qtd": "1749"
+                        },
+                        {
+                            "valor": "93.37",
+                            "qtd": "1574"
+                        },
+                        {
+                            "valor": "72.33",
+                            "qtd": "1558"
+                        },
+                        {
+                            "valor": "107.78",
+                            "qtd": "1556"
+                        },
+                        {
+                            "valor": "92.38",
+                            "qtd": "1508"
+                        },
+                        {
+                            "valor": "108.93",
+                            "qtd": "1508"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_PARC_APARELHO_LIQ`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "31600434"
+                        },
+                        {
+                            "valor": "134.37",
+                            "qtd": "252"
+                        },
+                        {
+                            "valor": "127.97",
+                            "qtd": "224"
+                        },
+                        {
+                            "valor": "148.58",
+                            "qtd": "224"
+                        },
+                        {
+                            "valor": "181.58",
+                            "qtd": "210"
+                        },
+                        {
+                            "valor": "2201.93",
+                            "qtd": "196"
+                        },
+                        {
+                            "valor": "20046.8",
+                            "qtd": "180"
+                        },
+                        {
+                            "valor": "605.75",
+                            "qtd": "165"
+                        },
+                        {
+                            "valor": "126.56",
+                            "qtd": "164"
+                        },
+                        {
+                            "valor": "207.41",
+                            "qtd": "161"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_FAT_LIQ_JM_MC`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "1616999"
+                        },
+                        {
+                            "valor": "54.9",
+                            "qtd": "904411"
+                        },
+                        {
+                            "valor": "34.8",
+                            "qtd": "664101"
+                        },
+                        {
+                            "valor": "29.9",
+                            "qtd": "639614"
+                        },
+                        {
+                            "valor": "34.9",
+                            "qtd": "601776"
+                        },
+                        {
+                            "valor": "64.9",
+                            "qtd": "465884"
+                        },
+                        {
+                            "valor": "54.8",
+                            "qtd": "432747"
+                        },
+                        {
+                            "valor": "49.9",
+                            "qtd": "386686"
+                        },
+                        {
+                            "valor": "29.8",
+                            "qtd": "377164"
+                        },
+                        {
+                            "valor": "39.89",
+                            "qtd": "325328"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_ATIVACAO_CONTA_CLI`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "18OCT2021:00:00:00",
+                            "qtd": "150548"
+                        },
+                        {
+                            "valor": "18JUL2021:00:00:00",
+                            "qtd": "120996"
+                        },
+                        {
+                            "valor": "02OCT2024:00:00:00",
+                            "qtd": "107281"
+                        },
+                        {
+                            "valor": "14OCT2024:00:00:00",
+                            "qtd": "99256"
+                        },
+                        {
+                            "valor": "01OCT2024:00:00:00",
+                            "qtd": "99243"
+                        },
+                        {
+                            "valor": "30OCT2024:00:00:00",
+                            "qtd": "98926"
+                        },
+                        {
+                            "valor": "01NOV2024:00:00:00",
+                            "qtd": "98507"
+                        },
+                        {
+                            "valor": "15OCT2024:00:00:00",
+                            "qtd": "97506"
+                        },
+                        {
+                            "valor": "22JUL2021:00:00:00",
+                            "qtd": "96110"
+                        },
+                        {
+                            "valor": "16OCT2024:00:00:00",
+                            "qtd": "94208"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_CRIACAO_DW`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "04NOV2024:15:46:22",
+                            "qtd": "20417"
+                        },
+                        {
+                            "valor": "04JAN2025:13:53:40",
+                            "qtd": "19978"
+                        },
+                        {
+                            "valor": "04MAR2025:01:38:46",
+                            "qtd": "19544"
+                        },
+                        {
+                            "valor": "04JAN2025:13:54:10",
+                            "qtd": "19142"
+                        },
+                        {
+                            "valor": "04JAN2025:13:53:41",
+                            "qtd": "18916"
+                        },
+                        {
+                            "valor": "04MAR2025:01:38:39",
+                            "qtd": "18707"
+                        },
+                        {
+                            "valor": "04MAR2025:01:38:43",
+                            "qtd": "18318"
+                        },
+                        {
+                            "valor": "04JAN2025:13:54:20",
+                            "qtd": "18087"
+                        },
+                        {
+                            "valor": "04JAN2025:13:53:24",
+                            "qtd": "17828"
+                        },
+                        {
+                            "valor": "04MAR2025:01:38:41",
+                            "qtd": "17672"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📏 Comprimento de Strings: `raw/atraso`",
+            "content": []
+        },
+        {
+            "header": "Coluna: `NUM_CPF`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "11",
+                            "avg_len": "11",
+                            "max_len": "11"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_REFERENCIA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "18",
+                            "avg_len": "18",
+                            "max_len": "18"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `NUM_FATURA_HASH`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "64",
+                            "avg_len": "64",
+                            "max_len": "64"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `NUM_ENT_SEQ_FATURA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "1.71",
+                            "max_len": "4"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `CONTRATO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "8",
+                            "avg_len": "9",
+                            "max_len": "9"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_UN_NEGOCIO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "1.05",
+                            "max_len": "2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_HIS_PONTO_VENDA_COMTA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "2",
+                            "avg_len": "6.87",
+                            "max_len": "8"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_NUM_CLIENTE`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "9",
+                            "avg_len": "9.94",
+                            "max_len": "10"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_AREA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "1.78",
+                            "max_len": "2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_CICLO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "2",
+                            "max_len": "3"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_TIPO_CLIENTE_CONTA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "1.5",
+                            "max_len": "3"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_OFERTA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "2",
+                            "avg_len": "5.53",
+                            "max_len": "6"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_FAIXA_AGING_FATURA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "3",
+                            "avg_len": "3",
+                            "max_len": "3"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_FAIXA_AGING_DIVIDA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "3",
+                            "avg_len": "3",
+                            "max_len": "3"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_FAIXA_TEMPO_BASE`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "2",
+                            "avg_len": "2.98",
+                            "max_len": "3"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_FAIXA_AGING_PROX_FECH`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "2",
+                            "avg_len": "2.98",
+                            "max_len": "3"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DW_TIPO_FATURAMENTO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "5",
+                            "avg_len": "5",
+                            "max_len": "5"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `COD_PLATAFORMA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "2",
+                            "avg_len": "4.78",
+                            "max_len": "5"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_CRIACAO_REGISTRO_TRANS`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "18",
+                            "avg_len": "18",
+                            "max_len": "18"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_ALTERACAO_REGISTRO_TRANS`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "18",
+                            "avg_len": "18",
+                            "max_len": "18"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_CANCELAMENTO_FAT`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "NULL",
+                            "avg_len": "NULL",
+                            "max_len": "NULL"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_ORIGINAL_VCTO_FAT`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "18",
+                            "avg_len": "18",
+                            "max_len": "18"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_ALTERACAO_VCTO_FAT`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "18",
+                            "avg_len": "18",
+                            "max_len": "18"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_CRIACAO_FAT`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "18",
+                            "avg_len": "18",
+                            "max_len": "18"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_VENCIMENTO_FAT`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "18",
+                            "avg_len": "18",
+                            "max_len": "18"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_STATUS_FAT`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "18",
+                            "avg_len": "18",
+                            "max_len": "18"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_MIN_VENCIMENTO_FAT`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "18",
+                            "avg_len": "18",
+                            "max_len": "18"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `NUM_BILL_SEQ_FAT`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "1.6",
+                            "max_len": "3"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `NUM_SEQ_ACORDO_FAT`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "1.98",
+                            "max_len": "2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `IND_ISENCAO_COB_FAT`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "1.89",
+                            "max_len": "2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `IND_WO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "1.02",
+                            "max_len": "2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `IND_PDD`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "1.02",
+                            "max_len": "2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `IND_PCCR`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "1.02",
+                            "max_len": "2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `IND_ACA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "1",
+                            "max_len": "1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `IND_PRIMEIRA_FAT`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "1",
+                            "max_len": "1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `IND_FRAUDE`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "1",
+                            "max_len": "1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_FAT_LIQUIDO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "4",
+                            "avg_len": "4.87",
+                            "max_len": "10"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_FAT_BRUTO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "4",
+                            "avg_len": "4.95",
+                            "max_len": "10"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_FAT_CREDITO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "4",
+                            "avg_len": "4.34",
+                            "max_len": "9"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_FAT_AJUSTE`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "4",
+                            "avg_len": "4",
+                            "max_len": "9"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_FAT_BRUTO_BC`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "4",
+                            "avg_len": "4.88",
+                            "max_len": "10"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_FAT_PAGAMENTO_BRUTO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "4",
+                            "avg_len": "4.02",
+                            "max_len": "9"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_FAT_ABERTO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "4",
+                            "avg_len": "4.88",
+                            "max_len": "10"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_FAT_ABERTO_LIQ`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "4",
+                            "avg_len": "4.86",
+                            "max_len": "10"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_MULTA_JUROS`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "4",
+                            "avg_len": "4",
+                            "max_len": "8"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_MULTA_CANCELAMENTO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "4",
+                            "avg_len": "4.02",
+                            "max_len": "9"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_PARC_APARELHO_LIQ`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "4",
+                            "avg_len": "4",
+                            "max_len": "10"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `VAL_FAT_LIQ_JM_MC`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "4",
+                            "avg_len": "4.86",
+                            "max_len": "10"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_ATIVACAO_CONTA_CLI`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "18",
+                            "avg_len": "18",
+                            "max_len": "18"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `DAT_CRIACAO_DW`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "18",
+                            "avg_len": "18",
+                            "max_len": "18"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "title": "Relatório de Profiling: `raw/atraso`"
+}

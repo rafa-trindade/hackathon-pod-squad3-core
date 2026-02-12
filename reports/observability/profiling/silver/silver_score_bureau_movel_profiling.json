@@ -1,0 +1,621 @@
+{
+    "report_type": "Profiling",
+    "source_file": "silver_score_bureau_movel_profiling.md",
+    "sections": [
+        {
+            "header": "🔑 Garantia de Unicidade: `silver/score_bureau_movel`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "CHAVE_TECNICA",
+                            "distintos": "3795310",
+                            "nulos": "0",
+                            "duplicados": "0",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "0.0%",
+                            "cardinalidade": "MÁXIMA"
+                        }
+                    ]
+                }
+            ],
+            "metadata": {
+                "Chave Técnica": "num_cpf, safra, prod",
+                "Tipo": "COMPOSTA"
+            }
+        },
+        {
+            "header": "🚩 Diagnóstico e Observações Técnicas",
+            "content": [
+                {
+                    "type": "text",
+                    "data": "✅ Sucesso: Unicidade Garantida. O grão da tabela está preservado.\n\n\n---"
+                }
+            ]
+        },
+        {
+            "header": "📊 Schema e Estatísticas: `silver/score_bureau_movel`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "column_name": "num_cpf",
+                            "column_type": "VARCHAR",
+                            "distintos": "3034069",
+                            "nulos": "0",
+                            "duplicados": "761241",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "20.06%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "column_name": "safra",
+                            "column_type": "DATE",
+                            "distintos": "6",
+                            "nulos": "0",
+                            "duplicados": "3795304",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "prod",
+                            "column_type": "VARCHAR",
+                            "distintos": "1",
+                            "nulos": "0",
+                            "duplicados": "3795309",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "flag_instalacao",
+                            "column_type": "BOOLEAN",
+                            "distintos": "2",
+                            "nulos": "0",
+                            "duplicados": "3795308",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "flag_mig2",
+                            "column_type": "VARCHAR",
+                            "distintos": "3",
+                            "nulos": "1161410",
+                            "duplicados": "3795307",
+                            "pct_nulos": "30.6%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "fpd",
+                            "column_type": "BOOLEAN",
+                            "distintos": "2",
+                            "nulos": "1161410",
+                            "duplicados": "3795308",
+                            "pct_nulos": "30.6%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "score_01",
+                            "column_type": "INTEGER",
+                            "distintos": "355",
+                            "nulos": "54035",
+                            "duplicados": "3794955",
+                            "pct_nulos": "1.42%",
+                            "pct_duplicados": "99.99%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "score_02",
+                            "column_type": "INTEGER",
+                            "distintos": "598",
+                            "nulos": "1876",
+                            "duplicados": "3794712",
+                            "pct_nulos": "0.05%",
+                            "pct_duplicados": "99.98%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "ingestion_ts",
+                            "column_type": "TIMESTAMP WITH TIME ZONE",
+                            "distintos": "1",
+                            "nulos": "0",
+                            "duplicados": "3795309",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "run_id",
+                            "column_type": "BIGINT",
+                            "distintos": "1",
+                            "nulos": "0",
+                            "duplicados": "3795309",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "ano_mes",
+                            "column_type": "BIGINT",
+                            "distintos": "6",
+                            "nulos": "0",
+                            "duplicados": "3795304",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📦 Volumetria: `silver/score_bureau_movel`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "diretorio": "ano_mes=202410",
+                            "qtd_arquivos": "1",
+                            "registros": "636.951",
+                            "colunas": "11",
+                            "tamanho_comprimido_mib": "6.48",
+                            "tamanho_descomprimido_mib": "11.02"
+                        },
+                        {
+                            "diretorio": "ano_mes=202411",
+                            "qtd_arquivos": "1",
+                            "registros": "647.199",
+                            "colunas": "11",
+                            "tamanho_comprimido_mib": "6.59",
+                            "tamanho_descomprimido_mib": "11.2"
+                        },
+                        {
+                            "diretorio": "ano_mes=202412",
+                            "qtd_arquivos": "1",
+                            "registros": "626.744",
+                            "colunas": "11",
+                            "tamanho_comprimido_mib": "6.39",
+                            "tamanho_descomprimido_mib": "10.85"
+                        },
+                        {
+                            "diretorio": "ano_mes=202501",
+                            "qtd_arquivos": "1",
+                            "registros": "648.554",
+                            "colunas": "11",
+                            "tamanho_comprimido_mib": "6.6",
+                            "tamanho_descomprimido_mib": "11.23"
+                        },
+                        {
+                            "diretorio": "ano_mes=202502",
+                            "qtd_arquivos": "1",
+                            "registros": "602.344",
+                            "colunas": "11",
+                            "tamanho_comprimido_mib": "6.15",
+                            "tamanho_descomprimido_mib": "10.42"
+                        },
+                        {
+                            "diretorio": "ano_mes=202503",
+                            "qtd_arquivos": "1",
+                            "registros": "633.518",
+                            "colunas": "11",
+                            "tamanho_comprimido_mib": "6.44",
+                            "tamanho_descomprimido_mib": "10.95"
+                        },
+                        {
+                            "diretorio": "TOTAL",
+                            "qtd_arquivos": "6",
+                            "registros": "3.795.310",
+                            "colunas": "11",
+                            "tamanho_comprimido_mib": "38.64",
+                            "tamanho_descomprimido_mib": "65.66"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📅 Range de Datas: `silver/score_bureau_movel`",
+            "content": []
+        },
+        {
+            "header": "Coluna: `safra`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "2024-10-01T00:00:00.000000",
+                            "max": "2025-03-01T00:00:00.000000"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `ingestion_ts`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "2026-02-12 00:56:32.597252-03:00",
+                            "max": "2026-02-12 00:56:32.597252-03:00"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔢 Range de Valores Numéricos: `silver/score_bureau_movel`",
+            "content": []
+        },
+        {
+            "header": "Coluna: `score_01`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "0",
+                            "max": "778",
+                            "media": "578.99"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `score_02`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "1",
+                            "max": "926",
+                            "media": "628.51"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔟 Distribuição de Valores (Top 10): `silver/score_bureau_movel`",
+            "content": []
+        },
+        {
+            "header": "Coluna: `num_cpf`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "ZZZZZZZX7T9",
+                            "qtd": "6"
+                        },
+                        {
+                            "valor": "U8Z9ZZ8N8XZ",
+                            "qtd": "6"
+                        },
+                        {
+                            "valor": "888W78UZYYT",
+                            "qtd": "6"
+                        },
+                        {
+                            "valor": "7X7NZ79YWU9",
+                            "qtd": "6"
+                        },
+                        {
+                            "valor": "Y77ZYUXU8NW",
+                            "qtd": "6"
+                        },
+                        {
+                            "valor": "ZXNWZNXTU8Z",
+                            "qtd": "5"
+                        },
+                        {
+                            "valor": "WU9UZZX88ZN",
+                            "qtd": "5"
+                        },
+                        {
+                            "valor": "9TUZT8Y8XU9",
+                            "qtd": "5"
+                        },
+                        {
+                            "valor": "UYW78WZU897",
+                            "qtd": "5"
+                        },
+                        {
+                            "valor": "ZXX8UXXTUWT",
+                            "qtd": "5"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `safra`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "2025-01-01",
+                            "qtd": "648554"
+                        },
+                        {
+                            "valor": "2024-11-01",
+                            "qtd": "647199"
+                        },
+                        {
+                            "valor": "2024-10-01",
+                            "qtd": "636951"
+                        },
+                        {
+                            "valor": "2025-03-01",
+                            "qtd": "633518"
+                        },
+                        {
+                            "valor": "2024-12-01",
+                            "qtd": "626744"
+                        },
+                        {
+                            "valor": "2025-02-01",
+                            "qtd": "602344"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `prod`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "CMV",
+                            "qtd": "3795310"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `flag_instalacao`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "true",
+                            "qtd": "2633900"
+                        },
+                        {
+                            "valor": "false",
+                            "qtd": "1161410"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `flag_mig2`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "Aquisição",
+                            "qtd": "1338888"
+                        },
+                        {
+                            "valor": "PRE",
+                            "qtd": "1290526"
+                        },
+                        {
+                            "valor": "NULL",
+                            "qtd": "1161410"
+                        },
+                        {
+                            "valor": "FLEX",
+                            "qtd": "4486"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `fpd`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "false",
+                            "qtd": "2074671"
+                        },
+                        {
+                            "valor": "NULL",
+                            "qtd": "1161410"
+                        },
+                        {
+                            "valor": "true",
+                            "qtd": "559229"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `score_01`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "589",
+                            "qtd": "64373"
+                        },
+                        {
+                            "valor": "601",
+                            "qtd": "63565"
+                        },
+                        {
+                            "valor": "NULL",
+                            "qtd": "54035"
+                        },
+                        {
+                            "valor": "571",
+                            "qtd": "53351"
+                        },
+                        {
+                            "valor": "560",
+                            "qtd": "53313"
+                        },
+                        {
+                            "valor": "582",
+                            "qtd": "48768"
+                        },
+                        {
+                            "valor": "593",
+                            "qtd": "48286"
+                        },
+                        {
+                            "valor": "574",
+                            "qtd": "46425"
+                        },
+                        {
+                            "valor": "531",
+                            "qtd": "45087"
+                        },
+                        {
+                            "valor": "599",
+                            "qtd": "43953"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `score_02`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "1",
+                            "qtd": "18855"
+                        },
+                        {
+                            "valor": "574",
+                            "qtd": "12743"
+                        },
+                        {
+                            "valor": "582",
+                            "qtd": "12682"
+                        },
+                        {
+                            "valor": "561",
+                            "qtd": "12680"
+                        },
+                        {
+                            "valor": "577",
+                            "qtd": "12673"
+                        },
+                        {
+                            "valor": "570",
+                            "qtd": "12653"
+                        },
+                        {
+                            "valor": "581",
+                            "qtd": "12627"
+                        },
+                        {
+                            "valor": "576",
+                            "qtd": "12625"
+                        },
+                        {
+                            "valor": "567",
+                            "qtd": "12620"
+                        },
+                        {
+                            "valor": "579",
+                            "qtd": "12613"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `ingestion_ts`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "2026-02-12 00:56:32.597252-03",
+                            "qtd": "3795310"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `run_id`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "20260212",
+                            "qtd": "3795310"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `ano_mes`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "202501",
+                            "qtd": "648554"
+                        },
+                        {
+                            "valor": "202411",
+                            "qtd": "647199"
+                        },
+                        {
+                            "valor": "202410",
+                            "qtd": "636951"
+                        },
+                        {
+                            "valor": "202503",
+                            "qtd": "633518"
+                        },
+                        {
+                            "valor": "202412",
+                            "qtd": "626744"
+                        },
+                        {
+                            "valor": "202502",
+                            "qtd": "602344"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "title": "Relatório de Profiling: `silver/score_bureau_movel` - `20260212`"
+}

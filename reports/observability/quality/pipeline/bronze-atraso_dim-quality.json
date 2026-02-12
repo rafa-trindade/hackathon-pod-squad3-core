@@ -1,0 +1,28 @@
+{
+    "report_type": "Pipeline Quality",
+    "tests": [
+        {
+            "test": "Volumetria Dimensão",
+            "status": "INFO",
+            "obs": "72 registros"
+        },
+        {
+            "test": "Chave Técnica",
+            "status": "INFO",
+            "obs": "dw_tipo_faturamento"
+        },
+        {
+            "test": "Match de Tipagem Chave Técnica",
+            "status": "PASS",
+            "obs": "Fato: VARCHAR - Dim: VARCHAR"
+        },
+        {
+            "test": "Integridade de Chave (Fato)",
+            "status": "PASS",
+            "obs": "0 registros órfãos"
+        }
+    ],
+    "title": "",
+    "run_id": "",
+    "final_result": "SUCCESS"
+}

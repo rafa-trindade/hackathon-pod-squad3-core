@@ -1,0 +1,2181 @@
+{
+    "report_type": "Profiling",
+    "source_file": "bronze_recarga_dim_multi_profiling.md",
+    "sections": [
+        {
+            "header": "📄 Arquivo: `canal_aquisicao_credito.parquet`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `canal_aquisicao_credito.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "canal_aquisicao_credito.parquet",
+                            "Registros": "5.899",
+                            "Colunas": "3"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 20)  - `canal_aquisicao_credito.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "cod_canal_aquisicao": "14929",
+                            "dsc_canal_aquisicao": "ss/aa ebv - golfe telecom",
+                            "cod_tipo_credito_aquisicao": "CV"
+                        },
+                        {
+                            "cod_canal_aquisicao": "14930",
+                            "dsc_canal_aquisicao": "ss/aa ebv - marajo comerci",
+                            "cod_tipo_credito_aquisicao": "CV"
+                        },
+                        {
+                            "cod_canal_aquisicao": "14931",
+                            "dsc_canal_aquisicao": "ss/aa concel",
+                            "cod_tipo_credito_aquisicao": "CV"
+                        },
+                        {
+                            "cod_canal_aquisicao": "14932",
+                            "dsc_canal_aquisicao": "ss/aa virtual celulares",
+                            "cod_tipo_credito_aquisicao": "CV"
+                        },
+                        {
+                            "cod_canal_aquisicao": "14933",
+                            "dsc_canal_aquisicao": "ss/aa portocel",
+                            "cod_tipo_credito_aquisicao": "CV"
+                        },
+                        {
+                            "cod_canal_aquisicao": "14934",
+                            "dsc_canal_aquisicao": "ss/aa mv celulares",
+                            "cod_tipo_credito_aquisicao": "CV"
+                        },
+                        {
+                            "cod_canal_aquisicao": "14935",
+                            "dsc_canal_aquisicao": "ss/aa falecom",
+                            "cod_tipo_credito_aquisicao": "CV"
+                        },
+                        {
+                            "cod_canal_aquisicao": "14936",
+                            "dsc_canal_aquisicao": "ss/aa cell work",
+                            "cod_tipo_credito_aquisicao": "CV"
+                        },
+                        {
+                            "cod_canal_aquisicao": "14937",
+                            "dsc_canal_aquisicao": "ss/aa ccv informatica",
+                            "cod_tipo_credito_aquisicao": "CV"
+                        },
+                        {
+                            "cod_canal_aquisicao": "14938",
+                            "dsc_canal_aquisicao": "ss/aa eletro aurora",
+                            "cod_tipo_credito_aquisicao": "CV"
+                        },
+                        {
+                            "cod_canal_aquisicao": "14939",
+                            "dsc_canal_aquisicao": "ss/aa ole celulares",
+                            "cod_tipo_credito_aquisicao": "CV"
+                        },
+                        {
+                            "cod_canal_aquisicao": "14940",
+                            "dsc_canal_aquisicao": "ss/aa radio luz",
+                            "cod_tipo_credito_aquisicao": "CV"
+                        },
+                        {
+                            "cod_canal_aquisicao": "14941",
+                            "dsc_canal_aquisicao": "ss/aa eskinao",
+                            "cod_tipo_credito_aquisicao": "CV"
+                        },
+                        {
+                            "cod_canal_aquisicao": "14942",
+                            "dsc_canal_aquisicao": "ss/aa radio luz",
+                            "cod_tipo_credito_aquisicao": "CV"
+                        },
+                        {
+                            "cod_canal_aquisicao": "14943",
+                            "dsc_canal_aquisicao": "ss/aa radio luz",
+                            "cod_tipo_credito_aquisicao": "CV"
+                        },
+                        {
+                            "cod_canal_aquisicao": "14944",
+                            "dsc_canal_aquisicao": "ss/aa radio luz",
+                            "cod_tipo_credito_aquisicao": "CV"
+                        },
+                        {
+                            "cod_canal_aquisicao": "14945",
+                            "dsc_canal_aquisicao": "ss/aa cpm celulares",
+                            "cod_tipo_credito_aquisicao": "CV"
+                        },
+                        {
+                            "cod_canal_aquisicao": "14946",
+                            "dsc_canal_aquisicao": "ss/aa lusa celulares",
+                            "cod_tipo_credito_aquisicao": "CV"
+                        },
+                        {
+                            "cod_canal_aquisicao": "14947",
+                            "dsc_canal_aquisicao": "ss/aa comercial bernardi",
+                            "cod_tipo_credito_aquisicao": "CV"
+                        },
+                        {
+                            "cod_canal_aquisicao": "14948",
+                            "dsc_canal_aquisicao": "ss/aa clarocel",
+                            "cod_tipo_credito_aquisicao": "CV"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `canal_aquisicao_credito.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "cod_canal_aquisicao",
+                            "tipo": "VARCHAR",
+                            "distintos": "5899",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "dsc_canal_aquisicao",
+                            "tipo": "VARCHAR",
+                            "distintos": "4232",
+                            "nulos": "0",
+                            "pct_distintos": "71.74%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "cod_tipo_credito_aquisicao",
+                            "tipo": "VARCHAR",
+                            "distintos": "3",
+                            "nulos": "294",
+                            "pct_distintos": "0.05%",
+                            "pct_nulos": "4.98%",
+                            "cardinalidade": "BAIXA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📄 Arquivo: `forma_pagamento.parquet`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `forma_pagamento.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "forma_pagamento.parquet",
+                            "Registros": "9",
+                            "Colunas": "3"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 20)  - `forma_pagamento.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "dw_forma_pagamento": "-1",
+                            "dsc_forma_pagamento": "não se aplica",
+                            "desc_cod_forma_pagamento": "-1"
+                        },
+                        {
+                            "dw_forma_pagamento": "-2",
+                            "dsc_forma_pagamento": "não determinado",
+                            "desc_cod_forma_pagamento": "-2"
+                        },
+                        {
+                            "dw_forma_pagamento": "-3",
+                            "dsc_forma_pagamento": "não informado",
+                            "desc_cod_forma_pagamento": "-3"
+                        },
+                        {
+                            "dw_forma_pagamento": "11",
+                            "dsc_forma_pagamento": "credito de prepago",
+                            "desc_cod_forma_pagamento": "CP"
+                        },
+                        {
+                            "dw_forma_pagamento": "12",
+                            "dsc_forma_pagamento": "debito direto",
+                            "desc_cod_forma_pagamento": "DD"
+                        },
+                        {
+                            "dw_forma_pagamento": "13",
+                            "dsc_forma_pagamento": "pagamento manual",
+                            "desc_cod_forma_pagamento": "MP"
+                        },
+                        {
+                            "dw_forma_pagamento": "14",
+                            "dsc_forma_pagamento": "arrecadacao bancaria",
+                            "desc_cod_forma_pagamento": "PB"
+                        },
+                        {
+                            "dw_forma_pagamento": "10",
+                            "dsc_forma_pagamento": "pagamento online",
+                            "desc_cod_forma_pagamento": "CA"
+                        },
+                        {
+                            "dw_forma_pagamento": "15",
+                            "dsc_forma_pagamento": "acordo de pagamento",
+                            "desc_cod_forma_pagamento": "PA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `forma_pagamento.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "dw_forma_pagamento",
+                            "tipo": "VARCHAR",
+                            "distintos": "9",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "dsc_forma_pagamento",
+                            "tipo": "VARCHAR",
+                            "distintos": "9",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "desc_cod_forma_pagamento",
+                            "tipo": "VARCHAR",
+                            "distintos": "9",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📄 Arquivo: `instituicao.parquet`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `instituicao.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "instituicao.parquet",
+                            "Registros": "550",
+                            "Colunas": "5"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 20)  - `instituicao.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "dw_instituicao": "13926",
+                            "cod_instituicao": "416",
+                            "dsc_instituicao": "banco inter",
+                            "cod_tipo_instituicao": "1",
+                            "dsc_tipo_instituicao": "banco"
+                        },
+                        {
+                            "dw_instituicao": "13927",
+                            "cod_instituicao": "490",
+                            "dsc_instituicao": "mwallet/bradesco",
+                            "cod_tipo_instituicao": "1",
+                            "dsc_tipo_instituicao": "banco"
+                        },
+                        {
+                            "dw_instituicao": "13928",
+                            "cod_instituicao": "514",
+                            "dsc_instituicao": "santander/c.bancario",
+                            "cod_tipo_instituicao": "1",
+                            "dsc_tipo_instituicao": "banco"
+                        },
+                        {
+                            "dw_instituicao": "13929",
+                            "cod_instituicao": "24",
+                            "dsc_instituicao": "cef/c.bancario",
+                            "cod_tipo_instituicao": "1",
+                            "dsc_tipo_instituicao": "banco"
+                        },
+                        {
+                            "dw_instituicao": "13930",
+                            "cod_instituicao": "69",
+                            "dsc_instituicao": "lemon bank",
+                            "cod_tipo_instituicao": "1",
+                            "dsc_tipo_instituicao": "banco"
+                        },
+                        {
+                            "dw_instituicao": "13931",
+                            "cod_instituicao": "49",
+                            "dsc_instituicao": "tribanco",
+                            "cod_tipo_instituicao": "1",
+                            "dsc_tipo_instituicao": "banco"
+                        },
+                        {
+                            "dw_instituicao": "13932",
+                            "cod_instituicao": "38",
+                            "dsc_instituicao": "santander-banespa",
+                            "cod_tipo_instituicao": "1",
+                            "dsc_tipo_instituicao": "banco"
+                        },
+                        {
+                            "dw_instituicao": "13933",
+                            "cod_instituicao": "33",
+                            "dsc_instituicao": "banrisul",
+                            "cod_tipo_instituicao": "1",
+                            "dsc_tipo_instituicao": "banco"
+                        },
+                        {
+                            "dw_instituicao": "13934",
+                            "cod_instituicao": "25",
+                            "dsc_instituicao": "cef/banco",
+                            "cod_tipo_instituicao": "1",
+                            "dsc_tipo_instituicao": "banco"
+                        },
+                        {
+                            "dw_instituicao": "13935",
+                            "cod_instituicao": "56",
+                            "dsc_instituicao": "hsbc",
+                            "cod_tipo_instituicao": "1",
+                            "dsc_tipo_instituicao": "banco"
+                        },
+                        {
+                            "dw_instituicao": "13936",
+                            "cod_instituicao": "14",
+                            "dsc_instituicao": "ic/citibank",
+                            "cod_tipo_instituicao": "1",
+                            "dsc_tipo_instituicao": "banco"
+                        },
+                        {
+                            "dw_instituicao": "13937",
+                            "cod_instituicao": "13",
+                            "dsc_instituicao": "nossa caixa",
+                            "cod_tipo_instituicao": "1",
+                            "dsc_tipo_instituicao": "banco"
+                        },
+                        {
+                            "dw_instituicao": "13938",
+                            "cod_instituicao": "8",
+                            "dsc_instituicao": "citibank",
+                            "cod_tipo_instituicao": "1",
+                            "dsc_tipo_instituicao": "banco"
+                        },
+                        {
+                            "dw_instituicao": "13939",
+                            "cod_instituicao": "7",
+                            "dsc_instituicao": "banco do brasil",
+                            "cod_tipo_instituicao": "1",
+                            "dsc_tipo_instituicao": "banco"
+                        },
+                        {
+                            "dw_instituicao": "13940",
+                            "cod_instituicao": "4",
+                            "dsc_instituicao": "abn amro bank",
+                            "cod_tipo_instituicao": "1",
+                            "dsc_tipo_instituicao": "banco"
+                        },
+                        {
+                            "dw_instituicao": "13941",
+                            "cod_instituicao": "3",
+                            "dsc_instituicao": "unibanco",
+                            "cod_tipo_instituicao": "1",
+                            "dsc_tipo_instituicao": "banco"
+                        },
+                        {
+                            "dw_instituicao": "13942",
+                            "cod_instituicao": "2",
+                            "dsc_instituicao": "itau",
+                            "cod_tipo_instituicao": "1",
+                            "dsc_tipo_instituicao": "banco"
+                        },
+                        {
+                            "dw_instituicao": "13943",
+                            "cod_instituicao": "1",
+                            "dsc_instituicao": "bradesco",
+                            "cod_tipo_instituicao": "1",
+                            "dsc_tipo_instituicao": "banco"
+                        },
+                        {
+                            "dw_instituicao": "13944",
+                            "cod_instituicao": "425",
+                            "dsc_instituicao": "m4u controle facil boleto 3",
+                            "cod_tipo_instituicao": "2",
+                            "dsc_tipo_instituicao": "venda direta"
+                        },
+                        {
+                            "dw_instituicao": "13945",
+                            "cod_instituicao": "424",
+                            "dsc_instituicao": "m4u controle facil boleto 2",
+                            "cod_tipo_instituicao": "2",
+                            "dsc_tipo_instituicao": "venda direta"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `instituicao.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "dw_instituicao",
+                            "tipo": "VARCHAR",
+                            "distintos": "550",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "cod_instituicao",
+                            "tipo": "VARCHAR",
+                            "distintos": "550",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "dsc_instituicao",
+                            "tipo": "VARCHAR",
+                            "distintos": "550",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "cod_tipo_instituicao",
+                            "tipo": "VARCHAR",
+                            "distintos": "11",
+                            "nulos": "0",
+                            "pct_distintos": "2.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "dsc_tipo_instituicao",
+                            "tipo": "VARCHAR",
+                            "distintos": "11",
+                            "nulos": "0",
+                            "pct_distintos": "2.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "MEDIA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📄 Arquivo: `plano_preco.parquet`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `plano_preco.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "plano_preco.parquet",
+                            "Registros": "293.743",
+                            "Colunas": "18"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 20)  - `plano_preco.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "dw_plano_tarifacao": "533477",
+                            "cod_plano_preco": "50029231",
+                            "dsc_plano_tarifacao": "licitac?o marinha do brasil",
+                            "cod_tipo_cliente": "-1",
+                            "dw_tipo_cliente": "-1",
+                            "dat_efetivacao": "NaT",
+                            "dsc_plano_preco_bi": "-3",
+                            "dsc_grupo_plano_bi": "-3",
+                            "dsc_tipo_plano_bi": "-3",
+                            "ind_amdocs_plat_pre": "a",
+                            "cod_tratamento_especial": "-1",
+                            "num_franquia_minutos_bi": "50029231",
+                            "num_franquia_reais_bi": "",
+                            "num_franquia_eventos_bi": "",
+                            "num_franquia_volume_bi": "",
+                            "cod_plano_componente": "",
+                            "dsc_plano_preco_unico_bi": "",
+                            "dsc_modalidade_plano": ""
+                        },
+                        {
+                            "dw_plano_tarifacao": "601796",
+                            "cod_plano_preco": "50029231",
+                            "dsc_plano_tarifacao": "licitação marinha do brasil",
+                            "cod_tipo_cliente": "-1",
+                            "dw_tipo_cliente": "-1",
+                            "dat_efetivacao": "NaT",
+                            "dsc_plano_preco_bi": "-3",
+                            "dsc_grupo_plano_bi": "-3",
+                            "dsc_tipo_plano_bi": "-3",
+                            "ind_amdocs_plat_pre": "a",
+                            "cod_tratamento_especial": "-1",
+                            "num_franquia_minutos_bi": "50029231",
+                            "num_franquia_reais_bi": "-3",
+                            "num_franquia_eventos_bi": "",
+                            "num_franquia_volume_bi": "",
+                            "cod_plano_componente": "",
+                            "dsc_plano_preco_unico_bi": "",
+                            "dsc_modalidade_plano": ""
+                        },
+                        {
+                            "dw_plano_tarifacao": "548887",
+                            "cod_plano_preco": "50029231",
+                            "dsc_plano_tarifacao": "licitac?o marinha do brasil",
+                            "cod_tipo_cliente": "-1",
+                            "dw_tipo_cliente": "-1",
+                            "dat_efetivacao": "NaT",
+                            "dsc_plano_preco_bi": "-3",
+                            "dsc_grupo_plano_bi": "-3",
+                            "dsc_tipo_plano_bi": "-3",
+                            "ind_amdocs_plat_pre": "a",
+                            "cod_tratamento_especial": "-1",
+                            "num_franquia_minutos_bi": "50029231",
+                            "num_franquia_reais_bi": "",
+                            "num_franquia_eventos_bi": "",
+                            "num_franquia_volume_bi": "",
+                            "cod_plano_componente": "",
+                            "dsc_plano_preco_unico_bi": "",
+                            "dsc_modalidade_plano": ""
+                        },
+                        {
+                            "dw_plano_tarifacao": "535237",
+                            "cod_plano_preco": "50029231",
+                            "dsc_plano_tarifacao": "licitac?o marinha do brasil",
+                            "cod_tipo_cliente": "-1",
+                            "dw_tipo_cliente": "-1",
+                            "dat_efetivacao": "NaT",
+                            "dsc_plano_preco_bi": "-3",
+                            "dsc_grupo_plano_bi": "-3",
+                            "dsc_tipo_plano_bi": "-3",
+                            "ind_amdocs_plat_pre": "a",
+                            "cod_tratamento_especial": "-1",
+                            "num_franquia_minutos_bi": "50029231",
+                            "num_franquia_reais_bi": "",
+                            "num_franquia_eventos_bi": "",
+                            "num_franquia_volume_bi": "",
+                            "cod_plano_componente": "",
+                            "dsc_plano_preco_unico_bi": "",
+                            "dsc_modalidade_plano": ""
+                        },
+                        {
+                            "dw_plano_tarifacao": "536107",
+                            "cod_plano_preco": "50029231",
+                            "dsc_plano_tarifacao": "licitac?o marinha do brasil",
+                            "cod_tipo_cliente": "-1",
+                            "dw_tipo_cliente": "-1",
+                            "dat_efetivacao": "NaT",
+                            "dsc_plano_preco_bi": "-3",
+                            "dsc_grupo_plano_bi": "-3",
+                            "dsc_tipo_plano_bi": "-3",
+                            "ind_amdocs_plat_pre": "a",
+                            "cod_tratamento_especial": "-1",
+                            "num_franquia_minutos_bi": "50029231",
+                            "num_franquia_reais_bi": "",
+                            "num_franquia_eventos_bi": "",
+                            "num_franquia_volume_bi": "",
+                            "cod_plano_componente": "",
+                            "dsc_plano_preco_unico_bi": "",
+                            "dsc_modalidade_plano": ""
+                        },
+                        {
+                            "dw_plano_tarifacao": "537347",
+                            "cod_plano_preco": "50029231",
+                            "dsc_plano_tarifacao": "licitac?o marinha do brasil",
+                            "cod_tipo_cliente": "-1",
+                            "dw_tipo_cliente": "-1",
+                            "dat_efetivacao": "NaT",
+                            "dsc_plano_preco_bi": "-3",
+                            "dsc_grupo_plano_bi": "-3",
+                            "dsc_tipo_plano_bi": "-3",
+                            "ind_amdocs_plat_pre": "a",
+                            "cod_tratamento_especial": "-1",
+                            "num_franquia_minutos_bi": "50029231",
+                            "num_franquia_reais_bi": "",
+                            "num_franquia_eventos_bi": "",
+                            "num_franquia_volume_bi": "",
+                            "cod_plano_componente": "",
+                            "dsc_plano_preco_unico_bi": "",
+                            "dsc_modalidade_plano": ""
+                        },
+                        {
+                            "dw_plano_tarifacao": "393144",
+                            "cod_plano_preco": "50029231",
+                            "dsc_plano_tarifacao": "licitac?o marinha do brasil",
+                            "cod_tipo_cliente": "-1",
+                            "dw_tipo_cliente": "-1",
+                            "dat_efetivacao": "NaT",
+                            "dsc_plano_preco_bi": "licitac?o",
+                            "dsc_grupo_plano_bi": "-3",
+                            "dsc_tipo_plano_bi": "-3",
+                            "ind_amdocs_plat_pre": "a",
+                            "cod_tratamento_especial": "-1",
+                            "num_franquia_minutos_bi": "50029231",
+                            "num_franquia_reais_bi": "outros",
+                            "num_franquia_eventos_bi": "",
+                            "num_franquia_volume_bi": "",
+                            "cod_plano_componente": "",
+                            "dsc_plano_preco_unico_bi": "",
+                            "dsc_modalidade_plano": ""
+                        },
+                        {
+                            "dw_plano_tarifacao": "554107",
+                            "cod_plano_preco": "50029231",
+                            "dsc_plano_tarifacao": "licitac?o marinha do brasil",
+                            "cod_tipo_cliente": "-1",
+                            "dw_tipo_cliente": "-1",
+                            "dat_efetivacao": "NaT",
+                            "dsc_plano_preco_bi": "-3",
+                            "dsc_grupo_plano_bi": "-3",
+                            "dsc_tipo_plano_bi": "-3",
+                            "ind_amdocs_plat_pre": "a",
+                            "cod_tratamento_especial": "-1",
+                            "num_franquia_minutos_bi": "50029231",
+                            "num_franquia_reais_bi": "",
+                            "num_franquia_eventos_bi": "",
+                            "num_franquia_volume_bi": "",
+                            "cod_plano_componente": "",
+                            "dsc_plano_preco_unico_bi": "",
+                            "dsc_modalidade_plano": ""
+                        },
+                        {
+                            "dw_plano_tarifacao": "538627",
+                            "cod_plano_preco": "50029231",
+                            "dsc_plano_tarifacao": "licitac?o marinha do brasil",
+                            "cod_tipo_cliente": "-1",
+                            "dw_tipo_cliente": "-1",
+                            "dat_efetivacao": "NaT",
+                            "dsc_plano_preco_bi": "-3",
+                            "dsc_grupo_plano_bi": "-3",
+                            "dsc_tipo_plano_bi": "-3",
+                            "ind_amdocs_plat_pre": "a",
+                            "cod_tratamento_especial": "-1",
+                            "num_franquia_minutos_bi": "50029231",
+                            "num_franquia_reais_bi": "",
+                            "num_franquia_eventos_bi": "",
+                            "num_franquia_volume_bi": "",
+                            "cod_plano_componente": "",
+                            "dsc_plano_preco_unico_bi": "",
+                            "dsc_modalidade_plano": ""
+                        },
+                        {
+                            "dw_plano_tarifacao": "547957",
+                            "cod_plano_preco": "50029231",
+                            "dsc_plano_tarifacao": "licitac?o marinha do brasil",
+                            "cod_tipo_cliente": "-1",
+                            "dw_tipo_cliente": "-1",
+                            "dat_efetivacao": "NaT",
+                            "dsc_plano_preco_bi": "-3",
+                            "dsc_grupo_plano_bi": "-3",
+                            "dsc_tipo_plano_bi": "-3",
+                            "ind_amdocs_plat_pre": "a",
+                            "cod_tratamento_especial": "-1",
+                            "num_franquia_minutos_bi": "50029231",
+                            "num_franquia_reais_bi": "",
+                            "num_franquia_eventos_bi": "",
+                            "num_franquia_volume_bi": "",
+                            "cod_plano_componente": "",
+                            "dsc_plano_preco_unico_bi": "",
+                            "dsc_modalidade_plano": ""
+                        },
+                        {
+                            "dw_plano_tarifacao": "545277",
+                            "cod_plano_preco": "50029231",
+                            "dsc_plano_tarifacao": "licitac?o marinha do brasil",
+                            "cod_tipo_cliente": "-1",
+                            "dw_tipo_cliente": "-1",
+                            "dat_efetivacao": "NaT",
+                            "dsc_plano_preco_bi": "-3",
+                            "dsc_grupo_plano_bi": "-3",
+                            "dsc_tipo_plano_bi": "-3",
+                            "ind_amdocs_plat_pre": "a",
+                            "cod_tratamento_especial": "-1",
+                            "num_franquia_minutos_bi": "50029231",
+                            "num_franquia_reais_bi": "",
+                            "num_franquia_eventos_bi": "",
+                            "num_franquia_volume_bi": "",
+                            "cod_plano_componente": "",
+                            "dsc_plano_preco_unico_bi": "",
+                            "dsc_modalidade_plano": ""
+                        },
+                        {
+                            "dw_plano_tarifacao": "539477",
+                            "cod_plano_preco": "50029231",
+                            "dsc_plano_tarifacao": "licitac?o marinha do brasil",
+                            "cod_tipo_cliente": "-1",
+                            "dw_tipo_cliente": "-1",
+                            "dat_efetivacao": "NaT",
+                            "dsc_plano_preco_bi": "-3",
+                            "dsc_grupo_plano_bi": "-3",
+                            "dsc_tipo_plano_bi": "-3",
+                            "ind_amdocs_plat_pre": "a",
+                            "cod_tratamento_especial": "-1",
+                            "num_franquia_minutos_bi": "50029231",
+                            "num_franquia_reais_bi": "",
+                            "num_franquia_eventos_bi": "",
+                            "num_franquia_volume_bi": "",
+                            "cod_plano_componente": "",
+                            "dsc_plano_preco_unico_bi": "",
+                            "dsc_modalidade_plano": ""
+                        },
+                        {
+                            "dw_plano_tarifacao": "540427",
+                            "cod_plano_preco": "50029231",
+                            "dsc_plano_tarifacao": "licitac?o marinha do brasil",
+                            "cod_tipo_cliente": "-1",
+                            "dw_tipo_cliente": "-1",
+                            "dat_efetivacao": "NaT",
+                            "dsc_plano_preco_bi": "-3",
+                            "dsc_grupo_plano_bi": "-3",
+                            "dsc_tipo_plano_bi": "-3",
+                            "ind_amdocs_plat_pre": "a",
+                            "cod_tratamento_especial": "-1",
+                            "num_franquia_minutos_bi": "50029231",
+                            "num_franquia_reais_bi": "",
+                            "num_franquia_eventos_bi": "",
+                            "num_franquia_volume_bi": "",
+                            "cod_plano_componente": "",
+                            "dsc_plano_preco_unico_bi": "",
+                            "dsc_modalidade_plano": ""
+                        },
+                        {
+                            "dw_plano_tarifacao": "550997",
+                            "cod_plano_preco": "50029231",
+                            "dsc_plano_tarifacao": "licitac?o marinha do brasil",
+                            "cod_tipo_cliente": "-1",
+                            "dw_tipo_cliente": "-1",
+                            "dat_efetivacao": "NaT",
+                            "dsc_plano_preco_bi": "-3",
+                            "dsc_grupo_plano_bi": "-3",
+                            "dsc_tipo_plano_bi": "-3",
+                            "ind_amdocs_plat_pre": "a",
+                            "cod_tratamento_especial": "-1",
+                            "num_franquia_minutos_bi": "50029231",
+                            "num_franquia_reais_bi": "",
+                            "num_franquia_eventos_bi": "",
+                            "num_franquia_volume_bi": "",
+                            "cod_plano_componente": "",
+                            "dsc_plano_preco_unico_bi": "",
+                            "dsc_modalidade_plano": ""
+                        },
+                        {
+                            "dw_plano_tarifacao": "523427",
+                            "cod_plano_preco": "50029231",
+                            "dsc_plano_tarifacao": "licitac?o marinha do brasil",
+                            "cod_tipo_cliente": "-1",
+                            "dw_tipo_cliente": "-1",
+                            "dat_efetivacao": "NaT",
+                            "dsc_plano_preco_bi": "licitac?o marinha do brasil",
+                            "dsc_grupo_plano_bi": "-3",
+                            "dsc_tipo_plano_bi": "-3",
+                            "ind_amdocs_plat_pre": "a",
+                            "cod_tratamento_especial": "-1",
+                            "num_franquia_minutos_bi": "50029231",
+                            "num_franquia_reais_bi": "outros",
+                            "num_franquia_eventos_bi": "",
+                            "num_franquia_volume_bi": "",
+                            "cod_plano_componente": "",
+                            "dsc_plano_preco_unico_bi": "",
+                            "dsc_modalidade_plano": ""
+                        },
+                        {
+                            "dw_plano_tarifacao": "532247",
+                            "cod_plano_preco": "50029231",
+                            "dsc_plano_tarifacao": "licitac?o marinha do brasil",
+                            "cod_tipo_cliente": "-1",
+                            "dw_tipo_cliente": "-1",
+                            "dat_efetivacao": "NaT",
+                            "dsc_plano_preco_bi": "-3",
+                            "dsc_grupo_plano_bi": "-3",
+                            "dsc_tipo_plano_bi": "-3",
+                            "ind_amdocs_plat_pre": "a",
+                            "cod_tratamento_especial": "-1",
+                            "num_franquia_minutos_bi": "50029231",
+                            "num_franquia_reais_bi": "",
+                            "num_franquia_eventos_bi": "",
+                            "num_franquia_volume_bi": "",
+                            "cod_plano_componente": "",
+                            "dsc_plano_preco_unico_bi": "",
+                            "dsc_modalidade_plano": ""
+                        },
+                        {
+                            "dw_plano_tarifacao": "549927",
+                            "cod_plano_preco": "50029231",
+                            "dsc_plano_tarifacao": "licitac?o marinha do brasil",
+                            "cod_tipo_cliente": "-1",
+                            "dw_tipo_cliente": "-1",
+                            "dat_efetivacao": "NaT",
+                            "dsc_plano_preco_bi": "-3",
+                            "dsc_grupo_plano_bi": "-3",
+                            "dsc_tipo_plano_bi": "-3",
+                            "ind_amdocs_plat_pre": "a",
+                            "cod_tratamento_especial": "-1",
+                            "num_franquia_minutos_bi": "50029231",
+                            "num_franquia_reais_bi": "",
+                            "num_franquia_eventos_bi": "",
+                            "num_franquia_volume_bi": "",
+                            "cod_plano_componente": "",
+                            "dsc_plano_preco_unico_bi": "",
+                            "dsc_modalidade_plano": ""
+                        },
+                        {
+                            "dw_plano_tarifacao": "546657",
+                            "cod_plano_preco": "50029231",
+                            "dsc_plano_tarifacao": "licitac?o marinha do brasil",
+                            "cod_tipo_cliente": "-1",
+                            "dw_tipo_cliente": "-1",
+                            "dat_efetivacao": "NaT",
+                            "dsc_plano_preco_bi": "-3",
+                            "dsc_grupo_plano_bi": "-3",
+                            "dsc_tipo_plano_bi": "-3",
+                            "ind_amdocs_plat_pre": "a",
+                            "cod_tratamento_especial": "-1",
+                            "num_franquia_minutos_bi": "50029231",
+                            "num_franquia_reais_bi": "",
+                            "num_franquia_eventos_bi": "",
+                            "num_franquia_volume_bi": "",
+                            "cod_plano_componente": "",
+                            "dsc_plano_preco_unico_bi": "",
+                            "dsc_modalidade_plano": ""
+                        },
+                        {
+                            "dw_plano_tarifacao": "696318",
+                            "cod_plano_preco": "50029241",
+                            "dsc_plano_tarifacao": "licitacao min da educacao",
+                            "cod_tipo_cliente": "-1",
+                            "dw_tipo_cliente": "-1",
+                            "dat_efetivacao": "NaT",
+                            "dsc_plano_preco_bi": "-3",
+                            "dsc_grupo_plano_bi": "-3",
+                            "dsc_tipo_plano_bi": "-3",
+                            "ind_amdocs_plat_pre": "a",
+                            "cod_tratamento_especial": "-1",
+                            "num_franquia_minutos_bi": "50029241",
+                            "num_franquia_reais_bi": "",
+                            "num_franquia_eventos_bi": "",
+                            "num_franquia_volume_bi": "",
+                            "cod_plano_componente": "",
+                            "dsc_plano_preco_unico_bi": "",
+                            "dsc_modalidade_plano": ""
+                        },
+                        {
+                            "dw_plano_tarifacao": "696319",
+                            "cod_plano_preco": "50029251",
+                            "dsc_plano_tarifacao": "licitacao min des combate fome",
+                            "cod_tipo_cliente": "-1",
+                            "dw_tipo_cliente": "-1",
+                            "dat_efetivacao": "NaT",
+                            "dsc_plano_preco_bi": "-3",
+                            "dsc_grupo_plano_bi": "-3",
+                            "dsc_tipo_plano_bi": "-3",
+                            "ind_amdocs_plat_pre": "a",
+                            "cod_tratamento_especial": "-1",
+                            "num_franquia_minutos_bi": "50029251",
+                            "num_franquia_reais_bi": "",
+                            "num_franquia_eventos_bi": "",
+                            "num_franquia_volume_bi": "",
+                            "cod_plano_componente": "",
+                            "dsc_plano_preco_unico_bi": "",
+                            "dsc_modalidade_plano": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `plano_preco.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "dw_plano_tarifacao",
+                            "tipo": "VARCHAR",
+                            "distintos": "293743",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "cod_plano_preco",
+                            "tipo": "VARCHAR",
+                            "distintos": "13490",
+                            "nulos": "0",
+                            "pct_distintos": "4.59%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "dsc_plano_tarifacao",
+                            "tipo": "VARCHAR",
+                            "distintos": "41929",
+                            "nulos": "0",
+                            "pct_distintos": "14.27%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "cod_tipo_cliente",
+                            "tipo": "VARCHAR",
+                            "distintos": "9",
+                            "nulos": "0",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "dw_tipo_cliente",
+                            "tipo": "VARCHAR",
+                            "distintos": "97",
+                            "nulos": "0",
+                            "pct_distintos": "0.03%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "dat_efetivacao",
+                            "tipo": "DATE",
+                            "distintos": "0",
+                            "nulos": "293743",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "dsc_plano_preco_bi",
+                            "tipo": "VARCHAR",
+                            "distintos": "2469",
+                            "nulos": "0",
+                            "pct_distintos": "0.84%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "dsc_grupo_plano_bi",
+                            "tipo": "VARCHAR",
+                            "distintos": "30",
+                            "nulos": "0",
+                            "pct_distintos": "0.01%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "dsc_tipo_plano_bi",
+                            "tipo": "VARCHAR",
+                            "distintos": "9",
+                            "nulos": "0",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "ind_amdocs_plat_pre",
+                            "tipo": "VARCHAR",
+                            "distintos": "3",
+                            "nulos": "0",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "cod_tratamento_especial",
+                            "tipo": "VARCHAR",
+                            "distintos": "4",
+                            "nulos": "0",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "num_franquia_minutos_bi",
+                            "tipo": "VARCHAR",
+                            "distintos": "0",
+                            "nulos": "293743",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "num_franquia_reais_bi",
+                            "tipo": "VARCHAR",
+                            "distintos": "0",
+                            "nulos": "293743",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "num_franquia_eventos_bi",
+                            "tipo": "VARCHAR",
+                            "distintos": "0",
+                            "nulos": "293743",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "num_franquia_volume_bi",
+                            "tipo": "VARCHAR",
+                            "distintos": "0",
+                            "nulos": "293743",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "cod_plano_componente",
+                            "tipo": "VARCHAR",
+                            "distintos": "6259",
+                            "nulos": "124730",
+                            "pct_distintos": "2.13%",
+                            "pct_nulos": "42.46%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "dsc_plano_preco_unico_bi",
+                            "tipo": "VARCHAR",
+                            "distintos": "100",
+                            "nulos": "110147",
+                            "pct_distintos": "0.03%",
+                            "pct_nulos": "37.5%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "dsc_modalidade_plano",
+                            "tipo": "VARCHAR",
+                            "distintos": "0",
+                            "nulos": "293743",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📄 Arquivo: `plataforma.parquet`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `plataforma.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "plataforma.parquet",
+                            "Registros": "28",
+                            "Colunas": "4"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 20)  - `plataforma.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "cod_plataforma_atu": "M2MS",
+                            "dsc_plataforma_atu": "machine to machine special",
+                            "cod_grupo_plataforma": "POSTL",
+                            "dsc_grupo_plataforma": "telemetria"
+                        },
+                        {
+                            "cod_plataforma_atu": "MVNOD",
+                            "dsc_plataforma_atu": "parceiros mvno digital",
+                            "cod_grupo_plataforma": "MVNO",
+                            "dsc_grupo_plataforma": "mvno digital"
+                        },
+                        {
+                            "cod_plataforma_atu": "POSTL",
+                            "dsc_plataforma_atu": "telemetria",
+                            "cod_grupo_plataforma": "POSTL",
+                            "dsc_grupo_plataforma": "telemetria"
+                        },
+                        {
+                            "cod_plataforma_atu": "POSDT",
+                            "dsc_plataforma_atu": "pós pago deutsche telekom",
+                            "cod_grupo_plataforma": "POSPG",
+                            "dsc_grupo_plataforma": "telemetria"
+                        },
+                        {
+                            "cod_plataforma_atu": "FLEXD",
+                            "dsc_plataforma_atu": "pré pago flex digital",
+                            "cod_grupo_plataforma": "PREPG",
+                            "dsc_grupo_plataforma": "pós pago"
+                        },
+                        {
+                            "cod_plataforma_atu": "MVNO",
+                            "dsc_plataforma_atu": "parceiros mvno",
+                            "cod_grupo_plataforma": "MVNO",
+                            "dsc_grupo_plataforma": "telemetria"
+                        },
+                        {
+                            "cod_plataforma_atu": "-1",
+                            "dsc_plataforma_atu": "não se aplica",
+                            "cod_grupo_plataforma": "NA",
+                            "dsc_grupo_plataforma": "outros"
+                        },
+                        {
+                            "cod_plataforma_atu": "-2",
+                            "dsc_plataforma_atu": "não definido",
+                            "cod_grupo_plataforma": "ND",
+                            "dsc_grupo_plataforma": "outros"
+                        },
+                        {
+                            "cod_plataforma_atu": "-3",
+                            "dsc_plataforma_atu": "não informado",
+                            "cod_grupo_plataforma": "NI",
+                            "dsc_grupo_plataforma": "outros"
+                        },
+                        {
+                            "cod_plataforma_atu": "PREPG",
+                            "dsc_plataforma_atu": "pré pago",
+                            "cod_grupo_plataforma": "PREPG",
+                            "dsc_grupo_plataforma": "pré pago"
+                        },
+                        {
+                            "cod_plataforma_atu": "POSPG",
+                            "dsc_plataforma_atu": "pós pago",
+                            "cod_grupo_plataforma": "POSPG",
+                            "dsc_grupo_plataforma": "pós pago"
+                        },
+                        {
+                            "cod_plataforma_atu": "AUTOC",
+                            "dsc_plataforma_atu": "controle",
+                            "cod_grupo_plataforma": "AUTOC",
+                            "dsc_grupo_plataforma": "controle"
+                        },
+                        {
+                            "cod_plataforma_atu": "PRERO",
+                            "dsc_plataforma_atu": "pré pago roaming",
+                            "cod_grupo_plataforma": "PREPG",
+                            "dsc_grupo_plataforma": "pré pago"
+                        },
+                        {
+                            "cod_plataforma_atu": "VROAM",
+                            "dsc_plataforma_atu": "visitante nacional",
+                            "cod_grupo_plataforma": "VROAM",
+                            "dsc_grupo_plataforma": "outros"
+                        },
+                        {
+                            "cod_plataforma_atu": "VRINT",
+                            "dsc_plataforma_atu": "visitante internacional",
+                            "cod_grupo_plataforma": "VRINT",
+                            "dsc_grupo_plataforma": "outros"
+                        },
+                        {
+                            "cod_plataforma_atu": "POSCM",
+                            "dsc_plataforma_atu": "comunicação multimídia",
+                            "cod_grupo_plataforma": "POSPG",
+                            "dsc_grupo_plataforma": "pós pago"
+                        },
+                        {
+                            "cod_plataforma_atu": "POSFX",
+                            "dsc_plataforma_atu": "nr fixo combo fixo",
+                            "cod_grupo_plataforma": "POSPG",
+                            "dsc_grupo_plataforma": "pós pago"
+                        },
+                        {
+                            "cod_plataforma_atu": "POSBL",
+                            "dsc_plataforma_atu": "pós pago banda larga",
+                            "cod_grupo_plataforma": "POSPG",
+                            "dsc_grupo_plataforma": "pós pago"
+                        },
+                        {
+                            "cod_plataforma_atu": "CTLBL",
+                            "dsc_plataforma_atu": "controle banda larga",
+                            "cod_grupo_plataforma": "AUTOC",
+                            "dsc_grupo_plataforma": "controle"
+                        },
+                        {
+                            "cod_plataforma_atu": "PREBL",
+                            "dsc_plataforma_atu": "pré pago banda larga",
+                            "cod_grupo_plataforma": "PREPG",
+                            "dsc_grupo_plataforma": "pré pago"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `plataforma.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "cod_plataforma_atu",
+                            "tipo": "VARCHAR",
+                            "distintos": "28",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "dsc_plataforma_atu",
+                            "tipo": "VARCHAR",
+                            "distintos": "28",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "cod_grupo_plataforma",
+                            "tipo": "VARCHAR",
+                            "distintos": "13",
+                            "nulos": "0",
+                            "pct_distintos": "46.43%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "dsc_grupo_plataforma",
+                            "tipo": "VARCHAR",
+                            "distintos": "6",
+                            "nulos": "1",
+                            "pct_distintos": "21.43%",
+                            "pct_nulos": "3.57%",
+                            "cardinalidade": "ALTA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📄 Arquivo: `promocao_credito.parquet`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `promocao_credito.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "promocao_credito.parquet",
+                            "Registros": "15",
+                            "Colunas": "7"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 20)  - `promocao_credito.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "cod_promocao": "317",
+                            "dsc_promocao": "incentivo a adesão ao débito automático para claro controle",
+                            "cod_prom_grupo_cartao": "1",
+                            "dsc_nome_promocao": "debau_01",
+                            "cod_tipo_promocao": "INCENTIVO_DEBAU",
+                            "val_promocao": "50",
+                            "num_conta_dedicada": "2"
+                        },
+                        {
+                            "cod_promocao": "318",
+                            "dsc_promocao": "incentivo à recarga, em todas as modalidades, para clientes pré-pago e claro controle, em que bônus",
+                            "cod_prom_grupo_cartao": "2",
+                            "dsc_nome_promocao": "recarga turbinada",
+                            "cod_tipo_promocao": "RECARGA",
+                            "val_promocao": "0",
+                            "num_conta_dedicada": "0"
+                        },
+                        {
+                            "cod_promocao": "319",
+                            "dsc_promocao": "incentivo à recarga em parceria com a visa para clientes pré-pago e claro controle, em que ganham bo",
+                            "cod_prom_grupo_cartao": "3",
+                            "dsc_nome_promocao": "acao claro visa",
+                            "cod_tipo_promocao": "RECARGA",
+                            "val_promocao": "0",
+                            "num_conta_dedicada": "0"
+                        },
+                        {
+                            "cod_promocao": "320",
+                            "dsc_promocao": "troca de portfolio com aumento de validade e ajuste nas descricoes de alguns voucher groups de merca",
+                            "cod_prom_grupo_cartao": "4",
+                            "dsc_nome_promocao": "troca de portfolio 19/08/2008",
+                            "cod_tipo_promocao": "RECARGA",
+                            "val_promocao": "0",
+                            "num_conta_dedicada": "0"
+                        },
+                        {
+                            "cod_promocao": "321",
+                            "dsc_promocao": "diminui??o de validade nas recargas de 50 e 100 reais",
+                            "cod_prom_grupo_cartao": "5",
+                            "dsc_nome_promocao": "altera??o de validades 50 e 100",
+                            "cod_tipo_promocao": "RECARGA",
+                            "val_promocao": "0",
+                            "num_conta_dedicada": "0"
+                        },
+                        {
+                            "cod_promocao": "367",
+                            "dsc_promocao": "diminuic?o de validade nas recargas de 50 e 100 reais",
+                            "cod_prom_grupo_cartao": "5",
+                            "dsc_nome_promocao": "alterac?o de validades 50 e 100",
+                            "cod_tipo_promocao": "RECARGA",
+                            "val_promocao": "0",
+                            "num_conta_dedicada": "0"
+                        },
+                        {
+                            "cod_promocao": "377",
+                            "dsc_promocao": "diminuição de validade nas recargas de 50 e 100 reais",
+                            "cod_prom_grupo_cartao": "5",
+                            "dsc_nome_promocao": "alteração de validades 50 e 100",
+                            "cod_tipo_promocao": "RECARGA",
+                            "val_promocao": "0",
+                            "num_conta_dedicada": "0"
+                        },
+                        {
+                            "cod_promocao": "322",
+                            "dsc_promocao": "bônus para todas as recargas online e física de r$3 e r$5",
+                            "cod_prom_grupo_cartao": "6",
+                            "dsc_nome_promocao": "recarga bonificada",
+                            "cod_tipo_promocao": "RECARGA",
+                            "val_promocao": "0",
+                            "num_conta_dedicada": "0"
+                        },
+                        {
+                            "cod_promocao": "327",
+                            "dsc_promocao": "alteração da validade dos vgs para 30 dias (histórico pré-alteração)",
+                            "cod_prom_grupo_cartao": "7",
+                            "dsc_nome_promocao": "anatel 632",
+                            "cod_tipo_promocao": "RECARGA",
+                            "val_promocao": "0",
+                            "num_conta_dedicada": "0"
+                        },
+                        {
+                            "cod_promocao": "337",
+                            "dsc_promocao": "concess?o de b?nus em conta dedicada para recargas de r$20, r$30, r$50 e r$100",
+                            "cod_prom_grupo_cartao": "8",
+                            "dsc_nome_promocao": "concess?o de cr?ditos adicionais",
+                            "cod_tipo_promocao": "RECARGA",
+                            "val_promocao": "0",
+                            "num_conta_dedicada": "67"
+                        },
+                        {
+                            "cod_promocao": "368",
+                            "dsc_promocao": "concess?o de bonus em conta dedicada para recargas de r$20, r$30, r$50 e r$100",
+                            "cod_prom_grupo_cartao": "8",
+                            "dsc_nome_promocao": "concess?o de creditos adicionais",
+                            "cod_tipo_promocao": "RECARGA",
+                            "val_promocao": "0",
+                            "num_conta_dedicada": "67"
+                        },
+                        {
+                            "cod_promocao": "378",
+                            "dsc_promocao": "concessão de bônus em conta dedicada para recargas de r$20, r$30, r$50 e r$100",
+                            "cod_prom_grupo_cartao": "8",
+                            "dsc_nome_promocao": "concessão de créditos adicionais",
+                            "cod_tipo_promocao": "RECARGA",
+                            "val_promocao": "0",
+                            "num_conta_dedicada": "67"
+                        },
+                        {
+                            "cod_promocao": "347",
+                            "dsc_promocao": "hist?rico de altera??es de caracter?sticas de voucher groups",
+                            "cod_prom_grupo_cartao": "10",
+                            "dsc_nome_promocao": "hist?rico de altera??es",
+                            "cod_tipo_promocao": "RECARGA",
+                            "val_promocao": "0",
+                            "num_conta_dedicada": "0"
+                        },
+                        {
+                            "cod_promocao": "369",
+                            "dsc_promocao": "historico de alterac?es de caracteristicas de voucher groups",
+                            "cod_prom_grupo_cartao": "10",
+                            "dsc_nome_promocao": "historico de alterac?es",
+                            "cod_tipo_promocao": "RECARGA",
+                            "val_promocao": "0",
+                            "num_conta_dedicada": "0"
+                        },
+                        {
+                            "cod_promocao": "379",
+                            "dsc_promocao": "histórico de alterações de características de voucher groups",
+                            "cod_prom_grupo_cartao": "10",
+                            "dsc_nome_promocao": "histórico de alterações",
+                            "cod_tipo_promocao": "RECARGA",
+                            "val_promocao": "0",
+                            "num_conta_dedicada": "0"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `promocao_credito.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "cod_promocao",
+                            "tipo": "VARCHAR",
+                            "distintos": "15",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "dsc_promocao",
+                            "tipo": "VARCHAR",
+                            "distintos": "15",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "cod_prom_grupo_cartao",
+                            "tipo": "VARCHAR",
+                            "distintos": "9",
+                            "nulos": "0",
+                            "pct_distintos": "60.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "dsc_nome_promocao",
+                            "tipo": "VARCHAR",
+                            "distintos": "15",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "cod_tipo_promocao",
+                            "tipo": "VARCHAR",
+                            "distintos": "2",
+                            "nulos": "0",
+                            "pct_distintos": "13.33%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "val_promocao",
+                            "tipo": "DOUBLE",
+                            "distintos": "2",
+                            "nulos": "0",
+                            "pct_distintos": "13.33%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "num_conta_dedicada",
+                            "tipo": "VARCHAR",
+                            "distintos": "3",
+                            "nulos": "0",
+                            "pct_distintos": "20.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📄 Arquivo: `status_plataforma.parquet`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `status_plataforma.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "status_plataforma.parquet",
+                            "Registros": "25",
+                            "Colunas": "5"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 20)  - `status_plataforma.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "cod_status_plataforma": "A",
+                            "dsc_status_plataforma": "ativo",
+                            "ind_ativo": "s",
+                            "cod_status_plat_grp": "A",
+                            "ind_sts_plat_grp_ativo": "s"
+                        },
+                        {
+                            "cod_status_plataforma": "ZB1",
+                            "dsc_status_plataforma": "expirado 1",
+                            "ind_ativo": "s",
+                            "cod_status_plat_grp": "ZB1",
+                            "ind_sts_plat_grp_ativo": "s"
+                        },
+                        {
+                            "cod_status_plataforma": "PRE",
+                            "dsc_status_plataforma": "pré-ativo",
+                            "ind_ativo": "n",
+                            "cod_status_plat_grp": "PRE",
+                            "ind_sts_plat_grp_ativo": "n"
+                        },
+                        {
+                            "cod_status_plataforma": "ZB2",
+                            "dsc_status_plataforma": "expirado 2",
+                            "ind_ativo": "n",
+                            "cod_status_plat_grp": "ZB2",
+                            "ind_sts_plat_grp_ativo": "n"
+                        },
+                        {
+                            "cod_status_plataforma": "C",
+                            "dsc_status_plataforma": "desconectado",
+                            "ind_ativo": "n",
+                            "cod_status_plat_grp": "C",
+                            "ind_sts_plat_grp_ativo": "n"
+                        },
+                        {
+                            "cod_status_plataforma": "FRD",
+                            "dsc_status_plataforma": "bloqueio por fraude",
+                            "ind_ativo": "n",
+                            "cod_status_plat_grp": "C",
+                            "ind_sts_plat_grp_ativo": "n"
+                        },
+                        {
+                            "cod_status_plataforma": "COL",
+                            "dsc_status_plataforma": "cooling",
+                            "ind_ativo": "n",
+                            "cod_status_plat_grp": "C",
+                            "ind_sts_plat_grp_ativo": "n"
+                        },
+                        {
+                            "cod_status_plataforma": "NDF",
+                            "dsc_status_plataforma": "status nao definido",
+                            "ind_ativo": "n",
+                            "cod_status_plat_grp": "ND",
+                            "ind_sts_plat_grp_ativo": "n"
+                        },
+                        {
+                            "cod_status_plataforma": "-3",
+                            "dsc_status_plataforma": "nao informado",
+                            "ind_ativo": "n",
+                            "cod_status_plat_grp": "ND",
+                            "ind_sts_plat_grp_ativo": "n"
+                        },
+                        {
+                            "cod_status_plataforma": "-2",
+                            "dsc_status_plataforma": "nao determinado",
+                            "ind_ativo": "n",
+                            "cod_status_plat_grp": "ND",
+                            "ind_sts_plat_grp_ativo": "n"
+                        },
+                        {
+                            "cod_status_plataforma": "ST",
+                            "dsc_status_plataforma": "suspensão temporária",
+                            "ind_ativo": "s",
+                            "cod_status_plat_grp": "A",
+                            "ind_sts_plat_grp_ativo": "s"
+                        },
+                        {
+                            "cod_status_plataforma": "4",
+                            "dsc_status_plataforma": "inventario",
+                            "ind_ativo": "n",
+                            "cod_status_plat_grp": "C",
+                            "ind_sts_plat_grp_ativo": "n"
+                        },
+                        {
+                            "cod_status_plataforma": "6",
+                            "dsc_status_plataforma": "ativo",
+                            "ind_ativo": "s",
+                            "cod_status_plat_grp": "A",
+                            "ind_sts_plat_grp_ativo": "s"
+                        },
+                        {
+                            "cod_status_plataforma": "7",
+                            "dsc_status_plataforma": "inativo",
+                            "ind_ativo": "n",
+                            "cod_status_plat_grp": "C",
+                            "ind_sts_plat_grp_ativo": "n"
+                        },
+                        {
+                            "cod_status_plataforma": "8",
+                            "dsc_status_plataforma": "removido",
+                            "ind_ativo": "n",
+                            "cod_status_plat_grp": "C",
+                            "ind_sts_plat_grp_ativo": "n"
+                        },
+                        {
+                            "cod_status_plataforma": "9",
+                            "dsc_status_plataforma": "retirado",
+                            "ind_ativo": "n",
+                            "cod_status_plat_grp": "C",
+                            "ind_sts_plat_grp_ativo": "n"
+                        },
+                        {
+                            "cod_status_plataforma": "10",
+                            "dsc_status_plataforma": "teste pronto",
+                            "ind_ativo": "s",
+                            "cod_status_plat_grp": "A",
+                            "ind_sts_plat_grp_ativo": "s"
+                        },
+                        {
+                            "cod_status_plataforma": "11",
+                            "dsc_status_plataforma": "ativacao pronta",
+                            "ind_ativo": "s",
+                            "cod_status_plat_grp": "A",
+                            "ind_sts_plat_grp_ativo": "s"
+                        },
+                        {
+                            "cod_status_plataforma": "12",
+                            "dsc_status_plataforma": "trial",
+                            "ind_ativo": "s",
+                            "cod_status_plat_grp": "A",
+                            "ind_sts_plat_grp_ativo": "s"
+                        },
+                        {
+                            "cod_status_plataforma": "13",
+                            "dsc_status_plataforma": "substituido",
+                            "ind_ativo": "n",
+                            "cod_status_plat_grp": "C",
+                            "ind_sts_plat_grp_ativo": "n"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `status_plataforma.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "cod_status_plataforma",
+                            "tipo": "VARCHAR",
+                            "distintos": "25",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "dsc_status_plataforma",
+                            "tipo": "VARCHAR",
+                            "distintos": "24",
+                            "nulos": "0",
+                            "pct_distintos": "96.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "ind_ativo",
+                            "tipo": "VARCHAR",
+                            "distintos": "2",
+                            "nulos": "0",
+                            "pct_distintos": "8.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "cod_status_plat_grp",
+                            "tipo": "VARCHAR",
+                            "distintos": "6",
+                            "nulos": "0",
+                            "pct_distintos": "24.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "ind_sts_plat_grp_ativo",
+                            "tipo": "VARCHAR",
+                            "distintos": "2",
+                            "nulos": "0",
+                            "pct_distintos": "8.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📄 Arquivo: `tecnologia.parquet`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `tecnologia.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "tecnologia.parquet",
+                            "Registros": "10",
+                            "Colunas": "2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 20)  - `tecnologia.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "cod_tecnologia_dw": "AMBOS",
+                            "dsc_tecnologia": "3g/gsm"
+                        },
+                        {
+                            "cod_tecnologia_dw": "GSM",
+                            "dsc_tecnologia": "gsm"
+                        },
+                        {
+                            "cod_tecnologia_dw": "NTDMA",
+                            "dsc_tecnologia": "novo tdma"
+                        },
+                        {
+                            "cod_tecnologia_dw": "TDMA",
+                            "dsc_tecnologia": "tdma"
+                        },
+                        {
+                            "cod_tecnologia_dw": "-1",
+                            "dsc_tecnologia": "na"
+                        },
+                        {
+                            "cod_tecnologia_dw": "-2",
+                            "dsc_tecnologia": "nd"
+                        },
+                        {
+                            "cod_tecnologia_dw": "-3",
+                            "dsc_tecnologia": "ni"
+                        },
+                        {
+                            "cod_tecnologia_dw": "3G",
+                            "dsc_tecnologia": "3g"
+                        },
+                        {
+                            "cod_tecnologia_dw": "4G",
+                            "dsc_tecnologia": "4g"
+                        },
+                        {
+                            "cod_tecnologia_dw": "5G",
+                            "dsc_tecnologia": "5g"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `tecnologia.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "cod_tecnologia_dw",
+                            "tipo": "VARCHAR",
+                            "distintos": "10",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "dsc_tecnologia",
+                            "tipo": "VARCHAR",
+                            "distintos": "10",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📄 Arquivo: `tipo_credito.parquet`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `tipo_credito.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "tipo_credito.parquet",
+                            "Registros": "12",
+                            "Colunas": "2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 20)  - `tipo_credito.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "cod_tipo_credito": "PE",
+                            "dsc_tipo_credito": "online"
+                        },
+                        {
+                            "cod_tipo_credito": "-1",
+                            "dsc_tipo_credito": "na"
+                        },
+                        {
+                            "cod_tipo_credito": "-2",
+                            "dsc_tipo_credito": "nd"
+                        },
+                        {
+                            "cod_tipo_credito": "-3",
+                            "dsc_tipo_credito": "ni"
+                        },
+                        {
+                            "cod_tipo_credito": "AU",
+                            "dsc_tipo_credito": "autocontrole"
+                        },
+                        {
+                            "cod_tipo_credito": "BO",
+                            "dsc_tipo_credito": "bonus"
+                        },
+                        {
+                            "cod_tipo_credito": "CF",
+                            "dsc_tipo_credito": "cartão físico"
+                        },
+                        {
+                            "cod_tipo_credito": "CV",
+                            "dsc_tipo_credito": "pin eletronico"
+                        },
+                        {
+                            "cod_tipo_credito": "IO",
+                            "dsc_tipo_credito": "ioio"
+                        },
+                        {
+                            "cod_tipo_credito": "OU",
+                            "dsc_tipo_credito": "outros"
+                        },
+                        {
+                            "cod_tipo_credito": "TE",
+                            "dsc_tipo_credito": "transferência eletrônica"
+                        },
+                        {
+                            "cod_tipo_credito": "TF",
+                            "dsc_tipo_credito": "tef"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `tipo_credito.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "cod_tipo_credito",
+                            "tipo": "VARCHAR",
+                            "distintos": "12",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "dsc_tipo_credito",
+                            "tipo": "VARCHAR",
+                            "distintos": "12",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📄 Arquivo: `tipo_insercao.parquet`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `tipo_insercao.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "tipo_insercao.parquet",
+                            "Registros": "22",
+                            "Colunas": "2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 20)  - `tipo_insercao.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "dw_tipo_insercao": "-3",
+                            "dsc_tipo_insercao": "não informado"
+                        },
+                        {
+                            "dw_tipo_insercao": "-2",
+                            "dsc_tipo_insercao": "não determinado"
+                        },
+                        {
+                            "dw_tipo_insercao": "-1",
+                            "dsc_tipo_insercao": "não se aplica"
+                        },
+                        {
+                            "dw_tipo_insercao": "1",
+                            "dsc_tipo_insercao": "pag. cartão físico"
+                        },
+                        {
+                            "dw_tipo_insercao": "2",
+                            "dsc_tipo_insercao": "pag. pin eletrônico"
+                        },
+                        {
+                            "dw_tipo_insercao": "3",
+                            "dsc_tipo_insercao": "pag. virtual"
+                        },
+                        {
+                            "dw_tipo_insercao": "4",
+                            "dsc_tipo_insercao": "franquia claro controle"
+                        },
+                        {
+                            "dw_tipo_insercao": "5",
+                            "dsc_tipo_insercao": "adicional claro controle-cartão físico"
+                        },
+                        {
+                            "dw_tipo_insercao": "6",
+                            "dsc_tipo_insercao": "adicional claro controle-pin eletrônico"
+                        },
+                        {
+                            "dw_tipo_insercao": "7",
+                            "dsc_tipo_insercao": "adicional claro controle-virtual"
+                        },
+                        {
+                            "dw_tipo_insercao": "8",
+                            "dsc_tipo_insercao": "claro transferência"
+                        },
+                        {
+                            "dw_tipo_insercao": "9",
+                            "dsc_tipo_insercao": "ajustes positivos"
+                        },
+                        {
+                            "dw_tipo_insercao": "10",
+                            "dsc_tipo_insercao": "pacote torpedo dacc"
+                        },
+                        {
+                            "dw_tipo_insercao": "11",
+                            "dsc_tipo_insercao": "claro bônus"
+                        },
+                        {
+                            "dw_tipo_insercao": "12",
+                            "dsc_tipo_insercao": "bônus ativação"
+                        },
+                        {
+                            "dw_tipo_insercao": "13",
+                            "dsc_tipo_insercao": "bônus recarga"
+                        },
+                        {
+                            "dw_tipo_insercao": "14",
+                            "dsc_tipo_insercao": "bônus acumulador 1"
+                        },
+                        {
+                            "dw_tipo_insercao": "15",
+                            "dsc_tipo_insercao": "bônus acumulador 2 e 3"
+                        },
+                        {
+                            "dw_tipo_insercao": "16",
+                            "dsc_tipo_insercao": "bônus dedicadas 1"
+                        },
+                        {
+                            "dw_tipo_insercao": "17",
+                            "dsc_tipo_insercao": "bônus dedicadas 2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `tipo_insercao.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "dw_tipo_insercao",
+                            "tipo": "VARCHAR",
+                            "distintos": "22",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "dsc_tipo_insercao",
+                            "tipo": "VARCHAR",
+                            "distintos": "22",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📄 Arquivo: `tipo_recarga.parquet`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `tipo_recarga.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "tipo_recarga.parquet",
+                            "Registros": "5",
+                            "Colunas": "2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 20)  - `tipo_recarga.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "dw_tipo_recarga": "-3",
+                            "dsc_tipo_recarga": "não informado"
+                        },
+                        {
+                            "dw_tipo_recarga": "-2",
+                            "dsc_tipo_recarga": "não determinado"
+                        },
+                        {
+                            "dw_tipo_recarga": "-1",
+                            "dsc_tipo_recarga": "não se aplica"
+                        },
+                        {
+                            "dw_tipo_recarga": "1",
+                            "dsc_tipo_recarga": "franquia do claro controle"
+                        },
+                        {
+                            "dw_tipo_recarga": "2",
+                            "dsc_tipo_recarga": "adicional do claro controle"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `tipo_recarga.parquet`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "dw_tipo_recarga",
+                            "tipo": "VARCHAR",
+                            "distintos": "5",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "dsc_tipo_recarga",
+                            "tipo": "VARCHAR",
+                            "distintos": "5",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "title": "Relatório de Profiling: `bronze/recarga_dim`"
+}

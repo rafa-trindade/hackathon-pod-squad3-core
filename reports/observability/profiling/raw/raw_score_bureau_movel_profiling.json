@@ -1,0 +1,594 @@
+{
+    "report_type": "Profiling",
+    "source_file": "raw_score_bureau_movel_profiling.md",
+    "sections": [
+        {
+            "header": "📦 Volumetria: `raw/score_bureau_movel`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "qtd_arquivos": "1",
+                            "registros": "3.795.310",
+                            "colunas": "8",
+                            "tamanho_comprimido_mib": "38.62",
+                            "tamanho_descomprimido_mib": "65.5"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🧬 Schema: `raw/score_bureau_movel`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "column_name": "SAFRA",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "FLAG_INSTALACAO",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "FPD",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "PROD",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "flag_mig2",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "SCORE_01",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "SCORE_02",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        },
+                        {
+                            "column_name": "NUM_CPF",
+                            "column_type": "VARCHAR",
+                            "null": "YES",
+                            "key": "",
+                            "default": "",
+                            "extra": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📅 Campos de Data: `raw/score_bureau_movel`",
+            "content": []
+        },
+        {
+            "header": "✅ Datas com tipagem (DATE / TIMESTAMP)",
+            "content": [
+                {
+                    "type": "text",
+                    "data": "> ⚠️ Nenhuma coluna DATE ou TIMESTAMP encontrada."
+                }
+            ]
+        },
+        {
+            "header": "⚠️ Possíveis campos de data/hora sem tipagem (inferido pelo nome)",
+            "content": [
+                {
+                    "type": "text",
+                    "data": "- `SAFRA`\n\n\n---"
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas por Coluna: `raw/score_bureau_movel`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "SAFRA",
+                            "distintos": "6",
+                            "nulos": "0",
+                            "duplicados": "3795304",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "FLAG_INSTALACAO",
+                            "distintos": "2",
+                            "nulos": "0",
+                            "duplicados": "3795308",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "FPD",
+                            "distintos": "2",
+                            "nulos": "1161410",
+                            "duplicados": "3795308",
+                            "pct_nulos": "30.6%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "PROD",
+                            "distintos": "1",
+                            "nulos": "0",
+                            "duplicados": "3795309",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "flag_mig2",
+                            "distintos": "3",
+                            "nulos": "1161410",
+                            "duplicados": "3795307",
+                            "pct_nulos": "30.6%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "SCORE_01",
+                            "distintos": "308",
+                            "nulos": "54035",
+                            "duplicados": "3795002",
+                            "pct_nulos": "1.42%",
+                            "pct_duplicados": "99.99%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "SCORE_02",
+                            "distintos": "603",
+                            "nulos": "1876",
+                            "duplicados": "3794707",
+                            "pct_nulos": "0.05%",
+                            "pct_duplicados": "99.98%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "NUM_CPF",
+                            "distintos": "3590459",
+                            "nulos": "0",
+                            "duplicados": "204851",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "5.4%",
+                            "cardinalidade": "ALTA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔟 Distribuição de Valores (Top 10): `raw/score_bureau_movel`",
+            "content": []
+        },
+        {
+            "header": "Coluna: `SAFRA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "202501",
+                            "qtd": "648554"
+                        },
+                        {
+                            "valor": "202411",
+                            "qtd": "647199"
+                        },
+                        {
+                            "valor": "202410",
+                            "qtd": "636951"
+                        },
+                        {
+                            "valor": "202503",
+                            "qtd": "633518"
+                        },
+                        {
+                            "valor": "202412",
+                            "qtd": "626744"
+                        },
+                        {
+                            "valor": "202502",
+                            "qtd": "602344"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `FLAG_INSTALACAO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "1",
+                            "qtd": "2633900"
+                        },
+                        {
+                            "valor": "0",
+                            "qtd": "1161410"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `FPD`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "0",
+                            "qtd": "2074671"
+                        },
+                        {
+                            "valor": "1161410",
+                            "qtd": ""
+                        },
+                        {
+                            "valor": "1",
+                            "qtd": "559229"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `PROD`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "CMV",
+                            "qtd": "3795310"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `flag_mig2`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "Aquisição",
+                            "qtd": "1338888"
+                        },
+                        {
+                            "valor": "PRE",
+                            "qtd": "1290526"
+                        },
+                        {
+                            "valor": "1161410",
+                            "qtd": ""
+                        },
+                        {
+                            "valor": "FLEX",
+                            "qtd": "4486"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `SCORE_01`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "589",
+                            "qtd": "64373"
+                        },
+                        {
+                            "valor": "601",
+                            "qtd": "63565"
+                        },
+                        {
+                            "valor": "54035",
+                            "qtd": ""
+                        },
+                        {
+                            "valor": "571",
+                            "qtd": "53351"
+                        },
+                        {
+                            "valor": "560",
+                            "qtd": "53313"
+                        },
+                        {
+                            "valor": "582",
+                            "qtd": "48768"
+                        },
+                        {
+                            "valor": "593",
+                            "qtd": "48286"
+                        },
+                        {
+                            "valor": "574",
+                            "qtd": "46425"
+                        },
+                        {
+                            "valor": "531",
+                            "qtd": "45087"
+                        },
+                        {
+                            "valor": "599",
+                            "qtd": "43953"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `SCORE_02`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "1",
+                            "qtd": "18855"
+                        },
+                        {
+                            "valor": "574",
+                            "qtd": "12743"
+                        },
+                        {
+                            "valor": "582",
+                            "qtd": "12682"
+                        },
+                        {
+                            "valor": "561",
+                            "qtd": "12680"
+                        },
+                        {
+                            "valor": "577",
+                            "qtd": "12673"
+                        },
+                        {
+                            "valor": "570",
+                            "qtd": "12653"
+                        },
+                        {
+                            "valor": "581",
+                            "qtd": "12627"
+                        },
+                        {
+                            "valor": "576",
+                            "qtd": "12625"
+                        },
+                        {
+                            "valor": "567",
+                            "qtd": "12620"
+                        },
+                        {
+                            "valor": "579",
+                            "qtd": "12613"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `NUM_CPF`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "Y77ZYUXU8NW",
+                            "qtd": "6"
+                        },
+                        {
+                            "valor": "7X7NZ79YWU9",
+                            "qtd": "6"
+                        },
+                        {
+                            "valor": "ZZZZZZZX7T9",
+                            "qtd": "6"
+                        },
+                        {
+                            "valor": "U8Z9ZZ8N8XZ",
+                            "qtd": "6"
+                        },
+                        {
+                            "valor": "888W78UZYYT",
+                            "qtd": "6"
+                        },
+                        {
+                            "valor": "ZNTN78ZW7XX",
+                            "qtd": "5"
+                        },
+                        {
+                            "valor": "ZNY9U7TWWUX",
+                            "qtd": "5"
+                        },
+                        {
+                            "valor": "ZTZTWZXTYZX",
+                            "qtd": "5"
+                        },
+                        {
+                            "valor": "ZUZUZZX7X88",
+                            "qtd": "5"
+                        },
+                        {
+                            "valor": "U79ZXXNY8ZT",
+                            "qtd": "5"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📏 Comprimento de Strings: `raw/score_bureau_movel`",
+            "content": []
+        },
+        {
+            "header": "Coluna: `SAFRA`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "6",
+                            "avg_len": "6",
+                            "max_len": "6"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `FLAG_INSTALACAO`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "1",
+                            "max_len": "1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `FPD`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "1",
+                            "max_len": "1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `PROD`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "3",
+                            "avg_len": "3",
+                            "max_len": "3"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `flag_mig2`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "3",
+                            "avg_len": "6.05",
+                            "max_len": "9"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `SCORE_01`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "2.99",
+                            "max_len": "3"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `SCORE_02`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "1",
+                            "avg_len": "2.99",
+                            "max_len": "3"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `NUM_CPF`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min_len": "11",
+                            "avg_len": "11",
+                            "max_len": "11"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "title": "Relatório de Profiling: `raw/score_bureau_movel`"
+}

@@ -1,0 +1,36 @@
+{
+    "report_type": "Data Contract Audit",
+    "results": [
+        {
+            "status": "✅ PASS",
+            "cols": "50",
+            "detail": "Tabela 'atraso' em conformidade."
+        },
+        {
+            "status": "✅ PASS",
+            "cols": "33",
+            "detail": "Tabela 'dados_cadastrais' em conformidade."
+        },
+        {
+            "status": "✅ PASS",
+            "cols": "73",
+            "detail": "Tabela 'pagamento' em conformidade."
+        },
+        {
+            "status": "✅ PASS",
+            "cols": "24",
+            "detail": "Tabela 'recarga' em conformidade."
+        },
+        {
+            "status": "✅ PASS",
+            "cols": "8",
+            "detail": "Tabela 'score_bureau_movel' em conformidade."
+        },
+        {
+            "status": "✅ PASS",
+            "cols": "74",
+            "detail": "Tabela 'telco' em conformidade."
+        }
+    ],
+    "timestamp": "2026-02-12 00:44:21"
+}

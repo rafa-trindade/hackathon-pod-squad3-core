@@ -1,0 +1,155 @@
+{
+    "report_type": "Profiling",
+    "source_file": "raw_atraso_dim_multi_profiling.md",
+    "sections": [
+        {
+            "header": "📄 Arquivo: `BI_DIM_TIPO_FATURAMENTO.csv`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `BI_DIM_TIPO_FATURAMENTO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "BI_DIM_TIPO_FATURAMENTO.csv",
+                            "Registros": "72",
+                            "Colunas": "6"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 5)  - `BI_DIM_TIPO_FATURAMENTO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "DW_TIPO_FATURAMENTO": "32527",
+                            "DSC_TIPO_FATURAMENTO": "Refund",
+                            "COD_TIPO_FATURAMENTO": "R",
+                            "DAT_EXPIRACAO_DW": "28MAR2017:08:00:40",
+                            "DAT_CRIACAO_DW": "REFUND",
+                            "DSC_TIPO_FATURAMENTO_ABREV": ""
+                        },
+                        {
+                            "DW_TIPO_FATURAMENTO": "32528",
+                            "DSC_TIPO_FATURAMENTO": "Credit",
+                            "COD_TIPO_FATURAMENTO": "C",
+                            "DAT_EXPIRACAO_DW": "28MAR2017:08:00:40",
+                            "DAT_CRIACAO_DW": "CREDIT",
+                            "DSC_TIPO_FATURAMENTO_ABREV": ""
+                        },
+                        {
+                            "DW_TIPO_FATURAMENTO": "32529",
+                            "DSC_TIPO_FATURAMENTO": "Claro",
+                            "COD_TIPO_FATURAMENTO": "B",
+                            "DAT_EXPIRACAO_DW": "28MAR2017:08:00:40",
+                            "DAT_CRIACAO_DW": "SERVICE",
+                            "DSC_TIPO_FATURAMENTO_ABREV": ""
+                        },
+                        {
+                            "DW_TIPO_FATURAMENTO": "32530",
+                            "DSC_TIPO_FATURAMENTO": "Service Deposit",
+                            "COD_TIPO_FATURAMENTO": "D",
+                            "DAT_EXPIRACAO_DW": "28MAR2017:08:00:40",
+                            "DAT_CRIACAO_DW": "DEPOSIT",
+                            "DSC_TIPO_FATURAMENTO_ABREV": ""
+                        },
+                        {
+                            "DW_TIPO_FATURAMENTO": "32531",
+                            "DSC_TIPO_FATURAMENTO": "Reversal",
+                            "COD_TIPO_FATURAMENTO": "RV",
+                            "DAT_EXPIRACAO_DW": "28MAR2017:08:00:40",
+                            "DAT_CRIACAO_DW": "REVERSAL",
+                            "DSC_TIPO_FATURAMENTO_ABREV": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `BI_DIM_TIPO_FATURAMENTO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "DW_TIPO_FATURAMENTO",
+                            "tipo": "BIGINT",
+                            "distintos": "72",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DSC_TIPO_FATURAMENTO",
+                            "tipo": "VARCHAR",
+                            "distintos": "69",
+                            "nulos": "0",
+                            "pct_distintos": "95.83%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "COD_TIPO_FATURAMENTO",
+                            "tipo": "VARCHAR",
+                            "distintos": "70",
+                            "nulos": "0",
+                            "pct_distintos": "97.22%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DAT_EXPIRACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "2",
+                            "nulos": "70",
+                            "pct_distintos": "2.78%",
+                            "pct_nulos": "97.22%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "DAT_CRIACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "10",
+                            "nulos": "0",
+                            "pct_distintos": "13.89%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DSC_TIPO_FATURAMENTO_ABREV",
+                            "tipo": "VARCHAR",
+                            "distintos": "65",
+                            "nulos": "3",
+                            "pct_distintos": "90.28%",
+                            "pct_nulos": "4.17%",
+                            "cardinalidade": "ALTA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📏 Extremos (Min/Max)  - `BI_DIM_TIPO_FATURAMENTO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "DW_TIPO_FATURAMENTO",
+                            "minimo": "-3",
+                            "maximo": "33543"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "title": "Relatório de Profiling: `raw/atraso_dim`"
+}

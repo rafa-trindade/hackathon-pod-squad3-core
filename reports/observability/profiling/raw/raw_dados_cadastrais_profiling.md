@@ -102,16 +102,16 @@
 
 | valor       |   qtd |
 |:------------|------:|
-| U8Z9ZZ8N8XZ |     6 |
-| ZX77YX8WNWN |     6 |
-| 888W78UZYYT |     6 |
-| 7X7NZ79YWU9 |     6 |
-| WXZY8TNZ7XZ |     6 |
-| Y77ZYUXU8NW |     6 |
-| ZZZZZZZX7T9 |     6 |
-| WW7NWZ9Y8ZW |     6 |
-| ZZTZ799U79T |     6 |
 | XX9Z8T8YUZT |     6 |
+| Y77ZYUXU8NW |     6 |
+| U8Z9ZZ8N8XZ |     6 |
+| WXZY8TNZ7XZ |     6 |
+| ZX77YX8WNWN |     6 |
+| WW7NWZ9Y8ZW |     6 |
+| 7X7NZ79YWU9 |     6 |
+| ZZTZ799U79T |     6 |
+| ZZZZZZZX7T9 |     6 |
+| 888W78UZYYT |     6 |
 
 #### Coluna: `SAFRA`
 
@@ -177,8 +177,8 @@
 | 10/06/1981 |   349 |
 | 05/06/1981 |   348 |
 | 20/09/1985 |   346 |
-| 12/10/1989 |   345 |
 | 10/03/1988 |   345 |
+| 12/10/1989 |   345 |
 | 08/06/1982 |   344 |
 | 06/06/1988 |   343 |
 | 09/05/1988 |   342 |

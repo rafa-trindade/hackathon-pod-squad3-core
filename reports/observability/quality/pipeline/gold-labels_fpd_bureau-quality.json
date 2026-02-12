@@ -1,0 +1,77 @@
+{
+    "report_type": "Pipeline Quality",
+    "tests": [
+        {
+            "test": "Unicidade no Grão",
+            "status": "PASS",
+            "obs": "0 duplicatas"
+        },
+        {
+            "test": "Missing FPD Gold = 0",
+            "status": "PASS",
+            "obs": "0 nulos"
+        },
+        {
+            "test": "Distribuição Safra 202410",
+            "status": "PASS",
+            "obs": "16.2%"
+        },
+        {
+            "test": "Distribuição Safra 202411",
+            "status": "PASS",
+            "obs": "17.3%"
+        },
+        {
+            "test": "Distribuição Safra 202412",
+            "status": "PASS",
+            "obs": "16.9%"
+        },
+        {
+            "test": "Distribuição Safra 202501",
+            "status": "PASS",
+            "obs": "17.2%"
+        },
+        {
+            "test": "Distribuição Safra 202502",
+            "status": "PASS",
+            "obs": "15.9%"
+        },
+        {
+            "test": "Distribuição Safra 202503",
+            "status": "PASS",
+            "obs": "16.6%"
+        },
+        {
+            "test": "Overlap dados_cadastrais",
+            "status": "PASS",
+            "obs": "100.00% de match"
+        },
+        {
+            "test": "Overlap score_bureau_movel",
+            "status": "PASS",
+            "obs": "100.00% de match"
+        },
+        {
+            "test": "Overlap atraso",
+            "status": "PASS",
+            "obs": "77.11% de match"
+        },
+        {
+            "test": "Overlap pagamento",
+            "status": "PASS",
+            "obs": "71.84% de match"
+        },
+        {
+            "test": "Overlap recarga",
+            "status": "PASS",
+            "obs": "90.68% de match"
+        },
+        {
+            "test": "Saneamento (Missing)",
+            "status": "INFO",
+            "obs": "Descartados 1,161,410 registros (30.60%)"
+        }
+    ],
+    "title": "",
+    "run_id": ""
+}

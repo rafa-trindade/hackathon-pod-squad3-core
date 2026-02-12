@@ -1,4 +1,4 @@
-# Relatório de Profiling: `gold/labels_fpd_bureau` - `20260129`
+# Relatório de Profiling: `gold/labels_fpd_bureau` - `20260212`
 
 ### 🔑 Garantia de Unicidade: `gold/labels_fpd_bureau`
 - **Chave Técnica:** `num_cpf, safra, prod`
@@ -50,7 +50,7 @@
 #### Coluna: `ingestion_ts`
 | min                              | max                              |
 |:---------------------------------|:---------------------------------|
-| 2026-01-29 02:20:47.838586-03:00 | 2026-01-29 02:20:47.838586-03:00 |
+| 2026-02-12 01:29:41.180523-03:00 | 2026-02-12 01:29:41.180523-03:00 |
 
 
 
@@ -72,12 +72,12 @@
 | ZZZZZZZX7T9 |     6 |
 | 7X7NZ79YWU9 |     6 |
 | ZW9TYZXTWTZ |     5 |
-| ZZTU7ZZZY78 |     5 |
 | XYUZ8ZXUUZ9 |     5 |
-| ZZTZ799U79T |     5 |
-| Y97YZZX88TY |     5 |
 | ZTZTWZXTYZX |     5 |
 | XYTY9ZX879Z |     5 |
+| ZZTZ799U79T |     5 |
+| Y97YZZX88TY |     5 |
+| ZZTU7ZZZY78 |     5 |
 | YY8U879X87Z |     5 |
 
 #### Coluna: `safra`
@@ -114,13 +114,13 @@
 
 |    valor |     qtd |
 |---------:|--------:|
-| 20260129 | 2633900 |
+| 20260212 | 2633900 |
 
 #### Coluna: `ingestion_ts`
 
 | valor                         |     qtd |
 |:------------------------------|--------:|
-| 2026-01-29 02:20:47.838586-03 | 2633900 |
+| 2026-02-12 01:29:41.180523-03 | 2633900 |
 
 #### Coluna: `ano_mes`
 

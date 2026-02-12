@@ -1,0 +1,250 @@
+{
+    "report_type": "Pipeline Execution",
+    "title": "Sumário de Execução do Pipeline",
+    "timestamp": "2026-02-12",
+    "run_id": "20260212",
+    "operador": "rafael",
+    "tempo_total": "00:48:27",
+    "steps": [
+        {
+            "step": "QUALITY RAW",
+            "status": "✅ OK",
+            "duration": "00:00:04"
+        },
+        {
+            "step": "PROFILING RAW - atraso_dim",
+            "status": "✅ OK",
+            "duration": "00:00:01"
+        },
+        {
+            "step": "PROFILING RAW - atraso",
+            "status": "✅ OK",
+            "duration": "00:00:54"
+        },
+        {
+            "step": "PROFILING RAW - dados_cadastrais",
+            "status": "✅ OK",
+            "duration": "00:00:09"
+        },
+        {
+            "step": "PROFILING RAW - pagamento",
+            "status": "✅ OK",
+            "duration": "00:00:46"
+        },
+        {
+            "step": "PROFILING RAW - recarga_dim",
+            "status": "✅ OK",
+            "duration": "00:00:08"
+        },
+        {
+            "step": "PROFILING RAW - recarga",
+            "status": "✅ OK",
+            "duration": "00:00:45"
+        },
+        {
+            "step": "PROFILING RAW - score_bureau",
+            "status": "✅ OK",
+            "duration": "00:00:03"
+        },
+        {
+            "step": "PROFILING RAW - telco",
+            "status": "✅ OK",
+            "duration": "00:00:05"
+        },
+        {
+            "step": "BRONZE - atraso",
+            "status": "✅ OK",
+            "duration": "00:02:48"
+        },
+        {
+            "step": "BRONZE - atraso_dim",
+            "status": "✅ OK",
+            "duration": "00:00:02"
+        },
+        {
+            "step": "BRONZE - dados_cadastrais",
+            "status": "✅ OK",
+            "duration": "00:00:12"
+        },
+        {
+            "step": "BRONZE - pagamento",
+            "status": "✅ OK",
+            "duration": "00:02:35"
+        },
+        {
+            "step": "BRONZE - recarga",
+            "status": "✅ OK",
+            "duration": "00:03:19"
+        },
+        {
+            "step": "BRONZE - recarga_dim",
+            "status": "✅ OK",
+            "duration": "00:00:14"
+        },
+        {
+            "step": "BRONZE - score_bureau",
+            "status": "✅ OK",
+            "duration": "00:00:04"
+        },
+        {
+            "step": "BRONZE - telco",
+            "status": "✅ OK",
+            "duration": "00:00:12"
+        },
+        {
+            "step": "PROFILING BRONZE - atraso_dim",
+            "status": "✅ OK",
+            "duration": "00:00:00"
+        },
+        {
+            "step": "PROFILING BRONZE - atraso",
+            "status": "✅ OK",
+            "duration": "00:01:10"
+        },
+        {
+            "step": "PROFILING BRONZE - dados_cadastrais",
+            "status": "✅ OK",
+            "duration": "00:00:06"
+        },
+        {
+            "step": "PROFILING BRONZE - pagamento",
+            "status": "✅ OK",
+            "duration": "00:01:06"
+        },
+        {
+            "step": "PROFILING BRONZE - recarga_dim",
+            "status": "✅ OK",
+            "duration": "00:00:01"
+        },
+        {
+            "step": "PROFILING BRONZE - recarga",
+            "status": "✅ OK",
+            "duration": "00:01:11"
+        },
+        {
+            "step": "PROFILING BRONZE - score_bureau",
+            "status": "✅ OK",
+            "duration": "00:00:02"
+        },
+        {
+            "step": "PROFILING BRONZE - telco",
+            "status": "✅ OK",
+            "duration": "00:00:08"
+        },
+        {
+            "step": "INSPECT BRONZE",
+            "status": "✅ OK",
+            "duration": "00:00:03"
+        },
+        {
+            "step": "SILVER - atraso",
+            "status": "✅ OK",
+            "duration": "00:05:39"
+        },
+        {
+            "step": "SILVER - dados_cadastrais",
+            "status": "✅ OK",
+            "duration": "00:00:15"
+        },
+        {
+            "step": "SILVER - pagamento",
+            "status": "✅ OK",
+            "duration": "00:04:31"
+        },
+        {
+            "step": "SILVER - recarga",
+            "status": "✅ OK",
+            "duration": "00:12:17"
+        },
+        {
+            "step": "SILVER - score_bureau",
+            "status": "✅ OK",
+            "duration": "00:00:06"
+        },
+        {
+            "step": "SILVER - telco",
+            "status": "✅ OK",
+            "duration": "00:00:20"
+        },
+        {
+            "step": "PROFILING SILVER - atraso",
+            "status": "✅ OK",
+            "duration": "00:01:15"
+        },
+        {
+            "step": "PROFILING SILVER - dados_cadastrais",
+            "status": "✅ OK",
+            "duration": "00:00:06"
+        },
+        {
+            "step": "PROFILING SILVER - pagamento",
+            "status": "✅ OK",
+            "duration": "00:01:06"
+        },
+        {
+            "step": "PROFILING SILVER - recarga",
+            "status": "✅ OK",
+            "duration": "00:01:39"
+        },
+        {
+            "step": "PROFILING SILVER - score_bureau",
+            "status": "✅ OK",
+            "duration": "00:00:02"
+        },
+        {
+            "step": "PROFILING SILVER - telco",
+            "status": "✅ OK",
+            "duration": "00:00:08"
+        },
+        {
+            "step": "INSPECT SILVER",
+            "status": "✅ OK",
+            "duration": "00:00:03"
+        },
+        {
+            "step": "GOLD - labels_fpd",
+            "status": "✅ OK",
+            "duration": "00:00:09"
+        },
+        {
+            "step": "GOLD - abt_base_prod",
+            "status": "✅ OK",
+            "duration": "00:01:17"
+        },
+        {
+            "step": "GOLD - labels_fpd_bureau",
+            "status": "✅ OK",
+            "duration": "00:00:12"
+        },
+        {
+            "step": "GOLD - abt_base_cmv",
+            "status": "✅ OK",
+            "duration": "00:02:15"
+        },
+        {
+            "step": "PROFILING GOLD - labels_fpd",
+            "status": "✅ OK",
+            "duration": "00:00:02"
+        },
+        {
+            "step": "PROFILING GOLD - abt_base_prod",
+            "status": "✅ OK",
+            "duration": "00:00:13"
+        },
+        {
+            "step": "PROFILING GOLD - labels_fpd_bureau",
+            "status": "✅ OK",
+            "duration": "00:00:02"
+        },
+        {
+            "step": "PROFILING GOLD - abt_base_cmv",
+            "status": "✅ OK",
+            "duration": "00:00:21"
+        },
+        {
+            "step": "INSPECT GOLD",
+            "status": "✅ OK",
+            "duration": "00:00:01"
+        }
+    ]
+}

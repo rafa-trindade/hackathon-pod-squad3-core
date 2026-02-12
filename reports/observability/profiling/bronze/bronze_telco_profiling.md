@@ -1,4 +1,4 @@
-# Relatório de Profiling: `bronze/telco` - `20260129`
+# Relatório de Profiling: `bronze/telco` - `20260212`
 
 ### 🔑 Garantia de Unicidade: `bronze/telco`
 - **Chave Técnica:** `num_cpf, safra, prod, flag_instalacao`
@@ -120,7 +120,7 @@
 #### Coluna: `ingestion_ts`
 | min                              | max                              |
 |:---------------------------------|:---------------------------------|
-| 2026-01-29 01:48:00.532794-03:00 | 2026-01-29 01:48:00.532794-03:00 |
+| 2026-02-12 00:56:36.659605-03:00 | 2026-02-12 00:56:36.659605-03:00 |
 
 
 
@@ -353,15 +353,15 @@
 | valor       |   qtd |
 |:------------|------:|
 | 888W78UZYYT |     6 |
-| ZNTN78ZW7XX |     5 |
-| ZZUNWZYXXTZ |     5 |
-| XYUZ8ZXUUZ9 |     5 |
-| Y79XYXNN8T8 |     5 |
-| T9ZYTXZ7WYZ |     5 |
-| ZWZT9ZZUZU8 |     5 |
+| ZUZUZZX7X88 |     5 |
 | ZW9TYZXTWTZ |     5 |
-| WXXT7WUX8Y9 |     5 |
-| XUU89ZXU7YU |     5 |
+| ZXNUU77UYZ8 |     5 |
+| 7ZU8NNN7XUN |     5 |
+| 8NYZZZUWTYW |     5 |
+| ZTZTWZXTYZX |     5 |
+| UZTWX7NU8UY |     5 |
+| XNW79U9Z7WN |     5 |
+| XNXXWZZ97TZ |     5 |
 
 #### Coluna: `safra`
 
@@ -1428,7 +1428,7 @@
 
 | valor                         |     qtd |
 |:------------------------------|--------:|
-| 2026-01-29 01:48:00.532794-03 | 1367104 |
+| 2026-02-12 00:56:36.659605-03 | 1367104 |
 
 #### Coluna: `ano_mes`
 
@@ -1445,7 +1445,7 @@
 
 |    valor |     qtd |
 |---------:|--------:|
-| 20260129 | 1367104 |
+| 20260212 | 1367104 |
 
 
 

@@ -1,0 +1,17 @@
+{
+    "report_type": "Pipeline Quality",
+    "tests": [
+        {
+            "test": "PAREAMENTO (CHAVE -> DESC)",
+            "status": "STATUS",
+            "obs": "NÃO INFORMADOS"
+        },
+        {
+            "test": "dw_tipo_faturamento -> dsc_tipo_faturamento",
+            "status": "PASS",
+            "obs": "0"
+        }
+    ],
+    "title": "",
+    "run_id": ""
+}

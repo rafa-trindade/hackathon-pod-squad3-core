@@ -1,0 +1,432 @@
+{
+    "report_type": "Profiling",
+    "source_file": "gold-labels_fpd_bureau-profiling.md",
+    "sections": [
+        {
+            "header": "🔑 Garantia de Unicidade: `gold/labels_fpd_bureau`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "CHAVE_TECNICA",
+                            "distintos": "2633900",
+                            "nulos": "0",
+                            "duplicados": "0",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "0.0%",
+                            "cardinalidade": "MÁXIMA"
+                        }
+                    ]
+                }
+            ],
+            "metadata": {
+                "Chave Técnica": "num_cpf, safra, prod",
+                "Tipo": "COMPOSTA"
+            }
+        },
+        {
+            "header": "🚩 Diagnóstico e Observações Técnicas",
+            "content": [
+                {
+                    "type": "text",
+                    "data": "✅ Sucesso: Unicidade Garantida. O grão da tabela está preservado.\n\n\n---"
+                }
+            ]
+        },
+        {
+            "header": "📊 Schema e Estatísticas: `gold/labels_fpd_bureau`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "column_name": "num_cpf",
+                            "column_type": "VARCHAR",
+                            "distintos": "2341772",
+                            "nulos": "0",
+                            "duplicados": "292128",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "11.09%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "column_name": "safra",
+                            "column_type": "DATE",
+                            "distintos": "6",
+                            "nulos": "0",
+                            "duplicados": "2633894",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "prod",
+                            "column_type": "VARCHAR",
+                            "distintos": "1",
+                            "nulos": "0",
+                            "duplicados": "2633899",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "fpd",
+                            "column_type": "BOOLEAN",
+                            "distintos": "2",
+                            "nulos": "0",
+                            "duplicados": "2633898",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "flag_instalacao",
+                            "column_type": "BOOLEAN",
+                            "distintos": "1",
+                            "nulos": "0",
+                            "duplicados": "2633899",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "run_id",
+                            "column_type": "BIGINT",
+                            "distintos": "1",
+                            "nulos": "0",
+                            "duplicados": "2633899",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "ingestion_ts",
+                            "column_type": "TIMESTAMP WITH TIME ZONE",
+                            "distintos": "1",
+                            "nulos": "0",
+                            "duplicados": "2633899",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "column_name": "ano_mes",
+                            "column_type": "BIGINT",
+                            "distintos": "6",
+                            "nulos": "0",
+                            "duplicados": "2633894",
+                            "pct_nulos": "0.0%",
+                            "pct_duplicados": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📦 Volumetria: `gold/labels_fpd_bureau`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "diretorio": "ano_mes=202410",
+                            "qtd_arquivos": "1",
+                            "registros": "426.104",
+                            "colunas": "8",
+                            "tamanho_comprimido_mib": "3.8",
+                            "tamanho_descomprimido_mib": "6.2"
+                        },
+                        {
+                            "diretorio": "ano_mes=202411",
+                            "qtd_arquivos": "1",
+                            "registros": "454.572",
+                            "colunas": "8",
+                            "tamanho_comprimido_mib": "4.05",
+                            "tamanho_descomprimido_mib": "6.61"
+                        },
+                        {
+                            "diretorio": "ano_mes=202412",
+                            "qtd_arquivos": "1",
+                            "registros": "445.154",
+                            "colunas": "8",
+                            "tamanho_comprimido_mib": "3.97",
+                            "tamanho_descomprimido_mib": "6.48"
+                        },
+                        {
+                            "diretorio": "ano_mes=202501",
+                            "qtd_arquivos": "1",
+                            "registros": "452.621",
+                            "colunas": "8",
+                            "tamanho_comprimido_mib": "4.03",
+                            "tamanho_descomprimido_mib": "6.58"
+                        },
+                        {
+                            "diretorio": "ano_mes=202502",
+                            "qtd_arquivos": "1",
+                            "registros": "419.453",
+                            "colunas": "8",
+                            "tamanho_comprimido_mib": "3.75",
+                            "tamanho_descomprimido_mib": "6.1"
+                        },
+                        {
+                            "diretorio": "ano_mes=202503",
+                            "qtd_arquivos": "1",
+                            "registros": "435.996",
+                            "colunas": "8",
+                            "tamanho_comprimido_mib": "3.89",
+                            "tamanho_descomprimido_mib": "6.34"
+                        },
+                        {
+                            "diretorio": "TOTAL",
+                            "qtd_arquivos": "6",
+                            "registros": "2.633.900",
+                            "colunas": "8",
+                            "tamanho_comprimido_mib": "23.5",
+                            "tamanho_descomprimido_mib": "38.31"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📅 Range de Datas: `gold/labels_fpd_bureau`",
+            "content": []
+        },
+        {
+            "header": "Coluna: `safra`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "2024-10-01T00:00:00.000000",
+                            "max": "2025-03-01T00:00:00.000000"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `ingestion_ts`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "min": "2026-02-12 01:29:41.180523-03:00",
+                            "max": "2026-02-12 01:29:41.180523-03:00"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔢 Range de Valores Numéricos: `gold/labels_fpd_bureau`",
+            "content": [
+                {
+                    "type": "text",
+                    "data": "> ⚠️ Nenhuma coluna numérica relevante encontrada.\n\n\n\n---"
+                }
+            ]
+        },
+        {
+            "header": "🔟 Distribuição de Valores (Top 10): `gold/labels_fpd_bureau`",
+            "content": []
+        },
+        {
+            "header": "Coluna: `num_cpf`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "ZZZZZZZX7T9",
+                            "qtd": "6"
+                        },
+                        {
+                            "valor": "7X7NZ79YWU9",
+                            "qtd": "6"
+                        },
+                        {
+                            "valor": "ZW9TYZXTWTZ",
+                            "qtd": "5"
+                        },
+                        {
+                            "valor": "XYUZ8ZXUUZ9",
+                            "qtd": "5"
+                        },
+                        {
+                            "valor": "ZTZTWZXTYZX",
+                            "qtd": "5"
+                        },
+                        {
+                            "valor": "XYTY9ZX879Z",
+                            "qtd": "5"
+                        },
+                        {
+                            "valor": "ZZTZ799U79T",
+                            "qtd": "5"
+                        },
+                        {
+                            "valor": "Y97YZZX88TY",
+                            "qtd": "5"
+                        },
+                        {
+                            "valor": "ZZTU7ZZZY78",
+                            "qtd": "5"
+                        },
+                        {
+                            "valor": "YY8U879X87Z",
+                            "qtd": "5"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `safra`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "2024-11-01",
+                            "qtd": "454572"
+                        },
+                        {
+                            "valor": "2025-01-01",
+                            "qtd": "452621"
+                        },
+                        {
+                            "valor": "2024-12-01",
+                            "qtd": "445154"
+                        },
+                        {
+                            "valor": "2025-03-01",
+                            "qtd": "435996"
+                        },
+                        {
+                            "valor": "2024-10-01",
+                            "qtd": "426104"
+                        },
+                        {
+                            "valor": "2025-02-01",
+                            "qtd": "419453"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `prod`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "CMV",
+                            "qtd": "2633900"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `fpd`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "false",
+                            "qtd": "2074671"
+                        },
+                        {
+                            "valor": "true",
+                            "qtd": "559229"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `flag_instalacao`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "true",
+                            "qtd": "2633900"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `run_id`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "20260212",
+                            "qtd": "2633900"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `ingestion_ts`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "2026-02-12 01:29:41.180523-03",
+                            "qtd": "2633900"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Coluna: `ano_mes`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "valor": "202411",
+                            "qtd": "454572"
+                        },
+                        {
+                            "valor": "202501",
+                            "qtd": "452621"
+                        },
+                        {
+                            "valor": "202412",
+                            "qtd": "445154"
+                        },
+                        {
+                            "valor": "202503",
+                            "qtd": "435996"
+                        },
+                        {
+                            "valor": "202410",
+                            "qtd": "426104"
+                        },
+                        {
+                            "valor": "202502",
+                            "qtd": "419453"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "title": "Relatório de Profiling: `gold/labels_fpd_bureau` - `20260212`"
+}

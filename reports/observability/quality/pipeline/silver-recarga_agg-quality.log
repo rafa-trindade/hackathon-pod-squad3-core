@@ -1,10 +1,10 @@
-📋 QUALITY REPORT - recarga_aggregation | RUN: 20260129
+📋 QUALITY REPORT - recarga_aggregation | RUN: 20260212
 ----------------------------------------------------------------------------------
 PAREAMENTO (CHAVE -> DESC)                         | STATUS    | NÃO INFORMADOS 
 ----------------------------------------------------------------------------------
 cod_canal_aquisicao -> dsc_canal_aquisicao         | PASS      | 0
 dw_forma_pagamento -> dsc_forma_pagamento          | PASS      | 0
-dw_instituicao -> dsc_instituicao                  | WARN      | 6.849.477
+dw_instituicao -> dsc_instituicao                  | WARN      | 6.849.485
 dw_plano_tarifacao -> dsc_plano_tarifacao          | WARN      | 2.105.750
 cod_plataforma_atu -> dsc_plataforma_atu           | PASS      | 0
 cod_promocao -> dsc_promocao                       | WARN      | 2.105.750

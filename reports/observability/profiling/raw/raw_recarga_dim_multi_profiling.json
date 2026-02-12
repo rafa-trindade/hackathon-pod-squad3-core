@@ -1,0 +1,2102 @@
+{
+    "report_type": "Profiling",
+    "source_file": "raw_recarga_dim_multi_profiling.md",
+    "sections": [
+        {
+            "header": "📄 Arquivo: `BI_DIM_CANAL_AQUISICAO_CREDITO.csv`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `BI_DIM_CANAL_AQUISICAO_CREDITO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "BI_DIM_CANAL_AQUISICAO_CREDITO.csv",
+                            "Registros": "5.899",
+                            "Colunas": "12"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 5)  - `BI_DIM_CANAL_AQUISICAO_CREDITO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "COD_CANAL_AQUISICAO": "14929",
+                            "DSC_CANAL_AQUISICAO": "SS/AA EBV - GOLFE TELECOM",
+                            "COD_SISTEMA_DW": "21",
+                            "DAT_ATUALIZACAO_DW": "08JUL2020:08:22:50",
+                            "DAT_CRIACAO_DW": "16APR2015:22:19:21",
+                            "COD_CANAL_AQUISICAO_BI": "-3",
+                            "DSC_CANAL_AQUISICAO_BI": "-3",
+                            "COD_AGENTE_CREDITO": "8210",
+                            "DAT_EXPIRACAO_DW": "08JUL2020:00:00:00",
+                            "COD_TIPO_CREDITO": "CV",
+                            "COD_TIPO_INSTITUICAO": "<NA>",
+                            "DSC_TIPO_INSTITUICAO": ""
+                        },
+                        {
+                            "COD_CANAL_AQUISICAO": "14930",
+                            "DSC_CANAL_AQUISICAO": "SS/AA EBV - MARAJO COMERCI",
+                            "COD_SISTEMA_DW": "21",
+                            "DAT_ATUALIZACAO_DW": "08JUL2020:08:22:50",
+                            "DAT_CRIACAO_DW": "16APR2015:22:19:21",
+                            "COD_CANAL_AQUISICAO_BI": "-3",
+                            "DSC_CANAL_AQUISICAO_BI": "-3",
+                            "COD_AGENTE_CREDITO": "8211",
+                            "DAT_EXPIRACAO_DW": "08JUL2020:00:00:00",
+                            "COD_TIPO_CREDITO": "CV",
+                            "COD_TIPO_INSTITUICAO": "<NA>",
+                            "DSC_TIPO_INSTITUICAO": ""
+                        },
+                        {
+                            "COD_CANAL_AQUISICAO": "14931",
+                            "DSC_CANAL_AQUISICAO": "SS/AA CONCEL",
+                            "COD_SISTEMA_DW": "21",
+                            "DAT_ATUALIZACAO_DW": "08JUL2020:08:22:50",
+                            "DAT_CRIACAO_DW": "16APR2015:22:19:21",
+                            "COD_CANAL_AQUISICAO_BI": "-3",
+                            "DSC_CANAL_AQUISICAO_BI": "-3",
+                            "COD_AGENTE_CREDITO": "8212",
+                            "DAT_EXPIRACAO_DW": "08JUL2020:00:00:00",
+                            "COD_TIPO_CREDITO": "CV",
+                            "COD_TIPO_INSTITUICAO": "<NA>",
+                            "DSC_TIPO_INSTITUICAO": ""
+                        },
+                        {
+                            "COD_CANAL_AQUISICAO": "14932",
+                            "DSC_CANAL_AQUISICAO": "SS/AA VIRTUAL CELULARES",
+                            "COD_SISTEMA_DW": "21",
+                            "DAT_ATUALIZACAO_DW": "08JUL2020:08:22:50",
+                            "DAT_CRIACAO_DW": "16APR2015:22:19:21",
+                            "COD_CANAL_AQUISICAO_BI": "-3",
+                            "DSC_CANAL_AQUISICAO_BI": "-3",
+                            "COD_AGENTE_CREDITO": "8213",
+                            "DAT_EXPIRACAO_DW": "08JUL2020:00:00:00",
+                            "COD_TIPO_CREDITO": "CV",
+                            "COD_TIPO_INSTITUICAO": "<NA>",
+                            "DSC_TIPO_INSTITUICAO": ""
+                        },
+                        {
+                            "COD_CANAL_AQUISICAO": "14933",
+                            "DSC_CANAL_AQUISICAO": "SS/AA PORTOCEL",
+                            "COD_SISTEMA_DW": "21",
+                            "DAT_ATUALIZACAO_DW": "08JUL2020:08:22:50",
+                            "DAT_CRIACAO_DW": "16APR2015:22:19:21",
+                            "COD_CANAL_AQUISICAO_BI": "-3",
+                            "DSC_CANAL_AQUISICAO_BI": "-3",
+                            "COD_AGENTE_CREDITO": "8214",
+                            "DAT_EXPIRACAO_DW": "08JUL2020:00:00:00",
+                            "COD_TIPO_CREDITO": "CV",
+                            "COD_TIPO_INSTITUICAO": "<NA>",
+                            "DSC_TIPO_INSTITUICAO": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `BI_DIM_CANAL_AQUISICAO_CREDITO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "COD_CANAL_AQUISICAO",
+                            "tipo": "BIGINT",
+                            "distintos": "5899",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DSC_CANAL_AQUISICAO",
+                            "tipo": "VARCHAR",
+                            "distintos": "4243",
+                            "nulos": "0",
+                            "pct_distintos": "71.93%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "COD_SISTEMA_DW",
+                            "tipo": "BIGINT",
+                            "distintos": "9",
+                            "nulos": "0",
+                            "pct_distintos": "0.15%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "DAT_ATUALIZACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "79",
+                            "nulos": "0",
+                            "pct_distintos": "1.34%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "DAT_CRIACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "321",
+                            "nulos": "0",
+                            "pct_distintos": "5.44%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "COD_CANAL_AQUISICAO_BI",
+                            "tipo": "BIGINT",
+                            "distintos": "17",
+                            "nulos": "0",
+                            "pct_distintos": "0.29%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "DSC_CANAL_AQUISICAO_BI",
+                            "tipo": "VARCHAR",
+                            "distintos": "19",
+                            "nulos": "0",
+                            "pct_distintos": "0.32%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "COD_AGENTE_CREDITO",
+                            "tipo": "VARCHAR",
+                            "distintos": "5105",
+                            "nulos": "294",
+                            "pct_distintos": "86.54%",
+                            "pct_nulos": "4.98%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DAT_EXPIRACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "32",
+                            "nulos": "990",
+                            "pct_distintos": "0.54%",
+                            "pct_nulos": "16.78%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "COD_TIPO_CREDITO",
+                            "tipo": "VARCHAR",
+                            "distintos": "3",
+                            "nulos": "294",
+                            "pct_distintos": "0.05%",
+                            "pct_nulos": "4.98%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "COD_TIPO_INSTITUICAO",
+                            "tipo": "BIGINT",
+                            "distintos": "11",
+                            "nulos": "5268",
+                            "pct_distintos": "0.19%",
+                            "pct_nulos": "89.3%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "DSC_TIPO_INSTITUICAO",
+                            "tipo": "VARCHAR",
+                            "distintos": "13",
+                            "nulos": "5268",
+                            "pct_distintos": "0.22%",
+                            "pct_nulos": "89.3%",
+                            "cardinalidade": "MEDIA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📏 Extremos (Min/Max)  - `BI_DIM_CANAL_AQUISICAO_CREDITO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "COD_CANAL_AQUISICAO",
+                            "minimo": "-3",
+                            "maximo": "17708"
+                        },
+                        {
+                            "coluna": "COD_SISTEMA_DW",
+                            "minimo": "-3",
+                            "maximo": "21"
+                        },
+                        {
+                            "coluna": "COD_CANAL_AQUISICAO_BI",
+                            "minimo": "-3",
+                            "maximo": "16"
+                        },
+                        {
+                            "coluna": "COD_TIPO_INSTITUICAO",
+                            "minimo": "1",
+                            "maximo": "13"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📄 Arquivo: `BI_DIM_FORMA_PAGAMENTO.csv`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `BI_DIM_FORMA_PAGAMENTO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "BI_DIM_FORMA_PAGAMENTO.csv",
+                            "Registros": "9",
+                            "Colunas": "5"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 5)  - `BI_DIM_FORMA_PAGAMENTO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "DW_FORMA_PAGAMENTO": "-1",
+                            "COD_FORMA_PAGAMENTO": "-1",
+                            "DSC_FORMA_PAGAMENTO": "Não se Aplica",
+                            "DAT_CRIACAO_DW": "21FEB2008:17:11:28",
+                            "DAT_EXPIRACAO_DW": ""
+                        },
+                        {
+                            "DW_FORMA_PAGAMENTO": "-2",
+                            "COD_FORMA_PAGAMENTO": "-2",
+                            "DSC_FORMA_PAGAMENTO": "Não Determinado",
+                            "DAT_CRIACAO_DW": "21FEB2008:17:11:29",
+                            "DAT_EXPIRACAO_DW": ""
+                        },
+                        {
+                            "DW_FORMA_PAGAMENTO": "-3",
+                            "COD_FORMA_PAGAMENTO": "-3",
+                            "DSC_FORMA_PAGAMENTO": "Não Informado",
+                            "DAT_CRIACAO_DW": "21FEB2008:17:11:29",
+                            "DAT_EXPIRACAO_DW": ""
+                        },
+                        {
+                            "DW_FORMA_PAGAMENTO": "11",
+                            "COD_FORMA_PAGAMENTO": "CP",
+                            "DSC_FORMA_PAGAMENTO": "Credito de PrePago",
+                            "DAT_CRIACAO_DW": "15FEB2008:11:27:40",
+                            "DAT_EXPIRACAO_DW": ""
+                        },
+                        {
+                            "DW_FORMA_PAGAMENTO": "12",
+                            "COD_FORMA_PAGAMENTO": "DD",
+                            "DSC_FORMA_PAGAMENTO": "Debito Direto",
+                            "DAT_CRIACAO_DW": "15FEB2008:11:27:40",
+                            "DAT_EXPIRACAO_DW": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `BI_DIM_FORMA_PAGAMENTO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "DW_FORMA_PAGAMENTO",
+                            "tipo": "BIGINT",
+                            "distintos": "9",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "COD_FORMA_PAGAMENTO",
+                            "tipo": "VARCHAR",
+                            "distintos": "9",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DSC_FORMA_PAGAMENTO",
+                            "tipo": "VARCHAR",
+                            "distintos": "9",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DAT_CRIACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "4",
+                            "nulos": "0",
+                            "pct_distintos": "44.44%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DAT_EXPIRACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "0",
+                            "nulos": "9",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📏 Extremos (Min/Max)  - `BI_DIM_FORMA_PAGAMENTO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "DW_FORMA_PAGAMENTO",
+                            "minimo": "-3",
+                            "maximo": "15"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📄 Arquivo: `BI_DIM_INSTITUICAO.csv`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `BI_DIM_INSTITUICAO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "BI_DIM_INSTITUICAO.csv",
+                            "Registros": "550",
+                            "Colunas": "9"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 5)  - `BI_DIM_INSTITUICAO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "DW_INSTITUICAO": "13926",
+                            "COD_INSTITUICAO": "416",
+                            "DSC_INSTITUICAO": "Banco Inter",
+                            "COD_TIPO_INSTITUICAO": "1",
+                            "DSC_TIPO_INSTITUICAO": "Banco",
+                            "COD_SISTEMA_DW": "21",
+                            "DAT_EXPIRACAO_DW": "26AUG2021:00:18:55",
+                            "DAT_CRIACAO_DW": "5416",
+                            "COD_AGENTE": ""
+                        },
+                        {
+                            "DW_INSTITUICAO": "13927",
+                            "COD_INSTITUICAO": "490",
+                            "DSC_INSTITUICAO": "MWallet/Bradesco",
+                            "COD_TIPO_INSTITUICAO": "1",
+                            "DSC_TIPO_INSTITUICAO": "Banco",
+                            "COD_SISTEMA_DW": "21",
+                            "DAT_EXPIRACAO_DW": "26AUG2021:00:18:55",
+                            "DAT_CRIACAO_DW": "5490",
+                            "COD_AGENTE": ""
+                        },
+                        {
+                            "DW_INSTITUICAO": "13928",
+                            "COD_INSTITUICAO": "514",
+                            "DSC_INSTITUICAO": "Santander/C.Bancario",
+                            "COD_TIPO_INSTITUICAO": "1",
+                            "DSC_TIPO_INSTITUICAO": "Banco",
+                            "COD_SISTEMA_DW": "21",
+                            "DAT_EXPIRACAO_DW": "26AUG2021:00:18:55",
+                            "DAT_CRIACAO_DW": "5514",
+                            "COD_AGENTE": ""
+                        },
+                        {
+                            "DW_INSTITUICAO": "13929",
+                            "COD_INSTITUICAO": "24",
+                            "DSC_INSTITUICAO": "CEF/C.Bancario",
+                            "COD_TIPO_INSTITUICAO": "1",
+                            "DSC_TIPO_INSTITUICAO": "Banco",
+                            "COD_SISTEMA_DW": "21",
+                            "DAT_EXPIRACAO_DW": "26AUG2021:00:18:55",
+                            "DAT_CRIACAO_DW": "5024",
+                            "COD_AGENTE": ""
+                        },
+                        {
+                            "DW_INSTITUICAO": "13930",
+                            "COD_INSTITUICAO": "69",
+                            "DSC_INSTITUICAO": "Lemon Bank",
+                            "COD_TIPO_INSTITUICAO": "1",
+                            "DSC_TIPO_INSTITUICAO": "Banco",
+                            "COD_SISTEMA_DW": "21",
+                            "DAT_EXPIRACAO_DW": "26AUG2021:00:18:55",
+                            "DAT_CRIACAO_DW": "5069",
+                            "COD_AGENTE": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `BI_DIM_INSTITUICAO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "DW_INSTITUICAO",
+                            "tipo": "BIGINT",
+                            "distintos": "550",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "COD_INSTITUICAO",
+                            "tipo": "BIGINT",
+                            "distintos": "550",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DSC_INSTITUICAO",
+                            "tipo": "VARCHAR",
+                            "distintos": "550",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "COD_TIPO_INSTITUICAO",
+                            "tipo": "BIGINT",
+                            "distintos": "11",
+                            "nulos": "0",
+                            "pct_distintos": "2.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "DSC_TIPO_INSTITUICAO",
+                            "tipo": "VARCHAR",
+                            "distintos": "11",
+                            "nulos": "0",
+                            "pct_distintos": "2.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "COD_SISTEMA_DW",
+                            "tipo": "BIGINT",
+                            "distintos": "1",
+                            "nulos": "0",
+                            "pct_distintos": "0.18%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "DAT_EXPIRACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "0",
+                            "nulos": "550",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DAT_CRIACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "2",
+                            "nulos": "0",
+                            "pct_distintos": "0.36%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "COD_AGENTE",
+                            "tipo": "BIGINT",
+                            "distintos": "550",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📏 Extremos (Min/Max)  - `BI_DIM_INSTITUICAO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "DW_INSTITUICAO",
+                            "minimo": "13926",
+                            "maximo": "14477"
+                        },
+                        {
+                            "coluna": "COD_INSTITUICAO",
+                            "minimo": "1",
+                            "maximo": "558"
+                        },
+                        {
+                            "coluna": "COD_TIPO_INSTITUICAO",
+                            "minimo": "1",
+                            "maximo": "13"
+                        },
+                        {
+                            "coluna": "COD_SISTEMA_DW",
+                            "minimo": "21",
+                            "maximo": "21"
+                        },
+                        {
+                            "coluna": "COD_AGENTE",
+                            "minimo": "5001",
+                            "maximo": "5558"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📄 Arquivo: `BI_DIM_PLANO_PRECO.csv`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `BI_DIM_PLANO_PRECO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "BI_DIM_PLANO_PRECO.csv",
+                            "Registros": "293.743",
+                            "Colunas": "25"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 5)  - `BI_DIM_PLANO_PRECO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "DW_PLANO": "533477",
+                            "COD_PLANO_PRECO": "50029231",
+                            "DSC_PLANO_PRECO": "Licitac?o Marinha do Brasil",
+                            "COD_TIPO_CLIENTE": "-1",
+                            "COD_SUB_TIPO_CLIENTE": "-1",
+                            "DW_TIPO_CLIENTE": "-1",
+                            "DAT_EFETIVACAO": "13OCT2017:23:18:06",
+                            "DAT_EXPIRACAO": "-3",
+                            "DSC_PLANO_PRECO_BI": "-3",
+                            "DSC_GRUPO_PLANO_BI": "-3",
+                            "DSC_TIPO_PLANO_BI": "A",
+                            "IND_AMDOCS_PLAT_PRE": "-1",
+                            "COD_TRATAMENTO_ESPECIAL": "35",
+                            "COD_SISTEMA_DW": "-3",
+                            "COD_TECNOLOGIA_DW": "20NOV2017:00:00:00",
+                            "DAT_EXPIRACAO_DW": "20NOV2017:00:15:25",
+                            "DAT_ATUALIZACAO_DW": "22AUG2017:00:15:10",
+                            "DAT_CRIACAO_DW": "50029231",
+                            "NUM_FRANQUIA_MINUTOS_BI": "",
+                            "NUM_FRANQUIA_REAIS_BI": "",
+                            "NUM_FRANQUIA_EVENTOS_BI": "",
+                            "NUM_FRANQUIA_VOLUME_BI": "",
+                            "COD_PLANO_COMPONENTE": "",
+                            "DSC_PLANO_PRECO_UNICO_BI": "",
+                            "DSC_MODALIDADE_PLANO": ""
+                        },
+                        {
+                            "DW_PLANO": "601796",
+                            "COD_PLANO_PRECO": "50029231",
+                            "DSC_PLANO_PRECO": "Licitação Marinha do Brasil",
+                            "COD_TIPO_CLIENTE": "-1",
+                            "COD_SUB_TIPO_CLIENTE": "-1",
+                            "DW_TIPO_CLIENTE": "-1",
+                            "DAT_EFETIVACAO": "20FEB2025:17:52:41",
+                            "DAT_EXPIRACAO": "-3",
+                            "DSC_PLANO_PRECO_BI": "-3",
+                            "DSC_GRUPO_PLANO_BI": "-3",
+                            "DSC_TIPO_PLANO_BI": "A",
+                            "IND_AMDOCS_PLAT_PRE": "-1",
+                            "COD_TRATAMENTO_ESPECIAL": "35",
+                            "COD_SISTEMA_DW": "-3",
+                            "COD_TECNOLOGIA_DW": "06APR2025:00:00:00",
+                            "DAT_EXPIRACAO_DW": "06APR2025:01:51:48",
+                            "DAT_ATUALIZACAO_DW": "08FEB2022:04:43:05",
+                            "DAT_CRIACAO_DW": "50029231",
+                            "NUM_FRANQUIA_MINUTOS_BI": "-3",
+                            "NUM_FRANQUIA_REAIS_BI": "",
+                            "NUM_FRANQUIA_EVENTOS_BI": "",
+                            "NUM_FRANQUIA_VOLUME_BI": "",
+                            "COD_PLANO_COMPONENTE": "",
+                            "DSC_PLANO_PRECO_UNICO_BI": "",
+                            "DSC_MODALIDADE_PLANO": ""
+                        },
+                        {
+                            "DW_PLANO": "548887",
+                            "COD_PLANO_PRECO": "50029231",
+                            "DSC_PLANO_PRECO": "Licitac?o Marinha do Brasil",
+                            "COD_TIPO_CLIENTE": "-1",
+                            "COD_SUB_TIPO_CLIENTE": "-1",
+                            "DW_TIPO_CLIENTE": "-1",
+                            "DAT_EFETIVACAO": "12MAY2019:12:23:52",
+                            "DAT_EXPIRACAO": "-3",
+                            "DSC_PLANO_PRECO_BI": "-3",
+                            "DSC_GRUPO_PLANO_BI": "-3",
+                            "DSC_TIPO_PLANO_BI": "A",
+                            "IND_AMDOCS_PLAT_PRE": "-1",
+                            "COD_TRATAMENTO_ESPECIAL": "35",
+                            "COD_SISTEMA_DW": "-3",
+                            "COD_TECNOLOGIA_DW": "16JUN2019:00:00:00",
+                            "DAT_EXPIRACAO_DW": "16JUN2019:00:29:37",
+                            "DAT_ATUALIZACAO_DW": "27MAY2019:00:33:52",
+                            "DAT_CRIACAO_DW": "50029231",
+                            "NUM_FRANQUIA_MINUTOS_BI": "",
+                            "NUM_FRANQUIA_REAIS_BI": "",
+                            "NUM_FRANQUIA_EVENTOS_BI": "",
+                            "NUM_FRANQUIA_VOLUME_BI": "",
+                            "COD_PLANO_COMPONENTE": "",
+                            "DSC_PLANO_PRECO_UNICO_BI": "",
+                            "DSC_MODALIDADE_PLANO": ""
+                        },
+                        {
+                            "DW_PLANO": "535237",
+                            "COD_PLANO_PRECO": "50029231",
+                            "DSC_PLANO_PRECO": "Licitac?o Marinha do Brasil",
+                            "COD_TIPO_CLIENTE": "-1",
+                            "COD_SUB_TIPO_CLIENTE": "-1",
+                            "DW_TIPO_CLIENTE": "-1",
+                            "DAT_EFETIVACAO": "18NOV2017:23:22:29",
+                            "DAT_EXPIRACAO": "-3",
+                            "DSC_PLANO_PRECO_BI": "-3",
+                            "DSC_GRUPO_PLANO_BI": "-3",
+                            "DSC_TIPO_PLANO_BI": "A",
+                            "IND_AMDOCS_PLAT_PRE": "-1",
+                            "COD_TRATAMENTO_ESPECIAL": "35",
+                            "COD_SISTEMA_DW": "-3",
+                            "COD_TECNOLOGIA_DW": "03DEC2017:00:00:00",
+                            "DAT_EXPIRACAO_DW": "03DEC2017:00:13:58",
+                            "DAT_ATUALIZACAO_DW": "21NOV2017:00:20:19",
+                            "DAT_CRIACAO_DW": "50029231",
+                            "NUM_FRANQUIA_MINUTOS_BI": "",
+                            "NUM_FRANQUIA_REAIS_BI": "",
+                            "NUM_FRANQUIA_EVENTOS_BI": "",
+                            "NUM_FRANQUIA_VOLUME_BI": "",
+                            "COD_PLANO_COMPONENTE": "",
+                            "DSC_PLANO_PRECO_UNICO_BI": "",
+                            "DSC_MODALIDADE_PLANO": ""
+                        },
+                        {
+                            "DW_PLANO": "536107",
+                            "COD_PLANO_PRECO": "50029231",
+                            "DSC_PLANO_PRECO": "Licitac?o Marinha do Brasil",
+                            "COD_TIPO_CLIENTE": "-1",
+                            "COD_SUB_TIPO_CLIENTE": "-1",
+                            "DW_TIPO_CLIENTE": "-1",
+                            "DAT_EFETIVACAO": "01DEC2017:23:42:01",
+                            "DAT_EXPIRACAO": "-3",
+                            "DSC_PLANO_PRECO_BI": "-3",
+                            "DSC_GRUPO_PLANO_BI": "-3",
+                            "DSC_TIPO_PLANO_BI": "A",
+                            "IND_AMDOCS_PLAT_PRE": "-1",
+                            "COD_TRATAMENTO_ESPECIAL": "35",
+                            "COD_SISTEMA_DW": "-3",
+                            "COD_TECNOLOGIA_DW": "14JAN2018:00:00:00",
+                            "DAT_EXPIRACAO_DW": "14JAN2018:00:16:37",
+                            "DAT_ATUALIZACAO_DW": "04DEC2017:00:12:56",
+                            "DAT_CRIACAO_DW": "50029231",
+                            "NUM_FRANQUIA_MINUTOS_BI": "",
+                            "NUM_FRANQUIA_REAIS_BI": "",
+                            "NUM_FRANQUIA_EVENTOS_BI": "",
+                            "NUM_FRANQUIA_VOLUME_BI": "",
+                            "COD_PLANO_COMPONENTE": "",
+                            "DSC_PLANO_PRECO_UNICO_BI": "",
+                            "DSC_MODALIDADE_PLANO": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `BI_DIM_PLANO_PRECO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "DW_PLANO",
+                            "tipo": "BIGINT",
+                            "distintos": "293743",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "COD_PLANO_PRECO",
+                            "tipo": "VARCHAR",
+                            "distintos": "13490",
+                            "nulos": "0",
+                            "pct_distintos": "4.59%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "DSC_PLANO_PRECO",
+                            "tipo": "VARCHAR",
+                            "distintos": "42084",
+                            "nulos": "0",
+                            "pct_distintos": "14.33%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "COD_TIPO_CLIENTE",
+                            "tipo": "VARCHAR",
+                            "distintos": "9",
+                            "nulos": "0",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "COD_SUB_TIPO_CLIENTE",
+                            "tipo": "VARCHAR",
+                            "distintos": "25",
+                            "nulos": "0",
+                            "pct_distintos": "0.01%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DW_TIPO_CLIENTE",
+                            "tipo": "BIGINT",
+                            "distintos": "97",
+                            "nulos": "0",
+                            "pct_distintos": "0.03%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DAT_EFETIVACAO",
+                            "tipo": "VARCHAR",
+                            "distintos": "10579",
+                            "nulos": "107047",
+                            "pct_distintos": "3.6%",
+                            "pct_nulos": "36.44%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "DAT_EXPIRACAO",
+                            "tipo": "VARCHAR",
+                            "distintos": "2",
+                            "nulos": "292111",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "99.44%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DSC_PLANO_PRECO_BI",
+                            "tipo": "VARCHAR",
+                            "distintos": "2487",
+                            "nulos": "0",
+                            "pct_distintos": "0.85%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "DSC_GRUPO_PLANO_BI",
+                            "tipo": "VARCHAR",
+                            "distintos": "30",
+                            "nulos": "0",
+                            "pct_distintos": "0.01%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DSC_TIPO_PLANO_BI",
+                            "tipo": "VARCHAR",
+                            "distintos": "9",
+                            "nulos": "0",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "IND_AMDOCS_PLAT_PRE",
+                            "tipo": "VARCHAR",
+                            "distintos": "3",
+                            "nulos": "0",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "COD_TRATAMENTO_ESPECIAL",
+                            "tipo": "VARCHAR",
+                            "distintos": "4",
+                            "nulos": "0",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "COD_SISTEMA_DW",
+                            "tipo": "BIGINT",
+                            "distintos": "15",
+                            "nulos": "0",
+                            "pct_distintos": "0.01%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "COD_TECNOLOGIA_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "8",
+                            "nulos": "0",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DAT_EXPIRACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "1980",
+                            "nulos": "34169",
+                            "pct_distintos": "0.67%",
+                            "pct_nulos": "11.63%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "DAT_ATUALIZACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "3665",
+                            "nulos": "0",
+                            "pct_distintos": "1.25%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "DAT_CRIACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "6568",
+                            "nulos": "0",
+                            "pct_distintos": "2.24%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "NUM_FRANQUIA_MINUTOS_BI",
+                            "tipo": "VARCHAR",
+                            "distintos": "0",
+                            "nulos": "293743",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "NUM_FRANQUIA_REAIS_BI",
+                            "tipo": "VARCHAR",
+                            "distintos": "0",
+                            "nulos": "293743",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "NUM_FRANQUIA_EVENTOS_BI",
+                            "tipo": "VARCHAR",
+                            "distintos": "0",
+                            "nulos": "293743",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "NUM_FRANQUIA_VOLUME_BI",
+                            "tipo": "VARCHAR",
+                            "distintos": "0",
+                            "nulos": "293743",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "COD_PLANO_COMPONENTE",
+                            "tipo": "BIGINT",
+                            "distintos": "6259",
+                            "nulos": "124730",
+                            "pct_distintos": "2.13%",
+                            "pct_nulos": "42.46%",
+                            "cardinalidade": "MEDIA"
+                        },
+                        {
+                            "coluna": "DSC_PLANO_PRECO_UNICO_BI",
+                            "tipo": "VARCHAR",
+                            "distintos": "101",
+                            "nulos": "110147",
+                            "pct_distintos": "0.03%",
+                            "pct_nulos": "37.5%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DSC_MODALIDADE_PLANO",
+                            "tipo": "VARCHAR",
+                            "distintos": "0",
+                            "nulos": "293743",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📏 Extremos (Min/Max)  - `BI_DIM_PLANO_PRECO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "DW_PLANO",
+                            "minimo": "-3",
+                            "maximo": "712581"
+                        },
+                        {
+                            "coluna": "DW_TIPO_CLIENTE",
+                            "minimo": "-3",
+                            "maximo": "171"
+                        },
+                        {
+                            "coluna": "COD_SISTEMA_DW",
+                            "minimo": "-3",
+                            "maximo": "39"
+                        },
+                        {
+                            "coluna": "COD_PLANO_COMPONENTE",
+                            "minimo": "-3",
+                            "maximo": "609552531"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📄 Arquivo: `BI_DIM_PLATAFORMA.csv`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `BI_DIM_PLATAFORMA.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "BI_DIM_PLATAFORMA.csv",
+                            "Registros": "28",
+                            "Colunas": "8"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 5)  - `BI_DIM_PLATAFORMA.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "COD_PLATAFORMA": "24",
+                            "DSC_PLATAFORMA": "M2MS",
+                            "DAT_EXPIRACAO_DW": "06NOV2018:09:05:39",
+                            "DAT_ATUALIZACAO_DW": "06NOV2018:09:05:39",
+                            "DAT_CRIACAO_DW": "Machine to Machine Special",
+                            "DSC_PLATAFORMA_BI": "POSTL",
+                            "COD_GRUPO_PLATAFORMA_BI": "Telemetria",
+                            "DSC_GRUPO_PLATAFORMA": ""
+                        },
+                        {
+                            "COD_PLATAFORMA": "26",
+                            "DSC_PLATAFORMA": "MVNOD",
+                            "DAT_EXPIRACAO_DW": "06DEC2021:12:03:25",
+                            "DAT_ATUALIZACAO_DW": "06DEC2021:12:03:25",
+                            "DAT_CRIACAO_DW": "Parceiros MVNO DIGITAL",
+                            "DSC_PLATAFORMA_BI": "MVNO",
+                            "COD_GRUPO_PLATAFORMA_BI": "MVNO Digital",
+                            "DSC_GRUPO_PLATAFORMA": ""
+                        },
+                        {
+                            "COD_PLATAFORMA": "12",
+                            "DSC_PLATAFORMA": "POSTL",
+                            "DAT_EXPIRACAO_DW": "07NOV2012:15:02:14",
+                            "DAT_ATUALIZACAO_DW": "07NOV2012:15:02:14",
+                            "DAT_CRIACAO_DW": "Telemetria",
+                            "DSC_PLATAFORMA_BI": "POSTL",
+                            "COD_GRUPO_PLATAFORMA_BI": "Telemetria",
+                            "DSC_GRUPO_PLATAFORMA": ""
+                        },
+                        {
+                            "COD_PLATAFORMA": "20",
+                            "DSC_PLATAFORMA": "POSDT",
+                            "DAT_EXPIRACAO_DW": "13DEC2017:15:11:00",
+                            "DAT_ATUALIZACAO_DW": "13DEC2017:15:11:00",
+                            "DAT_CRIACAO_DW": "Pós Pago Deutsche Telekom",
+                            "DSC_PLATAFORMA_BI": "POSPG",
+                            "COD_GRUPO_PLATAFORMA_BI": "Telemetria",
+                            "DSC_GRUPO_PLATAFORMA": ""
+                        },
+                        {
+                            "COD_PLATAFORMA": "21",
+                            "DSC_PLATAFORMA": "FLEXD",
+                            "DAT_EXPIRACAO_DW": "13DEC2017:15:11:00",
+                            "DAT_ATUALIZACAO_DW": "13DEC2017:15:11:00",
+                            "DAT_CRIACAO_DW": "Pré Pago Flex Digital",
+                            "DSC_PLATAFORMA_BI": "PREPG",
+                            "COD_GRUPO_PLATAFORMA_BI": "Pós Pago",
+                            "DSC_GRUPO_PLATAFORMA": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `BI_DIM_PLATAFORMA.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "COD_PLATAFORMA",
+                            "tipo": "BIGINT",
+                            "distintos": "28",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DSC_PLATAFORMA",
+                            "tipo": "VARCHAR",
+                            "distintos": "28",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DAT_EXPIRACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "0",
+                            "nulos": "28",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DAT_ATUALIZACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "24",
+                            "nulos": "0",
+                            "pct_distintos": "85.71%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DAT_CRIACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "24",
+                            "nulos": "0",
+                            "pct_distintos": "85.71%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DSC_PLATAFORMA_BI",
+                            "tipo": "VARCHAR",
+                            "distintos": "28",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "COD_GRUPO_PLATAFORMA_BI",
+                            "tipo": "VARCHAR",
+                            "distintos": "13",
+                            "nulos": "0",
+                            "pct_distintos": "46.43%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DSC_GRUPO_PLATAFORMA",
+                            "tipo": "VARCHAR",
+                            "distintos": "6",
+                            "nulos": "1",
+                            "pct_distintos": "21.43%",
+                            "pct_nulos": "3.57%",
+                            "cardinalidade": "ALTA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📏 Extremos (Min/Max)  - `BI_DIM_PLATAFORMA.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "COD_PLATAFORMA",
+                            "minimo": "-3",
+                            "maximo": "26"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📄 Arquivo: `BI_DIM_PROMOCAO_CREDITO.csv`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `BI_DIM_PROMOCAO_CREDITO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "BI_DIM_PROMOCAO_CREDITO.csv",
+                            "Registros": "15",
+                            "Colunas": "12"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 5)  - `BI_DIM_PROMOCAO_CREDITO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "COD_PROMOCAO": "317",
+                            "DSC_PROMOCAO": "Incentivo a adesão ao débito automático para Claro Controle",
+                            "DAT_EXPIRACAO_DW": "14SEP2025:11:05:20",
+                            "DAT_ATUALIZACAO_DW": "11NOV2011:16:31:04",
+                            "DAT_CRIACAO_DW": "1",
+                            "COD_PROM_GRUPO_CARTAO": "DEBAU_01",
+                            "DSC_NOME_PROMOCAO": "INCENTIVO_DEBAU",
+                            "COD_TIPO_PROMOCAO": "07APR2007:00:00:00",
+                            "DAT_INICIO_VIGENCIA": "30APR2010:23:59:59",
+                            "DAT_FIM_VIGENCIA": "50",
+                            "VAL_PROMOCAO": "2",
+                            "NUM_CONTA_DEDICADA": ""
+                        },
+                        {
+                            "COD_PROMOCAO": "318",
+                            "DSC_PROMOCAO": "Incentivo à recarga, em todas as modalidades, para clientes pré-pago e Claro Controle, em que bônus",
+                            "DAT_EXPIRACAO_DW": "14SEP2025:11:05:20",
+                            "DAT_ATUALIZACAO_DW": "11NOV2011:16:31:04",
+                            "DAT_CRIACAO_DW": "2",
+                            "COD_PROM_GRUPO_CARTAO": "Recarga Turbinada",
+                            "DSC_NOME_PROMOCAO": "RECARGA",
+                            "COD_TIPO_PROMOCAO": "14JUN2007:00:00:00",
+                            "DAT_INICIO_VIGENCIA": "03SEP2007:23:59:59",
+                            "DAT_FIM_VIGENCIA": "0",
+                            "VAL_PROMOCAO": "0",
+                            "NUM_CONTA_DEDICADA": ""
+                        },
+                        {
+                            "COD_PROMOCAO": "319",
+                            "DSC_PROMOCAO": "Incentivo à recarga em parceria com a VISA para clientes pré-pago e Claro Controle, em que ganham bo",
+                            "DAT_EXPIRACAO_DW": "14SEP2025:11:05:20",
+                            "DAT_ATUALIZACAO_DW": "11NOV2011:16:31:04",
+                            "DAT_CRIACAO_DW": "3",
+                            "COD_PROM_GRUPO_CARTAO": "Acao Claro Visa",
+                            "DSC_NOME_PROMOCAO": "RECARGA",
+                            "COD_TIPO_PROMOCAO": "26NOV2007:00:00:00",
+                            "DAT_INICIO_VIGENCIA": "28JAN2008:23:59:59",
+                            "DAT_FIM_VIGENCIA": "0",
+                            "VAL_PROMOCAO": "0",
+                            "NUM_CONTA_DEDICADA": ""
+                        },
+                        {
+                            "COD_PROMOCAO": "320",
+                            "DSC_PROMOCAO": "Troca de portfolio com aumento de validade e ajuste nas descricoes de alguns voucher groups de merca",
+                            "DAT_EXPIRACAO_DW": "14SEP2025:11:05:20",
+                            "DAT_ATUALIZACAO_DW": "11NOV2011:16:31:04",
+                            "DAT_CRIACAO_DW": "4",
+                            "COD_PROM_GRUPO_CARTAO": "Troca de portfolio 19/08/2008",
+                            "DSC_NOME_PROMOCAO": "RECARGA",
+                            "COD_TIPO_PROMOCAO": "19AUG2008:00:00:00",
+                            "DAT_INICIO_VIGENCIA": "31DEC9999:23:59:59",
+                            "DAT_FIM_VIGENCIA": "0",
+                            "VAL_PROMOCAO": "0",
+                            "NUM_CONTA_DEDICADA": ""
+                        },
+                        {
+                            "COD_PROMOCAO": "321",
+                            "DSC_PROMOCAO": "Diminui??o de validade nas recargas de 50 e 100 reais",
+                            "DAT_EXPIRACAO_DW": "17JAN2022:00:00:00",
+                            "DAT_ATUALIZACAO_DW": "18JAN2022:12:05:22",
+                            "DAT_CRIACAO_DW": "11NOV2011:16:31:04",
+                            "COD_PROM_GRUPO_CARTAO": "5",
+                            "DSC_NOME_PROMOCAO": "Altera??o de validades 50 e 100",
+                            "COD_TIPO_PROMOCAO": "RECARGA",
+                            "DAT_INICIO_VIGENCIA": "10AUG2009:00:00:00",
+                            "DAT_FIM_VIGENCIA": "31DEC9999:23:59:59",
+                            "VAL_PROMOCAO": "0",
+                            "NUM_CONTA_DEDICADA": "0"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `BI_DIM_PROMOCAO_CREDITO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "COD_PROMOCAO",
+                            "tipo": "BIGINT",
+                            "distintos": "15",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DSC_PROMOCAO",
+                            "tipo": "VARCHAR",
+                            "distintos": "15",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DAT_EXPIRACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "2",
+                            "nulos": "9",
+                            "pct_distintos": "13.33%",
+                            "pct_nulos": "60.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DAT_ATUALIZACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "3",
+                            "nulos": "0",
+                            "pct_distintos": "20.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DAT_CRIACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "6",
+                            "nulos": "0",
+                            "pct_distintos": "40.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "COD_PROM_GRUPO_CARTAO",
+                            "tipo": "BIGINT",
+                            "distintos": "9",
+                            "nulos": "0",
+                            "pct_distintos": "60.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DSC_NOME_PROMOCAO",
+                            "tipo": "VARCHAR",
+                            "distintos": "15",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "COD_TIPO_PROMOCAO",
+                            "tipo": "VARCHAR",
+                            "distintos": "2",
+                            "nulos": "0",
+                            "pct_distintos": "13.33%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DAT_INICIO_VIGENCIA",
+                            "tipo": "VARCHAR",
+                            "distintos": "9",
+                            "nulos": "0",
+                            "pct_distintos": "60.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DAT_FIM_VIGENCIA",
+                            "tipo": "VARCHAR",
+                            "distintos": "5",
+                            "nulos": "0",
+                            "pct_distintos": "33.33%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "VAL_PROMOCAO",
+                            "tipo": "DOUBLE",
+                            "distintos": "2",
+                            "nulos": "0",
+                            "pct_distintos": "13.33%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "NUM_CONTA_DEDICADA",
+                            "tipo": "BIGINT",
+                            "distintos": "3",
+                            "nulos": "0",
+                            "pct_distintos": "20.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📏 Extremos (Min/Max)  - `BI_DIM_PROMOCAO_CREDITO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "COD_PROMOCAO",
+                            "minimo": "317",
+                            "maximo": "379"
+                        },
+                        {
+                            "coluna": "COD_PROM_GRUPO_CARTAO",
+                            "minimo": "1",
+                            "maximo": "10"
+                        },
+                        {
+                            "coluna": "VAL_PROMOCAO",
+                            "minimo": "0",
+                            "maximo": "50"
+                        },
+                        {
+                            "coluna": "NUM_CONTA_DEDICADA",
+                            "minimo": "0",
+                            "maximo": "67"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📄 Arquivo: `BI_DIM_STATUS_PLATAFORMA.csv`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `BI_DIM_STATUS_PLATAFORMA.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "BI_DIM_STATUS_PLATAFORMA.csv",
+                            "Registros": "25",
+                            "Colunas": "7"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 5)  - `BI_DIM_STATUS_PLATAFORMA.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "COD_STATUS_PLATAFORMA": "A",
+                            "DSC_STATUS_PLATAFORMA": "Ativo",
+                            "IND_ATIVO": "S",
+                            "DAT_ATUALIZACAO_DW": "16OCT2006:10:28:44",
+                            "DAT_CRIACAO_DW": "16OCT2006:10:28:44",
+                            "COD_STATUS_PLAT_GRP": "A",
+                            "IND_STS_PLAT_GRP_ATIVO": "S"
+                        },
+                        {
+                            "COD_STATUS_PLATAFORMA": "ZB1",
+                            "DSC_STATUS_PLATAFORMA": "Expirado 1",
+                            "IND_ATIVO": "S",
+                            "DAT_ATUALIZACAO_DW": "16OCT2006:10:28:44",
+                            "DAT_CRIACAO_DW": "16OCT2006:10:28:44",
+                            "COD_STATUS_PLAT_GRP": "ZB1",
+                            "IND_STS_PLAT_GRP_ATIVO": "S"
+                        },
+                        {
+                            "COD_STATUS_PLATAFORMA": "PRE",
+                            "DSC_STATUS_PLATAFORMA": "Pré-Ativo",
+                            "IND_ATIVO": "N",
+                            "DAT_ATUALIZACAO_DW": "16OCT2006:10:28:56",
+                            "DAT_CRIACAO_DW": "16OCT2006:10:28:56",
+                            "COD_STATUS_PLAT_GRP": "PRE",
+                            "IND_STS_PLAT_GRP_ATIVO": "N"
+                        },
+                        {
+                            "COD_STATUS_PLATAFORMA": "ZB2",
+                            "DSC_STATUS_PLATAFORMA": "Expirado 2",
+                            "IND_ATIVO": "N",
+                            "DAT_ATUALIZACAO_DW": "16OCT2006:10:28:56",
+                            "DAT_CRIACAO_DW": "16OCT2006:10:28:56",
+                            "COD_STATUS_PLAT_GRP": "ZB2",
+                            "IND_STS_PLAT_GRP_ATIVO": "N"
+                        },
+                        {
+                            "COD_STATUS_PLATAFORMA": "C",
+                            "DSC_STATUS_PLATAFORMA": "Desconectado",
+                            "IND_ATIVO": "N",
+                            "DAT_ATUALIZACAO_DW": "16OCT2006:10:28:56",
+                            "DAT_CRIACAO_DW": "16OCT2006:10:28:56",
+                            "COD_STATUS_PLAT_GRP": "C",
+                            "IND_STS_PLAT_GRP_ATIVO": "N"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `BI_DIM_STATUS_PLATAFORMA.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "COD_STATUS_PLATAFORMA",
+                            "tipo": "VARCHAR",
+                            "distintos": "25",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DSC_STATUS_PLATAFORMA",
+                            "tipo": "VARCHAR",
+                            "distintos": "24",
+                            "nulos": "0",
+                            "pct_distintos": "96.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "IND_ATIVO",
+                            "tipo": "VARCHAR",
+                            "distintos": "2",
+                            "nulos": "0",
+                            "pct_distintos": "8.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DAT_ATUALIZACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "7",
+                            "nulos": "0",
+                            "pct_distintos": "28.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DAT_CRIACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "7",
+                            "nulos": "0",
+                            "pct_distintos": "28.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "COD_STATUS_PLAT_GRP",
+                            "tipo": "VARCHAR",
+                            "distintos": "6",
+                            "nulos": "0",
+                            "pct_distintos": "24.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "IND_STS_PLAT_GRP_ATIVO",
+                            "tipo": "VARCHAR",
+                            "distintos": "2",
+                            "nulos": "0",
+                            "pct_distintos": "8.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📏 Extremos (Min/Max)  - `BI_DIM_STATUS_PLATAFORMA.csv`",
+            "content": [
+                {
+                    "type": "text",
+                    "data": "> Nenhuma coluna numérica ou de data identificada.\n\n\n---"
+                }
+            ]
+        },
+        {
+            "header": "📄 Arquivo: `BI_DIM_TECNOLOGIA.csv`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `BI_DIM_TECNOLOGIA.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "BI_DIM_TECNOLOGIA.csv",
+                            "Registros": "10",
+                            "Colunas": "5"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 5)  - `BI_DIM_TECNOLOGIA.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "COD_TECNOLOGIA_DW": "AMBOS",
+                            "DSC_TECNOLOGIA": "3G/GSM",
+                            "DAT_ATUALIZACAO_DW": "07MAY2010:11:23:38",
+                            "DAT_CRIACAO_DW": "",
+                            "COD_TECNOLOGIA_SVA": ""
+                        },
+                        {
+                            "COD_TECNOLOGIA_DW": "GSM",
+                            "DSC_TECNOLOGIA": "GSM",
+                            "DAT_ATUALIZACAO_DW": "19NOV2003:16:47:57",
+                            "DAT_CRIACAO_DW": "19NOV2003:16:47:57",
+                            "COD_TECNOLOGIA_SVA": ""
+                        },
+                        {
+                            "COD_TECNOLOGIA_DW": "NTDMA",
+                            "DSC_TECNOLOGIA": "Novo TDMA",
+                            "DAT_ATUALIZACAO_DW": "19NOV2003:16:47:51",
+                            "DAT_CRIACAO_DW": "19NOV2003:16:47:51",
+                            "COD_TECNOLOGIA_SVA": ""
+                        },
+                        {
+                            "COD_TECNOLOGIA_DW": "TDMA",
+                            "DSC_TECNOLOGIA": "TDMA",
+                            "DAT_ATUALIZACAO_DW": "19NOV2003:16:47:44",
+                            "DAT_CRIACAO_DW": "19NOV2003:16:47:44",
+                            "COD_TECNOLOGIA_SVA": "T"
+                        },
+                        {
+                            "COD_TECNOLOGIA_DW": "-1",
+                            "DSC_TECNOLOGIA": "NA",
+                            "DAT_ATUALIZACAO_DW": "01MAR2004:19:37:55",
+                            "DAT_CRIACAO_DW": "01MAR2004:19:37:55",
+                            "COD_TECNOLOGIA_SVA": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `BI_DIM_TECNOLOGIA.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "COD_TECNOLOGIA_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "10",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DSC_TECNOLOGIA",
+                            "tipo": "VARCHAR",
+                            "distintos": "10",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DAT_ATUALIZACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "9",
+                            "nulos": "1",
+                            "pct_distintos": "90.0%",
+                            "pct_nulos": "10.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DAT_CRIACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "10",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "COD_TECNOLOGIA_SVA",
+                            "tipo": "VARCHAR",
+                            "distintos": "3",
+                            "nulos": "6",
+                            "pct_distintos": "30.0%",
+                            "pct_nulos": "60.0%",
+                            "cardinalidade": "ALTA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📏 Extremos (Min/Max)  - `BI_DIM_TECNOLOGIA.csv`",
+            "content": [
+                {
+                    "type": "text",
+                    "data": "> Nenhuma coluna numérica ou de data identificada.\n\n\n---"
+                }
+            ]
+        },
+        {
+            "header": "📄 Arquivo: `BI_DIM_TIPO_CREDITO.csv`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `BI_DIM_TIPO_CREDITO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "BI_DIM_TIPO_CREDITO.csv",
+                            "Registros": "12",
+                            "Colunas": "5"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 5)  - `BI_DIM_TIPO_CREDITO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "COD_TIPO_CREDITO": "PE",
+                            "DSC_TIPO_CREDITO": "Online",
+                            "DAT_EXPIRACAO_DW": "19OCT2011:14:39:55",
+                            "DAT_ATUALIZACAO_DW": "",
+                            "DAT_CRIACAO_DW": ""
+                        },
+                        {
+                            "COD_TIPO_CREDITO": "-1",
+                            "DSC_TIPO_CREDITO": "NA",
+                            "DAT_EXPIRACAO_DW": "01MAR2004:19:54:06",
+                            "DAT_ATUALIZACAO_DW": "01MAR2004:19:54:06",
+                            "DAT_CRIACAO_DW": ""
+                        },
+                        {
+                            "COD_TIPO_CREDITO": "-2",
+                            "DSC_TIPO_CREDITO": "ND",
+                            "DAT_EXPIRACAO_DW": "01MAR2004:19:54:08",
+                            "DAT_ATUALIZACAO_DW": "01MAR2004:19:54:08",
+                            "DAT_CRIACAO_DW": ""
+                        },
+                        {
+                            "COD_TIPO_CREDITO": "-3",
+                            "DSC_TIPO_CREDITO": "NI",
+                            "DAT_EXPIRACAO_DW": "01MAR2004:19:54:09",
+                            "DAT_ATUALIZACAO_DW": "01MAR2004:19:54:09",
+                            "DAT_CRIACAO_DW": ""
+                        },
+                        {
+                            "COD_TIPO_CREDITO": "AU",
+                            "DSC_TIPO_CREDITO": "Autocontrole",
+                            "DAT_EXPIRACAO_DW": "01MAR2004:18:18:22",
+                            "DAT_ATUALIZACAO_DW": "01MAR2004:18:18:22",
+                            "DAT_CRIACAO_DW": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `BI_DIM_TIPO_CREDITO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "COD_TIPO_CREDITO",
+                            "tipo": "VARCHAR",
+                            "distintos": "12",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DSC_TIPO_CREDITO",
+                            "tipo": "VARCHAR",
+                            "distintos": "12",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DAT_EXPIRACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "0",
+                            "nulos": "12",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DAT_ATUALIZACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "11",
+                            "nulos": "1",
+                            "pct_distintos": "91.67%",
+                            "pct_nulos": "8.33%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DAT_CRIACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "12",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📏 Extremos (Min/Max)  - `BI_DIM_TIPO_CREDITO.csv`",
+            "content": [
+                {
+                    "type": "text",
+                    "data": "> Nenhuma coluna numérica ou de data identificada.\n\n\n---"
+                }
+            ]
+        },
+        {
+            "header": "📄 Arquivo: `BI_DIM_TIPO_INSERCAO.csv`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `BI_DIM_TIPO_INSERCAO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "BI_DIM_TIPO_INSERCAO.csv",
+                            "Registros": "22",
+                            "Colunas": "4"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 5)  - `BI_DIM_TIPO_INSERCAO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "DW_TIPO_INSERCAO": "-3",
+                            "DSC_TIPO_INSERCAO": "Não Informado",
+                            "DAT_EXPIRACAO_DW": "19OCT2011:14:39:56",
+                            "DAT_CRIACAO_DW": ""
+                        },
+                        {
+                            "DW_TIPO_INSERCAO": "-2",
+                            "DSC_TIPO_INSERCAO": "Não Determinado",
+                            "DAT_EXPIRACAO_DW": "19OCT2011:14:39:56",
+                            "DAT_CRIACAO_DW": ""
+                        },
+                        {
+                            "DW_TIPO_INSERCAO": "-1",
+                            "DSC_TIPO_INSERCAO": "Não se Aplica",
+                            "DAT_EXPIRACAO_DW": "19OCT2011:14:39:56",
+                            "DAT_CRIACAO_DW": ""
+                        },
+                        {
+                            "DW_TIPO_INSERCAO": "1",
+                            "DSC_TIPO_INSERCAO": "Pag. Cartão Físico",
+                            "DAT_EXPIRACAO_DW": "19OCT2011:14:39:56",
+                            "DAT_CRIACAO_DW": ""
+                        },
+                        {
+                            "DW_TIPO_INSERCAO": "2",
+                            "DSC_TIPO_INSERCAO": "Pag. PIN Eletrônico",
+                            "DAT_EXPIRACAO_DW": "19OCT2011:14:39:56",
+                            "DAT_CRIACAO_DW": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `BI_DIM_TIPO_INSERCAO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "DW_TIPO_INSERCAO",
+                            "tipo": "BIGINT",
+                            "distintos": "22",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DSC_TIPO_INSERCAO",
+                            "tipo": "VARCHAR",
+                            "distintos": "22",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DAT_EXPIRACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "0",
+                            "nulos": "22",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DAT_CRIACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "1",
+                            "nulos": "0",
+                            "pct_distintos": "4.55%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "MEDIA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📏 Extremos (Min/Max)  - `BI_DIM_TIPO_INSERCAO.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "DW_TIPO_INSERCAO",
+                            "minimo": "-3",
+                            "maximo": "19"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📄 Arquivo: `BI_DIM_TIPO_RECARGA.csv`",
+            "content": []
+        },
+        {
+            "header": "📦 Volumetria - `BI_DIM_TIPO_RECARGA.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "Arquivo": "BI_DIM_TIPO_RECARGA.csv",
+                            "Registros": "5",
+                            "Colunas": "4"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "🔍 Amostra de Dados (Head 5)  - `BI_DIM_TIPO_RECARGA.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "DW_TIPO_RECARGA": "-3",
+                            "DSC_TIPO_RECARGA": "Não Informado",
+                            "DAT_EXPIRACAO_DW": "19OCT2011:14:39:56",
+                            "DAT_CRIACAO_DW": ""
+                        },
+                        {
+                            "DW_TIPO_RECARGA": "-2",
+                            "DSC_TIPO_RECARGA": "Não Determinado",
+                            "DAT_EXPIRACAO_DW": "19OCT2011:14:39:56",
+                            "DAT_CRIACAO_DW": ""
+                        },
+                        {
+                            "DW_TIPO_RECARGA": "-1",
+                            "DSC_TIPO_RECARGA": "Não se Aplica",
+                            "DAT_EXPIRACAO_DW": "19OCT2011:14:39:56",
+                            "DAT_CRIACAO_DW": ""
+                        },
+                        {
+                            "DW_TIPO_RECARGA": "1",
+                            "DSC_TIPO_RECARGA": "Franquia do Claro Controle",
+                            "DAT_EXPIRACAO_DW": "19OCT2011:14:39:56",
+                            "DAT_CRIACAO_DW": ""
+                        },
+                        {
+                            "DW_TIPO_RECARGA": "2",
+                            "DSC_TIPO_RECARGA": "Adicional do Claro Controle",
+                            "DAT_EXPIRACAO_DW": "19OCT2011:14:39:56",
+                            "DAT_CRIACAO_DW": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📊 Estatísticas e Tipagem  - `BI_DIM_TIPO_RECARGA.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "DW_TIPO_RECARGA",
+                            "tipo": "BIGINT",
+                            "distintos": "5",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DSC_TIPO_RECARGA",
+                            "tipo": "VARCHAR",
+                            "distintos": "5",
+                            "nulos": "0",
+                            "pct_distintos": "100.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        },
+                        {
+                            "coluna": "DAT_EXPIRACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "0",
+                            "nulos": "5",
+                            "pct_distintos": "0.0%",
+                            "pct_nulos": "100.0%",
+                            "cardinalidade": "BAIXA"
+                        },
+                        {
+                            "coluna": "DAT_CRIACAO_DW",
+                            "tipo": "VARCHAR",
+                            "distintos": "1",
+                            "nulos": "0",
+                            "pct_distintos": "20.0%",
+                            "pct_nulos": "0.0%",
+                            "cardinalidade": "ALTA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "📏 Extremos (Min/Max)  - `BI_DIM_TIPO_RECARGA.csv`",
+            "content": [
+                {
+                    "type": "table",
+                    "data": [
+                        {
+                            "coluna": "DW_TIPO_RECARGA",
+                            "minimo": "-3",
+                            "maximo": "2"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "title": "Relatório de Profiling: `raw/recarga_dim`"
+}
