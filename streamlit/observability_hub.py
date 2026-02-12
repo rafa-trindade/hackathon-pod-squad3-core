@@ -3,7 +3,7 @@ import pandas as pd
 import json
 import os
 import sys
-import plotly.express as px
+import plotly.graph_objects as go
 from datetime import datetime
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -292,7 +292,6 @@ if data:
 
             with st.expander(f"**⏱️ Tempo de Execução:** `{tempo_total_formatado}`", expanded=True):
                 
-                import plotly.graph_objects as go
 
                 fig_cascade = go.Figure(go.Waterfall(
                     name="Pipeline",
