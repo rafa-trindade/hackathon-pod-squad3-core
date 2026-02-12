@@ -1,0 +1,63 @@
+.block-container {
+  padding-top: 46px !important;
+}
+
+section[data-testid="stSidebar"] {
+  width: 309px !important;
+  min-width: 309px !important;
+  max-width: 309px !important;
+}
+
+[data-testid="stMarkdownContainer"] code {
+  color: #DAD0D1 !important;
+  background-color: #1A1C24 !important;
+  padding: 4px 6px !important;
+  border-radius: 6px !important;
+}
+
+code.theme-1 {
+  color: #DAD0D1 !important;
+  background-color: #731E27 !important;
+  padding: 4px 6px !important;
+  border-radius: 6px !important;
+}
+
+[data-testid="stMetricLabel"] {
+  font-size: 1.2rem !important;
+}
+
+[data-testid="stMetricValue"] {
+  font-size: 1.35rem !important;
+}
+
+hr {
+  margin-top: -2px !important;
+  margin-bottom: 20px !important;
+}
+
+div[data-testid="stNotification"] {
+  background-color: #1A1A1A !important;
+  color: #DAD0D1 !important;
+  border: 1px solid #731E27 !important;
+}
+
+[data-testid="stMarkdownContainer"] blockquote {
+  background-color: #1A1A1A !important;
+  border-left: 5px solid #731E27 !important;
+  color: #DAD0D1 !important;
+  padding: 15px !important;
+}
+
+[data-testid="stNotification"] [data-testid="stMarkdownContainer"] p,
+[data-testid="stMarkdownContainer"] blockquote p,
+[data-testid="stMarkdownContainer"] ul li {
+  color: #DAD0D1 !important;
+}
+
+[data-testid="stMarkdownContainer"] ul li::marker {
+  color: #0D0D0D !important;
+}
+
+.st-ae {
+  background-color: #1A1A1A !important;
+}
