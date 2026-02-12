@@ -2,6 +2,20 @@
 
 Este documento mapeia como as práticas implementadas no projeto se consolidam nos pilares de **Data Observability**, demonstrando que a observabilidade é uma **propriedade emergente de boas decisões arquiteturais**.
 
+---
+
+## 🖥️ Central de Controle: Observability Hub
+> Acompanhe a saúde do ecossistema em tempo real através da nossa interface dedicada.
+
+<div align="center">
+  <video src="../images/data_observability/demo_painel.webm" width="100%" loop muted autoplay></video>
+  <p><i>Demonstração da interface de observabilidade em tempo real</i></p>
+</div>
+
+🌐 **Link do Painel Vivo:** [Painel de Observabilidade (Streamlit)](http://54.39.98.107:8501/)
+
+---
+
 ## 🧱 Os 5 Pilares da Observabilidade no Projeto
 
 A observabilidade de dados garante a transparência e a saúde do fluxo de informação, assegurando que o dado disponível para consumo seja confiável e rastreável.
