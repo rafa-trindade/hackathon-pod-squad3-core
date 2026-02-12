@@ -1,6 +1,7 @@
 # Classifica formalmente diretórios e arquivos de suporte como documentação
 docs/* linguist-documentation
 *.pdf linguist-documentation
+*.webm linguist-documentation binary
 
 # Evita que o volume de dados dos notebooks distorça as estatísticas de linguagem
 *.ipynb linguist-detectable=false
