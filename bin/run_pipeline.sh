@@ -6,7 +6,7 @@ set -euo pipefail
 #########################################
 RUN_ID=$(date +"%Y%m%d")
 LOG_DIR="bin/reports"
-LOG_FILE="${LOG_DIR}/pipeline_run_${RUN_ID}.log"
+LOG_FILE="${LOG_DIR}/pipeline_execution.log"
 PYTHON_BIN=python
 
 export RUN_ID_PIPELINE="${RUN_ID}"
@@ -105,12 +105,12 @@ run_step "PROFILING RAW - telco" "scripts.profiling.raw.profile_telco"
 #########################################
 # 2. TRANSFORMING - BRONZE
 #########################################
-run_step "BRONZE - atraso_dim" "scripts.transformations.bronze.bronze_atraso_dim"
 run_step "BRONZE - atraso" "scripts.transformations.bronze.bronze_atraso"
+run_step "BRONZE - atraso_dim" "scripts.transformations.bronze.bronze_atraso_dim"
 run_step "BRONZE - dados_cadastrais" "scripts.transformations.bronze.bronze_dados_cadastrais"
 run_step "BRONZE - pagamento" "scripts.transformations.bronze.bronze_pagamento"
-run_step "BRONZE - recarga_dim" "scripts.transformations.bronze.bronze_recarga_dim"
 run_step "BRONZE - recarga" "scripts.transformations.bronze.bronze_recarga"
+run_step "BRONZE - recarga_dim" "scripts.transformations.bronze.bronze_recarga_dim"
 run_step "BRONZE - score_bureau" "scripts.transformations.bronze.bronze_score_bureau_movel"
 run_step "BRONZE - telco" "scripts.transformations.bronze.bronze_telco"
 
@@ -180,4 +180,9 @@ separator
 #########################################
 # UPLOAD OBSERVABILITY REPORTS
 #########################################
+echo "Gerando JSON de execução..."
+$PYTHON_BIN scripts/observability/generate_pipeline_report.py "$RUN_ID" "$(whoami)" "$TOTAL_TIME_STR" "$LOG_FILE"
+
+run_step "PARSE OBSERVABILITY REPORTS" "scripts.observability.parse_reports"
+
 run_step "UPLOAD OBSERVABILITY REPORTS" "scripts.transformations.utils.upload_observability_reports"
