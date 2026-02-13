@@ -14,6 +14,7 @@ export LOG_FILE_PATH="${LOG_FILE}"
 export DISABLE_PANDERA_IMPORT_WARNING=True
 
 mkdir -p "$LOG_DIR"
+> "$LOG_FILE"
 
 #########################################
 # UTILS & FORMATTING
