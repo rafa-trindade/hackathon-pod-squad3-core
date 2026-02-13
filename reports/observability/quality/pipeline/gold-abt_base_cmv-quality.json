@@ -1,43 +1,12 @@
 {
-    "report_type": "Pipeline Quality",
-    "tests": [
-        {
-            "test": "Status Geral",
-            "status": "✅",
-            "obs": "ABT Gerada com Sucesso"
-        },
-        {
-            "test": "📋 RELATÓRIO TÉCNICO ABT - abt_base_cmv | RUN",
-            "status": "INFO",
-            "obs": "20260212"
-        },
-        {
-            "test": "✅ Status",
-            "status": "INFO",
-            "obs": "ABT Gerada com Sucesso"
-        },
-        {
-            "test": "📊 Variáveis",
-            "status": "INFO",
-            "obs": "207 colunas"
-        },
-        {
-            "test": "📈 Volumetria",
-            "status": "INFO",
-            "obs": "2,633,900 registros"
-        },
-        {
-            "test": "👤 Cardinalidade",
-            "status": "INFO",
-            "obs": "2,565,985 CPFs únicos"
-        },
-        {
-            "test": "📌 Grão da Tabela",
-            "status": "INFO",
-            "obs": "CPF + SAFRA + PROD"
-        }
-    ],
-    "title": "abt_base_cmv",
-    "run_id": "20260212",
-    "final_result": "SUCCESS"
+    "report_type": "ABT Technical Report",
+    "content": {
+        "status": "ABT Gerada com Sucesso",
+        "variables": "207 colunas",
+        "volumetry": "2,633,900 registros",
+        "cardinality": "2,565,985 CPFs únicos",
+        "grain": "CPF + SAFRA + PROD"
+    },
+    "entity": "abt_base_cmv",
+    "run_id": "20260212"
 }

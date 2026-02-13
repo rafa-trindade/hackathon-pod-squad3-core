@@ -1,28 +1,37 @@
 {
     "report_type": "Pipeline Quality",
-    "tests": [
+    "layer": "bronze",
+    "reports": [
         {
-            "test": "Volumetria Dimensão",
-            "status": "INFO",
-            "obs": "72 registros"
-        },
-        {
-            "test": "Chave Técnica",
-            "status": "INFO",
-            "obs": "dw_tipo_faturamento"
-        },
-        {
-            "test": "Match de Tipagem Chave Técnica",
-            "status": "PASS",
-            "obs": "Fato: VARCHAR - Dim: VARCHAR"
-        },
-        {
-            "test": "Integridade de Chave (Fato)",
-            "status": "PASS",
-            "obs": "0 registros órfãos"
+            "entity": "tipo_faturamento",
+            "run_id": "20260212",
+            "tests": [
+                {
+                    "test": "Volumetria Dimensão",
+                    "status": "INFO",
+                    "obs": "72 registros",
+                    "description": "Quantidade de registros existentes na dimensão carregada na camada Bronze."
+                },
+                {
+                    "test": "Chave Técnica",
+                    "status": "INFO",
+                    "obs": "dw_tipo_faturamento",
+                    "description": "Identifica qual coluna representa a chave substituta da dimensão no DW."
+                },
+                {
+                    "test": "Match de Tipagem Chave Técnica",
+                    "status": "PASS",
+                    "obs": "Fato: VARCHAR - Dim: VARCHAR",
+                    "description": "Verifica se o tipo de dado da chave técnica entre fato e dimensão é compatível."
+                },
+                {
+                    "test": "Integridade de Chave (Fato)",
+                    "status": "PASS",
+                    "obs": "0 registros órfãos",
+                    "description": "Valida se todos os registros da fato possuem correspondência válida na dimensão."
+                }
+            ],
+            "final_result": "SUCCESS"
         }
-    ],
-    "title": "",
-    "run_id": "",
-    "final_result": "SUCCESS"
+    ]
 }

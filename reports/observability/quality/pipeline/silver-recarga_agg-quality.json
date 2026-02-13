@@ -1,67 +1,80 @@
 {
     "report_type": "Pipeline Quality",
-    "tests": [
+    "layer": "silver",
+    "reports": [
         {
-            "test": "PAREAMENTO (CHAVE -> DESC)",
-            "status": "STATUS",
-            "obs": "NÃO INFORMADOS"
-        },
-        {
-            "test": "cod_canal_aquisicao -> dsc_canal_aquisicao",
-            "status": "PASS",
-            "obs": "0"
-        },
-        {
-            "test": "dw_forma_pagamento -> dsc_forma_pagamento",
-            "status": "PASS",
-            "obs": "0"
-        },
-        {
-            "test": "dw_instituicao -> dsc_instituicao",
-            "status": "WARN",
-            "obs": "6.849.485"
-        },
-        {
-            "test": "dw_plano_tarifacao -> dsc_plano_tarifacao",
-            "status": "WARN",
-            "obs": "2.105.750"
-        },
-        {
-            "test": "cod_plataforma_atu -> dsc_plataforma_atu",
-            "status": "PASS",
-            "obs": "0"
-        },
-        {
-            "test": "cod_promocao -> dsc_promocao",
-            "status": "WARN",
-            "obs": "2.105.750"
-        },
-        {
-            "test": "cod_status_plataforma -> dsc_status_plataforma",
-            "status": "WARN",
-            "obs": "878"
-        },
-        {
-            "test": "cod_tecnologia_dw -> dsc_tecnologia",
-            "status": "PASS",
-            "obs": "0"
-        },
-        {
-            "test": "cod_tipo_credito -> dsc_tipo_credito",
-            "status": "PASS",
-            "obs": "0"
-        },
-        {
-            "test": "dw_tipo_insercao -> dsc_tipo_insercao",
-            "status": "WARN",
-            "obs": "3.268.098"
-        },
-        {
-            "test": "dw_tipo_recarga -> dsc_tipo_recarga",
-            "status": "WARN",
-            "obs": "2.105.750"
+            "entity": "recarga_aggregation",
+            "run_id": "20260212",
+            "tests": [
+                {
+                    "test": "cod_canal_aquisicao -> dsc_canal_aquisicao",
+                    "status": "PASS",
+                    "obs": "0",
+                    "description": "Verifica se existem registros de chave sem correspondência na Silver."
+                },
+                {
+                    "test": "dw_forma_pagamento -> dsc_forma_pagamento",
+                    "status": "PASS",
+                    "obs": "0",
+                    "description": "Verifica se existem registros de chave sem correspondência na Silver."
+                },
+                {
+                    "test": "dw_instituicao -> dsc_instituicao",
+                    "status": "WARN",
+                    "obs": "6.849.485",
+                    "description": "Verifica se existem registros de chave sem correspondência na Silver."
+                },
+                {
+                    "test": "dw_plano_tarifacao -> dsc_plano_tarifacao",
+                    "status": "WARN",
+                    "obs": "2.105.750",
+                    "description": "Verifica se existem registros de chave sem correspondência na Silver."
+                },
+                {
+                    "test": "cod_plataforma_atu -> dsc_plataforma_atu",
+                    "status": "PASS",
+                    "obs": "0",
+                    "description": "Verifica se existem registros de chave sem correspondência na Silver."
+                },
+                {
+                    "test": "cod_promocao -> dsc_promocao",
+                    "status": "WARN",
+                    "obs": "2.105.750",
+                    "description": "Verifica se existem registros de chave sem correspondência na Silver."
+                },
+                {
+                    "test": "cod_status_plataforma -> dsc_status_plataforma",
+                    "status": "WARN",
+                    "obs": "878",
+                    "description": "Verifica se existem registros de chave sem correspondência na Silver."
+                },
+                {
+                    "test": "cod_tecnologia_dw -> dsc_tecnologia",
+                    "status": "PASS",
+                    "obs": "0",
+                    "description": "Verifica se existem registros de chave sem correspondência na Silver."
+                },
+                {
+                    "test": "cod_tipo_credito -> dsc_tipo_credito",
+                    "status": "PASS",
+                    "obs": "0",
+                    "description": "Verifica se existem registros de chave sem correspondência na Silver."
+                },
+                {
+                    "test": "dw_tipo_insercao -> dsc_tipo_insercao",
+                    "status": "WARN",
+                    "obs": "3.268.098",
+                    "description": "Verifica se existem registros de chave sem correspondência na Silver."
+                },
+                {
+                    "test": "dw_tipo_recarga -> dsc_tipo_recarga",
+                    "status": "WARN",
+                    "obs": "2.105.750",
+                    "description": "Verifica se existem registros de chave sem correspondência na Silver."
+                }
+            ],
+            "total_added_columns": 11,
+            "final_result": "CHECK_REQUIRED"
         }
-    ],
-    "title": "",
-    "run_id": ""
+    ]
 }

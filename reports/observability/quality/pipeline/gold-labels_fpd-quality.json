@@ -1,77 +1,116 @@
 {
     "report_type": "Pipeline Quality",
-    "tests": [
+    "layer": "gold",
+    "groups": [
         {
-            "test": "Unicidade no Grão",
-            "status": "PASS",
-            "obs": "0 duplicatas"
+            "group_id": 1,
+            "tests": [
+                {
+                    "test": "Unicidade no Grão",
+                    "status": "PASS",
+                    "obs": "0 duplicatas",
+                    "description": "Valida unicidade de grão."
+                },
+                {
+                    "test": "Missing FPD Gold = 0",
+                    "status": "PASS",
+                    "obs": "0 nulos",
+                    "description": "Valida se a variável target (Label) não possui valores nulos."
+                }
+            ],
+            "group_name": "Integridade de Chaves e Target"
         },
         {
-            "test": "Missing FPD Gold = 0",
-            "status": "PASS",
-            "obs": "0 nulos"
+            "group_id": 2,
+            "tests": [
+                {
+                    "test": "Distribuição Safra 202410",
+                    "status": "PASS",
+                    "obs": "15.7%",
+                    "description": "Analisa a representatividade temporal da janela de dados."
+                },
+                {
+                    "test": "Distribuição Safra 202411",
+                    "status": "PASS",
+                    "obs": "17.5%",
+                    "description": "Analisa a representatividade temporal da janela de dados."
+                },
+                {
+                    "test": "Distribuição Safra 202412",
+                    "status": "PASS",
+                    "obs": "17.6%",
+                    "description": "Analisa a representatividade temporal da janela de dados."
+                },
+                {
+                    "test": "Distribuição Safra 202501",
+                    "status": "PASS",
+                    "obs": "17.1%",
+                    "description": "Analisa a representatividade temporal da janela de dados."
+                },
+                {
+                    "test": "Distribuição Safra 202502",
+                    "status": "PASS",
+                    "obs": "15.8%",
+                    "description": "Analisa a representatividade temporal da janela de dados."
+                },
+                {
+                    "test": "Distribuição Safra 202503",
+                    "status": "PASS",
+                    "obs": "16.1%",
+                    "description": "Analisa a representatividade temporal da janela de dados."
+                }
+            ],
+            "group_name": "Saúde da Janela Temporal"
         },
         {
-            "test": "Distribuição Safra 202410",
-            "status": "PASS",
-            "obs": "15.7%"
+            "group_id": 3,
+            "tests": [
+                {
+                    "test": "Overlap dados_cadastrais",
+                    "status": "PASS",
+                    "obs": "100.00% de match",
+                    "description": "Percentual de cobertura de CPFs."
+                },
+                {
+                    "test": "Overlap score_bureau_movel",
+                    "status": "PASS",
+                    "obs": "100.00% de match",
+                    "description": "Percentual de cobertura de CPFs."
+                },
+                {
+                    "test": "Overlap atraso",
+                    "status": "PASS",
+                    "obs": "74.74% de match",
+                    "description": "Percentual de cobertura de CPFs."
+                },
+                {
+                    "test": "Overlap pagamento",
+                    "status": "WARN",
+                    "obs": "68.16% de match",
+                    "description": "Percentual de cobertura de CPFs."
+                },
+                {
+                    "test": "Overlap recarga",
+                    "status": "PASS",
+                    "obs": "99.78% de match",
+                    "description": "Percentual de cobertura de CPFs."
+                }
+            ],
+            "group_name": "Densidade de Cruzamento (Lineage)"
         },
         {
-            "test": "Distribuição Safra 202411",
-            "status": "PASS",
-            "obs": "17.5%"
-        },
-        {
-            "test": "Distribuição Safra 202412",
-            "status": "PASS",
-            "obs": "17.6%"
-        },
-        {
-            "test": "Distribuição Safra 202501",
-            "status": "PASS",
-            "obs": "17.1%"
-        },
-        {
-            "test": "Distribuição Safra 202502",
-            "status": "PASS",
-            "obs": "15.8%"
-        },
-        {
-            "test": "Distribuição Safra 202503",
-            "status": "PASS",
-            "obs": "16.1%"
-        },
-        {
-            "test": "Overlap dados_cadastrais",
-            "status": "PASS",
-            "obs": "100.00% de match"
-        },
-        {
-            "test": "Overlap score_bureau_movel",
-            "status": "PASS",
-            "obs": "100.00% de match"
-        },
-        {
-            "test": "Overlap atraso",
-            "status": "PASS",
-            "obs": "74.74% de match"
-        },
-        {
-            "test": "Overlap pagamento",
-            "status": "WARN",
-            "obs": "68.16% de match"
-        },
-        {
-            "test": "Overlap recarga",
-            "status": "PASS",
-            "obs": "99.78% de match"
-        },
-        {
-            "test": "Saneamento (Missing)",
-            "status": "INFO",
-            "obs": "Descartados 45,936 registros (3.36%)"
+            "group_id": 4,
+            "tests": [
+                {
+                    "test": "Saneamento (Missing)",
+                    "status": "INFO",
+                    "obs": "Descartados 45,936 registros (3.36%)",
+                    "description": "Valida se a variável target (Label) não possui valores nulos."
+                }
+            ],
+            "group_name": "Resumo de Expurgos"
         }
     ],
-    "title": "",
-    "run_id": ""
+    "entity": "labels_fpd",
+    "run_id": "20260212"
 }

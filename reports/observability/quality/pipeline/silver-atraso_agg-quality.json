@@ -1,17 +1,20 @@
 {
     "report_type": "Pipeline Quality",
-    "tests": [
+    "layer": "silver",
+    "reports": [
         {
-            "test": "PAREAMENTO (CHAVE -> DESC)",
-            "status": "STATUS",
-            "obs": "NÃO INFORMADOS"
-        },
-        {
-            "test": "dw_tipo_faturamento -> dsc_tipo_faturamento",
-            "status": "PASS",
-            "obs": "0"
+            "entity": "atraso_aggregation",
+            "run_id": "20260212",
+            "tests": [
+                {
+                    "test": "dw_tipo_faturamento -> dsc_tipo_faturamento",
+                    "status": "PASS",
+                    "obs": "0",
+                    "description": "Verifica se existem registros de chave sem correspondência na Silver."
+                }
+            ],
+            "total_added_columns": 1,
+            "final_result": "SUCCESS"
         }
-    ],
-    "title": "",
-    "run_id": ""
+    ]
 }

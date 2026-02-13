@@ -1,228 +1,347 @@
 {
     "report_type": "Pipeline Quality",
-    "tests": [
+    "layer": "bronze",
+    "reports": [
         {
-            "test": "Volumetria Dimensão",
-            "status": "INFO",
-            "obs": "5899 registros"
+            "entity": "canal_aquisicao_credito",
+            "run_id": "20260212",
+            "tests": [
+                {
+                    "test": "Volumetria Dimensão",
+                    "status": "INFO",
+                    "obs": "5899 registros",
+                    "description": "Quantidade de registros existentes na dimensão carregada na camada Bronze."
+                },
+                {
+                    "test": "Chave Técnica",
+                    "status": "INFO",
+                    "obs": "cod_canal_aquisicao",
+                    "description": "Identifica qual coluna representa a chave substituta da dimensão no DW."
+                },
+                {
+                    "test": "Match de Tipagem Chave Técnica",
+                    "status": "PASS",
+                    "obs": "Fato: VARCHAR - Dim: VARCHAR",
+                    "description": "Verifica se o tipo de dado da chave técnica entre fato e dimensão é compatível."
+                },
+                {
+                    "test": "Integridade de Chave (Fato)",
+                    "status": "PASS",
+                    "obs": "0 registros órfãos",
+                    "description": "Valida se todos os registros da fato possuem correspondência válida na dimensão."
+                }
+            ],
+            "final_result": "SUCCESS"
         },
         {
-            "test": "Chave Técnica",
-            "status": "INFO",
-            "obs": "cod_canal_aquisicao"
+            "entity": "forma_pagamento",
+            "run_id": "20260212",
+            "tests": [
+                {
+                    "test": "Volumetria Dimensão",
+                    "status": "INFO",
+                    "obs": "9 registros",
+                    "description": "Quantidade de registros existentes na dimensão carregada na camada Bronze."
+                },
+                {
+                    "test": "Chave Técnica",
+                    "status": "INFO",
+                    "obs": "dw_forma_pagamento",
+                    "description": "Identifica qual coluna representa a chave substituta da dimensão no DW."
+                },
+                {
+                    "test": "Match de Tipagem Chave Técnica",
+                    "status": "PASS",
+                    "obs": "Fato: VARCHAR - Dim: VARCHAR",
+                    "description": "Verifica se o tipo de dado da chave técnica entre fato e dimensão é compatível."
+                },
+                {
+                    "test": "Integridade de Chave (Fato)",
+                    "status": "PASS",
+                    "obs": "0 registros órfãos",
+                    "description": "Valida se todos os registros da fato possuem correspondência válida na dimensão."
+                }
+            ],
+            "final_result": "SUCCESS"
         },
         {
-            "test": "Match de Tipagem Chave Técnica",
-            "status": "PASS",
-            "obs": "Fato: VARCHAR - Dim: VARCHAR"
+            "entity": "instituicao",
+            "run_id": "20260212",
+            "tests": [
+                {
+                    "test": "Volumetria Dimensão",
+                    "status": "INFO",
+                    "obs": "550 registros",
+                    "description": "Quantidade de registros existentes na dimensão carregada na camada Bronze."
+                },
+                {
+                    "test": "Chave Técnica",
+                    "status": "INFO",
+                    "obs": "dw_instituicao",
+                    "description": "Identifica qual coluna representa a chave substituta da dimensão no DW."
+                },
+                {
+                    "test": "Match de Tipagem Chave Técnica",
+                    "status": "PASS",
+                    "obs": "Fato: VARCHAR - Dim: VARCHAR",
+                    "description": "Verifica se o tipo de dado da chave técnica entre fato e dimensão é compatível."
+                },
+                {
+                    "test": "Integridade de Chave (Fato)",
+                    "status": "WARN",
+                    "obs": "4 registros órfãos",
+                    "description": "Valida se todos os registros da fato possuem correspondência válida na dimensão."
+                }
+            ],
+            "final_result": "CHECK_REQUIRED"
         },
         {
-            "test": "Integridade de Chave (Fato)",
-            "status": "PASS",
-            "obs": "0 registros órfãos"
+            "entity": "plano_preco",
+            "run_id": "20260212",
+            "tests": [
+                {
+                    "test": "Volumetria Dimensão",
+                    "status": "INFO",
+                    "obs": "293743 registros",
+                    "description": "Quantidade de registros existentes na dimensão carregada na camada Bronze."
+                },
+                {
+                    "test": "Chave Técnica",
+                    "status": "INFO",
+                    "obs": "dw_plano_tarifacao",
+                    "description": "Identifica qual coluna representa a chave substituta da dimensão no DW."
+                },
+                {
+                    "test": "Match de Tipagem Chave Técnica",
+                    "status": "PASS",
+                    "obs": "Fato: VARCHAR - Dim: VARCHAR",
+                    "description": "Verifica se o tipo de dado da chave técnica entre fato e dimensão é compatível."
+                },
+                {
+                    "test": "Integridade de Chave (Fato)",
+                    "status": "PASS",
+                    "obs": "0 registros órfãos",
+                    "description": "Valida se todos os registros da fato possuem correspondência válida na dimensão."
+                }
+            ],
+            "final_result": "SUCCESS"
         },
         {
-            "test": "Volumetria Dimensão",
-            "status": "INFO",
-            "obs": "9 registros"
+            "entity": "plataforma",
+            "run_id": "20260212",
+            "tests": [
+                {
+                    "test": "Volumetria Dimensão",
+                    "status": "INFO",
+                    "obs": "28 registros",
+                    "description": "Quantidade de registros existentes na dimensão carregada na camada Bronze."
+                },
+                {
+                    "test": "Chave Técnica",
+                    "status": "INFO",
+                    "obs": "cod_plataforma_atu",
+                    "description": "Identifica qual coluna representa a chave substituta da dimensão no DW."
+                },
+                {
+                    "test": "Match de Tipagem Chave Técnica",
+                    "status": "PASS",
+                    "obs": "Fato: VARCHAR - Dim: VARCHAR",
+                    "description": "Verifica se o tipo de dado da chave técnica entre fato e dimensão é compatível."
+                },
+                {
+                    "test": "Integridade de Chave (Fato)",
+                    "status": "PASS",
+                    "obs": "0 registros órfãos",
+                    "description": "Valida se todos os registros da fato possuem correspondência válida na dimensão."
+                }
+            ],
+            "final_result": "SUCCESS"
         },
         {
-            "test": "Chave Técnica",
-            "status": "INFO",
-            "obs": "dw_forma_pagamento"
+            "entity": "promocao_credito",
+            "run_id": "20260212",
+            "tests": [
+                {
+                    "test": "Volumetria Dimensão",
+                    "status": "INFO",
+                    "obs": "15 registros",
+                    "description": "Quantidade de registros existentes na dimensão carregada na camada Bronze."
+                },
+                {
+                    "test": "Chave Técnica",
+                    "status": "INFO",
+                    "obs": "cod_promocao",
+                    "description": "Identifica qual coluna representa a chave substituta da dimensão no DW."
+                },
+                {
+                    "test": "Match de Tipagem Chave Técnica",
+                    "status": "PASS",
+                    "obs": "Fato: VARCHAR - Dim: VARCHAR",
+                    "description": "Verifica se o tipo de dado da chave técnica entre fato e dimensão é compatível."
+                },
+                {
+                    "test": "Integridade de Chave (Fato)",
+                    "status": "WARN",
+                    "obs": "1 registros órfãos",
+                    "description": "Valida se todos os registros da fato possuem correspondência válida na dimensão."
+                }
+            ],
+            "final_result": "CHECK_REQUIRED"
         },
         {
-            "test": "Match de Tipagem Chave Técnica",
-            "status": "PASS",
-            "obs": "Fato: VARCHAR - Dim: VARCHAR"
+            "entity": "status_plataforma",
+            "run_id": "20260212",
+            "tests": [
+                {
+                    "test": "Volumetria Dimensão",
+                    "status": "INFO",
+                    "obs": "25 registros",
+                    "description": "Quantidade de registros existentes na dimensão carregada na camada Bronze."
+                },
+                {
+                    "test": "Chave Técnica",
+                    "status": "INFO",
+                    "obs": "cod_status_plataforma",
+                    "description": "Identifica qual coluna representa a chave substituta da dimensão no DW."
+                },
+                {
+                    "test": "Match de Tipagem Chave Técnica",
+                    "status": "PASS",
+                    "obs": "Fato: VARCHAR - Dim: VARCHAR",
+                    "description": "Verifica se o tipo de dado da chave técnica entre fato e dimensão é compatível."
+                },
+                {
+                    "test": "Integridade de Chave (Fato)",
+                    "status": "WARN",
+                    "obs": "8 registros órfãos",
+                    "description": "Valida se todos os registros da fato possuem correspondência válida na dimensão."
+                }
+            ],
+            "final_result": "CHECK_REQUIRED"
         },
         {
-            "test": "Integridade de Chave (Fato)",
-            "status": "PASS",
-            "obs": "0 registros órfãos"
+            "entity": "tecnologia",
+            "run_id": "20260212",
+            "tests": [
+                {
+                    "test": "Volumetria Dimensão",
+                    "status": "INFO",
+                    "obs": "10 registros",
+                    "description": "Quantidade de registros existentes na dimensão carregada na camada Bronze."
+                },
+                {
+                    "test": "Chave Técnica",
+                    "status": "INFO",
+                    "obs": "cod_tecnologia_dw",
+                    "description": "Identifica qual coluna representa a chave substituta da dimensão no DW."
+                },
+                {
+                    "test": "Match de Tipagem Chave Técnica",
+                    "status": "PASS",
+                    "obs": "Fato: VARCHAR - Dim: VARCHAR",
+                    "description": "Verifica se o tipo de dado da chave técnica entre fato e dimensão é compatível."
+                },
+                {
+                    "test": "Integridade de Chave (Fato)",
+                    "status": "PASS",
+                    "obs": "0 registros órfãos",
+                    "description": "Valida se todos os registros da fato possuem correspondência válida na dimensão."
+                }
+            ],
+            "final_result": "SUCCESS"
         },
         {
-            "test": "Volumetria Dimensão",
-            "status": "INFO",
-            "obs": "550 registros"
+            "entity": "tipo_credito",
+            "run_id": "20260212",
+            "tests": [
+                {
+                    "test": "Volumetria Dimensão",
+                    "status": "INFO",
+                    "obs": "12 registros",
+                    "description": "Quantidade de registros existentes na dimensão carregada na camada Bronze."
+                },
+                {
+                    "test": "Chave Técnica",
+                    "status": "INFO",
+                    "obs": "cod_tipo_credito",
+                    "description": "Identifica qual coluna representa a chave substituta da dimensão no DW."
+                },
+                {
+                    "test": "Match de Tipagem Chave Técnica",
+                    "status": "PASS",
+                    "obs": "Fato: VARCHAR - Dim: VARCHAR",
+                    "description": "Verifica se o tipo de dado da chave técnica entre fato e dimensão é compatível."
+                },
+                {
+                    "test": "Integridade de Chave (Fato)",
+                    "status": "PASS",
+                    "obs": "0 registros órfãos",
+                    "description": "Valida se todos os registros da fato possuem correspondência válida na dimensão."
+                }
+            ],
+            "final_result": "SUCCESS"
         },
         {
-            "test": "Chave Técnica",
-            "status": "INFO",
-            "obs": "dw_instituicao"
+            "entity": "tipo_insercao",
+            "run_id": "20260212",
+            "tests": [
+                {
+                    "test": "Volumetria Dimensão",
+                    "status": "INFO",
+                    "obs": "22 registros",
+                    "description": "Quantidade de registros existentes na dimensão carregada na camada Bronze."
+                },
+                {
+                    "test": "Chave Técnica",
+                    "status": "INFO",
+                    "obs": "dw_tipo_insercao",
+                    "description": "Identifica qual coluna representa a chave substituta da dimensão no DW."
+                },
+                {
+                    "test": "Match de Tipagem Chave Técnica",
+                    "status": "PASS",
+                    "obs": "Fato: VARCHAR - Dim: VARCHAR",
+                    "description": "Verifica se o tipo de dado da chave técnica entre fato e dimensão é compatível."
+                },
+                {
+                    "test": "Integridade de Chave (Fato)",
+                    "status": "WARN",
+                    "obs": "3 registros órfãos",
+                    "description": "Valida se todos os registros da fato possuem correspondência válida na dimensão."
+                }
+            ],
+            "final_result": "CHECK_REQUIRED"
         },
         {
-            "test": "Match de Tipagem Chave Técnica",
-            "status": "PASS",
-            "obs": "Fato: VARCHAR - Dim: VARCHAR"
-        },
-        {
-            "test": "Integridade de Chave (Fato)",
-            "status": "WARN",
-            "obs": "4 registros órfãos"
-        },
-        {
-            "test": "Volumetria Dimensão",
-            "status": "INFO",
-            "obs": "293743 registros"
-        },
-        {
-            "test": "Chave Técnica",
-            "status": "INFO",
-            "obs": "dw_plano_tarifacao"
-        },
-        {
-            "test": "Match de Tipagem Chave Técnica",
-            "status": "PASS",
-            "obs": "Fato: VARCHAR - Dim: VARCHAR"
-        },
-        {
-            "test": "Integridade de Chave (Fato)",
-            "status": "PASS",
-            "obs": "0 registros órfãos"
-        },
-        {
-            "test": "Volumetria Dimensão",
-            "status": "INFO",
-            "obs": "28 registros"
-        },
-        {
-            "test": "Chave Técnica",
-            "status": "INFO",
-            "obs": "cod_plataforma_atu"
-        },
-        {
-            "test": "Match de Tipagem Chave Técnica",
-            "status": "PASS",
-            "obs": "Fato: VARCHAR - Dim: VARCHAR"
-        },
-        {
-            "test": "Integridade de Chave (Fato)",
-            "status": "PASS",
-            "obs": "0 registros órfãos"
-        },
-        {
-            "test": "Volumetria Dimensão",
-            "status": "INFO",
-            "obs": "15 registros"
-        },
-        {
-            "test": "Chave Técnica",
-            "status": "INFO",
-            "obs": "cod_promocao"
-        },
-        {
-            "test": "Match de Tipagem Chave Técnica",
-            "status": "PASS",
-            "obs": "Fato: VARCHAR - Dim: VARCHAR"
-        },
-        {
-            "test": "Integridade de Chave (Fato)",
-            "status": "WARN",
-            "obs": "1 registros órfãos"
-        },
-        {
-            "test": "Volumetria Dimensão",
-            "status": "INFO",
-            "obs": "25 registros"
-        },
-        {
-            "test": "Chave Técnica",
-            "status": "INFO",
-            "obs": "cod_status_plataforma"
-        },
-        {
-            "test": "Match de Tipagem Chave Técnica",
-            "status": "PASS",
-            "obs": "Fato: VARCHAR - Dim: VARCHAR"
-        },
-        {
-            "test": "Integridade de Chave (Fato)",
-            "status": "WARN",
-            "obs": "8 registros órfãos"
-        },
-        {
-            "test": "Volumetria Dimensão",
-            "status": "INFO",
-            "obs": "10 registros"
-        },
-        {
-            "test": "Chave Técnica",
-            "status": "INFO",
-            "obs": "cod_tecnologia_dw"
-        },
-        {
-            "test": "Match de Tipagem Chave Técnica",
-            "status": "PASS",
-            "obs": "Fato: VARCHAR - Dim: VARCHAR"
-        },
-        {
-            "test": "Integridade de Chave (Fato)",
-            "status": "PASS",
-            "obs": "0 registros órfãos"
-        },
-        {
-            "test": "Volumetria Dimensão",
-            "status": "INFO",
-            "obs": "12 registros"
-        },
-        {
-            "test": "Chave Técnica",
-            "status": "INFO",
-            "obs": "cod_tipo_credito"
-        },
-        {
-            "test": "Match de Tipagem Chave Técnica",
-            "status": "PASS",
-            "obs": "Fato: VARCHAR - Dim: VARCHAR"
-        },
-        {
-            "test": "Integridade de Chave (Fato)",
-            "status": "PASS",
-            "obs": "0 registros órfãos"
-        },
-        {
-            "test": "Volumetria Dimensão",
-            "status": "INFO",
-            "obs": "22 registros"
-        },
-        {
-            "test": "Chave Técnica",
-            "status": "INFO",
-            "obs": "dw_tipo_insercao"
-        },
-        {
-            "test": "Match de Tipagem Chave Técnica",
-            "status": "PASS",
-            "obs": "Fato: VARCHAR - Dim: VARCHAR"
-        },
-        {
-            "test": "Integridade de Chave (Fato)",
-            "status": "WARN",
-            "obs": "3 registros órfãos"
-        },
-        {
-            "test": "Volumetria Dimensão",
-            "status": "INFO",
-            "obs": "5 registros"
-        },
-        {
-            "test": "Chave Técnica",
-            "status": "INFO",
-            "obs": "dw_tipo_recarga"
-        },
-        {
-            "test": "Match de Tipagem Chave Técnica",
-            "status": "PASS",
-            "obs": "Fato: VARCHAR - Dim: VARCHAR"
-        },
-        {
-            "test": "Integridade de Chave (Fato)",
-            "status": "PASS",
-            "obs": "0 registros órfãos"
+            "entity": "tipo_recarga",
+            "run_id": "20260212",
+            "tests": [
+                {
+                    "test": "Volumetria Dimensão",
+                    "status": "INFO",
+                    "obs": "5 registros",
+                    "description": "Quantidade de registros existentes na dimensão carregada na camada Bronze."
+                },
+                {
+                    "test": "Chave Técnica",
+                    "status": "INFO",
+                    "obs": "dw_tipo_recarga",
+                    "description": "Identifica qual coluna representa a chave substituta da dimensão no DW."
+                },
+                {
+                    "test": "Match de Tipagem Chave Técnica",
+                    "status": "PASS",
+                    "obs": "Fato: VARCHAR - Dim: VARCHAR",
+                    "description": "Verifica se o tipo de dado da chave técnica entre fato e dimensão é compatível."
+                },
+                {
+                    "test": "Integridade de Chave (Fato)",
+                    "status": "PASS",
+                    "obs": "0 registros órfãos",
+                    "description": "Valida se todos os registros da fato possuem correspondência válida na dimensão."
+                }
+            ],
+            "final_result": "SUCCESS"
         }
-    ],
-    "title": "",
-    "run_id": "",
-    "final_result": "SUCCESS"
+    ]
 }
