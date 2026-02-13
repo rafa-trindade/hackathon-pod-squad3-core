@@ -23,7 +23,7 @@ local_css("streamlit/assets/style.css")
 st.sidebar.markdown(
     """
     <div style="display: flex; justify-content: flex-end; width: 100%; overflow: hidden; margin-top: 10px; margin-bottom: 20px;">
-        <img src="https://i.postimg.cc/rp1VPzMJ/Group-4.png" style="width: 100%; object-fit: contain;">
+        <img src="https://i.postimg.cc/dQNRCk8X/Group-4.png" style="width: 100%; object-fit: contain;">
     </div>
     """,
     unsafe_allow_html=True
@@ -124,7 +124,7 @@ if not all_files:
     st.stop()
 
 categories = {
-    "Pipeline Execution": [f for f in all_files if "pipeline_execution" in f.lower()], # NOVA CATEGORIA
+    "Pipeline Execution": [f for f in all_files if "pipeline_execution" in f.lower()],
     "Profiling": [f for f in all_files if "profiling" in f.lower()],
     "Quality": [f for f in all_files if "quality" in f.lower()],
     "Integrity": [f for f in all_files if "integrity" in f.lower() or "inspect_partition" in f.lower()],
@@ -452,10 +452,11 @@ if data:
                     hide_index=True
                 )
 
+
     elif category == "Quality":
         report_name = selected_report_display
         run_display = selected_run
-        
+
         st.markdown(
             f"""
             <h3 style="font-weight:semi-bold;">
@@ -467,99 +468,225 @@ if data:
             unsafe_allow_html=True
         )
 
-
-
         st.caption(f"Caminho no Lake: s3://{BUCKET_NAME}/{selected_report_key}")
         st.divider()
         render_timestamp(integrity_timestamp)
 
+        if data.get("report_type") == "ABT Technical Report":
+            content = data.get("content", {})
+
+            
+            with st.expander(f"Metadados e Volumetria da ABT: `{data.get('entity', 'Gold')}`", expanded=True):
+                st.markdown(
+                    f"""
+                    <div style="background-color:#1A1C24; padding:15px; border-radius:8px; border-left: 5px solid #731E27;">
+                        <span style="color:#808495; text-transform:uppercase; font-size:12px; font-weight:700;">📌 Grão da Tabela (Primary Key)</span>
+                        <h2 style="color:#FFFFFF; margin:0; font-family:'Inter'; font-size:24px;">{content.get('grain', 'N/I')}</h2>
+                    </div>
+                    """, 
+                    unsafe_allow_html=True
+                )
+
+                def format_milhar(valor):
+                    if valor is None or valor == "N/I":
+                        return "N/I"
+                    
+                    try:
+                        valor_limpo = "".join(filter(str.isdigit, str(valor)))
+                        
+                        if not valor_limpo:
+                            return str(valor)
+                        
+                        return f"{int(valor_limpo):,}".replace(",", ".")
+                    except Exception:
+                        return str(valor)
+
+                st.write("")
+                m1, m2, m3 = st.columns(3)
+                m1.metric("📦 Total de Variáveis", f"{format_milhar(content.get('variables', 'N/I'))} Features")
+                m2.metric("📊 Volumetria Total", f"{format_milhar(content.get('volumetry', 'N/I'))} Registros")
+                m3.metric("👤 Cardinalidade", f"{format_milhar(content.get('cardinality', 'N/I'))} CPFs Únicos")
+
+            st.stop()
+
+        COLUMN_ORDER_MAP = {
+            "bronze": {
+                "order": ["test", "description", "status", "obs"],
+                "rename": {"test": "Teste", "description": "Descrição", "status": "Status", "obs": "Informação"}
+            },
+            "silver": {
+                "order": ["test", "description", "status", "obs"],
+                "rename": {"test": "Pareamento (Chave -> Desc)", "status": "Status", "obs": "Reg. sem Correspondência", "description": "Descrição"}
+            },
+            "gold": { 
+                "order": ["test", "description", "status", "obs"],
+                "rename": {"test": "Teste", "description": "Descrição", "status": "Status", "obs": "Informação"}
+            },
+            "raw": {
+                "order": ["status", "description", "cols", "detail"],
+                "rename": {"status": "Status", "description": "Descrição", "cols": "Colunas Verificadas", "detail": "Informação"}
+            }
+        }
+
+        if "groups" in data:
+            groups = data.get("groups", [])
+            
+            total_tests = sum(len(g.get("tests", [])) for g in groups)
+            total_pass = total_fail = total_info = 0
+            for group in groups:
+                for test in group.get("tests", []):
+                    status = str(test.get("status", "")).upper()
+                    if "PASS" in status: total_pass += 1
+                    elif "FAIL" in status: total_fail += 1
+                    else: total_info += 1
+            
+            with st.expander("📊 Sumário de Qualidade", expanded=True):
+                m1, m2, m3, m4 = st.columns(4)
+                m1.metric("Total de Testes", total_tests)
+                m2.metric("Sucesso", total_pass)
+                m3.metric("Falhas", total_fail)
+                m4.metric("Informativos", total_info)
+
+            st.divider()
+
+            def format_status_smart(val):
+                v = str(val).upper()
+                if any(emoji in v for emoji in ['✅', '❌', '⚠️', 'ℹ️']): return val
+                if any(x in v for x in ['PASS', 'SUCCESS', 'SUCESSO', 'OK']): return f"✅ {val}"
+                if any(x in v for x in ['FAIL', 'ERROR', 'FAILED', 'ERR']): return f"❌ {val}"
+                if any(x in v for x in ['WARN', 'WARNING', 'ALERTA']): return f"⚠️ {val}"
+                return f"ℹ️ {val}"
+
+            for group in sorted(groups, key=lambda x: x.get("group_id", 99)):
+                group_name = group.get("group_name", f"Grupo {group.get('group_id', '')}")
+                with st.expander(f"▶️ {group_name}", expanded=True):
+                    tests = group.get("tests", [])
+                    if not tests:
+                        st.info("Nenhum teste neste grupo.")
+                        continue
+                    
+                    df_group = pd.DataFrame(tests)
+                    
+                    gold_config = COLUMN_ORDER_MAP.get("gold", {})
+                    cols_order = gold_config.get("order", [])
+                    rename_map = gold_config.get("rename", {})
+
+                    ordered_present = [c for c in cols_order if c in df_group.columns]
+                    extras = [c for c in df_group.columns if c not in ordered_present]
+                    df_group = df_group[ordered_present + extras]
+                    df_group = df_group.rename(columns=rename_map)
+
+                    status_col = "Status" if "Status" in df_group.columns else df_group.columns[-2]
+                    df_group[status_col] = df_group[status_col].apply(format_status_smart)
+                    
+                    st.dataframe(df_group, use_container_width=True, hide_index=True)
+            st.stop()
+
+
         results_key = "results" if "results" in data else "tests"
         
-        if results_key in data:
+        if results_key in data and "reports" not in data and "groups" not in data:
             raw_results = data[results_key]
-            
             forbidden_terms = ["Status Geral", "RELATÓRIO TÉCNICO", "RUNINFO", "======"]
-            filtered_results = [
-                r for r in raw_results 
-                if not any(term in str(list(r.values())) for term in forbidden_terms)
-            ]
+            filtered_results = [r for r in raw_results if not any(term in str(list(r.values())) for term in forbidden_terms)]
             
             df_qual = pd.DataFrame(filtered_results)
-
-            df_qual.columns = [c.replace('STATUS', 'INFO') if c.upper() == 'STATUS' else c for c in df_qual.columns]
             
-            possible_status_cols = ['info', 'status', 'result', 'obs', 'desc', 'valor']
-            status_col = next((c for c in df_qual.columns if any(p in c.lower() for p in possible_status_cols)), df_qual.columns[-1])
+            if 'description' not in df_qual.columns:
+                df_qual['description'] = "Validação de Schema."
+            
 
-            descricoes_padrao = {
-                "Unicidade": "Garante que não existam chaves duplicadas na tabela (PK).",
-                "Volumetria": "Quantidade total de linhas processadas nesta execução.",
-                "Cardinalidade": "Número de registros únicos (ex: CPFs únicos).",
-                "Variáveis": "Total de colunas (features) presentes no dataset.",
-                "Missing": "Identifica registros com ausência de dados obrigatórios.",
-                "Safra": "Valida se a distribuição temporal dos dados está consistente.",
-                "Grão": "Define a granularidade mínima da tabela.",
-                "Pareamento": "Integridade da relação entre chaves e suas descrições.",
-                "Contrato": "Validação de tipos e nomes de colunas via Pandera/Schema.",
-                "atraso": "Conformidade dos dados de atraso e pagamentos.",
-                "dados_cadastrais": "Integridade de nomes, CPFs e endereços.",
-                "telco": "Validação de variáveis de telecomunicações.",
-                "score_bureau": "Disponibilidade de scores de crédito externos."
-            }
+            layer_key = selected_layer.lower()
+            config = COLUMN_ORDER_MAP.get(layer_key, {})
+            cols_ordered = config.get("order", [])
+            rename_map = config.get("rename", {})
 
-            def sugerir_descricao(item):
-                item_str = str(item)
-                for chave, desc in descricoes_padrao.items():
-                    if chave.upper() in item_str.upper():
-                        return desc
-                return "Validação técnica de integridade."
-
-            test_col = df_qual.columns[0]
-            df_qual['Descrição'] = df_qual[test_col].apply(sugerir_descricao)
-
-            cols = list(df_qual.columns)
-            if 'Descrição' in cols:
-                cols.insert(1, cols.pop(cols.index('Descrição')))
-                df_qual = df_qual[cols]
+            ordered_present = [c for c in cols_ordered if c in df_qual.columns]
+            extras = [c for c in df_qual.columns if c not in ordered_present]
+            df_qual = df_qual[ordered_present + extras].rename(columns=rename_map)
+            
+            status_col = rename_map.get("status", df_qual.columns[-1])
 
             status_series = df_qual[status_col].astype(str).str.upper()
             passed = len(df_qual[status_series.str.contains('PASS|SUCCESS|SUCESSO|OK|✅', na=False)])
             failed = len(df_qual[status_series.str.contains('FAIL|ERROR|FAILED|ERR|❌', na=False)])
-            warns = len(df_qual) - passed - failed 
+            warns = len(df_qual) - passed - failed
 
-            if (passed + failed + (warns if warns > 0 else 0)) > 0:
-                with st.expander("📊 Sumário de Qualidade", expanded=True):
-                    m1, m2, m3, m4 = st.columns(4)
-                    m1.metric("Total", len(df_qual))
-                    m2.metric("Sucesso", passed)
-                    m3.metric("Info/Avisos", warns)
-                    m4.metric("Falhas", failed)
-
-            st.write("### Detalhes da Inspeção")
+            with st.expander("📊 Sumário de Qualidade", expanded=True):
+                m1, m2, m3, m4 = st.columns(4)
+                m1.metric("Total", len(df_qual)); m2.metric("Sucesso", passed); m3.metric("Atenção", warns); m4.metric("Falhas", failed)
             
             def format_status_smart(val):
                 v = str(val).upper()
-                if any(emoji in v for emoji in ['✅', '❌', '⚠️', 'ℹ️']):
-                    return val
-                
-                if any(x in v for x in ['PASS', 'SUCCESS', 'SUCESSO', 'OK']):
-                    return f"✅ {val}"
-                if any(x in v for x in ['FAIL', 'ERROR', 'FAILED', 'ERR']):
-                    return f"❌ {val}"
-                if any(x in v for x in ['WARN', 'WARNING', 'ALERTA']):
-                    return f"⚠️ {val}"
+                if any(emoji in v for emoji in ['✅', '❌', '⚠️', 'ℹ️']): return val
+                if any(x in v for x in ['PASS', 'SUCCESS', 'SUCESSO', 'OK']): return f"✅ {val}"
+                if any(x in v for x in ['FAIL', 'ERROR', 'FAILED', 'ERR']): return f"❌ {val}"
+                if any(x in v for x in ['WARN', 'WARNING', 'ALERTA']): return f"⚠️ {val}"
                 return f"ℹ️ {val}"
 
             df_display = df_qual.copy()
             df_display[status_col] = df_display[status_col].apply(format_status_smart)
+            st.dataframe(df_display, width='stretch', hide_index=True)
+            st.stop()
 
-            st.dataframe(
-                df_display, 
-                width='stretch', 
-                hide_index=True
-            )
-        else:
-            st.info("Nenhum dado de qualidade encontrado para este relatório.")
+        if "reports" not in data:
+            st.warning("Formato inesperado de relatório de qualidade.")
+            st.stop()
+
+        reports = data["reports"]
+
+        layer_key = selected_layer.lower()
+        layer_config = COLUMN_ORDER_MAP.get(layer_key, {})
+        cols_ordered = layer_config.get("order", [])
+        rename_map = layer_config.get("rename", {})
+
+        total_entities = sum(r.get("total_added_columns", 1) for r in reports) if layer_key == "silver" else len(reports)
+
+        total_pass = total_warn = total_fail = 0
+        for report in reports:
+            for test in report.get("tests", []):
+                status = str(test.get("status", "")).upper()
+                if any(x in status for x in ["PASS", "SUCCESS", "SUCESSO", "OK", "✅"]): total_pass += 1
+                elif any(x in status for x in ["WARN", "CHECK", "⚠️"]): total_warn += 1
+                elif any(x in status for x in ["FAIL", "ERROR", "FAILED", "ERR", "❌"]): total_fail += 1
+
+        with st.expander("📊 Visão Geral da Execução", expanded=True):
+            c1, c2, c3, c4 = st.columns(4)
+            c1.metric("Dimensões", total_entities); c2.metric("Sucesso", total_pass); c3.metric("Atenção", total_warn); c4.metric("Falhas", total_fail)
+
+        for report in reports:
+            entity = report["entity"]
+            entity_short = entity.split("_")[0]
+            final_result = report.get("final_result", "UNKNOWN")
+            icon = "✅" if final_result == "SUCCESS" else "⚠️" if final_result == "CHECK_REQUIRED" else "❌"
+
+            with st.expander(f"{icon} Dimensão: `{entity}`", expanded=True):
+                tests = report.get("tests", [])
+                if not tests:
+                    st.info("Nenhum teste encontrado."); continue
+
+                df = pd.DataFrame(tests)
+                if cols_ordered:
+                    ordered_present = [c for c in cols_ordered if c in df.columns]
+                    extras = [c for c in df.columns if c not in ordered_present]
+                    df = df[ordered_present + extras]
+                if rename_map: df = df.rename(columns=rename_map)
+
+                def format_status(val):
+                    v = str(val).upper()
+                    if any(x in v for x in ["PASS", "SUCCESS", "SUCESSO", "OK", "✅"]): return f"✅ {val}"
+                    if any(x in v for x in ["WARN", "CHECK", "⚠️"]): return f"⚠️ {val}"
+                    if any(x in v for x in ["FAIL", "ERROR", "FAILED", "ERR", "❌"]): return f"❌ {val}"
+                    return f"ℹ️ {val}"
+
+                status_col = "Status" if "Status" in df.columns else df.columns[-1]
+                df[status_col] = df[status_col].apply(format_status)
+
+                st.dataframe(df, use_container_width=True, hide_index=True)
+
+                if layer_key == "silver":
+                    total_desc_cols = report.get("total_added_columns", 0)
+                    st.info(f"ℹ️ Total de colunas de descrição adicionadas na tabela {entity_short}: {total_desc_cols}")
 
 else:
     st.error("Não foi possível processar o conteúdo do arquivo.")
