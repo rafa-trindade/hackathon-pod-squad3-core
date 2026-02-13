@@ -579,7 +579,7 @@ if data:
                     status_col = "Status" if "Status" in df_group.columns else df_group.columns[-2]
                     df_group[status_col] = df_group[status_col].apply(format_status_smart)
                     
-                    st.dataframe(df_group, use_container_width=True, hide_index=True)
+                    st.dataframe(df_group, width='stretch', hide_index=True)
             st.stop()
 
 
@@ -682,7 +682,7 @@ if data:
                 status_col = "Status" if "Status" in df.columns else df.columns[-1]
                 df[status_col] = df[status_col].apply(format_status)
 
-                st.dataframe(df, use_container_width=True, hide_index=True)
+                st.dataframe(df, width='stretch', hide_index=True)
 
                 if layer_key == "silver":
                     total_desc_cols = report.get("total_added_columns", 0)
