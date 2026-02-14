@@ -21,8 +21,8 @@ def get_s3_client():
         raise RuntimeError("S3_ENDPOINT não definido")
 
     s3_config = Config(
-        request_checksum_calculation="when_required",
-        response_checksum_validation="when_required"
+        #request_checksum_calculation="when_required",
+        #response_checksum_validation="when_required"
     )
 
     return boto3.client(
