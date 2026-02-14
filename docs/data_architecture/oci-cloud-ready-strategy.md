@@ -57,36 +57,40 @@ A arquitetura transporta os pilares de **Cloud Readiness** para a nuvem de forma
 
 ---
 
-## 🛠️ Stack & Estratégia de Hardware (Sandbox vs Prod)
+## 🛠️ Stack & Estratégia de Hardware
 
-Atualmente, a infraestrutura de **Sandbox** está **100% consolidada** via código (IaC). Toda a camada de governança, segurança e rede já foi provisionada com sucesso. O deploy da instância de computação encontra-se aguardando disponibilidade de slots de hardware ARM no pool **Always Free** da Oracle na região `sa-saopaulo-1`.
+A arquitetura de processamento foi desenhada em duas fases para otimização de performance e custos:
 
 ---
 
-### **Fase 1: Sandbox & Testes (Atual)**
+### **Fase 1: Sandbox & Testes**
 * **Shape:** `VM.Standard.A1.Flex` (ARM Ampere)
 * **Recursos:** 4 OCPUs | 24GB RAM
 * **Custo:** Always Free Tier (OCI)
 
 ---
 
-## 📈 4. Status da Infraestrutura (Sandbox)
-
-| Recurso | Status | Descrição |
-| :--- | :---: | :--- |
-| **Identity (IAM)** | 🟢 | Dynamic Groups e Políticas de Instance Principal ativos. |
-| **Networking** | 🟢 | VCN, Subnets e Security Lists provisionadas via Terraform. |
-| **Object Storage** | 🟢 | Bucket `lake-squad3` operacional (Camadas Medallion). |
-| **Compute Instance**| 🟢 | Configurada com Cloud-Init para Docker e DuckDB Temp. |
-| **Data Bridge** | 🟢 | Script de ingestão Raw (MinIO → OCI) validado e funcional. |
-| **Orchestration** | 🟢 | Airflow configurado com injeção dinâmica de `.env` para o Core. |
+### **Fase 2: Produção Oficial (Patrocinado) - Atual**
+* **Shape:** `VM.Standard.E3.Flex` (AMD EPYC™)
+* **Recursos:** 8 OCPUs | 64GB RAM (Escalável)
+* **Objetivo:** Alta performance para o motor DuckDB e paralelismo total de DAGs.
 
 ---
 
-### **Fase 2: Produção Oficial (Patrocinado)**
-* **Shape:** `VM.Standard.E4.Flex` (AMD EPYC™)
-* **Recursos:** 8 OCPUs | 64GB RAM (Escalável)
-* **Objetivo:** Alta performance para o motor DuckDB e paralelismo total de DAGs.
+## 🚀 Status do Provisionamento (Produção Oficial) - 100% Operacional
+
+A infraestrutura do **Squad 3** evoluiu da fase de testes para o ambiente de **Produção Oficial (Patrocinado)**. O provisionamento via Terraform foi concluído com a migração para instâncias de alta performance, garantindo o paralelismo total das DAGs e otimização do motor DuckDB.
+
+---
+
+| Recurso | Status | Descrição |
+| :--- | :---: | :--- |
+| **Identity (IAM)** | 🟢 | Governança completa com Dynamic Groups e Policies de Produção. |
+| **Networking** | 🟢 | VCN e Subnets otimizadas para tráfego de alta carga. |
+| **Object Storage** | 🟢 | Bucket `lake` operacional (Camadas Medallion). |
+| **Compute Instance**| 🟢 | **Instância AMD EPYC (8 OCPUs / 64GB) ativa e em produção.** |
+| **Data Bridge** | 🟢 | Ingestão Raw (MinIO → OCI) em regime de produção. |
+| **Orchestration** | 🟢 | Airflow operando com paralelismo total de DAGs. |
 
 ---
 
