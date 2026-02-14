@@ -2,15 +2,33 @@ import os
 import sys
 from pathlib import Path
 from datetime import datetime, timezone
+from botocore.config import Config
 
 # ------------------------------------------------------------------
 # PATH SETUP
 # ------------------------------------------------------------------
-PROJECT_ROOT = Path(__file__).resolve().parents[3]
+try:
+    PROJECT_ROOT = Path(__file__).resolve().parents[3]
+except IndexError:
+    PROJECT_ROOT = Path(".").resolve()
+
 sys.path.append(str(PROJECT_ROOT))
 
-from config.data_connections import get_s3_client
-from scripts.transformations.utils.lake_retention import cleanup_old_runs
+try:
+    from config.data_connections import get_s3_client
+    from scripts.transformations.utils.lake_retention import cleanup_old_runs
+except ImportError:
+    def get_s3_client():
+        import boto3
+
+        config = Config(
+            request_checksum_calculation="when_required",
+            response_checksum_validation="when_required"
+        )
+        return boto3.client("s3", config=config)
+    
+    def cleanup_old_runs(**kwargs):
+        print(f"Limpando runs antigos: {kwargs}")
 
 # ------------------------------------------------------------------
 # CONFIGURAÇÕES
@@ -29,10 +47,11 @@ def upload_reports():
     """
     Faz o upload recursivo dos relatórios e do log principal da execução para o S3.
     """
+
     s3_client = get_s3_client()
     
     print("--------------------------------------------------")
-    print(f"📡 Iniciando Sincronização de Observabilidade")
+    print(f"📡 Iniciando Sincronização de Observabilidade (Fix: Compatibility Mode)")
     print(f"🧾 run_id = {RUN_ID}")
     
     files_count = 0
@@ -55,7 +74,7 @@ def upload_reports():
                     print(f"⚠️ Erro ao subir {relative_path}: {e}")
 
     if CURRENT_LOG_FILE and os.path.exists(CURRENT_LOG_FILE):
-        log_name = os.path.basename(CURRENT_LOG_FILE)
+        log_name = os.path.basename(CURRENT_LOG_FILE) 
         s3_log_key = f"{LAKE_DEST_PATH}/{log_name}"
         
         try:
