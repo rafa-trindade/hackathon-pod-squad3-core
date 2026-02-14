@@ -40,6 +40,8 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
+
+
 BUCKET_NAME = os.getenv("S3_BUCKET", "lake")
 BASE_PATH = "observability/reports/"
 
@@ -110,6 +112,11 @@ def render_timestamp(global_timestamp):
 # --- Sidebar ---
 ##################################   
 st.sidebar.title("Painel de Observabilidade")
+
+st.sidebar.write("<hr style='margin-top:30px; margin-bottom:10px;'>", unsafe_allow_html=True)
+
+
+
 
 runs = list_runs()
 if not runs:
@@ -214,6 +221,36 @@ else:
     st.sidebar.warning("Nenhum relatório formatado disponível.")
     st.stop()
 
+st.sidebar.divider()
+
+st.sidebar.markdown(
+    """
+    <style>
+    /* Logo customizado */
+    .custom-sidebar-logo {
+        position: relative;   /* permite mover com top */
+        top: -10px;           /* desloca para cima */
+        display: flex;
+        justify-content: center;
+        margin-bottom: -23px;  /* espaço para itens abaixo */
+        z-index: 10;          /* sobreposição */
+    }
+    .custom-sidebar-logo img {
+        max-width: 260px; 
+        height: auto;
+        border-radius: 7px;
+    }
+    </style>
+    <div class="custom-sidebar-logo">
+        <a href="https://github.com/rafa-trindade/hackathon-pod-squad3-core" target="_blank">
+            <img src="https://img.shields.io/badge/hackathon--pod--academy-SQUAD•03-731E27?style=for-the-badge&logo=github&logoColor=DAD0D1&logoWidth=40&scale=1" />
+        </a>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
 
 ##################################   
 # --- Principal ---
@@ -252,20 +289,29 @@ if data:
 
         if "steps" in data:
             df_steps = pd.DataFrame(data["steps"])
-            df_steps.columns = [c.capitalize() for c in df_steps.columns]
+
+            column_mapping = {
+                "step": "Etapa",
+                "status": "Status",
+                "duration": "Duração",
+            }
+            
+            df_steps = df_steps.rename(columns=column_mapping)
 
             def dur_to_sec(ts):
                 if ":" not in str(ts): return 0
-                h, m, s = map(int, ts.split(':'))
-                return h * 3600 + m * 60 + s
+                try:
+                    h, m, s = map(int, ts.split(':'))
+                    return h * 3600 + m * 60 + s
+                except:
+                    return 0
 
             def format_hhmmss(total_seconds):
+                total_seconds = int(total_seconds)
                 horas = total_seconds // 3600
                 minutos = (total_seconds % 3600) // 60
                 segundos = total_seconds % 60
-                return f"{int(horas):02d}:{int(minutos):02d}:{int(segundos):02d}"
-
-            df_steps["Segundos"] = df_steps["Duration"].apply(dur_to_sec)
+                return f"{horas:02d}:{minutos:02d}:{segundos:02d}"
 
             def detect_layer(step_name):
                 s = str(step_name).upper()
@@ -275,11 +321,12 @@ if data:
                 if "GOLD" in s: return "GOLD"
                 return "OTHER"
 
-            df_steps["Layer"] = df_steps["Step"].apply(detect_layer)
+            df_steps["Segundos"] = df_steps["Duração"].apply(dur_to_sec)
+            df_steps["Layer"] = df_steps["Etapa"].apply(detect_layer)
 
             layer_order = ["RAW", "BRONZE", "SILVER", "GOLD"]
             layer_summary = df_steps.groupby("Layer").agg(
-                Total_Steps=("Step", "count"),
+                Total_Steps=("Etapa", "count"), 
                 Tempo_Total_Segundos=("Segundos", "sum")
             ).reset_index()
 
@@ -291,16 +338,14 @@ if data:
             tempo_total_formatado = format_hhmmss(tempo_total_seg)
 
             with st.expander(f"**⏱️ Tempo de Execução:** `{tempo_total_formatado}`", expanded=True):
-                
-
                 fig_cascade = go.Figure(go.Waterfall(
                     name="Pipeline",
                     orientation="v",
-                    measure=["relative", "relative", "relative", "relative", "total"],
+                    measure=(["relative"] * len(ls_plot)) + ["total"],
                     x=list(ls_plot["Layer"]) + ["GERAL"],
                     textposition="outside",
                     text=[format_hhmmss(v) for v in ls_plot["Tempo_Total_Segundos"]] + [tempo_total_formatado],
-                    y=list(ls_plot["Tempo_Total_Segundos"]) + [0],
+                    y=list(ls_plot["Tempo_Total_Segundos"]) + ([0] if len(ls_plot) > 0 else []),
                     connector={"line": {"color": "#731E27", "width": 1, "dash": "dot"}},
                     increasing={"marker": {"color": "#731E27"}},
                     totals={"marker": {"color": "#1A1C24", "line": {"color": "#731E27", "width": 2}}}
@@ -317,11 +362,9 @@ if data:
                         ticktext=[format_hhmmss(v) for v in range(0, int(tempo_total_seg) + 450, 450)]
                     )
                 )
-
-                st.plotly_chart(fig_cascade, width='stretch')
+                st.plotly_chart(fig_cascade, use_container_width=True)
 
             ordered_layers = ["RAW", "BRONZE", "SILVER", "GOLD"]
-
             for layer in ordered_layers:
                 df_layer = df_steps[df_steps["Layer"] == layer].copy()
                 if df_layer.empty: continue
@@ -337,12 +380,11 @@ if data:
                     m2.markdown(f"**Processos**: {total_proc}")
                     m3.markdown(f"**Sucesso**: {success_count}")
                     m4.markdown(f"**Falhas**: {fail_count}")
-
                     st.divider()
 
                     st.dataframe(
-                        df_layer[["Step", "Status", "Duration"]],
-                        width='stretch', 
+                        df_layer[["Etapa", "Status", "Duração"]],
+                        use_container_width=True, 
                         hide_index=True
                     )
 
