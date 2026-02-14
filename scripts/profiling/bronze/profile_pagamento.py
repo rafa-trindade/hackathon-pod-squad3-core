@@ -49,6 +49,8 @@ md_file = init_md_report(
 # GARANTIA DE UNICIDADE E QUALIDADE #################
 #####################################################
 chave_tecnica_cols = ["num_cpf", "contrato", "seq_fatura", "num_sub_seq_fatura", "num_credito_seq"]
+json_map = ", ".join([f"'{c}': '{c}'" for c in chave_tecnica_cols])
+
 
 md = "### 🔑 Garantia de Unicidade: `bronze/pagamento`\n"
 md += f"- **Chave Técnica:** `{', '.join(chave_tecnica_cols)}`\n"
@@ -60,9 +62,9 @@ try:
             SELECT 
                 COUNT(*) AS total_linhas,
                 APPROX_COUNT_DISTINCT({{ 
-                    {", ".join([f"'{c}': \"{c}\"" for c in chave_tecnica_cols])} 
+                    {json_map} 
                 }}) AS distintos_aprox,
-                COUNT(*) FILTER (WHERE {' OR '.join([f'"{c}" IS NULL' for c in chave_tecnica_cols])}) AS nulos
+                COUNT(*) FILTER (WHERE {' OR '.join([f"'{c}' IS NULL" for c in chave_tecnica_cols])}) AS nulos
             FROM read_parquet('{path_parquet}', hive_partitioning=1)
         )
         SELECT
