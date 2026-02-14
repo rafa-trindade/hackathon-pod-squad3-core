@@ -1,6 +1,6 @@
 import os
 from urllib.parse import urlparse
-
+from botocore.config import Config
 from dotenv import load_dotenv
 import boto3
 import duckdb
@@ -20,14 +20,19 @@ def get_s3_client():
     if not endpoint:
         raise RuntimeError("S3_ENDPOINT não definido")
 
+    s3_config = Config(
+        request_checksum_calculation="when_required",
+        response_checksum_validation="when_required"
+    )
+
     return boto3.client(
         "s3",
         endpoint_url=endpoint,
         aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
         aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
         region_name=os.getenv("AWS_DEFAULT_REGION", "us-east-1"),
+        config=s3_config
     )
-
 
 # --------------------------------------------------------------
 # DuckDB connection
@@ -37,13 +42,12 @@ def get_duckdb_connection(
     threads: int = None,
 ) -> duckdb.DuckDBPyConnection:
     
-    # Se não passar nada na chamada da função, ele busca do .env
-    # Se não tiver no .env, ele usa o fallback (6GB / 5)
+
     if memory_limit is None:
-        memory_limit = os.getenv("DUCKDB_MEMORY_LIMIT", "6GB")
+        memory_limit = os.getenv("DUCKDB_MEMORY_LIMIT", "26GB")
     
     if threads is None:
-        threads = int(os.getenv("DUCKDB_THREADS", 5))
+        threads = int(os.getenv("DUCKDB_THREADS", 6))
 
     con = duckdb.connect()
 
@@ -62,9 +66,6 @@ def get_duckdb_connection(
 
     # ---------------------------------------------------------------
     # DuckDB temp directory (NVMe) 
-    # Setup (executar uma vez no host): 
-    #   sudo mkdir -p /mnt/nvme/duckdb_temp
-    #   sudo chown -R user:user /mnt/nvme/duckdb_temp 
     # ---------------------------------------------------------------
     temp_dir = "/mnt/nvme/duckdb_temp"
     if not os.path.isdir(temp_dir):
@@ -87,7 +88,7 @@ def get_duckdb_connection(
         SET s3_access_key_id='{os.getenv("AWS_ACCESS_KEY_ID")}';
         SET s3_secret_access_key='{os.getenv("AWS_SECRET_ACCESS_KEY")}';
         SET s3_region='{os.getenv("AWS_DEFAULT_REGION", "us-east-1")}';
-        SET s3_use_ssl=false;
+        SET s3_use_ssl=true;
         SET s3_url_style='path';
     """)
 
