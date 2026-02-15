@@ -124,7 +124,7 @@ def run():
                 SELECT t.*, 
                        ROW_NUMBER() OVER(
                            PARTITION BY {", ".join([f"t.{c}" for c in chave_tecnica_cols])} 
-                           ORDER BY t.ingestion_ts DESC, t.dat_insercao_credito DESC, t.hor_insercao_credito DESC
+                           ORDER BY t.ingestion_ts DESC, t.dat_insercao_credito DESC, t.hor_insercao_credito DESC, t.num_cpf ASC
                        ) as row_num
                 FROM {step1_table} t JOIN work_db.chaves_duplicadas d ON {' AND '.join([f't.{c} = d.{c}' for c in chave_tecnica_cols])}
             ) WHERE row_num = 1
@@ -144,48 +144,59 @@ def run():
         CREATE TABLE work_db.silver_{TABLE_NAME}_step3 AS
         SELECT 
             f.*,
-            COALESCE(d1.dsc_canal_aquisicao, 'não informado') as dsc_canal_aquisicao,
-            COALESCE(d2.dsc_forma_pagamento, 'não informado') as dsc_forma_pagamento,
+            -- Canais e Pagamentos
+            COALESCE(d1.dsc_canal_aquisicao, CASE WHEN f.cod_canal_aquisicao IS NULL THEN 'Sem Descricao' ELSE 'Sem Correspondência (' || f.cod_canal_aquisicao::VARCHAR || ')' END) as dsc_canal_aquisicao,
+            COALESCE(d2.dsc_forma_pagamento, CASE WHEN f.dw_forma_pagamento IS NULL THEN 'Sem Descricao' ELSE 'Sem Correspondência (' || f.dw_forma_pagamento::VARCHAR || ')' END) as dsc_forma_pagamento,
             
-            -- Tratamento para Instituição
+            -- Instituição
             CASE 
-                WHEN f.dw_instituicao = '-1' THEN 'não mapeado (código -1)'
-                ELSE COALESCE(d3.dsc_instituicao, 'não informado') 
+                WHEN f.dw_instituicao IS NULL THEN 'Sem Descricao'
+                WHEN f.dw_instituicao::INT < 0 THEN 'Não Mapeado (' || f.dw_instituicao::VARCHAR || ')'
+                WHEN d3.dw_instituicao IS NULL THEN 'Sem Correspondência (' || f.dw_instituicao::VARCHAR || ')'
+                ELSE d3.dsc_instituicao 
             END as dsc_instituicao,
             
-            COALESCE(d4.dsc_plano_tarifacao, 'não informado') as dsc_plano_tarifacao, 
-            COALESCE(d5.dsc_plataforma_atu, 'não informado') as dsc_plataforma_atu,
+            -- Plano e Plataforma
+            COALESCE(d4.dsc_plano_tarifacao, CASE WHEN f.dw_plano_tarifacao IS NULL THEN 'Sem Descricao' ELSE 'Sem Correspondência (' || f.dw_plano_tarifacao::VARCHAR || ')' END) as dsc_plano_tarifacao,
+            COALESCE(d5.dsc_plataforma_atu, CASE WHEN f.cod_plataforma_atu IS NULL THEN 'Sem Descricao' ELSE 'Sem Correspondência (' || f.cod_plataforma_atu::VARCHAR || ')' END) as dsc_plataforma_atu,
             
-            -- Tratamento para Promoção
+            -- Promoção
             CASE 
-                WHEN f.cod_promocao = '-1' THEN 'não mapeado (código -1)'
-                ELSE COALESCE(d6.dsc_promocao, 'não informado') 
+                WHEN f.cod_promocao IS NULL THEN 'Sem Descricao'
+                WHEN f.cod_promocao::INT < 0 THEN 'Não Mapeado (' || f.cod_promocao::VARCHAR || ')'
+                WHEN d6.cod_promocao IS NULL THEN 'Sem Correspondência (' || f.cod_promocao::VARCHAR || ')'
+                ELSE d6.dsc_promocao 
             END as dsc_promocao,
+
+            -- Status, Tecnologia e Tipo Crédito
+            COALESCE(d7.dsc_status_plataforma, CASE WHEN f.cod_status_plataforma IS NULL THEN 'Sem Descricao' ELSE 'Sem Correspondência (' || f.cod_status_plataforma::VARCHAR || ')' END) as dsc_status_plataforma,
+            COALESCE(d8.dsc_tecnologia, CASE WHEN f.cod_tecnologia_dw IS NULL THEN 'Sem Descricao' ELSE 'Sem Correspondência (' || f.cod_tecnologia_dw::VARCHAR || ')' END) as dsc_tecnologia,
+            COALESCE(d9.dsc_tipo_credito, CASE WHEN f.cod_tipo_credito IS NULL THEN 'Sem Descricao' ELSE 'Sem Correspondência (' || f.cod_tipo_credito::VARCHAR || ')' END) as dsc_tipo_credito,
             
-            COALESCE(d7.dsc_status_plataforma, 'não informado') as dsc_status_plataforma,
-            COALESCE(d8.dsc_tecnologia, 'não informado') as dsc_tecnologia,
-            COALESCE(d9.dsc_tipo_credito, 'não informado') as dsc_tipo_credito,
-            COALESCE(d10.dsc_tipo_insercao, 'não informado') as dsc_tipo_insercao,
-            COALESCE(d11.dsc_tipo_recarga, 'não informado') as dsc_tipo_recarga
+            -- Tipo Inserção
+            CASE 
+                WHEN f.dw_tipo_insercao IS NULL THEN 'Sem Descricao'
+                WHEN d10.dw_tipo_insercao IS NULL THEN 'Sem Correspondência (' || f.dw_tipo_insercao::VARCHAR || ')'
+                ELSE d10.dsc_tipo_insercao 
+            END as dsc_tipo_insercao,
+            
+            -- Tipo Recarga
+            COALESCE(d11.dsc_tipo_recarga, CASE WHEN f.dw_tipo_recarga IS NULL THEN 'Sem Descricao' ELSE 'Sem Correspondência (' || f.dw_tipo_recarga::VARCHAR || ')' END) as dsc_tipo_recarga
+
         FROM work_db.silver_{TABLE_NAME}_step2 f
-        LEFT JOIN read_parquet('{BRONZE_DIM_PATH}canal_aquisicao_credito.parquet') d1 ON f.cod_canal_aquisicao = d1.cod_canal_aquisicao
-        LEFT JOIN read_parquet('{BRONZE_DIM_PATH}forma_pagamento.parquet') d2 ON f.dw_forma_pagamento = d2.dw_forma_pagamento
-        LEFT JOIN read_parquet('{BRONZE_DIM_PATH}instituicao.parquet') d3 ON f.dw_instituicao = d3.dw_instituicao
-        LEFT JOIN read_parquet('{BRONZE_DIM_PATH}plano_preco.parquet') d4 ON f.dw_plano_tarifacao = d4.dw_plano_tarifacao
-        LEFT JOIN read_parquet('{BRONZE_DIM_PATH}plataforma.parquet') d5 ON f.cod_plataforma_atu = d5.cod_plataforma_atu
-        LEFT JOIN read_parquet('{BRONZE_DIM_PATH}promocao_credito.parquet') d6 ON f.cod_promocao = d6.cod_promocao
-        
-        -- Adicionado ::VARCHAR nestes dois porque confirmamos que o valor existe no CSV mas deu WARN
+        LEFT JOIN read_parquet('{BRONZE_DIM_PATH}canal_aquisicao_credito.parquet') d1 ON f.cod_canal_aquisicao::VARCHAR = d1.cod_canal_aquisicao::VARCHAR
+        LEFT JOIN read_parquet('{BRONZE_DIM_PATH}forma_pagamento.parquet') d2 ON f.dw_forma_pagamento::VARCHAR = d2.dw_forma_pagamento::VARCHAR
+        LEFT JOIN read_parquet('{BRONZE_DIM_PATH}instituicao.parquet') d3 ON f.dw_instituicao::VARCHAR = d3.dw_instituicao::VARCHAR
+        LEFT JOIN read_parquet('{BRONZE_DIM_PATH}plano_preco.parquet') d4 ON f.dw_plano_tarifacao::VARCHAR = d4.dw_plano_tarifacao::VARCHAR
+        LEFT JOIN read_parquet('{BRONZE_DIM_PATH}plataforma.parquet') d5 ON f.cod_plataforma_atu::VARCHAR = d5.cod_plataforma_atu::VARCHAR
+        LEFT JOIN read_parquet('{BRONZE_DIM_PATH}promocao_credito.parquet') d6 ON f.cod_promocao::VARCHAR = d6.cod_promocao::VARCHAR
         LEFT JOIN read_parquet('{BRONZE_DIM_PATH}status_plataforma.parquet') d7 ON f.cod_status_plataforma::VARCHAR = d7.cod_status_plataforma::VARCHAR
-        
-        LEFT JOIN read_parquet('{BRONZE_DIM_PATH}tecnologia.parquet') d8 ON f.cod_tecnologia_dw = d8.cod_tecnologia_dw
-        LEFT JOIN read_parquet('{BRONZE_DIM_PATH}tipo_credito.parquet') d9 ON f.cod_tipo_credito = d9.cod_tipo_credito
-        
-        -- Adicionado ::VARCHAR neste porque confirmamos que o valor existe no CSV mas deu WARN
+        LEFT JOIN read_parquet('{BRONZE_DIM_PATH}tecnologia.parquet') d8 ON f.cod_tecnologia_dw::VARCHAR = d8.cod_tecnologia_dw::VARCHAR
+        LEFT JOIN read_parquet('{BRONZE_DIM_PATH}tipo_credito.parquet') d9 ON f.cod_tipo_credito::VARCHAR = d9.cod_tipo_credito::VARCHAR
         LEFT JOIN read_parquet('{BRONZE_DIM_PATH}tipo_insercao.parquet') d10 ON f.dw_tipo_insercao::VARCHAR = d10.dw_tipo_insercao::VARCHAR
-        
-        LEFT JOIN read_parquet('{BRONZE_DIM_PATH}tipo_recarga.parquet') d11 ON f.dw_tipo_recarga = d11.dw_tipo_recarga
+        LEFT JOIN read_parquet('{BRONZE_DIM_PATH}tipo_recarga.parquet') d11 ON f.dw_tipo_recarga::VARCHAR = d11.dw_tipo_recarga::VARCHAR
     """)
+
 
     # ------------------------------------------------------------------
     # GERAÇÃO DO LOG DE QUALIDADE (ESTILO DIMENSÕES)
@@ -204,26 +215,52 @@ def run():
         'dw_tipo_recarga': 'dsc_tipo_recarga'
     }
 
-    now_str = datetime.now().strftime('%Y%m%d')
+    total_rows = con.execute(f"SELECT COUNT(*) FROM work_db.silver_{TABLE_NAME}_step3").fetchone()[0]
+    
+    now_str = datetime.now(timezone.utc).strftime('%Y%m%d')
     log_content = f"📋 QUALITY REPORT - {TABLE_NAME}_aggregation | RUN: {now_str}\n"
-    log_content += "-" * 82 + "\n"
-    log_content += f"{'PAREAMENTO (CHAVE -> DESC)':<50} | {'STATUS':<9} | {'NÃO INFORMADOS':<15}\n"
-    log_content += "-" * 82 + "\n"
+    
+    # Definindo réguas de alinhamento
+    header = f"{'PAREAMENTO (CHAVE -> DESC)':<45} | {'STATUS':<6} | {'TRATADOS (%)':<15} | {'DADOS AUSENTES':<15} | {'SEM CORRESPONDENCIA':<18}\n"
+    separator = "-" * len(header) + "\n"
+    
+    log_content += separator
+    log_content += header
+    log_content += separator
 
     for key, desc in pair_map.items():
-
-        missing_count = con.execute(f"""
-            SELECT COUNT(*) 
-            FROM work_db.silver_{TABLE_NAME}_step3 
-            WHERE {desc} = 'não informado'
-        """).fetchone()[0]      
+        # Contagem dos indicadores
+        dados_ausentes = con.execute(f"SELECT COUNT(*) FROM work_db.silver_{TABLE_NAME}_step3 WHERE {desc} = 'Sem Descricao'").fetchone()[0]
+        sem_correspondencia = con.execute(f"SELECT COUNT(*) FROM work_db.silver_{TABLE_NAME}_step3 WHERE {desc} LIKE 'Sem Correspondência%'").fetchone()[0]
+        total_tratados = dados_ausentes + sem_correspondencia
         
-        status = "WARN" if missing_count > 0 else "PASS"
-        log_content += f"{f'{key} -> {desc}':<50} | {status:<9} | {missing_count:,}\n".replace(",", ".")
+        # Sensor de erro (não tratado)
+        nao_tratado = con.execute(f"SELECT COUNT(*) FROM work_db.silver_{TABLE_NAME}_step3 WHERE {desc} = 'não informado'").fetchone()[0]
+        status = "PASS" if nao_tratado == 0 else "WARN"
+        
+        # Cálculo da porcentagem de tratamento
+        total_casos = total_tratados + nao_tratado
+        perc_tratamento = (total_tratados / total_casos * 100) if total_casos > 0 else 100.0
 
-    log_content += "-" * 82 + "\n"
-    log_content += f"Total de Colunas Adicionadas: {len(pair_map)}\n"
-    log_content += "-" * 82 + "\n"
+        # Formatação das strings com espaçamento fixo para alinhar as colunas
+        col_pareamento = f"{f'{key} -> {desc}':<47}"
+        col_status = f"{status:<6}"
+        col_tratados = f"{perc_tratamento:>12.1f}%    " # Apenas a porcentagem
+        col_ausentes = f"{dados_ausentes:>15,}".replace(",", ".")
+        col_sem_corr = f"{sem_correspondencia:>18,}".replace(",", ".")
+        
+        log_content += f"{col_pareamento} | {col_status} | {col_tratados} | {col_ausentes} | {col_sem_corr}\n"
+
+    log_content += separator
+    log_content += f"Total de Colunas Adicionadas: {len(pair_map)} | Total de Registros Processados: {total_rows:,}\n".replace(",", ".")
+    log_content += separator    
+    log_content += "--- DETALHAMENTO DE AGREGAÇÃO ---"
+    log_content += "1. DADOS AUSENTES: Identificados na origem (Bronze) como NULL e normalizados para 'Sem Descricao'.\n"
+    log_content += "2. SEM CORRESPONDENCIA: IDs presentes na Fato que nao existem na Dimensao, mapeados como 'Sem Correspondencia (ID)'.\n"
+    log_content += "3. TRATADOS (%): Percentual de registros inconsistentes que foram higienizados e rotulados com sucesso.\n"
+    log_content += separator     
+    log_content += "\nNota: 'TRATADOS' representa a soma de Dados Ausentes e Sem Correspondência que foram higienizados na agregação.\n"
+    log_content += separator
 
     os.makedirs(QUALITY_REPORT_PATH.parent, exist_ok=True)
     with open(QUALITY_REPORT_PATH, "w") as f:
