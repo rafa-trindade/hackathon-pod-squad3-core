@@ -101,7 +101,7 @@ def run():
     con.execute("CHECKPOINT work_db")
 
     # ------------------------------------------------------------------
-    # ETAPA 2: Deduplicação
+    # ETAPA 2: Deduplicação 
     # ------------------------------------------------------------------
     print("--------------------------------------------------")
     print("💎 Etapa 2: Validando necessidade de deduplicação...")
@@ -116,17 +116,32 @@ def run():
     if qtd_duplicados > 0:
         print(f"⚠️ Detectados {qtd_duplicados:,} duplicados. Deduplicando...".replace(",", "."))
         con.execute(f"CREATE TABLE work_db.chaves_duplicadas AS SELECT {chave_cols_str} FROM {step1_table} GROUP BY {chave_cols_str} HAVING COUNT(*) > 1")
+        
         con.execute(f"""
             CREATE TABLE work_db.silver_{TABLE_NAME}_step2 AS
-            SELECT * FROM {step1_table} t WHERE NOT EXISTS (SELECT 1 FROM work_db.chaves_duplicadas d WHERE {' AND '.join([f't.{c} = d.{c}' for c in chave_tecnica_cols])})
+            SELECT * FROM {step1_table} t WHERE NOT EXISTS (
+                SELECT 1 FROM work_db.chaves_duplicadas d 
+                WHERE {' AND '.join([f't.{c} = d.{c}' for c in chave_tecnica_cols])}
+            )
             UNION ALL
             SELECT * EXCLUDE(row_num) FROM (
                 SELECT t.*, 
                        ROW_NUMBER() OVER(
                            PARTITION BY {", ".join([f"t.{c}" for c in chave_tecnica_cols])} 
-                           ORDER BY t.ingestion_ts DESC, t.dat_insercao_credito DESC, t.hor_insercao_credito DESC, t.num_cpf ASC
+                           ORDER BY 
+                                t.ingestion_ts DESC, 
+                                t.dat_insercao_credito DESC, 
+                                t.hor_insercao_credito DESC,
+                                -- Prioridade 1: Registros com Instituição (0 ganha de 1)
+                                (CASE WHEN t.dw_instituicao IS NOT NULL AND TRY_CAST(t.dw_instituicao AS INT) > 0 THEN 0 ELSE 1 END) ASC,
+                                -- Prioridade 2: Registros com Promoção
+                                (CASE WHEN t.cod_promocao IS NOT NULL AND TRY_CAST(t.cod_promocao AS INT) > 0 THEN 0 ELSE 1 END) ASC,
+                                -- Desempate determinístico final (substituindo o t.* que deu erro)
+                                t.num_cpf ASC,
+                                t.dw_num_ntc ASC
                        ) as row_num
-                FROM {step1_table} t JOIN work_db.chaves_duplicadas d ON {' AND '.join([f't.{c} = d.{c}' for c in chave_tecnica_cols])}
+                FROM {step1_table} t 
+                JOIN work_db.chaves_duplicadas d ON {' AND '.join([f't.{c} = d.{c}' for c in chave_tecnica_cols])}
             ) WHERE row_num = 1
         """)
         con.execute("CHECKPOINT work_db")
@@ -220,7 +235,6 @@ def run():
     now_str = datetime.now(timezone.utc).strftime('%Y%m%d')
     log_content = f"📋 QUALITY REPORT - {TABLE_NAME}_aggregation | RUN: {now_str}\n"
     
-    # Definindo réguas de alinhamento
     header = f"{'PAREAMENTO (CHAVE -> DESC)':<45} | {'STATUS':<6} | {'TRATADOS (%)':<15} | {'DADOS AUSENTES':<15} | {'SEM CORRESPONDENCIA':<18}\n"
     separator = "-" * len(header) + "\n"
     
@@ -229,23 +243,19 @@ def run():
     log_content += separator
 
     for key, desc in pair_map.items():
-        # Contagem dos indicadores
         dados_ausentes = con.execute(f"SELECT COUNT(*) FROM work_db.silver_{TABLE_NAME}_step3 WHERE {desc} = 'Sem Descricao'").fetchone()[0]
         sem_correspondencia = con.execute(f"SELECT COUNT(*) FROM work_db.silver_{TABLE_NAME}_step3 WHERE {desc} LIKE 'Sem Correspondência%'").fetchone()[0]
         total_tratados = dados_ausentes + sem_correspondencia
         
-        # Sensor de erro (não tratado)
         nao_tratado = con.execute(f"SELECT COUNT(*) FROM work_db.silver_{TABLE_NAME}_step3 WHERE {desc} = 'não informado'").fetchone()[0]
         status = "PASS" if nao_tratado == 0 else "WARN"
         
-        # Cálculo da porcentagem de tratamento
         total_casos = total_tratados + nao_tratado
         perc_tratamento = (total_tratados / total_casos * 100) if total_casos > 0 else 100.0
 
-        # Formatação das strings com espaçamento fixo para alinhar as colunas
         col_pareamento = f"{f'{key} -> {desc}':<47}"
         col_status = f"{status:<6}"
-        col_tratados = f"{perc_tratamento:>12.1f}%    " # Apenas a porcentagem
+        col_tratados = f"{perc_tratamento:>12.1f}%    " 
         col_ausentes = f"{dados_ausentes:>15,}".replace(",", ".")
         col_sem_corr = f"{sem_correspondencia:>18,}".replace(",", ".")
         
@@ -255,11 +265,11 @@ def run():
     log_content += f"Total de Colunas Adicionadas: {len(pair_map)} | Total de Registros Processados: {total_rows:,}\n".replace(",", ".")
     log_content += separator    
     log_content += "--- DETALHAMENTO DE AGREGAÇÃO ---"
-    log_content += "1. DADOS AUSENTES: Identificados na origem (Bronze) como NULL e normalizados para 'Sem Descricao'.\n"
+    log_content += "\n1. DADOS AUSENTES: Identificados na origem (Bronze) como NULL e normalizados para 'Sem Descricao'.\n"
     log_content += "2. SEM CORRESPONDENCIA: IDs presentes na Fato que nao existem na Dimensao, mapeados como 'Sem Correspondencia (ID)'.\n"
     log_content += "3. TRATADOS (%): Percentual de registros inconsistentes que foram higienizados e rotulados com sucesso.\n"
     log_content += separator     
-    log_content += "\nNota: 'TRATADOS' representa a soma de Dados Ausentes e Sem Correspondência que foram higienizados na agregação.\n"
+    log_content += "Nota: 'TRATADOS' representa a soma de Dados Ausentes e Sem Correspondência que foram higienizados na agregação.\n"
     log_content += separator
 
     os.makedirs(QUALITY_REPORT_PATH.parent, exist_ok=True)
