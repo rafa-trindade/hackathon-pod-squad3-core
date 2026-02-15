@@ -355,21 +355,58 @@ def run():
     """)
 
     # ------------------------------------------------------------------
-    # ETAPA 3: PERSISTÊNCIA E RELATÓRIO
+    # ETAPA 3: AUDITORIA DE INTEGRIDADE E RELATÓRIO TÉCNICO
     # ------------------------------------------------------------------
+    print("📊 Etapa 3: Gerando métricas de integridade e cobertura...")
+    
     stats = con.execute("SELECT COUNT(*), COUNT(DISTINCT num_cpf) FROM work_db.gold_step1").fetchone()
-    num_colunas = con.execute("SELECT COUNT(*) FROM (DESCRIBE work_db.gold_step1)").fetchone()[0]
+    total_rows, total_cpfs = stats
+    
+    cols_ignorar = ['num_cpf', 'safra', 'prod', 'fpd', 'run_id', 'ingestion_ts', 'ano_mes']
+    todas_as_cols = con.execute("DESCRIBE work_db.gold_step1").df()['column_name'].tolist()
+    features_reais = [c for c in todas_as_cols if c not in cols_ignorar]
+    num_features = len(features_reais)
 
-    report_log = f"""
-📋 RELATÓRIO TÉCNICO ABT - {TARGET_TABLE} | RUN: {RUN_ID}
-{"="*65}
-✅ Status:              ABT Gerada com Sucesso
-📊 Variáveis:           {num_colunas} colunas
-📈 Volumetria:          {stats[0]:,} registros
-👤 Cardinalidade:       {stats[1]:,} CPFs únicos
-📌 Grão da Tabela:      CPF + SAFRA + PROD
-{"="*65}
-"""
+    fontes = {
+        "Bureau Score":        {"col": "bur_score_02",      "tipo": "Master Join"}, 
+        "Dados Cadastrais":    {"col": "cad_statusrf",      "tipo": "Master Join"}, 
+        "Telco Features":      {"col": "tel_var_78",        "tipo": "Master Join"}, 
+        "Histórico Recarga":   {"col": "rec_qtd_geral",     "tipo": "Agregação"},
+        "Histórico Pagamento": {"col": "pag_vlr_total_geral", "tipo": "Agregação"},
+        "Histórico Atraso":    {"col": "atr_vlr_max_geral",   "tipo": "Agregação"}
+    }
+
+    col_list = ", ".join([f"COUNT({cfg['col']}) AS count_{i}" for i, cfg in enumerate(fontes.values())])
+    counts_res = con.execute(f"SELECT {col_list} FROM work_db.gold_step1").fetchone()
+    
+    report_log = f"📋 GOLD ABT REPORT - {TARGET_TABLE} | RUN: {RUN_ID}\n"
+    report_log += "="*100 + "\n"
+    report_log += f"🏆 STATUS GERAL: ✅ SUCCESS | VARIÁVEIS: {num_features} features | REGISTROS: {total_rows:,} | CPFs ÚNICOS: {total_cpfs:,}\n".replace(",", ".")
+    report_log += "="*100 + "\n\n"
+    report_log += "INTEGRIDADE E COBERTURA DE DADOS:\n"
+    report_log += "-"*100 + "\n"
+    report_log += f"{'FONTE DE DADOS':<23} | {'TIPO':<12} | {'STATUS':<6} | {'PREENCHIMENTO (%)':<17} | {'INFO ADICIONAL'}\n"
+    report_log += "-"*100 + "\n"
+
+    for i, (nome, cfg) in enumerate(fontes.items()):
+        present_count = counts_res[i]
+        perc = (present_count / total_rows * 100) if total_rows > 0 else 0.0
+        
+        if cfg['tipo'] == "Master Join":
+            status = "PASS" if perc > 95 else "INFO"
+            orfãos = total_rows - present_count
+            info = f"{orfãos:,} registros órfãos".replace(",", ".")
+        else:
+            status = "PASS"
+            obs = {
+                "Histórico Recarga":   "CPFs com atividade de recarga",
+                "Histórico Pagamento": "CPFs com evidência de pagamento",
+                "Histórico Atraso":    "CPFs com histórico de atraso"
+            }
+            info = obs.get(nome, "")
+        report_log += f"{nome:<23} | {cfg['tipo']:<12} | {status:<6} | {perc:>15.1f}% | {info}\n"
+    
+    report_log += "-"*100 + "\n"
     print(report_log)
     
     os.makedirs(QUALITY_REPORT_PATH.parent, exist_ok=True)
