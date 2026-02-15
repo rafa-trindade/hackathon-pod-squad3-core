@@ -358,8 +358,8 @@ if data:
                     height=450,
                     margin=dict(t=20, b=40, l=40, r=10),
                     yaxis=dict(
-                        tickvals=list(range(0, int(tempo_total_seg) + 450, 450)),
-                        ticktext=[format_hhmmss(v) for v in range(0, int(tempo_total_seg) + 450, 450)]
+                        tickvals=list(range(0, int(tempo_total_seg) + 300, 300)),
+                        ticktext=[format_hhmmss(v) for v in range(0, int(tempo_total_seg) + 300, 300)]
                     )
                 )
                 st.plotly_chart(fig_cascade, use_container_width=True)
