@@ -182,23 +182,49 @@ def parse_quality_silver_log(content):
     return data
 
 def parse_abt_technical_report(content):
-    """Parse de logs técnicos de ABT (Gold) - PADRÃO 1."""
-    data = {"report_type": "ABT Technical Report", "content": {}}
-    title_match = re.search(r'RELATÓRIO TÉCNICO ABT - (.*?) \| RUN: (\d+)', content)
+    """Parse robusto para o novo layout tabular de ABT Gold."""
+    data = {
+        "report_type": "ABT Technical Report", 
+        "entity": "N/I",
+        "run_id": "N/I",
+        "metadata": {},
+        "integrity_table": []
+    }
+    
+    # 1. Título e Run ID (Busca por RUN: 2026...)
+    title_match = re.search(r'REPORT - (.*?) \| RUN: (\d+)', content)
     if title_match:
         data['entity'] = title_match.group(1).strip()
         data['run_id'] = title_match.group(2)
     
+    # 2. Metadados do Cabeçalho - Regex focado nas palavras-chave e números com pontos
     patterns = {
-        "status": r'✅ Status:\s*(.*)',
-        "variables": r'📊 Variáveis:\s*(.*)',
-        "volumetry": r'📈 Volumetria:\s*(.*)',
-        "cardinality": r'👤 Cardinalidade:\s*(.*)',
-        "grain": r'📌 Grão da Tabela:\s*(.*)'
+        "status": r'STATUS GERAL:\s*(.*?)\s*\|',
+        "variables": r'VARIÁVEIS:\s*(\d+)',
+        "volumetry": r'REGISTROS:\s*([\d.]+)',
+        "cardinality": r'CPFs ÚNICOS:\s*([\d.]+)'
     }
+    
     for key, pattern in patterns.items():
-        match = re.search(pattern, content)
-        if match: data["content"][key] = match.group(1).strip()
+        m = re.search(pattern, content)
+        if m: data["metadata"][key] = m.group(1).strip()
+    
+    data["metadata"]["grain"] = "CPF + SAFRA + PROD"
+
+    # 3. Tabela de Integridade
+    # Filtra linhas que possuem o pipe | mas ignora cabeçalhos e divisores
+    for line in content.split('\n'):
+        if '|' in line and 'FONTE DE DADOS' not in line and '=' not in line and '-' not in line:
+            parts = [p.strip() for p in line.split('|')]
+            if len(parts) >= 5:
+                data["integrity_table"].append({
+                    "source": parts[0],
+                    "type": parts[1],
+                    "status": parts[2],
+                    "coverage": parts[3],
+                    "additional_info": parts[4]
+                })
+                
     return data
 
 def parse_quality_gold_log(content):
@@ -276,7 +302,7 @@ def main():
                     if "DATA PIPELINE EXECUTION" in content_upper: parsed = parse_pipeline_execution_log(content)
                     elif "AUDITORIA DE PARTIÇÕES" in content_upper: parsed = parse_integrity_log(content)
                     elif "DATA CONTRACT AUDIT" in content_upper: parsed = parse_pandera_log(content)
-                    elif "RELATÓRIO TÉCNICO ABT" in content_upper: parsed = parse_abt_technical_report(content)
+                    elif "GOLD ABT REPORT" in content_upper: parsed = parse_abt_technical_report(content)
                     elif "QUALITY REPORT" in content_upper:
                         cp = path.replace("\\", "/")
                         if "pipeline/gold" in cp: parsed = parse_quality_gold_log(content)
