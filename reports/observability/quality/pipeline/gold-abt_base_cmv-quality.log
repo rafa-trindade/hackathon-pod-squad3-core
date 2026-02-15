@@ -1,9 +1,16 @@
+📋 GOLD ABT REPORT - abt_base_cmv | RUN: 20260212
+====================================================================================================
+🏆 STATUS GERAL: ✅ SUCCESS | VARIÁVEIS: 200 features | REGISTROS: 2.633.900 | CPFs ÚNICOS: 2.565.985
+====================================================================================================
 
-📋 RELATÓRIO TÉCNICO ABT - abt_base_cmv | RUN: 20260212
-=================================================================
-✅ Status:              ABT Gerada com Sucesso
-📊 Variáveis:           207 colunas
-📈 Volumetria:          2,633,900 registros
-👤 Cardinalidade:       2,565,985 CPFs únicos
-📌 Grão da Tabela:      CPF + SAFRA + PROD
-=================================================================
+INTEGRIDADE E COBERTURA DE DADOS:
+----------------------------------------------------------------------------------------------------
+FONTE DE DADOS          | TIPO         | STATUS | PREENCHIMENTO (%) | INFO ADICIONAL
+----------------------------------------------------------------------------------------------------
+Bureau Score            | Master Join  | PASS   |            99.9% | 1.876 registros órfãos
+Dados Cadastrais        | Master Join  | PASS   |            99.8% | 5.153 registros órfãos
+Telco Features          | Master Join  | INFO   |            49.7% | 1.324.926 registros órfãos
+Histórico Recarga       | Agregação    | PASS   |           100.0% | CPFs com atividade de recarga
+Histórico Pagamento     | Agregação    | PASS   |            29.8% | CPFs com evidência de pagamento
+Histórico Atraso        | Agregação    | PASS   |            31.8% | CPFs com histórico de atraso
+----------------------------------------------------------------------------------------------------

@@ -1,18 +1,25 @@
 📋 QUALITY REPORT - recarga_aggregation | RUN: 20260212
-----------------------------------------------------------------------------------
-PAREAMENTO (CHAVE -> DESC)                         | STATUS    | NÃO INFORMADOS 
-----------------------------------------------------------------------------------
-cod_canal_aquisicao -> dsc_canal_aquisicao         | PASS      | 0
-dw_forma_pagamento -> dsc_forma_pagamento          | PASS      | 0
-dw_instituicao -> dsc_instituicao                  | WARN      | 6.849.485
-dw_plano_tarifacao -> dsc_plano_tarifacao          | WARN      | 2.105.750
-cod_plataforma_atu -> dsc_plataforma_atu           | PASS      | 0
-cod_promocao -> dsc_promocao                       | WARN      | 2.105.750
-cod_status_plataforma -> dsc_status_plataforma     | WARN      | 878
-cod_tecnologia_dw -> dsc_tecnologia                | PASS      | 0
-cod_tipo_credito -> dsc_tipo_credito               | PASS      | 0
-dw_tipo_insercao -> dsc_tipo_insercao              | WARN      | 3.268.098
-dw_tipo_recarga -> dsc_tipo_recarga                | WARN      | 2.105.750
-----------------------------------------------------------------------------------
-Total de Colunas Adicionadas: 11
-----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+PAREAMENTO (CHAVE -> DESC)                    | STATUS | TRATADOS (%)    | DADOS AUSENTES  | SEM CORRESPONDENCIA
+-----------------------------------------------------------------------------------------------------------------
+cod_canal_aquisicao -> dsc_canal_aquisicao      | PASS   |        100.0%     |               0 |                  0
+dw_forma_pagamento -> dsc_forma_pagamento       | PASS   |        100.0%     |               0 |                  0
+dw_instituicao -> dsc_instituicao               | PASS   |        100.0%     |               0 |            264.828
+dw_plano_tarifacao -> dsc_plano_tarifacao       | PASS   |        100.0%     |       2.105.750 |                  0
+cod_plataforma_atu -> dsc_plataforma_atu        | PASS   |        100.0%     |               0 |                  0
+cod_promocao -> dsc_promocao                    | PASS   |        100.0%     |       2.105.750 |                  0
+cod_status_plataforma -> dsc_status_plataforma  | PASS   |        100.0%     |               0 |                878
+cod_tecnologia_dw -> dsc_tecnologia             | PASS   |        100.0%     |               0 |                  0
+cod_tipo_credito -> dsc_tipo_credito            | PASS   |        100.0%     |               0 |                  0
+dw_tipo_insercao -> dsc_tipo_insercao           | PASS   |        100.0%     |               0 |          3.268.100
+dw_tipo_recarga -> dsc_tipo_recarga             | PASS   |        100.0%     |       2.105.750 |                  0
+-----------------------------------------------------------------------------------------------------------------
+Total de Colunas Adicionadas: 11 | Total de Registros Processados: 95.446.983
+-----------------------------------------------------------------------------------------------------------------
+--- DETALHAMENTO DE AGREGAÇÃO ---1. DADOS AUSENTES: Identificados na origem (Bronze) como NULL e normalizados para 'Sem Descricao'.
+2. SEM CORRESPONDENCIA: IDs presentes na Fato que nao existem na Dimensao, mapeados como 'Sem Correspondencia (ID)'.
+3. TRATADOS (%): Percentual de registros inconsistentes que foram higienizados e rotulados com sucesso.
+-----------------------------------------------------------------------------------------------------------------
+
+Nota: 'TRATADOS' representa a soma de Dados Ausentes e Sem Correspondência que foram higienizados na agregação.
+-----------------------------------------------------------------------------------------------------------------

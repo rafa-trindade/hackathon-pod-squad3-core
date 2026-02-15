@@ -1,12 +1,56 @@
 {
     "report_type": "ABT Technical Report",
-    "content": {
-        "status": "ABT Gerada com Sucesso",
-        "variables": "207 colunas",
-        "volumetry": "2,633,900 registros",
-        "cardinality": "2,565,985 CPFs únicos",
+    "entity": "abt_base_cmv",
+    "run_id": "20260212",
+    "metadata": {
+        "status": "✅ SUCCESS",
+        "variables": "200",
+        "volumetry": "2.633.900",
+        "cardinality": "2.565.985",
         "grain": "CPF + SAFRA + PROD"
     },
-    "entity": "abt_base_cmv",
-    "run_id": "20260212"
+    "integrity_table": [
+        {
+            "source": "Bureau Score",
+            "type": "Master Join",
+            "status": "PASS",
+            "coverage": "99.9%",
+            "additional_info": "1.876 registros órfãos"
+        },
+        {
+            "source": "Dados Cadastrais",
+            "type": "Master Join",
+            "status": "PASS",
+            "coverage": "99.8%",
+            "additional_info": "5.153 registros órfãos"
+        },
+        {
+            "source": "Telco Features",
+            "type": "Master Join",
+            "status": "INFO",
+            "coverage": "49.7%",
+            "additional_info": "1.324.926 registros órfãos"
+        },
+        {
+            "source": "Histórico Recarga",
+            "type": "Agregação",
+            "status": "PASS",
+            "coverage": "100.0%",
+            "additional_info": "CPFs com atividade de recarga"
+        },
+        {
+            "source": "Histórico Pagamento",
+            "type": "Agregação",
+            "status": "PASS",
+            "coverage": "29.8%",
+            "additional_info": "CPFs com evidência de pagamento"
+        },
+        {
+            "source": "Histórico Atraso",
+            "type": "Agregação",
+            "status": "PASS",
+            "coverage": "31.8%",
+            "additional_info": "CPFs com histórico de atraso"
+        }
+    ]
 }
