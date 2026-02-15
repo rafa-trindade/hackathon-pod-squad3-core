@@ -61,3 +61,10 @@ div[data-testid="stNotification"] {
 .st-ae {
   background-color: #1A1A1A !important;
 }
+
+div[data-testid="stMarkdownContainer"] h6 {
+  color: #8D8788 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}

@@ -557,8 +557,15 @@ if data:
                 "rename": {"test": "Teste", "description": "Descrição", "status": "Status", "obs": "Informação"}
             },
             "silver": {
-                "order": ["test", "description", "status", "obs"],
-                "rename": {"test": "Pareamento (Chave -> Desc)", "status": "Status", "obs": "Reg. sem Correspondência", "description": "Descrição"}
+                "order": ["pairing","description", "status", "efficiency_score", "null_values", "no_match_values"],
+                "rename": {
+                    "pairing": "Pareamento (Chave -> Desc)", 
+                    "status": "Status", 
+                    "efficiency_score": "Tratados (%)", 
+                    "null_values": "Dados Ausentes", 
+                    "no_match_values": "Sem Correspondência",
+                    "description": "Descrição"
+                }
             },
             "gold": { 
                 "order": ["test", "description", "status", "obs"],
@@ -728,7 +735,20 @@ if data:
 
                 if layer_key == "silver":
                     total_desc_cols = report.get("total_added_columns", 0)
-                    st.info(f"ℹ️ Total de colunas de descrição adicionadas na tabela {entity_short}: {total_desc_cols}")
+
+
+                    detalhamento_html = f"""
+                                        ###### DETALHAMENTO DE AGREGAÇÃO
+                                        ---
+                                        > **Dados Ausentes:** Identificados na origem (Bronze) como `NULL` e normalizados para 'Sem Descricao'.   
+                                        > **Sem Correspondência:** IDs na Fato ausentes na Dimensão, mapeados como 'Sem Correspondencia (ID)'.    
+                                        > **Tratados (%):** Eficácia da higienização e rotulagem das inconsistências encontradas   
+                                        >
+                                        > ---
+                                        > *Nota: 'Tratados (%)' representa a soma de Dados Ausentes e Sem Correspondência que foram higienizados na agregação.*
+                                        """
+                                        
+                    st.error(detalhamento_html)
 
 else:
     st.error("Não foi possível processar o conteúdo do arquivo.")
