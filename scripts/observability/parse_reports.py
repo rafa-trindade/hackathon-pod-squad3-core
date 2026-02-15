@@ -130,26 +130,55 @@ def parse_quality_bronze_log(content):
     return data
 
 def parse_quality_silver_log(content):
-    """Parse específico para quality da camada Silver (agregações)."""
+    """Parse atualizado para layout de qualidade da camada Silver com métricas de saneamento."""
     data = {"report_type": "Pipeline Quality", "layer": "silver", "reports": []}
+    
     blocks = re.split(r'📋 QUALITY REPORT - ', content)[1:]
+    
     for block in blocks:
         lines = block.strip().split('\n')
         header_match = re.match(r'(.*?)\s*\|\s*RUN:\s*(\d+)', lines[0])
         if not header_match: continue
-        report = {"entity": header_match.group(1).strip(), "run_id": header_match.group(2).strip(), "tests": [], "total_added_columns": 0}
+        
+        report = {
+            "entity": header_match.group(1).strip(),
+            "run_id": header_match.group(2).strip(),
+            "tests": [],
+            "total_added_columns": 0,
+            "total_processed_records": 0
+        }
+        
         for line in lines:
-            if '|' not in line or '---' in line or 'PAREAMENTO' in line.upper(): continue
-            parts = [p.strip() for p in line.split('|') if p.strip()]
-            if len(parts) < 3: continue
+            if '|' not in line or '---' in line or 'PAREAMENTO' in line.upper(): 
+                continue
+            
+            parts = [p.strip() for p in line.split('|')]
+            if len(parts) < 5: continue
+            
+            perc_match = re.search(r'\((.*?)\)', parts[2])
+            perc_val = perc_match.group(1) if perc_match else "100.0%"
+            
             report["tests"].append({
-                "test": parts[0], "status": parts[1], "obs": parts[2],
-                "description": "Verifica se existem registros de chave sem correspondência na Silver."
+                "pairing": parts[0],
+                "status": parts[1],
+                "efficiency_score": perc_val,
+                "null_values": parts[3],
+                "no_match_values": parts[4],
+                "description": "Validação de integridade referencial e higienização de nulos."
             })
+        
         total_cols_match = re.search(r'Total de Colunas Adicionadas:\s*(\d+)', block)
-        if total_cols_match: report["total_added_columns"] = int(total_cols_match.group(1))
-        report["final_result"] = "SUCCESS" if all(t["status"].upper() in ["PASS", "SUCCESS", "SUCESSO"] for t in report["tests"]) else "CHECK_REQUIRED"
+        if total_cols_match: 
+            report["total_added_columns"] = int(total_cols_match.group(1))
+            
+        total_rec_match = re.search(r'Total de Registros Processados:\s*([\d.]+)', block)
+        if total_rec_match:
+            report["total_processed_records"] = total_rec_match.group(1)
+
+        report["final_result"] = "SUCCESS" if all(t["status"].upper() in ["PASS", "SUCCESS"] for t in report["tests"]) else "CHECK_REQUIRED"
+        
         data["reports"].append(report)
+        
     return data
 
 def parse_abt_technical_report(content):
