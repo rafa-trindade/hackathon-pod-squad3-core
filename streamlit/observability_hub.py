@@ -4,7 +4,7 @@ import json
 import os
 import sys
 import plotly.graph_objects as go
-from datetime import datetime
+from datetime import datetime, timedelta
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -38,8 +38,6 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
-
-
 
 
 BUCKET_NAME = os.getenv("S3_BUCKET", "lake")
@@ -101,7 +99,11 @@ def render_timestamp(global_timestamp):
 
     try:
         dt = datetime.fromisoformat(str(global_timestamp).replace("Z", ""))
-        formatted = dt.strftime("%Y-%m-%d %H:%M:%S")
+
+        dt = dt - timedelta(hours=3)
+
+        formatted = dt.strftime("%d/%m/%Y %H:%M:%S")
+
     except Exception:
         formatted = str(global_timestamp)
 
@@ -114,8 +116,6 @@ def render_timestamp(global_timestamp):
 st.sidebar.title("Painel de Observabilidade")
 
 st.sidebar.write("<hr style='margin-top:30px; margin-bottom:10px;'>", unsafe_allow_html=True)
-
-
 
 
 runs = list_runs()
@@ -135,6 +135,7 @@ categories = {
     "Profiling": [f for f in all_files if "profiling" in f.lower()],
     "Quality": [f for f in all_files if "quality" in f.lower()],
     "Integrity": [f for f in all_files if "integrity" in f.lower() or "inspect_partition" in f.lower()],
+    "FinOps": ["observability/reports/observability_reports_oci_costs.json"] 
 }
 
 category = st.sidebar.selectbox("Categoria de Relatório", list(categories.keys()))
@@ -256,18 +257,165 @@ st.sidebar.markdown(
 # --- Principal ---
 ##################################   
 
+if category == "FinOps":
+    selected_report_key = "observability/reports/observability_reports_oci_costs.json"
+else:
+    selected_report_key = selected_report_key 
+
 data = load_json_from_s3(selected_report_key)
 
 integrity_timestamp = None
-
-integrity_files = categories.get("Integrity", [])
-
-if integrity_files:
-    integrity_data = load_json_from_s3(integrity_files[0])
-    if integrity_data:
-        integrity_timestamp = integrity_data.get("timestamp")
+if category != "FinOps":
+    integrity_files = categories.get("Integrity", [])
+    if integrity_files:
+        integrity_data = load_json_from_s3(integrity_files[0])
+        if integrity_data:
+            integrity_timestamp = integrity_data.get("timestamp")
 
 if data:
+
+    if category == "FinOps":
+
+        selected_report_key = "observability/reports/observability_reports_oci_costs.json"
+        data = load_json_from_s3(selected_report_key)
+
+        if data:
+
+            try:
+                dt_utc = datetime.fromisoformat(data.get('updated_at').replace("Z", ""))
+                timestamp_final = (dt_utc - timedelta(hours=3)).strftime("%d/%m/%Y %H:%M:%S")
+            except:
+                timestamp_final = data.get('updated_at', 'N/I')
+
+            st.markdown(f"### Painel de Custos Cloud (OCI): <code class='theme-1'>SQUAD•03 Tenancy</code>", unsafe_allow_html=True)
+            
+            st.caption(f"🕒 Dados atualizados em **{timestamp_final}**")
+            
+            total_val = data.get("total_amount", 0)
+            budget_limit = 2500.00
+            usage_pct = (total_val / budget_limit)
+
+            with st.expander("✅ Indicadores Financeiros", expanded=True):
+
+                m1, m2, m3 = st.columns(3)
+
+                def format_brl(valor):
+                    return f"R$ {valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+                
+                m1.metric("Custo Total (ITD)", format_brl(total_val))
+                m2.metric("Budget SQUAD 03", format_brl(budget_limit))
+                m3.metric("Consumo do Budget (%)", f"{usage_pct:.2%}")
+                
+                st.progress(min(usage_pct, 1.0))
+
+                df_raw_items = pd.DataFrame(data.get("items", []))
+                if not df_raw_items.empty:
+                    df_costs = df_raw_items.groupby('service')['amount'].sum().reset_index()
+                    df_costs = df_costs[df_costs['amount'] > 0].sort_values(by='amount', ascending=False)
+                else:
+                    df_costs = pd.DataFrame()
+
+            with st.expander("📑 Breakdown por Serviço", expanded=True):
+
+
+                if not df_costs.empty:
+                    df_display = df_costs.copy()
+
+                    df_display['amount'] = df_display['amount'].map(format_brl)
+
+                    row_height = 35
+                    header_height = 38
+
+                    height_dynamic = min(
+                        700,
+                        header_height + len(df_display) * row_height
+                    )
+
+                    st.dataframe(
+                        df_display.rename(columns={
+                            "service": "Serviço",
+                            "amount": "Valor"
+                        }),
+                        use_container_width=True,
+                        hide_index=True,
+                        height=height_dynamic
+                    )
+
+
+            c1, c2 = st.columns([3.5, 1])
+
+            df_daily = pd.DataFrame(data.get("daily_items", []))
+    
+
+            with c1:
+                with st.expander("📈 Trend de Consumo Diário", expanded=True):
+
+                    if not df_daily.empty:
+
+                        df_daily['date'] = pd.to_datetime(df_daily['date'])
+
+                        x_labels = df_daily['date'].dt.strftime('%d/%m')
+
+                        fig_daily = go.Figure(go.Bar(
+                            x=x_labels,
+                            y=df_daily['amount'],
+                            marker_color='#731E27',
+                            text=df_daily['amount'].map(lambda x: f"R$ {x:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")),
+                            textposition='auto',
+                        ))
+
+                        fig_daily.update_layout(
+                            height=350,
+                            margin=dict(t=10, b=10, l=10, r=10),
+                            xaxis_title="Dia",
+                            yaxis_title="R$",
+                            yaxis=dict(
+                                tickformat=".2f",  # base
+                                separatethousands=True
+                            )
+                        )
+
+                        fig_daily.update_yaxes(
+                            tickformat=",.2f"
+                        )
+
+                        st.plotly_chart(fig_daily, use_container_width=True)
+
+                    else:
+                        st.info("Série temporal diária não disponível.")
+
+            with c2:
+                with st.expander("📊 Distribuição de Custos", expanded=True):
+                    if not df_costs.empty:
+                        fig_pie = go.Figure(data=[go.Pie(
+                            labels=df_costs['service'], values=df_costs['amount'],
+                            hole=.4, textinfo='percent',
+                            marker_colors=['#1A1C24', '#731E27', '#9E9E9E', '#555555', '#DAD0D1']
+                        )])
+                        fig_pie.update_layout(
+                            margin=dict(t=0, b=0, l=0, r=0), height=350,
+                            legend=dict(orientation="h", yanchor="bottom", y=-0.3, xanchor="center", x=0.5)
+                        )
+                        st.plotly_chart(fig_pie, use_container_width=True)
+
+            if not df_costs.empty:
+                top_service = df_costs.iloc[0]['service']
+                col_info, col_alert = st.columns([1.5, 1])
+                
+                with col_info:
+                    st.info(f"💡 **FinOps Insight:** O serviço **{top_service}** lidera os gastos. " + 
+                            ("Considere instâncias 'Preemptible' para economizar." if top_service == 'Compute' else "Revise políticas de expiração de objetos."))
+                
+                with col_alert:
+                    if usage_pct > 0.9:
+                        st.info("🚨 **Crítico:** 90% do budget atingido!")
+                    elif usage_pct > 0.7:
+                        st.info("⚠️ **Atenção:** 70% do budget consumido.")
+                    else:
+                        st.info("✅ Orçamento dentro do esperado, continue monitorando.")
+
+            st.stop()
+
 
     if category == "Pipeline Execution":
 
