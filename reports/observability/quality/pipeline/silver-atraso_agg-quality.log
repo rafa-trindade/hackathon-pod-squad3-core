@@ -1,8 +1,15 @@
-📋 QUALITY REPORT - atraso_aggregation | RUN: 20260212
-----------------------------------------------------------------------------------
-PAREAMENTO (CHAVE -> DESC)                    | STATUS    | NÃO INFORMADOS 
-----------------------------------------------------------------------------------
-dw_tipo_faturamento -> dsc_tipo_faturamento   | PASS      | 0
-----------------------------------------------------------------------------------
-Total de Colunas Adicionadas: 1
-----------------------------------------------------------------------------------
+📋 QUALITY REPORT - atraso_aggregation | RUN: 20260215
+-----------------------------------------------------------------------------------------------------------------
+PAREAMENTO (CHAVE -> DESC)                    | STATUS | TRATADOS (%)    | DADOS AUSENTES  | SEM CORRESPONDENCIA
+-----------------------------------------------------------------------------------------------------------------
+dw_tipo_faturamento -> dsc_tipo_faturamento     | PASS   |        100.0%     |               0 |                  0
+-----------------------------------------------------------------------------------------------------------------
+Total de Colunas Adicionadas: 1 | Total de Registros Processados: 31.611.219
+-----------------------------------------------------------------------------------------------------------------
+--- DETALHAMENTO DE AGREGAÇÃO ---
+1. DADOS AUSENTES: Identificados na origem (Bronze) como NULL e normalizados para 'Sem Descricao'.
+2. SEM CORRESPONDENCIA: IDs presentes na Fato que nao existem na Dimensao, mapeados como 'Sem Correspondencia (ID)'.
+3. TRATADOS (%): Percentual de registros inconsistentes que foram higienizados e rotulados com sucesso.
+-----------------------------------------------------------------------------------------------------------------
+Nota: 'TRATADOS' representa a soma de Dados Ausentes e Sem Correspondência que foram higienizados na agregação.
+-----------------------------------------------------------------------------------------------------------------

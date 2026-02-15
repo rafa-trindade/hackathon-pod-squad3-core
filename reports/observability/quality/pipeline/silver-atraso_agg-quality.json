@@ -4,10 +4,19 @@
     "reports": [
         {
             "entity": "atraso_aggregation",
-            "run_id": "20260212",
-            "tests": [],
+            "run_id": "20260215",
+            "tests": [
+                {
+                    "pairing": "dw_tipo_faturamento -> dsc_tipo_faturamento",
+                    "status": "PASS",
+                    "efficiency_score": "100.0%",
+                    "null_values": "0",
+                    "no_match_values": "0",
+                    "description": "Validação de integridade referencial e higienização de nulos."
+                }
+            ],
             "total_added_columns": 1,
-            "total_processed_records": 0,
+            "total_processed_records": "31.611.219",
             "final_result": "SUCCESS"
         }
     ]
