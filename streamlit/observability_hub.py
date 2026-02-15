@@ -514,43 +514,6 @@ if data:
         st.divider()
         render_timestamp(integrity_timestamp)
 
-        if data.get("report_type") == "ABT Technical Report":
-            content = data.get("content", {})
-
-            
-            with st.expander(f"Metadados e Volumetria da ABT: `{data.get('entity', 'Gold')}`", expanded=True):
-                st.markdown(
-                    f"""
-                    <div style="background-color:#1A1C24; padding:15px; border-radius:8px; border-left: 5px solid #731E27;">
-                        <span style="color:#808495; text-transform:uppercase; font-size:12px; font-weight:700;">📌 Grão da Tabela (Primary Key)</span>
-                        <h2 style="color:#FFFFFF; margin:0; font-family:'Inter'; font-size:24px;">{content.get('grain', 'N/I')}</h2>
-                    </div>
-                    """, 
-                    unsafe_allow_html=True
-                )
-
-                def format_milhar(valor):
-                    if valor is None or valor == "N/I":
-                        return "N/I"
-                    
-                    try:
-                        valor_limpo = "".join(filter(str.isdigit, str(valor)))
-                        
-                        if not valor_limpo:
-                            return str(valor)
-                        
-                        return f"{int(valor_limpo):,}".replace(",", ".")
-                    except Exception:
-                        return str(valor)
-
-                st.write("")
-                m1, m2, m3 = st.columns(3)
-                m1.metric("📦 Total de Variáveis", f"{format_milhar(content.get('variables', 'N/I'))} Features")
-                m2.metric("📊 Volumetria Total", f"{format_milhar(content.get('volumetry', 'N/I'))} Registros")
-                m3.metric("👤 Cardinalidade", f"{format_milhar(content.get('cardinality', 'N/I'))} CPFs Únicos")
-
-            st.stop()
-
         COLUMN_ORDER_MAP = {
             "bronze": {
                 "order": ["test", "description", "status", "obs"],
@@ -567,7 +530,14 @@ if data:
                     "description": "Descrição"
                 }
             },
-            "gold": { 
+            "gold_abt": { 
+                "order": ["source", "type", "status", "coverage", "additional_info"],
+                "rename": {
+                    "source": "Fonte de Dados", "type": "Tipo", "status": "Status", 
+                    "coverage": "Preenchimento (%)", "additional_info": "Informação Adicional"
+                }
+            },
+            "gold_labels": { 
                 "order": ["test", "description", "status", "obs"],
                 "rename": {"test": "Teste", "description": "Descrição", "status": "Status", "obs": "Informação"}
             },
@@ -576,6 +546,64 @@ if data:
                 "rename": {"status": "Status", "description": "Descrição", "cols": "Colunas Verificadas", "detail": "Informação"}
             }
         }
+
+        if data.get("report_type") == "ABT Technical Report":
+            metadata = data.get("metadata", {})
+            
+            with st.expander(f"💎 Metadados e Volumetria da ABT: `{data.get('entity', 'Gold')}`", expanded=True):
+
+                def format_milhar(valor):
+                    if not valor or valor == "N/I": return "N/I"
+                    try:
+                        v = str(valor).replace(".", "")
+                        return f"{int(v):,}".replace(",", ".")
+                    except: return str(valor)
+
+                m1, m2, m3 = st.columns(3)
+                m1.metric("📦 Escopo da ABT", f"{metadata.get('variables', '0')} Features Analíticas")
+                m2.metric("📊 Volumetria Total", f"{format_milhar(metadata.get('volumetry', '0'))} Registros")
+                m3.metric("👤 Cardinalidade", f"{format_milhar(metadata.get('cardinality', '0'))} CPFs Únicos")
+                
+                st.divider()
+                
+                integrity_data = data.get("integrity_table", [])
+                if integrity_data:
+                    df_gold = pd.DataFrame(integrity_data)
+                    
+                    gold_config = COLUMN_ORDER_MAP.get("gold_abt", {})
+
+                    df_gold = df_gold[gold_config["order"]].rename(columns=gold_config["rename"])
+                    
+                    def format_status_gold(val):
+                        v = str(val).upper()
+                        if "PASS" in v or "OK" in v: return f"✅ {val}"
+                        if "INFO" in v: return f"ℹ️ {val}"
+                        return val
+                    
+                    df_gold["Status"] = df_gold["Status"].apply(format_status_gold)
+                    
+                    st.dataframe(df_gold, use_container_width=True, hide_index=True)
+
+                    detalhamento_gold = f"""
+                        ###### DETALHAMENTO DE CONFORMIDADE (GOLD)
+                        ---
+                        > **Master Join (Lógica Point-in-Time):** Cruza as informações respeitando a **Safra** do evento. Garante que o dado cadastral seja contemporâneo à foto, evitando vazamento de dados (data leakage) em modelos preditivos.
+                        > 
+                        > **Agregação:** Percentual de CPFs da âncora com transações detectadas nas janelas históricas (L30D, L60D, L90D ou Geral).
+                        >
+                        > **Grão da ABT:** `{metadata.get('grain', 'CPF + SAFRA + PROD')}`
+                        >
+                        > **🛡️ Metodologia de Sentinelas (Data Trust):**
+                        > A saúde da ABT é validada por atributos de presença obrigatória identificados via Profiling:
+                        > - **Fontes Cadastrais (Join):** `bur_score_02`, `cad_statusrf` e `tel_var_78`. A ausência indica **Registro Órfão** (falha de enriquecimento).
+                        > - **Fontes Comportamentais (Atividade):** `rec_qtd_geral`, `pag_vlr_total_geral` e `atr_vlr_max_geral`. A ausência indica **Inatividade** (traço do perfil do cliente).
+                        >
+                        > ---
+                        > *ℹ️ Nota: A baixa densidade em Agregações reflete apenas a ausência de atividade ou dado cadastral do cliente e não deve ser confundida com uma falha técnica de cruzamento.*                    """
+
+                st.info(detalhamento_gold)
+            
+            st.stop()
 
         if "groups" in data:
             groups = data.get("groups", [])
@@ -616,7 +644,9 @@ if data:
                     
                     df_group = pd.DataFrame(tests)
                     
-                    gold_config = COLUMN_ORDER_MAP.get("gold", {})
+                    layer_key = selected_layer.lower()
+                    config_key = "gold_labels" if layer_key == "gold" else layer_key
+                    gold_config = COLUMN_ORDER_MAP.get(config_key, {})
                     cols_order = gold_config.get("order", [])
                     rename_map = gold_config.get("rename", {})
 
@@ -644,9 +674,13 @@ if data:
             if 'description' not in df_qual.columns:
                 df_qual['description'] = "Validação de Schema."
             
-
             layer_key = selected_layer.lower()
-            config = COLUMN_ORDER_MAP.get(layer_key, {})
+            if layer_key == "gold":
+                config = COLUMN_ORDER_MAP.get("gold_labels", {})
+            else:
+                config = COLUMN_ORDER_MAP.get(layer_key, {})
+
+
             cols_ordered = config.get("order", [])
             rename_map = config.get("rename", {})
 
@@ -675,7 +709,22 @@ if data:
 
             df_display = df_qual.copy()
             df_display[status_col] = df_display[status_col].apply(format_status_smart)
+
             st.dataframe(df_display, width='stretch', hide_index=True)
+
+            if layer_key == "raw":
+                detalhamento_raw = f"""
+                    ###### AUDITORIA DE CONTRATO DE DADOS (RAW)
+                    ---
+                    > **Data Contract:** Validação rigorosa do schema original via Pandera para garantir que a estrutura técnica foi preservada.  
+                    > **Conformidade (COLS):** Verifica se o número de colunas entregue pela origem coincide com a definição técnica esperada.  
+                    > **Status de Auditoria:** Garante que tipos de dados e nomes de campos não sofreram alterações inesperadas na extração.
+                    >
+                    > ---
+                    > *Nota: Um 'FAIL' na camada Raw indica uma quebra de contrato na origem, impedindo o processamento seguro para as camadas subsequentes.*
+                """
+                st.info(detalhamento_raw)
+
             st.stop()
 
         if "reports" not in data:
@@ -702,6 +751,7 @@ if data:
         with st.expander("📊 Visão Geral da Execução", expanded=True):
             c1, c2, c3, c4 = st.columns(4)
             c1.metric("Dimensões", total_entities); c2.metric("Sucesso", total_pass); c3.metric("Atenção", total_warn); c4.metric("Falhas", total_fail)
+
 
         for report in reports:
             entity = report["entity"]
@@ -738,7 +788,7 @@ if data:
 
 
                     detalhamento_html = f"""
-                                        ###### DETALHAMENTO DE AGREGAÇÃO
+                                        ###### DETALHAMENTO DE AGREGAÇÃO (SILVER)
                                         ---
                                         > **Dados Ausentes:** Identificados na origem (Bronze) como `NULL` e normalizados para 'Sem Descricao'.   
                                         > **Sem Correspondência:** IDs na Fato ausentes na Dimensão, mapeados como 'Sem Correspondencia (ID)'.    
@@ -748,7 +798,20 @@ if data:
                                         > *Nota: 'Tratados (%)' representa a soma de Dados Ausentes e Sem Correspondência que foram higienizados na agregação.*
                                         """
                                         
-                    st.error(detalhamento_html)
+                    st.info(detalhamento_html)
+
+        if layer_key == "bronze":
+            detalhamento_bronze = f"""
+                ###### DETALHAMENTO DE INTEGRIDADE (BRONZE)
+                ---
+                > **Match de Tipagem:** Garante que o ID da Fato e da Dimensão possuam o mesmo formato técnico para evitar falhas de JOIN.  
+                > **Integridade de Chave:** Identifica códigos (IDs) que circulam na transação (Fato) mas não possuem cadastro na tabela de suporte (Dimensão).  
+                > **Registros Órfãos:** Quantidade de IDs distintos ausentes no cadastro que impedem o enriquecimento completo dos dados na Silver.
+                >
+                > ---
+                > *Nota: Um 'WARN' em Integridade de Chave indica que existem novos domínios de dados que ainda não foram mapeados.*
+            """
+            st.info(detalhamento_bronze)
 
 else:
     st.error("Não foi possível processar o conteúdo do arquivo.")
