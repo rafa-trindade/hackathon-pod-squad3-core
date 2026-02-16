@@ -323,17 +323,24 @@ if data:
 
                 df_daily = pd.DataFrame(data.get("daily_items", []))
                 if not df_daily.empty:
+
                     df_daily['amount'] = pd.to_numeric(df_daily['amount'], errors='coerce').fillna(0)
                     df_daily['date'] = pd.to_datetime(df_daily['date'])
-                    df_daily = df_daily.sort_values('date')
 
-                    ultimo_dia = df_daily['date'].iloc[-1]
-                    valor_ultimo_dia = df_daily['amount'].iloc[-1]
-                    
-                    valor_penultimo_dia = df_daily['amount'].iloc[0] if len(df_daily) > 1 else valor_ultimo_dia
+                    df_grouped = df_daily.groupby('date', as_index=False)['amount'].sum()
+                    df_grouped = df_grouped.sort_values('date')
+
+                    ultimo_dia = df_grouped['date'].iloc[-1]
+                    valor_ultimo_dia = df_grouped['amount'].iloc[-1]
+
+                    if len(df_grouped) > 1:
+                        valor_penultimo_dia = df_grouped['amount'].iloc[-2]
+                    else:
+                        valor_penultimo_dia = valor_ultimo_dia
+
                     delta_valor = valor_ultimo_dia - valor_penultimo_dia
 
-                    delta_color = "#37B5A8" if delta_valor <= 0 else "#B53744"
+                    delta_color = "#37B544" if delta_valor <= 0 else "#B53744"
                     setinha = "↓" if delta_valor <= 0 else "↑"
 
                     m4.markdown(f"""
