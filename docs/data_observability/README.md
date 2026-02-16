@@ -10,7 +10,7 @@ Este documento mapeia como as práticas implementadas no projeto se consolidam n
 ![Dashboard Squad 3](../images/data_observability/demo_painel.gif)
 *GIF demonstrativo: Navegação entre camadas Medalhão e auditoria de volumetria.*
 
-🌐 **Link do Painel Vivo:** [Painel de Observabilidade (Streamlit)](http://54.39.98.107:8501/)
+🌐 **Link do Painel Vivo:** [Painel de Observabilidade (Streamlit)](http://137.131.205.67:8501/)
 
 ---
 
