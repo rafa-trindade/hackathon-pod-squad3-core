@@ -31,7 +31,7 @@ def render_simple_metric(col, label, value):
 
 st.sidebar.markdown(
     """
-    <div style="display: flex; justify-content: flex-end; width: 100%; overflow: hidden; margin-top: 10px; margin-bottom: 20px;">
+    <div style="display: flex; justify-content: flex-end; width: 100%; overflow: hidden; margin-top: 10px; margin-bottom: -5px;">
         <img src="https://i.postimg.cc/dQNRCk8X/Group-4.png" style="width: 100%; object-fit: contain;">
     </div>
     """,
@@ -341,7 +341,7 @@ if data:
             st.markdown(f"### Painel de Custos Cloud (OCI): <code class='theme-1'>{display_name}</code> <code class='theme-1'>{region}</code>", unsafe_allow_html=True)
 
             st.caption(f"Caminho no Lake: s3://{BUCKET_NAME}/{selected_report_key}")
-            st.write("<hr style='margin-top:-10px; margin-bottom:0px;'>", unsafe_allow_html=True)
+            st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
 
             st.caption(f"🕒 Dados atualizados em **{timestamp_final}**")
             
@@ -517,7 +517,7 @@ if data:
         )
 
         st.caption(f"Caminho no Lake: s3://{BUCKET_NAME}/{selected_report_key}")
-        st.write("<hr style='margin-top:-10px; margin-bottom:0px;'>", unsafe_allow_html=True)
+        st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
         render_timestamp(integrity_timestamp)
 
         if "steps" in data:
@@ -613,7 +613,7 @@ if data:
                     m2.markdown(f"**Processos**: {total_proc}")
                     m3.markdown(f"**Sucesso**: {success_count}")
                     m4.markdown(f"**Falhas**: {fail_count}")
-                    st.write("<hr style='margin-top:-10px; margin-bottom:0px;'>", unsafe_allow_html=True)
+                    st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
 
                     st.dataframe(
                         df_layer[["Etapa", "Status", "Duração"]],
@@ -646,7 +646,7 @@ if data:
         )
         
         st.caption(f"Caminho no Lake: s3://{BUCKET_NAME}/{selected_report_key}")
-        st.write("<hr style='margin-top:-10px; margin-bottom:0px;'>", unsafe_allow_html=True)
+        st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
         render_timestamp(integrity_timestamp)
 
         
@@ -690,7 +690,7 @@ if data:
         )
 
         st.caption(f"Caminho no Lake: s3://{BUCKET_NAME}/{selected_report_key}")
-        st.write("<hr style='margin-top:-10px; margin-bottom:0px;'>", unsafe_allow_html=True)
+        st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
         render_timestamp(integrity_timestamp)
 
         for table in data.get("tables", []):
@@ -744,7 +744,7 @@ if data:
         )
 
         st.caption(f"Caminho no Lake: s3://{BUCKET_NAME}/{selected_report_key}")
-        st.write("<hr style='margin-top:-10px; margin-bottom:0px;'>", unsafe_allow_html=True)
+        st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
         render_timestamp(integrity_timestamp)
 
         COLUMN_ORDER_MAP = {
@@ -797,7 +797,7 @@ if data:
                 m2.metric("📊 Volumetria Total", f"{format_milhar(metadata.get('volumetry', '0'))} Registros")
                 m3.metric("👤 Cardinalidade", f"{format_milhar(metadata.get('cardinality', '0'))} CPFs Únicos")
                 
-                st.write("<hr style='margin-top:-10px; margin-bottom:0px;'>", unsafe_allow_html=True)
+                st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
                 
                 integrity_data = data.get("integrity_table", [])
                 if integrity_data:
@@ -857,7 +857,7 @@ if data:
                 m3.metric("Falhas", total_fail)
                 m4.metric("Informativos", total_info)
 
-            st.write("<hr style='margin-top:-10px; margin-bottom:0px;'>", unsafe_allow_html=True)
+            st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
 
             def format_status_smart(val):
                 v = str(val).upper()
