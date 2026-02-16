@@ -128,11 +128,11 @@ st.sidebar.title("Painel de Observabilidade")
 st.sidebar.write("<hr style='margin-top:20px; margin-bottom:10px;'>", unsafe_allow_html=True)
 
 pilar_options = {
-    "Custos | FinOps": "FinOps",
     "Execução | Pipeline": "Pipeline Execution",
     "Análise | Profiling": "Profiling",
     "Validação | Data Quality": "Quality",
     "Estrutura | Integrity": "Integrity",
+    "Custos | FinOps": "FinOps",
 }
 
 runs = list_runs()
@@ -140,16 +140,18 @@ if not runs:
     st.warning("Nenhuma run encontrada no Lake.")
     st.stop()
 
-if "pilar_key" not in st.session_state:
-    st.session_state["pilar_key"] = "Custos | FinOps"
+#if "pilar_key" not in st.session_state:
+#    st.session_state["pilar_key"] = "Custos | FinOps"
 
-is_finops = st.session_state["pilar_key"] == "Custos | FinOps"
+#is_finops = st.session_state["pilar_key"] == "Custos | FinOps"
 
-selected_run = st.sidebar.selectbox(
-    "Selecione a Run (ID)",
-    runs,
-    disabled=is_finops
-)
+#selected_run = st.sidebar.selectbox(
+#    "Selecione a Run (ID)",
+#    runs,
+#    disabled=is_finops
+#)
+
+selected_run = st.sidebar.selectbox( "Selecione a Run (ID)", runs, disabled=(st.session_state.get("pilar_key") == "Custos | FinOps") )
 
 selected_pilar_display = st.sidebar.selectbox(
     "Pilar de Observabilidade", 
@@ -166,11 +168,11 @@ if not all_files and category != "FinOps":
     st.stop()
 
 categories = {
-    "FinOps": ["observability/reports/observability_reports_oci_costs.json"],
     "Pipeline Execution": [f for f in all_files if "pipeline_execution" in f.lower()],
     "Profiling": [f for f in all_files if "profiling" in f.lower()],
     "Quality": [f for f in all_files if "quality" in f.lower()],
     "Integrity": [f for f in all_files if "integrity" in f.lower() or "inspect_partition" in f.lower()],
+    "FinOps": ["observability/reports/observability_reports_oci_costs.json"]
 }
 
 available_reports = categories[category]
