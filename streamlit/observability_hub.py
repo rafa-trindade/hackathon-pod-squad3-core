@@ -6,6 +6,16 @@ import sys
 import plotly.graph_objects as go
 from datetime import datetime, timedelta
 
+def render_simple_metric(col, label, value):
+    col.markdown(f"""
+        <div style="display: flex; flex-direction: column;">
+            <p style="font-size: 0.9rem; color: gray; margin-bottom: 0;">{label}</p>
+            <div style="display: flex; align-items: baseline;">
+                <span style="font-size: 1.6rem; color: #DAD0D1; font-weight: bold;">{value}</span>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from config.data_connections import get_s3_client
@@ -115,18 +125,38 @@ def render_timestamp(global_timestamp):
 ##################################   
 st.sidebar.title("Painel de Observabilidade")
 
-st.sidebar.write("<hr style='margin-top:30px; margin-bottom:10px;'>", unsafe_allow_html=True)
+st.sidebar.write("<hr style='margin-top:20px; margin-bottom:10px;'>", unsafe_allow_html=True)
 
+pilar_options = {
+    "Execução | Pipeline": "Pipeline Execution",
+    "Análise | Profiling": "Profiling",
+    "Validação | Data Quality": "Quality",
+    "Estrutura | Integrity": "Integrity",
+    "Custos | FinOps": "FinOps"
+}
 
 runs = list_runs()
 if not runs:
     st.warning("Nenhuma run encontrada no Lake.")
     st.stop()
 
-selected_run = st.sidebar.selectbox("Selecione a Run (ID)", runs)
+selected_run = st.sidebar.selectbox(
+    "Selecione a Run (ID)", 
+    runs, 
+    disabled=(st.session_state.get("pilar_key") == "💰 Gestão de Custos (FinOps)")
+)
+
+selected_pilar_display = st.sidebar.selectbox(
+    "Pilar de Observabilidade", 
+    list(pilar_options.keys()),
+    key="pilar_key"
+)
+category = pilar_options[selected_pilar_display]
+
 
 all_files = list_reports(selected_run)
-if not all_files:
+
+if not all_files and category != "FinOps":
     st.info(f"Nenhum relatório JSON encontrado para a run {selected_run}.")
     st.stop()
 
@@ -138,20 +168,13 @@ categories = {
     "FinOps": ["observability/reports/observability_reports_oci_costs.json"] 
 }
 
-category = st.sidebar.selectbox("Categoria de Relatório", list(categories.keys()))
 available_reports = categories[category]
 
-if not available_reports:
-    st.sidebar.info("Nenhum relatório nesta categoria.")
-    st.stop()
-
 order_map = {"gold": 1, "silver": 2, "bronze": 3, "raw": 4}
-
 detected_layers = set()
 for f in available_reports:
     normalized_path = f.lower().replace('-', '_')
     path_segments = normalized_path.split('/')
-    
     for segment in path_segments:
         if segment in order_map:
             detected_layers.add(segment)
@@ -164,15 +187,12 @@ for f in available_reports:
 layers = sorted(list(detected_layers), key=lambda x: order_map.get(x, 99))
 
 if layers:
-    default_index = 0 
-    
     selected_layer = st.sidebar.selectbox(
         "Selecione a Camada", 
         layers, 
-        index=default_index,
+        index=0,
         format_func=lambda x: x.capitalize()
     )
-    
     available_reports = [
         f for f in available_reports 
         if f"/{selected_layer}/" in f.lower() or 
@@ -183,22 +203,14 @@ else:
 
 def format_report_name(path):
     filename = path.split("/")[-1].replace(".json", "")
-    
     if "integrity" in path.lower() or "inspect_partition" in path.lower():
         name = filename.split('-')[-1] if '-' in filename else filename
         return name.replace("_", " ").capitalize()
-
     if "-" in filename:
         parts = filename.split("-")
-        if len(parts) >= 3:
-            return parts[1].lower()
-        return parts[-1].lower()
-    
+        return parts[1].lower() if len(parts) >= 3 else parts[-1].lower()
     parts = filename.split("_")
-    if len(parts) > 2:
-        return "_".join(parts[1:-1]).lower()
-    
-    return filename.lower()
+    return "_".join(parts[1:-1]).lower() if len(parts) > 2 else filename.lower()
 
 report_options = {format_report_name(f): f for f in available_reports}
 
@@ -212,16 +224,14 @@ if report_options:
         return 99
 
     sorted_display_names = sorted(list(report_options.keys()), key=get_sort_key)
-
-    selected_report_display = st.sidebar.selectbox(
-        "Selecione o Relatório", 
-        options=sorted_display_names
-    )
+    selected_report_display = st.sidebar.selectbox("Selecione o Relatório", options=sorted_display_names)
     selected_report_key = report_options[selected_report_display]
 else:
-    st.sidebar.warning("Nenhum relatório formatado disponível.")
-    st.stop()
-
+    if category != "FinOps":
+        st.sidebar.warning("Nenhum relatório formatado disponível.")
+        st.stop()
+    else:
+        selected_report_key = categories["FinOps"][0]
 st.sidebar.divider()
 
 st.sidebar.markdown(
@@ -250,7 +260,6 @@ st.sidebar.markdown(
     """,
     unsafe_allow_html=True
 )
-
 
 
 ##################################   
@@ -287,7 +296,7 @@ if data:
             except:
                 timestamp_final = data.get('updated_at', 'N/I')
 
-            st.markdown(f"### Painel de Custos Cloud (OCI): <code class='theme-1'>SQUAD•03 Tenancy</code>", unsafe_allow_html=True)
+            st.markdown(f"### Painel de Custos Cloud (OCI): <code class='theme-1'>SQUAD•03</code>", unsafe_allow_html=True)
             
             st.caption(f"🕒 Dados atualizados em **{timestamp_final}**")
             
@@ -296,31 +305,53 @@ if data:
             usage_pct = (total_val / budget_limit)
 
             with st.expander("✅ Indicadores Financeiros", expanded=True):
-
-                m1, m2, m3 = st.columns(3)
+                m1, m2, m3, m4 = st.columns(4)
 
                 def format_brl(valor):
                     return f"R$ {valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
-                
-                m1.metric("Custo Total (ITD)", format_brl(total_val))
-                m2.metric("Budget SQUAD 03", format_brl(budget_limit))
-                m3.metric("Consumo do Budget (%)", f"{usage_pct:.2%}")
-                
+
+                render_simple_metric(m1, "Custo Total (ITD)", format_brl(total_val))
+                render_simple_metric(m2, f"Budget SQUAD 03", format_brl(budget_limit))
+                render_simple_metric(m3, "Consumo do Budget (%)", f"{usage_pct:.2%}")
+
                 st.progress(min(usage_pct, 1.0))
 
                 df_raw_items = pd.DataFrame(data.get("items", []))
-                if not df_raw_items.empty:
-                    df_costs = df_raw_items.groupby('service')['amount'].sum().reset_index()
+                df_costs = df_raw_items.groupby('service')['amount'].sum().reset_index() if not df_raw_items.empty else pd.DataFrame()
+                if not df_costs.empty:
                     df_costs = df_costs[df_costs['amount'] > 0].sort_values(by='amount', ascending=False)
+
+                df_daily = pd.DataFrame(data.get("daily_items", []))
+                if not df_daily.empty:
+                    df_daily['amount'] = pd.to_numeric(df_daily['amount'], errors='coerce').fillna(0)
+                    df_daily['date'] = pd.to_datetime(df_daily['date'])
+                    df_daily = df_daily.sort_values('date')
+
+                    ultimo_dia = df_daily['date'].iloc[-1]
+                    valor_ultimo_dia = df_daily['amount'].iloc[-1]
+                    
+                    valor_penultimo_dia = df_daily['amount'].iloc[0] if len(df_daily) > 1 else valor_ultimo_dia
+                    delta_valor = valor_ultimo_dia - valor_penultimo_dia
+
+                    delta_color = "#37B5A8" if delta_valor <= 0 else "#B53744"
+                    setinha = "↓" if delta_valor <= 0 else "↑"
+
+                    m4.markdown(f"""
+                        <div style="display: flex; flex-direction: column;">
+                            <p style="font-size: 0.9rem; color: gray; margin-bottom: 0;">Custo {ultimo_dia.strftime('%d/%m/%Y')}</p>
+                            <div style="display: flex; align-items: baseline; gap: 10px;">
+                                <span style="font-size: 1.6rem; font-weight: bold;">{format_brl(valor_ultimo_dia)}</span>
+                                <span style="font-size: 1rem; color: {delta_color}; font-weight: bold;">{setinha} {format_brl(delta_valor)}</span>
+                            </div>
+                        </div>
+                    """, unsafe_allow_html=True)
                 else:
-                    df_costs = pd.DataFrame()
+                    render_simple_metric(m4, "Custo Último Dia", "N/I")
 
             with st.expander("📑 Breakdown por Serviço", expanded=True):
 
-
                 if not df_costs.empty:
                     df_display = df_costs.copy()
-
                     df_display['amount'] = df_display['amount'].map(format_brl)
 
                     row_height = 35
@@ -342,10 +373,7 @@ if data:
                     )
 
 
-            c1, c2 = st.columns([3.5, 1])
-
-            df_daily = pd.DataFrame(data.get("daily_items", []))
-    
+            c1, c2 = st.columns([3, 1.1])    
 
             with c1:
                 with st.expander("📈 Trend de Consumo Diário", expanded=True):
@@ -366,12 +394,13 @@ if data:
 
                         fig_daily.update_layout(
                             height=350,
-                            margin=dict(t=10, b=10, l=10, r=10),
-                            xaxis_title="Dia",
-                            yaxis_title="R$",
+                            margin=dict(t=0, b=0, l=0, r=0),
+                            xaxis_title="Data",
+                            yaxis_title="Valor",
                             yaxis=dict(
-                                tickformat=".2f",  # base
-                                separatethousands=True
+                                tickprefix="R$ ",
+                                separatethousands=True,
+                                tickformat=".2f"
                             )
                         )
 
@@ -388,31 +417,35 @@ if data:
                 with st.expander("📊 Distribuição de Custos", expanded=True):
                     if not df_costs.empty:
                         fig_pie = go.Figure(data=[go.Pie(
-                            labels=df_costs['service'], values=df_costs['amount'],
-                            hole=.4, textinfo='percent',
-                            marker_colors=['#1A1C24', '#731E27', '#9E9E9E', '#555555', '#DAD0D1']
+                            labels=df_costs['service'], 
+                            values=df_costs['amount'],
+                            hole=.4, 
+                            textinfo='percent',
+                            marker_colors=['#1A1C24', '#731E27', '#9E9E9E', '#555555', '#DAD0D1'],
+                            rotation=45  # gira as fatias em 45 graus
                         )])
                         fig_pie.update_layout(
-                            margin=dict(t=0, b=0, l=0, r=0), height=350,
-                            legend=dict(orientation="h", yanchor="bottom", y=-0.3, xanchor="center", x=0.5)
+                            margin=dict(t=10, b=10, l=0, r=0), 
+                            height=350,
+                            legend=dict(orientation="h", yanchor="bottom", y=-0.2, xanchor="center", x=0.5)
                         )
                         st.plotly_chart(fig_pie, use_container_width=True)
 
             if not df_costs.empty:
                 top_service = df_costs.iloc[0]['service']
-                col_info, col_alert = st.columns([1.5, 1])
+                col_info, col_alert = st.columns([2, 1.1])
                 
                 with col_info:
-                    st.info(f"💡 **FinOps Insight:** O serviço **{top_service}** lidera os gastos. " + 
+                    st.info(f">💡 **FinOps Insight:** O serviço **{top_service}** lidera os gastos. " + 
                             ("Considere instâncias 'Preemptible' para economizar." if top_service == 'Compute' else "Revise políticas de expiração de objetos."))
                 
                 with col_alert:
                     if usage_pct > 0.9:
-                        st.info("🚨 **Crítico:** 90% do budget atingido!")
+                        st.info(">🚨 **Crítico:** 90% do budget atingido!")
                     elif usage_pct > 0.7:
-                        st.info("⚠️ **Atenção:** 70% do budget consumido.")
+                        st.info(">⚠️ **Atenção:** 70% do budget consumido.")
                     else:
-                        st.info("✅ Orçamento dentro do esperado, continue monitorando.")
+                        st.info(">✅ Orçamento dentro do esperado, continue monitorando.")
 
             st.stop()
 
