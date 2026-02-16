@@ -6,16 +6,6 @@ import sys
 import plotly.graph_objects as go
 from datetime import datetime, timedelta
 
-def render_simple_metric(col, label, value):
-    col.markdown(f"""
-        <div style="display: flex; flex-direction: column;">
-            <p style="font-size: 0.9rem; color: gray; margin-bottom: 0;">{label}</p>
-            <div style="display: flex; align-items: baseline;">
-                <span style="font-size: 1.6rem; color: #DAD0D1; font-weight: bold;">{value}</span>
-            </div>
-        </div>
-    """, unsafe_allow_html=True)
-
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from config.data_connections import get_s3_client
@@ -29,6 +19,15 @@ def local_css(file_name):
 
 local_css("streamlit/assets/style.css")
 
+def render_simple_metric(col, label, value):
+    col.markdown(f"""
+        <div style="display: flex; flex-direction: column;">
+            <p style="font-size: 0.9rem; color: gray; margin-bottom: 0;">{label}</p>
+            <div style="display: flex; align-items: baseline;">
+                <span style="font-size: 1.6rem; color: #DAD0D1; font-weight: bold;">{value}</span>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
 
 st.sidebar.markdown(
     """
@@ -125,7 +124,20 @@ def render_timestamp(global_timestamp):
 ##################################   
 st.sidebar.title("Painel de Observabilidade")
 
-st.sidebar.write("<hr style='margin-top:20px; margin-bottom:10px;'>", unsafe_allow_html=True)
+st.sidebar.write("<hr style='margin-top:-10px; margin-bottom:0px;'>", unsafe_allow_html=True)
+
+view_mode = st.sidebar.radio(
+    "Selecione a Visualização",
+    ["⚙️ Core Engine", "📊 FinOps Governance"],
+    index=0,
+    label_visibility="collapsed"
+)
+
+is_finops_view = (view_mode == "📊 FinOps Governance")
+
+st.sidebar.write("<hr style='margin-top:3px; margin-bottom:-8px;'><br>", unsafe_allow_html=True)
+
+
 
 pilar_options = {
     "Execução | Pipeline": "Pipeline Execution",
@@ -135,36 +147,42 @@ pilar_options = {
     "Custos | FinOps": "FinOps",
 }
 
+# Runs disponíveis (não bloqueia FinOps View)
 runs = list_runs()
 if not runs:
-    st.warning("Nenhuma run encontrada no Lake.")
+    st.warning(">Nenhuma run encontrada no Lake.")
     st.stop()
 
-#if "pilar_key" not in st.session_state:
-#    st.session_state["pilar_key"] = "Custos | FinOps"
-
-#is_finops = st.session_state["pilar_key"] == "Custos | FinOps"
-
-#selected_run = st.sidebar.selectbox(
-#    "Selecione a Run (ID)",
-#    runs,
-#    disabled=is_finops
-#)
-
-selected_run = st.sidebar.selectbox( "Selecione a Run (ID)", runs, disabled=(st.session_state.get("pilar_key") == "Custos | FinOps") )
-
-selected_pilar_display = st.sidebar.selectbox(
-    "Pilar de Observabilidade", 
-    list(pilar_options.keys()),
-    key="pilar_key"
+# Selectbox dinamicamente desabilitado se for FinOps
+selected_run = st.sidebar.selectbox(
+    "Selecione a Run (ID)",
+    runs,
+    disabled=is_finops_view  # desabilita selectbox de runs para FinOps
 )
-category = pilar_options[selected_pilar_display]
+
+# Filtra opções de pilar de acordo com a visualização
+pilar_keys = list(pilar_options.keys())
+
+
+if not is_finops_view:
+    # remove FinOps para Core Engine
+    pilar_keys = [k for k in pilar_keys if "FinOps" not in k]
+
+if not is_finops_view:
+    selected_pilar_display = st.sidebar.selectbox(
+        "Pilar de Observabilidade",
+        pilar_keys,
+        key="pilar_key"
+    )
+    category = pilar_options[selected_pilar_display]
+else:
+    category = "FinOps"  # garante que a categoria seja FinOps
 
 
 all_files = list_reports(selected_run)
 
 if not all_files and category != "FinOps":
-    st.info(f"Nenhum relatório JSON encontrado para a run {selected_run}.")
+    st.info(f">Nenhum relatório JSON encontrado para a run {selected_run}.")
     st.stop()
 
 categories = {
@@ -217,7 +235,12 @@ def format_report_name(path):
         parts = filename.split("-")
         return parts[1].lower() if len(parts) >= 3 else parts[-1].lower()
     parts = filename.split("_")
+
+    if "finops" in path.lower() or "costs" in path.lower():
+        return "_".join(parts[1:]).lower() 
+            
     return "_".join(parts[1:-1]).lower() if len(parts) > 2 else filename.lower()
+
 
 report_options = {format_report_name(f): f for f in available_reports}
 
@@ -235,14 +258,17 @@ if report_options:
     selected_report_key = report_options[selected_report_display]
 else:
     if category != "FinOps":
-        st.sidebar.warning("Nenhum relatório formatado disponível.")
+        st.sidebar.warning(">Nenhum relatório formatado disponível.")
         st.stop()
     else:
         selected_report_key = categories["FinOps"][0]
-st.sidebar.divider()
+
+
+st.sidebar.write("<hr style='margin-top:5px; margin-bottom:10px;'>", unsafe_allow_html=True)
 
 st.sidebar.markdown(
     """
+    <p style='margin-top:18px;'>
     <style>
     /* Logo customizado */
     .custom-sidebar-logo {
@@ -273,8 +299,8 @@ st.sidebar.markdown(
 # --- Principal ---
 ##################################   
 
-if category == "FinOps":
-    selected_report_key = "observability/reports/observability_reports_oci_costs.json"
+if is_finops_view:
+    category = "FinOps"
 else:
     selected_report_key = selected_report_key 
 
@@ -295,7 +321,16 @@ if data:
         selected_report_key = "observability/reports/observability_reports_oci_costs.json"
         data = load_json_from_s3(selected_report_key)
 
+        status_key = "observability/reports/observability_reports_oci_status.json"
+        status_data = load_json_from_s3(status_key)
+
         if data:
+
+            display_name = "SQUAD•03"
+            if status_data and "instances" in status_data and len(status_data["instances"]) > 0:
+                first_instance = status_data["instances"][0]
+                display_name = first_instance.get("display_name", "SQUAD•03")
+                region = first_instance.get("region", "unknown")
 
             try:
                 dt_utc = datetime.fromisoformat(data.get('updated_at').replace("Z", ""))
@@ -303,8 +338,11 @@ if data:
             except:
                 timestamp_final = data.get('updated_at', 'N/I')
 
-            st.markdown(f"### Painel de Custos Cloud (OCI): <code class='theme-1'>SQUAD•03</code>", unsafe_allow_html=True)
-            
+            st.markdown(f"### Painel de Custos Cloud (OCI): <code class='theme-1'>{display_name}</code> <code class='theme-1'>{region}</code>", unsafe_allow_html=True)
+
+            st.caption(f"Caminho no Lake: s3://{BUCKET_NAME}/{selected_report_key}")
+            st.write("<hr style='margin-top:-10px; margin-bottom:0px;'>", unsafe_allow_html=True)
+
             st.caption(f"🕒 Dados atualizados em **{timestamp_final}**")
             
             total_val = data.get("total_amount", 0)
@@ -381,7 +419,7 @@ if data:
                             "service": "Serviço",
                             "amount": "Valor"
                         }),
-                        use_container_width=True,
+                        width='stretch',
                         hide_index=True,
                         height=height_dynamic
                     )
@@ -422,10 +460,10 @@ if data:
                             tickformat=",.2f"
                         )
 
-                        st.plotly_chart(fig_daily, use_container_width=True)
+                        st.plotly_chart(fig_daily, width='stretch')
 
                     else:
-                        st.info("Série temporal diária não disponível.")
+                        st.info(">Série temporal diária não disponível.")
 
             with c2:
                 with st.expander("📊 Distribuição de Custos", expanded=True):
@@ -443,7 +481,7 @@ if data:
                             height=350,
                             legend=dict(orientation="h", yanchor="bottom", y=-0.2, xanchor="center", x=0.5)
                         )
-                        st.plotly_chart(fig_pie, use_container_width=True)
+                        st.plotly_chart(fig_pie, width='stretch')
 
             if not df_costs.empty:
                 top_service = df_costs.iloc[0]['service']
@@ -479,7 +517,7 @@ if data:
         )
 
         st.caption(f"Caminho no Lake: s3://{BUCKET_NAME}/{selected_report_key}")
-        st.divider()
+        st.write("<hr style='margin-top:-10px; margin-bottom:0px;'>", unsafe_allow_html=True)
         render_timestamp(integrity_timestamp)
 
         if "steps" in data:
@@ -557,7 +595,7 @@ if data:
                         ticktext=[format_hhmmss(v) for v in range(0, int(tempo_total_seg) + 300, 300)]
                     )
                 )
-                st.plotly_chart(fig_cascade, use_container_width=True)
+                st.plotly_chart(fig_cascade, width='stretch')
 
             ordered_layers = ["RAW", "BRONZE", "SILVER", "GOLD"]
             for layer in ordered_layers:
@@ -575,11 +613,11 @@ if data:
                     m2.markdown(f"**Processos**: {total_proc}")
                     m3.markdown(f"**Sucesso**: {success_count}")
                     m4.markdown(f"**Falhas**: {fail_count}")
-                    st.divider()
+                    st.write("<hr style='margin-top:-10px; margin-bottom:0px;'>", unsafe_allow_html=True)
 
                     st.dataframe(
                         df_layer[["Etapa", "Status", "Duração"]],
-                        use_container_width=True, 
+                        width='stretch', 
                         hide_index=True
                     )
 
@@ -608,7 +646,7 @@ if data:
         )
         
         st.caption(f"Caminho no Lake: s3://{BUCKET_NAME}/{selected_report_key}")
-        st.divider()
+        st.write("<hr style='margin-top:-10px; margin-bottom:0px;'>", unsafe_allow_html=True)
         render_timestamp(integrity_timestamp)
 
         
@@ -652,7 +690,7 @@ if data:
         )
 
         st.caption(f"Caminho no Lake: s3://{BUCKET_NAME}/{selected_report_key}")
-        st.divider()
+        st.write("<hr style='margin-top:-10px; margin-bottom:0px;'>", unsafe_allow_html=True)
         render_timestamp(integrity_timestamp)
 
         for table in data.get("tables", []):
@@ -706,7 +744,7 @@ if data:
         )
 
         st.caption(f"Caminho no Lake: s3://{BUCKET_NAME}/{selected_report_key}")
-        st.divider()
+        st.write("<hr style='margin-top:-10px; margin-bottom:0px;'>", unsafe_allow_html=True)
         render_timestamp(integrity_timestamp)
 
         COLUMN_ORDER_MAP = {
@@ -759,7 +797,7 @@ if data:
                 m2.metric("📊 Volumetria Total", f"{format_milhar(metadata.get('volumetry', '0'))} Registros")
                 m3.metric("👤 Cardinalidade", f"{format_milhar(metadata.get('cardinality', '0'))} CPFs Únicos")
                 
-                st.divider()
+                st.write("<hr style='margin-top:-10px; margin-bottom:0px;'>", unsafe_allow_html=True)
                 
                 integrity_data = data.get("integrity_table", [])
                 if integrity_data:
@@ -777,7 +815,7 @@ if data:
                     
                     df_gold["Status"] = df_gold["Status"].apply(format_status_gold)
                     
-                    st.dataframe(df_gold, use_container_width=True, hide_index=True)
+                    st.dataframe(df_gold, width='stretch', hide_index=True)
 
                     detalhamento_gold = f"""
                         ###### DETALHAMENTO DE CONFORMIDADE (GOLD)
@@ -819,7 +857,7 @@ if data:
                 m3.metric("Falhas", total_fail)
                 m4.metric("Informativos", total_info)
 
-            st.divider()
+            st.write("<hr style='margin-top:-10px; margin-bottom:0px;'>", unsafe_allow_html=True)
 
             def format_status_smart(val):
                 v = str(val).upper()
@@ -834,7 +872,7 @@ if data:
                 with st.expander(f"▶️ {group_name}", expanded=True):
                     tests = group.get("tests", [])
                     if not tests:
-                        st.info("Nenhum teste neste grupo.")
+                        st.info(">Nenhum teste neste grupo.")
                         continue
                     
                     df_group = pd.DataFrame(tests)
@@ -923,7 +961,7 @@ if data:
             st.stop()
 
         if "reports" not in data:
-            st.warning("Formato inesperado de relatório de qualidade.")
+            st.warning(">Formato inesperado de relatório de qualidade.")
             st.stop()
 
         reports = data["reports"]
@@ -957,7 +995,7 @@ if data:
             with st.expander(f"{icon} Dimensão: `{entity}`", expanded=True):
                 tests = report.get("tests", [])
                 if not tests:
-                    st.info("Nenhum teste encontrado."); continue
+                    st.info(">Nenhum teste encontrado."); continue
 
                 df = pd.DataFrame(tests)
                 if cols_ordered:

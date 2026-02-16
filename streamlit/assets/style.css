@@ -30,11 +30,6 @@ code.theme-1 {
   font-size: 1.35rem !important;
 }
 
-hr {
-  margin-top: -2px !important;
-  margin-bottom: 20px !important;
-}
-
 div[data-testid="stNotification"] {
   background-color: #1A1A1A !important;
   color: #DAD0D1 !important;
