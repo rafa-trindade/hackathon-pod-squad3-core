@@ -47,10 +47,6 @@ div[data-testid="stNotification"] {
 [data-testid="stMarkdownContainer"] blockquote p,
 
 
-.st-ae {
-  background-color: #1A1A1A !important;
-}
-
 div[data-testid="stMarkdownContainer"] h6 {
   color: #8D8788 !important;
   text-transform: uppercase;
