@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import json
 import os
+import re
 import sys
 import plotly.graph_objects as go
 from datetime import datetime, timedelta
@@ -69,7 +70,7 @@ def list_runs():
                     runs.append(folder.replace("run_id=", ""))
         return sorted(runs, reverse=True)
     except Exception as e:
-        st.error(f"Erro ao listar runs no S3: {e}")
+        st.markdown(f"Erro ao listar runs no S3: {e}")
         return []
 
 def list_reports(run_id):
@@ -87,7 +88,7 @@ def list_reports(run_id):
                         files.append(obj['Key'])
         return files
     except Exception as e:
-        st.error(f"Erro ao listar arquivos da run {run_id}: {e}")
+        st.markdown(f"Erro ao listar arquivos da run {run_id}: {e}")
         return []
 
 def load_json_from_s3(key):
@@ -97,7 +98,7 @@ def load_json_from_s3(key):
         response = s3.get_object(Bucket=BUCKET_NAME, Key=key)
         return json.loads(response['Body'].read().decode('utf-8'))
     except Exception as e:
-        st.error(f"Erro ao carregar {key}: {e}")
+        st.markdown(f"Erro ao carregar {key}: {e}")
         return None
 
 def render_timestamp(global_timestamp):
@@ -157,7 +158,7 @@ st.sidebar.write("<hr style='margin-top:3px; margin-bottom:-8px;'><br>", unsafe_
 
 runs = list_runs()
 if not runs:
-    st.warning(">Nenhuma run encontrada no Lake.")
+    st.markdown(">Nenhuma run encontrada no Lake.")
     st.stop()
 
 
@@ -186,7 +187,7 @@ else:
 all_files = list_reports(selected_run)
 
 if not all_files and category != "FinOps":
-    st.info(f">Nenhum relatório JSON encontrado para a run {selected_run}.")
+    st.markdown(f">Nenhum relatório JSON encontrado para a run {selected_run}.")
     st.stop()
 
 categories = {
@@ -467,7 +468,7 @@ if data:
                         st.plotly_chart(fig_daily, width='stretch')
 
                     else:
-                        st.info(">Série temporal diária não disponível.")
+                        st.markdown(">Série temporal diária não disponível.")
 
             with c2:
                 with st.expander("📊 Distribuição de Custos", expanded=True):
@@ -478,7 +479,7 @@ if data:
                             hole=.4, 
                             textinfo='percent',
                             marker_colors=['#1A1C24', '#731E27', '#9E9E9E', '#555555', '#DAD0D1'],
-                            rotation=45  # gira as fatias em 45 graus
+                            rotation=45 
                         )])
                         fig_pie.update_layout(
                             margin=dict(t=10, b=10, l=0, r=0), 
@@ -699,7 +700,11 @@ if data:
                                 df = pd.DataFrame(item["data"])
                                 st.dataframe(df, width='stretch')
                             elif item["type"] == "text":
-                                st.info(item["data"])
+                                
+                                cleaned_text = item["data"]         
+                                cleaned_text = re.sub(r'(\n|\r|\s)*---(\n|\r|\s)*', '\n', cleaned_text)          
+                                cleaned_text = '\n'.join([line for line in cleaned_text.splitlines() if line.strip() != ''])
+                                st.markdown(cleaned_text)
 
     elif category == "Integrity":
         filename = selected_report_key.split('/')[-1].replace(".json", "")
@@ -915,7 +920,7 @@ if data:
                 with st.expander(f"▶️ {group_name}", expanded=True):
                     tests = group.get("tests", [])
                     if not tests:
-                        st.info(">Nenhum teste neste grupo.")
+                        st.markdown(">Nenhum teste neste grupo.")
                         continue
                     
                     df_group = pd.DataFrame(tests)
@@ -1018,7 +1023,7 @@ if data:
             st.stop()
 
         if "reports" not in data:
-            st.warning(">Formato inesperado de relatório de qualidade.")
+            st.markdown(">Formato inesperado de relatório de qualidade.")
             st.stop()
 
         reports = data["reports"]
@@ -1052,7 +1057,7 @@ if data:
             with st.expander(f"{icon} Dimensão: `{entity}`", expanded=True):
                 tests = report.get("tests", [])
                 if not tests:
-                    st.info(">Nenhum teste encontrado."); continue
+                    st.markdown(">Nenhum teste encontrado."); continue
 
                 df = pd.DataFrame(tests)
                 if cols_ordered:
@@ -1130,5 +1135,5 @@ if data:
             st.markdown("<p>", unsafe_allow_html=True)
 
 else:
-    st.error("Não foi possível processar o conteúdo do arquivo.")
+    st.markdown("Não foi possível processar o conteúdo do arquivo.")
 
