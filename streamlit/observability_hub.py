@@ -119,12 +119,16 @@ def render_timestamp(global_timestamp):
     st.caption(f"🕒 Data/Hora da Auditoria: {formatted}")
 
 
-##################################       
+##################################   
 # --- Sidebar ---
 ##################################   
 st.sidebar.title("Painel de Observabilidade")
 
 st.sidebar.write("<hr style='margin-top:-10px; margin-bottom:0px;'>", unsafe_allow_html=True)
+
+# 1. Capture a mudança de estado do rádio
+if 'last_view_mode' not in st.session_state:
+    st.session_state.last_view_mode = "⚙️ Core Engine"
 
 view_mode = st.sidebar.radio(
     "Selecione a Visualização",
@@ -132,12 +136,6 @@ view_mode = st.sidebar.radio(
     index=0,
     label_visibility="collapsed"
 )
-
-is_finops_view = (view_mode == "📊 FinOps Governance")
-
-st.sidebar.write("<hr style='margin-top:3px; margin-bottom:-8px;'><br>", unsafe_allow_html=True)
-
-
 
 pilar_options = {
     "Execução | Pipeline": "Pipeline Execution",
@@ -147,25 +145,32 @@ pilar_options = {
     "Custos | FinOps": "FinOps",
 }
 
-# Runs disponíveis (não bloqueia FinOps View)
+if view_mode != st.session_state.last_view_mode:
+    if view_mode == "⚙️ Core Engine":
+        st.session_state.pilar_key = list(pilar_options.keys())[0]
+    st.session_state.last_view_mode = view_mode
+
+is_finops_view = (view_mode == "📊 FinOps Governance")
+
+st.sidebar.write("<hr style='margin-top:3px; margin-bottom:-8px;'><br>", unsafe_allow_html=True)
+
+
 runs = list_runs()
 if not runs:
     st.warning(">Nenhuma run encontrada no Lake.")
     st.stop()
 
-# Selectbox dinamicamente desabilitado se for FinOps
+
 selected_run = st.sidebar.selectbox(
     "Selecione a Run (ID)",
     runs,
-    disabled=is_finops_view  # desabilita selectbox de runs para FinOps
+    disabled=is_finops_view
 )
 
-# Filtra opções de pilar de acordo com a visualização
 pilar_keys = list(pilar_options.keys())
 
 
 if not is_finops_view:
-    # remove FinOps para Core Engine
     pilar_keys = [k for k in pilar_keys if "FinOps" not in k]
 
 if not is_finops_view:
@@ -176,8 +181,7 @@ if not is_finops_view:
     )
     category = pilar_options[selected_pilar_display]
 else:
-    category = "FinOps"  # garante que a categoria seja FinOps
-
+    category = "FinOps"
 
 all_files = list_reports(selected_run)
 
@@ -338,7 +342,7 @@ if data:
             except:
                 timestamp_final = data.get('updated_at', 'N/I')
 
-            st.markdown(f"### Painel de Custos Cloud (OCI): <code class='theme-1'>{display_name}</code> <code class='theme-1'>{region}</code>", unsafe_allow_html=True)
+            st.markdown(f"### Painel de Custos Cloud (OCI): <code class='theme-1'>{display_name}</code> - <code class='theme-1'>{region}</code>", unsafe_allow_html=True)
 
             st.caption(f"Caminho no Lake: s3://{BUCKET_NAME}/{selected_report_key}")
             st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
@@ -485,19 +489,43 @@ if data:
 
             if not df_costs.empty:
                 top_service = df_costs.iloc[0]['service']
-                col_info, col_alert = st.columns([2, 1.1])
+                col_info, col_alert = st.columns([2, 2])
                 
                 with col_info:
-                    st.info(f">💡 **FinOps Insight:** O serviço **{top_service}** lidera os gastos. " + 
-                            ("Considere instâncias 'Preemptible' para economizar." if top_service == 'Compute' else "Revise políticas de expiração de objetos."))
-                
+                    finops_insight_msg = ("Considere instâncias 'Preemptible' para economizar." if top_service == 'Compute' else "Revise políticas de expiração de objetos.")
+                    
+                    html_finops = f"""
+                    <div style="background-color:#1A1A1A; color:#888; padding:12px; border-radius:8px; border-left:6px solid #4F1C22; font-family:sans-serif; font-size: 14.5px;">
+                        <h6 style="margin-top:0px; margin-bottom:3px;">FINOPS INSIGHT</h6>
+                        <hr style="margin-top:0px; margin-bottom:15px; border:1px solid #666;">
+                        <div style="margin-left:10px;">
+                            <p>💡 <b>Análise de Custos:</b> O serviço <b>{top_service}</b> lidera os gastos atuais da infraestrutura.</p>
+                            <p style="margin-bottom:0px;">{finops_insight_msg}</p>
+                        </div>
+                    </div>
+                    """
+                    st.markdown(html_finops, unsafe_allow_html=True)
+
+                # Bloco de Alerta de Budget
                 with col_alert:
                     if usage_pct > 0.9:
-                        st.info(">🚨 **Crítico:** 90% do budget atingido!")
+                        status_msg = "🚨 <b>Crítico:</b> 90% do budget atingido!"
                     elif usage_pct > 0.7:
-                        st.info(">⚠️ **Atenção:** 70% do budget consumido.")
+                        status_msg = "⚠️ <b>Atenção:</b> 70% do budget consumido."
                     else:
-                        st.info(">✅ Orçamento dentro do esperado, continue monitorando.")
+                        status_msg = "✅ Orçamento dentro do esperado, continue monitorando."
+
+                    html_budget = f"""
+                    <div style="background-color:#1A1A1A; color:#888; padding:12px; border-radius:8px; border-left:6px solid #4F1C22; font-family:sans-serif; font-size: 14.5px;">
+                        <h6 style="margin-top:0px; margin-bottom:3px;">CONTROLE ORÇAMENTÁRIO</h6>
+                        <hr style="margin-top:0px; margin-bottom:15px; border:1px solid #666;">
+                        <div style="margin-left:10px;">
+                            <p>{status_msg}</p>
+                             <p style="margin-bottom:0px;">&ensp;</p>
+                        </div>
+                    </div>
+                    """
+                    st.markdown(html_budget, unsafe_allow_html=True)
 
             st.stop()
 
@@ -509,7 +537,7 @@ if data:
         st.markdown(
             f"""
             <h3 style="font-weight:semi-bold; display: flex; align-items: center; gap: 8px;">
-                Relatório de Execução do Pipeline: 
+                Relatório de Execução do Pipeline: <code class="theme-1">run_pipeline</code> -
                 <code class="theme-1">{run_id}</code>
             </h3>
             """,
@@ -818,23 +846,38 @@ if data:
                     st.dataframe(df_gold, width='stretch', hide_index=True)
 
                     detalhamento_gold = f"""
-                        ###### DETALHAMENTO DE CONFORMIDADE (GOLD)
-                        ---
-                        > **Master Join (Lógica Point-in-Time):** Cruza as informações respeitando a **Safra** do evento. Garante que o dado cadastral seja contemporâneo à foto, evitando vazamento de dados (data leakage) em modelos preditivos.
-                        > 
-                        > **Agregação:** Percentual de CPFs da âncora com transações detectadas nas janelas históricas (L30D, L60D, L90D ou Geral).
-                        >
-                        > **Grão da ABT:** `{metadata.get('grain', 'CPF + SAFRA + PROD')}`
-                        >
-                        > **🛡️ Metodologia de Sentinelas (Data Trust):**
-                        > A saúde da ABT é validada por atributos de presença obrigatória identificados via Profiling:
-                        > - **Fontes Cadastrais (Join):** `bur_score_02`, `cad_statusrf` e `tel_var_78`. A ausência indica **Registro Órfão** (falha de enriquecimento).
-                        > - **Fontes Comportamentais (Atividade):** `rec_qtd_geral`, `pag_vlr_total_geral` e `atr_vlr_max_geral`. A ausência indica **Inatividade** (traço do perfil do cliente).
-                        >
-                        > ---
-                        > *ℹ️ Nota: A baixa densidade em Agregações reflete apenas a ausência de atividade ou dado cadastral do cliente e não deve ser confundida com uma falha técnica de cruzamento.*                    """
+                    <div style="background-color:#1A1A1A; color:#888; padding:12px; border-radius:8px; border-left:6px solid #4F1C22; font-family:sans-serif; font-size: 14.5px;">
 
-                st.info(detalhamento_gold)
+                    <h6 style="margin-top:0px; margin-bottom:3px;">DETALHAMENTO DE CONFORMIDADE (GOLD)</h6>
+
+                    <hr style="margin-top:2px; margin-bottom:15px; border:1px solid #666;">
+
+                    <div style="margin-left:10px;">
+                    <p><b>Master Join (Lógica Point-in-Time):</b> Cruza as informações respeitando a <b>Safra</b> do evento. Garante que o dado cadastral seja contemporâneo à foto, evitando vazamento de dados (data leakage) em modelos preditivos.</p>
+
+                    <p><b>Agregação:</b> Percentual de CPFs da âncora com transações detectadas nas janelas históricas (L30D, L60D, L90D ou Geral).</p>
+
+                    <p><b>Grão da ABT:</b> {metadata.get('grain', 'CPF + SAFRA + PROD')}</p>
+
+                    <p><b>🛡️ Metodologia de Sentinelas (Data Trust):</b> A saúde da ABT é validada por atributos de presença obrigatória identificados via Profiling:</p>
+
+                    <ul>
+                    <li><b>Fontes Cadastrais (Join):</b> <i>bur_score_02</i>, <i>cad_statusrf</i> e <i>tel_var_78</i>. A ausência indica <b>Registro Órfão</b> (falha de enriquecimento).</li>
+                    <li><b>Fontes Comportamentais (Atividade):</b> <i>rec_qtd_geral</i>, <i>pag_vlr_total_geral</i> e <i>atr_vlr_max_geral</i>. A ausência indica <b>Inatividade</b> (traço do perfil do cliente).</li>
+                    </ul>
+
+                    </div>
+
+                    <hr style="margin-top:2px; margin-bottom:15px; border:1px solid #666;">
+
+                    <p style="margin-top:10px; margin-bottom:5px; font-style:italic;">ℹ️ Nota: A baixa densidade em Agregações reflete apenas a ausência de atividade ou dado cadastral do cliente e não deve ser confundida com uma falha técnica de cruzamento.</p>
+
+                    </div>
+                    """
+                    st.markdown(detalhamento_gold, unsafe_allow_html=True)
+                    st.markdown("<p>", unsafe_allow_html=True)
+                    
+
             
             st.stop()
 
@@ -947,16 +990,30 @@ if data:
 
             if layer_key == "raw":
                 detalhamento_raw = f"""
-                    ###### AUDITORIA DE CONTRATO DE DADOS (RAW)
-                    ---
-                    > **Data Contract:** Validação rigorosa do schema original via Pandera para garantir que a estrutura técnica foi preservada.  
-                    > **Conformidade (COLS):** Verifica se o número de colunas entregue pela origem coincide com a definição técnica esperada.  
-                    > **Status de Auditoria:** Garante que tipos de dados e nomes de campos não sofreram alterações inesperadas na extração.
-                    >
-                    > ---
-                    > *Nota: Um 'FAIL' na camada Raw indica uma quebra de contrato na origem, impedindo o processamento seguro para as camadas subsequentes.*
+                <div style="background-color:#1A1A1A; color:#888; padding:12px; border-radius:8px; border-left:6px solid #4F1C22; font-family:sans-serif; font-size: 14.5px;">
+
+                <h6 style="margin-top:0px; margin-bottom:3px;">AUDITORIA DE CONTRATO DE DADOS (RAW)</h6>
+
+                <hr style="margin-top:2px; margin-bottom:15px; border:1px solid #666;">
+
+                <div style="margin-left:10px;">
+                <p><b>Data Contract:</b> Validação rigorosa do schema original via <i>Pandera</i> para garantir que a estrutura técnica foi preservada.</p>
+                        
+                <p><b>Conformidade (COLS):</b> Verifica se o número de colunas entregue pela origem coincide com a definição técnica esperada.</p>
+                        
+                <p><b>Status de Auditoria:</b> Garante que tipos de dados e nomes de campos não sofreram alterações inesperadas na extração.</p>
+
+                </div>
+
+                <hr style="margin-top:15px; margin-bottom:15px; border:1px solid #666;">
+
+                <p style="margin-top:10px; margin-bottom:5px; font-style:italic;">ℹ️ Nota: Um 'FAIL' na camada Raw indica uma quebra de contrato na origem, impedindo o processamento seguro para as camadas subsequentes.</p>
+
+                </div>
                 """
-                st.info(detalhamento_raw)
+
+                st.markdown(detalhamento_raw, unsafe_allow_html=True)
+                st.markdown("<p>", unsafe_allow_html=True)
 
             st.stop()
 
@@ -1021,30 +1078,56 @@ if data:
 
 
                     detalhamento_html = f"""
-                                        ###### DETALHAMENTO DE AGREGAÇÃO (SILVER)
-                                        ---
-                                        > **Dados Ausentes:** Identificados na origem (Bronze) como `NULL` e normalizados para 'Sem Descricao'.   
-                                        > **Sem Correspondência:** IDs na Fato ausentes na Dimensão, mapeados como 'Sem Correspondencia (ID)'.    
-                                        > **Tratados (%):** Eficácia da higienização e rotulagem das inconsistências encontradas   
-                                        >
-                                        > ---
-                                        > *Nota: 'Tratados (%)' representa a soma de Dados Ausentes e Sem Correspondência que foram higienizados na agregação.*
-                                        """
-                                        
-                    st.info(detalhamento_html)
+                    <div style="background-color:#1A1A1A; color:#888; padding:12px; border-radius:8px; border-left:6px solid #4F1C22; font-family:sans-serif; font-size: 14.5px;">
+
+                    <h6 style="margin-top:0px; margin-bottom:3px;">DETALHAMENTO DE AGREGAÇÃO (SILVER)</h6>
+
+                    <hr style="margin-top:2px; margin-bottom:15px; border:1px solid #666;">
+
+                    <div style="margin-left:10px;">
+                    <p><b>Dados Ausentes:</b> Identificados na origem (Bronze) como <i>NULL</i> e normalizados para <i>'Sem Descricao'</i>.</p>
+                            
+                    <p><b>Sem Correspondência:</b> IDs na Fato ausentes na Dimensão, mapeados como <i>'Sem Correspondencia (ID)'</i>.</p>
+                            
+                    <p><b>Tratados (%):</b> Eficácia da higienização e rotulagem das inconsistências encontradas.</p>
+
+                    </div>
+                    <hr style="margin-top:15px; margin-bottom:15px; border:1px solid #666;">
+
+                    <p style="margin-top:10px; margin-bottom:5px; font-style:italic;">ℹ️ Nota: 'Tratados (%)' representa a soma de Dados Ausentes e Sem Correspondência que foram higienizados na agregação.</p>
+
+                    </div>
+                    """
+
+                    st.markdown(detalhamento_html, unsafe_allow_html=True)
+                    st.markdown("<p>", unsafe_allow_html=True)
 
         if layer_key == "bronze":
             detalhamento_bronze = f"""
-                ###### DETALHAMENTO DE INTEGRIDADE (BRONZE)
-                ---
-                > **Match de Tipagem:** Garante que o ID da Fato e da Dimensão possuam o mesmo formato técnico para evitar falhas de JOIN.  
-                > **Integridade de Chave:** Identifica códigos (IDs) que circulam na transação (Fato) mas não possuem cadastro na tabela de suporte (Dimensão).  
-                > **Registros Órfãos:** Quantidade de IDs distintos ausentes no cadastro que impedem o enriquecimento completo dos dados na Silver.
-                >
-                > ---
-                > *Nota: Um 'WARN' em Integridade de Chave indica que existem novos domínios de dados que ainda não foram mapeados.*
+            <div style="background-color:#1A1A1A; color:#888; padding:12px; border-radius:8px; border-left:6px solid #4F1C22; font-family:sans-serif; font-size: 14.5px;">
+
+            <h6 style="margin-top:0px; margin-bottom:3px;">DETALHAMENTO DE INTEGRIDADE (BRONZE)</h6>
+
+            <hr style="margin-top:2px; margin-bottom:15px; border:1px solid #666;">
+
+            <div style="margin-left:10px;">
+            <p><b>Match de Tipagem:</b> Garante que o ID da Fato e da Dimensão possuam o mesmo formato técnico para evitar falhas de JOIN.</p>
+                    
+            <p><b>Integridade de Chave:</b> Identifica códigos (IDs) que circulam na transação (Fato) mas não possuem cadastro na tabela de suporte (Dimensão).</p>
+                    
+            <p><b>Registros Órfãos:</b> Quantidade de IDs distintos ausentes no cadastro que impedem o enriquecimento completo dos dados na Silver.</p>
+
+            </div>
+
+            <hr style="margin-top:15px; margin-bottom:15px; border:1px solid #666;">
+
+            <p style="margin-top:10px; margin-bottom:5px; font-style:italic;">ℹ️ Nota: Um 'WARN' em Integridade de Chave indica que existem novos domínios de dados que ainda não foram mapeados.</p>
+
+            </div>
             """
-            st.info(detalhamento_bronze)
+
+            st.markdown(detalhamento_bronze, unsafe_allow_html=True)
+            st.markdown("<p>", unsafe_allow_html=True)
 
 else:
     st.error("Não foi possível processar o conteúdo do arquivo.")

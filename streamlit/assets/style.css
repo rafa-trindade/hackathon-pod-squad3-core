@@ -45,13 +45,7 @@ div[data-testid="stNotification"] {
 
 [data-testid="stNotification"] [data-testid="stMarkdownContainer"] p,
 [data-testid="stMarkdownContainer"] blockquote p,
-[data-testid="stMarkdownContainer"] ul li {
-  color: #DAD0D1 !important;
-}
 
-[data-testid="stMarkdownContainer"] ul li::marker {
-  color: #0D0D0D !important;
-}
 
 .st-ae {
   background-color: #1A1A1A !important;
