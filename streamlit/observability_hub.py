@@ -20,25 +20,6 @@ def local_css(file_name):
 
 local_css("streamlit/assets/style.css")
 
-def render_simple_metric(col, label, value):
-    col.markdown(f"""
-        <div style="display: flex; flex-direction: column;">
-            <p style="font-size: 0.9rem; color: gray; margin-bottom: 0;">{label}</p>
-            <div style="display: flex; align-items: baseline;">
-                <span style="font-size: 1.6rem; color: #DAD0D1; font-weight: bold;">{value}</span>
-            </div>
-        </div>
-    """, unsafe_allow_html=True)
-
-st.sidebar.markdown(
-    """
-    <div style="display: flex; justify-content: flex-end; width: 100%; overflow: hidden; margin-top: 10px; margin-bottom: -5px;">
-        <img src="https://i.postimg.cc/dQNRCk8X/Group-4.png" style="width: 100%; object-fit: contain;">
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
@@ -49,6 +30,28 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+def render_simple_metric(col, label, value):
+    col.markdown(f"""
+        <div style="display: flex; flex-direction: column;">
+            <p style="font-size: 0.9rem; color: gray; margin-bottom: 0;">{label}</p>
+            <div style="display: flex; align-items: baseline;">
+                <span style="font-size: 1.6rem; color: #DAD0D1; font-weight: bold;">{value}</span>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
+def format_report_name(path):
+    filename = path.split("/")[-1].replace(".json", "")
+    if "integrity" in path.lower() or "inspect_partition" in path.lower():
+        name = filename.split('-')[-1] if '-' in filename else filename
+        return name.replace("_", " ").capitalize()
+    if "-" in filename:
+        parts = filename.split("-")
+        return parts[1].lower() if len(parts) >= 3 else parts[-1].lower()
+    parts = filename.split("_")
+    if "finops" in path.lower() or "costs" in path.lower():
+        return "_".join(parts[1:]).lower() 
+    return "_".join(parts[1:-1]).lower() if len(parts) > 2 else filename.lower()
 
 BUCKET_NAME = os.getenv("S3_BUCKET", "lake")
 BASE_PATH = "observability/reports/"
@@ -98,42 +101,44 @@ def load_json_from_s3(key):
         response = s3.get_object(Bucket=BUCKET_NAME, Key=key)
         return json.loads(response['Body'].read().decode('utf-8'))
     except Exception as e:
-        st.markdown(f"Erro ao carregar {key}: {e}")
         return None
 
 def render_timestamp(global_timestamp):
-
     if not global_timestamp:
         st.caption("\u200B")
         return
-
     try:
         dt = datetime.fromisoformat(str(global_timestamp).replace("Z", ""))
-
         dt = dt - timedelta(hours=3)
-
         formatted = dt.strftime("%d/%m/%Y %H:%M:%S")
-
     except Exception:
         formatted = str(global_timestamp)
-
-    st.caption(f"🕒 Data/Hora da Auditoria: {formatted}")
-
+    st.caption(f"🕒 Data/Hora da Auditoria: **{formatted}**")
 
 ##################################   
 # --- Sidebar ---
 ##################################   
-st.sidebar.title("Painel de Observabilidade")
+st.sidebar.markdown(
+    """
+    <div style="display: flex; justify-content: flex-end; width: 100%; overflow: hidden; margin-top: 10px; margin-bottom: -5px;">
+        <img src="https://i.postimg.cc/dQNRCk8X/Group-4.png" style="width: 100%; object-fit: contain;">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
+
+
+
+st.sidebar.title("Painel de Observabilidade")
 st.sidebar.write("<hr style='margin-top:-10px; margin-bottom:0px;'>", unsafe_allow_html=True)
 
-# 1. Capture a mudança de estado do rádio
 if 'last_view_mode' not in st.session_state:
     st.session_state.last_view_mode = "⚙️ Core Engine"
 
 view_mode = st.sidebar.radio(
     "Selecione a Visualização",
-    ["⚙️ Core Engine", "📊 FinOps Governance"],
+    ["⚙️ Core Engine", "☁️ Compute & Storage", "📊 FinOps Governance"], # Nova rádio aqui
     index=0,
     label_visibility="collapsed"
 )
@@ -152,41 +157,39 @@ if view_mode != st.session_state.last_view_mode:
     st.session_state.last_view_mode = view_mode
 
 is_finops_view = (view_mode == "📊 FinOps Governance")
+is_compute_view = (view_mode == "☁️ Compute & Storage")
 
 st.sidebar.write("<hr style='margin-top:3px; margin-bottom:-8px;'><br>", unsafe_allow_html=True)
-
 
 runs = list_runs()
 if not runs:
     st.markdown(">Nenhuma run encontrada no Lake.")
     st.stop()
 
-
 selected_run = st.sidebar.selectbox(
     "Selecione a Run (ID)",
     runs,
-    disabled=is_finops_view
+    disabled=is_finops_view or is_compute_view 
 )
 
 pilar_keys = list(pilar_options.keys())
 
-
-if not is_finops_view:
+if not is_finops_view and not is_compute_view:
     pilar_keys = [k for k in pilar_keys if "FinOps" not in k]
-
-if not is_finops_view:
     selected_pilar_display = st.sidebar.selectbox(
         "Pilar de Observabilidade",
         pilar_keys,
         key="pilar_key"
     )
     category = pilar_options[selected_pilar_display]
-else:
+elif is_finops_view:
     category = "FinOps"
+else:
+    category = "ComputeStorage" 
 
 all_files = list_reports(selected_run)
 
-if not all_files and category != "FinOps":
+if not all_files and category not in ["FinOps", "ComputeStorage"]:
     st.markdown(f">Nenhum relatório JSON encontrado para a run {selected_run}.")
     st.stop()
 
@@ -195,110 +198,78 @@ categories = {
     "Profiling": [f for f in all_files if "profiling" in f.lower()],
     "Quality": [f for f in all_files if "quality" in f.lower()],
     "Integrity": [f for f in all_files if "integrity" in f.lower() or "inspect_partition" in f.lower()],
-    "FinOps": ["observability/reports/observability_reports_oci_costs.json"]
+    "FinOps": ["observability/reports/observability_reports_oci_costs.json"],
+    "ComputeStorage": ["observability/reports/observability_reports_oci_status.json"] # Adicionado
 }
 
 available_reports = categories[category]
 
-order_map = {"gold": 1, "silver": 2, "bronze": 3, "raw": 4}
-detected_layers = set()
-for f in available_reports:
-    normalized_path = f.lower().replace('-', '_')
-    path_segments = normalized_path.split('/')
-    for segment in path_segments:
-        if segment in order_map:
-            detected_layers.add(segment)
-        else:
-            file_parts = segment.split('_')
-            for fp in file_parts:
-                if fp in order_map:
-                    detected_layers.add(fp)
+# --- Filtros Dinâmicos (Apenas para Core Engine) ---
+selected_layer = None
+selected_report_key = None
 
-layers = sorted(list(detected_layers), key=lambda x: order_map.get(x, 99))
+if category not in ["FinOps", "ComputeStorage"]:
+    order_map = {"gold": 1, "silver": 2, "bronze": 3, "raw": 4}
+    detected_layers = set()
+    for f in available_reports:
+        normalized_path = f.lower().replace('-', '_')
+        path_segments = normalized_path.split('/')
+        for segment in path_segments:
+            if segment in order_map:
+                detected_layers.add(segment)
+            else:
+                file_parts = segment.split('_')
+                for fp in file_parts:
+                    if fp in order_map:
+                        detected_layers.add(fp)
 
-if layers:
-    selected_layer = st.sidebar.selectbox(
-        "Selecione a Camada", 
-        layers, 
-        index=0,
-        format_func=lambda x: x.capitalize()
-    )
-    available_reports = [
-        f for f in available_reports 
-        if f"/{selected_layer}/" in f.lower() or 
-           selected_layer in f.lower().split('/')[-1].replace('-', '_').split('_')
-    ]
-else:
-    selected_layer = None
+    layers = sorted(list(detected_layers), key=lambda x: order_map.get(x, 99))
 
-def format_report_name(path):
-    filename = path.split("/")[-1].replace(".json", "")
-    if "integrity" in path.lower() or "inspect_partition" in path.lower():
-        name = filename.split('-')[-1] if '-' in filename else filename
-        return name.replace("_", " ").capitalize()
-    if "-" in filename:
-        parts = filename.split("-")
-        return parts[1].lower() if len(parts) >= 3 else parts[-1].lower()
-    parts = filename.split("_")
+    if layers:
+        selected_layer = st.sidebar.selectbox(
+            "Selecione a Camada", 
+            layers, 
+            index=0,
+            format_func=lambda x: x.capitalize()
+        )
+        available_reports = [
+            f for f in available_reports 
+            if f"/{selected_layer}/" in f.lower() or 
+               selected_layer in f.lower().split('/')[-1].replace('-', '_').split('_')
+        ]
+    else:
+        selected_layer = None
 
-    if "finops" in path.lower() or "costs" in path.lower():
-        return "_".join(parts[1:]).lower() 
-            
-    return "_".join(parts[1:-1]).lower() if len(parts) > 2 else filename.lower()
+    report_options = {format_report_name(f): f for f in available_reports}
 
+    if report_options:
+        def get_sort_key(name):
+            n = name.lower()
+            if "gold" in n: return 1
+            if "silver" in n: return 2
+            if "bronze" in n: return 3
+            if "raw" in n: return 4
+            return 99
 
-report_options = {format_report_name(f): f for f in available_reports}
-
-if report_options:
-    def get_sort_key(name):
-        n = name.lower()
-        if "gold" in n: return 1
-        if "silver" in n: return 2
-        if "bronze" in n: return 3
-        if "raw" in n: return 4
-        return 99
-
-    sorted_display_names = sorted(list(report_options.keys()), key=get_sort_key)
-    selected_report_display = st.sidebar.selectbox("Selecione o Relatório", options=sorted_display_names)
-    selected_report_key = report_options[selected_report_display]
-else:
-    if category != "FinOps":
+        sorted_display_names = sorted(list(report_options.keys()), key=get_sort_key)
+        selected_report_display = st.sidebar.selectbox("Selecione o Relatório", options=sorted_display_names)
+        selected_report_key = report_options[selected_report_display]
+    else:
         st.sidebar.warning(">Nenhum relatório formatado disponível.")
         st.stop()
-    else:
-        selected_report_key = categories["FinOps"][0]
-
+else:
+    label_placeholder = "reports_oci_*" if is_finops_view else "reports_oci_*"
+    st.sidebar.selectbox("Selecione o Relatório", [label_placeholder], disabled=True)
+    selected_report_key = categories[category][0]
 
 st.sidebar.write("<hr style='margin-top:5px; margin-bottom:10px;'>", unsafe_allow_html=True)
 
 st.sidebar.markdown(
-    """
-    <p style='margin-top:18px;'>
-    <style>
-    /* Logo customizado */
-    .custom-sidebar-logo {
-        position: relative;   /* permite mover com top */
-        top: -10px;           /* desloca para cima */
-        display: flex;
-        justify-content: center;
-        margin-bottom: -23px;  /* espaço para itens abaixo */
-        z-index: 10;          /* sobreposição */
-    }
-    .custom-sidebar-logo img {
-        max-width: 260px; 
-        height: auto;
-        border-radius: 7px;
-    }
-    </style>
-    <div class="custom-sidebar-logo">
-        <a href="https://github.com/rafa-trindade/hackathon-pod-squad3-core" target="_blank">
-            <img src="https://img.shields.io/badge/hackathon--pod--academy-SQUAD•03-731E27?style=for-the-badge&logo=github&logoColor=DAD0D1&logoWidth=40&scale=1" />
-        </a>
-    </div>
-    """,
+    """<div style="display: flex; justify-content: center; margin-bottom: -23px;">
+    <a href="https://github.com/rafa-trindade/hackathon-pod-squad3-core" target="_blank">
+    <img src="https://img.shields.io/badge/hackathon--pod--academy-SQUAD•03-731E27?style=for-the-badge&logo=github&logoColor=DAD0D1" /></a></div>""",
     unsafe_allow_html=True
 )
-
 
 ##################################   
 # --- Principal ---
@@ -507,7 +478,6 @@ if data:
                     """
                     st.markdown(html_finops, unsafe_allow_html=True)
 
-                # Bloco de Alerta de Budget
                 with col_alert:
                     if usage_pct > 0.9:
                         status_msg = "🚨 <b>Crítico:</b> 90% do budget atingido!"
@@ -530,6 +500,216 @@ if data:
 
             st.stop()
 
+    if is_compute_view:
+        status_key = "observability/reports/observability_reports_oci_status.json"
+        bucket_summary_key = "observability/reports/observability_reports_oci_buckets.json"
+        
+        status_data = load_json_from_s3(status_key)
+        buckets_data = load_json_from_s3(bucket_summary_key)
+        
+        if status_data and buckets_data:
+            display_name = "SQUAD•03"
+            if status_data and "instances" in status_data and len(status_data["instances"]) > 0:
+                first_instance = status_data["instances"][0]
+                display_name = first_instance.get("display_name", "SQUAD•03")
+                region = first_instance.get("region", "unknown")
+
+            try:
+                dt_utc = datetime.fromisoformat(buckets_data.get('updated_at').replace("Z", ""))
+                timestamp_final = (dt_utc - timedelta(hours=3)).strftime("%d/%m/%Y %H:%M:%S")
+            except:
+                timestamp_final = buckets_data.get('updated_at', 'N/I')
+            
+            st.markdown(f"### Infraestrutura & Armazenamento (OCI): <code class='theme-1'>{display_name}</code> - <code class='theme-1'>{region}</code>", unsafe_allow_html=True)
+            st.caption(f"Caminhos no Lake: s3://{BUCKET_NAME}/{status_key} + observability_reports_oci_buckets.json")   
+            st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
+            st.caption(f"🕒 Relatório de infraestrutura gerado em **{timestamp_final}**")
+
+            ##----------
+
+            bucket_info = buckets_data.get("bucket_report", {})
+            folders_list = bucket_info.get("folders", [])
+            df_folders = pd.DataFrame(folders_list)
+            
+            with st.expander(f"🗄️ Monitoramento de Storage: `{bucket_info.get('bucket_name')}`", expanded=True):
+                m1, m2, m3, m4 = st.columns(4)
+                total_gb = bucket_info.get('total_bucket_size_gb', 0)
+                
+                if not df_folders.empty:
+                    df_layers = df_folders.groupby('parent_folder')['total_size_gb'].sum().reset_index()
+                    
+                    df_folders['ultima_atualizacao'] = pd.to_datetime(df_folders['ultima_atualizacao'], format='ISO8601', errors='coerce')
+                    latest_date = df_folders['ultima_atualizacao'].max()
+                    
+                    if pd.notnull(latest_date):
+                        diff = datetime.now(latest_date.tzinfo) - latest_date
+                        if diff.days > 0:
+                            freshness_label = f"{diff.days}d {diff.seconds // 3600}h atrás"
+                        else:
+                            freshness_label = f"{diff.seconds // 3600}h {(diff.seconds % 3600) // 60}min atrás"
+                    else:
+                        freshness_label = "N/I"
+
+                    storage_quota_gb = 200.0 
+                    usage_pct = (total_gb / storage_quota_gb) * 100
+                    percent_used = min(total_gb / storage_quota_gb, 1.0)
+
+                    df_filtered = df_folders[
+                        ~df_folders['folder_path'].str.contains('observability', case=False)
+                    ]
+
+                    total_objetos_lake = df_filtered['numero_de_objetos'].sum()
+                    total_gb_lake = df_filtered['total_size_gb'].sum()
+
+                    avg_size_mb = (
+                        (total_gb_lake * 1024) / total_objetos_lake
+                        if total_objetos_lake > 0 else 0
+                    )
+
+                    if 'avg_file_size_mb' in df_filtered.columns:
+                        small_files = df_filtered[
+                            df_filtered['avg_file_size_mb'] < 16
+                        ]['numero_de_objetos'].sum()
+
+                        small_files_ratio = (
+                            small_files / total_objetos_lake
+                            if total_objetos_lake > 0 else 0
+                        )
+                    else:
+                        small_files_ratio = 0
+
+                    if avg_size_mb >= 128 and small_files_ratio < 0.20:
+                        health_color, health_desc = "#37B544", "EFICIENTE"
+
+                    elif avg_size_mb >= 32 and small_files_ratio < 0.50:
+                        health_color, health_desc = "#FFA500", "ESTÁVEL"
+
+                    else:
+                        health_color, health_desc = "#B53744", "FRAGMENTADO"
+
+                    render_simple_metric(m1, "Volume Total no Lake / Cota", f"{total_gb:.2f} GB / {storage_quota_gb} GB")
+                    render_simple_metric(m3, "Custo Estimado Storage", f"R$ {(total_gb * 0.1405356):.2f}".replace('.', ',') + " /mês")
+                    
+                    m2.markdown(f"""
+                        <div style="display: flex; flex-direction: column;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <p style="font-size: 0.9rem; color: gray; margin: 0;">Saúde do Storage</p>
+                                <span style="font-size: 0.65rem; color: {health_color}; font-weight: bold; border: 1px solid {health_color}; border-radius: 4px; padding: 1px 5px; white-space: nowrap; line-height: 1; ">
+                                    {health_desc}
+                                </span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 9px; margin-top: 0px;">
+                                <span style="font-size: 1.6rem; color: #DAD0D1; font-weight: bold;">{avg_size_mb:.2f} MB</span>
+                                <span style="font-size: 0.7rem; color: #DAD0D1; font-weight: bold; border: 1px solid #555; border-radius: 4px; padding: 2px 6px; white-space: nowrap; height: fit-content; line-height: 1; background-color: #1A1C24; color: #DAD0D1; margin-top: 2px;">
+                                    Small files: {small_files_ratio*100:.1f}%
+                                </span>
+                            </div>
+                        </div>
+                    """, unsafe_allow_html=True)
+
+
+                    render_simple_metric(m4, "Última Atualização", freshness_label)
+
+                    st.write("") 
+                    st.progress(percent_used)
+
+                    if usage_pct > 90:
+                        st.markdown(f"🚨 Capacidade Crítica: {usage_pct:.1f}% utilizado.")
+                    elif usage_pct > 70:
+                        st.markdown(f"⚠️ Atenção: Ocupação do Data Lake em {usage_pct:.1f}%.")
+                    else:
+                        st.markdown(f"✅ Integridade de Storage: {usage_pct:.1f}% da cota utilizada.")
+
+
+            c3, c4 = st.columns([2, 1.1])    
+
+            with c3:
+                with st.expander("Detalhamento de Partições", expanded=True):
+
+                    layer_order = ["gold", "silver", "bronze", "raw", "observability"]
+
+                    df_display = df_folders[[
+                        "parent_folder",
+                        "folder_name",
+                        "total_size_gb",
+                        "numero_de_objetos",
+                        "percentual_bucket"
+                    ]].rename(columns={
+                        "parent_folder": "Camada",
+                        "folder_name": "Objeto",
+                        "total_size_gb": "Tamanho (GB)",
+                        "numero_de_objetos": "Qtd Objetos",
+                        "percentual_bucket": "% Total"
+                    })
+
+                    df_display["Camada"] = pd.Categorical(
+                        df_display["Camada"],
+                        categories=layer_order,
+                        ordered=True
+                    )
+
+                    df_display = df_display.sort_values(
+                        by=["Camada", "Tamanho (GB)"],
+                        ascending=[True, False]
+                    )
+
+                    st.dataframe(
+                        df_display,
+                        use_container_width=True,
+                        hide_index=True,
+                        height=350
+                    )
+
+            with c4:
+
+                with st.expander("Ocupação por Camada", expanded=True):
+
+                    fig_donut = go.Figure(data=[go.Pie(
+                        labels=df_layers['parent_folder'].str.upper(),
+                        values=df_layers['total_size_gb'],
+                        hole=.4,
+                        marker_colors=['#1A1C24', '#DAD0D1', '#555555', '#9E9E9E', '#731E27'],
+                        rotation=-20,
+                        textinfo='label+percent'     
+                        
+                    )])
+                    fig_donut.update_layout(
+
+                        height=350,
+                        margin=dict(t=10, b=10, l=0, r=0), 
+                        legend=dict(orientation="h", yanchor="bottom", y=-0.2, xanchor="center", x=0.5)
+                    )
+                    st.plotly_chart(fig_donut, use_container_width=True)
+
+            st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
+
+            with st.expander("🖥️ Recursos de Compute", expanded=True):
+                instances = status_data.get("instances", [])
+                if instances:
+                    for ins in instances:
+                        c1, c2, c3, c4 = st.columns(4)
+                        render_simple_metric(c1, "Nome da Instância", ins.get("display_name"))
+                        
+                        status = ins.get("lifecycle_state", "RUNNING") # Forçado RUNNING conforme seu log
+                        status_color = "#37B544" if status == "RUNNING" else "#B53744"
+                        c2.markdown(f"<p style='font-size: 0.9rem; color: gray; margin-bottom: 0;'>Status Atual</p><span style='color:{status_color}; font-size:1.4rem; font-weight:bold;'>● {status}</span>", unsafe_allow_html=True)
+                        
+                        render_simple_metric(c3, "Shape / Família", ins.get("shape"))
+                        render_simple_metric(c4, "Configuração", f"{ins.get('ocpus')} OCPUs / {ins.get('memory_gb')} GB RAM")
+                        
+                        try:
+                            data_criacao = datetime.fromisoformat(ins.get('time_created').replace("Z", "+00:00"))
+                            data_formatada = data_criacao.strftime("%d/%m/%Y")
+                        except:
+                            data_formatada = ins.get('time_created') # fallback caso falhe
+
+                        st.caption(f"Criada em: **{data_formatada}**")
+                else:
+                    st.info("Nenhuma instância de compute detectada no relatório.")
+
+        st.stop()
+
+        
 
     if category == "Pipeline Execution":
 
