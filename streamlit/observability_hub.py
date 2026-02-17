@@ -265,11 +265,34 @@ else:
 st.sidebar.write("<hr style='margin-top:5px; margin-bottom:10px;'>", unsafe_allow_html=True)
 
 st.sidebar.markdown(
-    """<div style="display: flex; justify-content: center; margin-bottom: -23px;">
-    <a href="https://github.com/rafa-trindade/hackathon-pod-squad3-core" target="_blank">
-    <img src="https://img.shields.io/badge/hackathon--pod--academy-SQUAD•03-731E27?style=for-the-badge&logo=github&logoColor=DAD0D1" /></a></div>""",
+    """
+    <p style='margin-top:18px;'>
+    <style>
+    /* Logo customizado */
+    .custom-sidebar-logo {
+        position: relative;   /* permite mover com top */
+        top: -10px;           /* desloca para cima */
+        display: flex;
+        justify-content: center;
+        margin-bottom: -23px;  /* espaço para itens abaixo */
+        z-index: 10;          /* sobreposição */
+    }
+    .custom-sidebar-logo img {
+        max-width: 260px; 
+        height: auto;
+        border-radius: 7px;
+    }
+    </style>
+    <div class="custom-sidebar-logo">
+        <a href="https://github.com/rafa-trindade/hackathon-pod-squad3-core" target="_blank">
+            <img src="https://img.shields.io/badge/hackathon--pod--academy-SQUAD•03-731E27?style=for-the-badge&logo=github&logoColor=DAD0D1&logoWidth=40&scale=1" />
+        </a>
+    </div>
+    """,
     unsafe_allow_html=True
 )
+
+
 
 ##################################   
 # --- Principal ---
@@ -709,7 +732,7 @@ if data:
 
         st.stop()
 
-        
+
 
     if category == "Pipeline Execution":
 
