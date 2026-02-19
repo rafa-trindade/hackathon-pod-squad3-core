@@ -110,9 +110,9 @@ def get_db_connection():
     """Gerencia a conexão com DuckDB/S3 com tratamento de SSL."""
     try:
         con = get_duckdb_connection()
-        con.execute("INSTALL httpfs; LOAD httpfs;")
-        con.execute("SET s3_use_ssl=false;")      
-        con.execute("SET s3_url_style='path';")   
+        
+        con.execute("LOAD httpfs;")
+        
         return con
     except Exception as e:
         st.error(f"Erro ao conectar ao DuckDB/S3: {e}")
