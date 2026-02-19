@@ -9,6 +9,7 @@ from pathlib import Path
 import os
 import sys
 from sklearn.metrics import roc_auc_score
+import json
 
 # ==============================================================================
 # CONFIGURAÇÃO DE CAMINHOS E IMPORTS EXTERNOS
@@ -121,8 +122,9 @@ def get_db_connection():
         st.error(f"Erro ao conectar ao DuckDB/S3: {e}")
         return None
 
-@st.cache_data(ttl=3600)
+@st.cache_data(ttl=3600, show_spinner=False)
 def load_data_summary():
+
     con = get_db_connection()
     if con is None: raise Exception("Não foi possível estabelecer conexão com o DuckDB.")
 
@@ -234,7 +236,7 @@ def plot_bad_rate_trend(summary_df):
             y=summary_df['total_registros'], 
             name="Volume", 
             marker_color=COLORS['neutral'], 
-            opacity=0.3, # Um pouco mais transparente para não brigar com a linha
+            opacity=0.3, 
             text=summary_df['total_registros'].apply(lambda x: f"{x/1000:.0f}k"), 
             textposition='auto'
         ), 
@@ -248,9 +250,9 @@ def plot_bad_rate_trend(summary_df):
             name="Bad Rate (%)", 
             line=dict(color=COLORS['bad'], width=4), 
             marker=dict(size=10, symbol='circle'),
-            mode='lines+markers+text', # Adiciona os textos nos pontos
+            mode='lines+markers+text',
             text=(summary_df['bad_rate']*100).apply(lambda x: f"{x:.1f}%"),
-            textposition='top center', # Texto em cima da bolinha
+            textposition='top center',
             textfont=dict(color=COLORS['accent'], size=11, weight='bold')
         ), 
         secondary_y=True
@@ -329,9 +331,29 @@ def plot_dist_comparison(df, var):
 # ==============================================================================
 # PLOTS DA ABA 3 (MULTIVARIADA)
 # ==============================================================================
+@st.cache_data(ttl=3600)
+def cached_spearman_corr(df):
+    """Calcula a correlação pesada uma única vez e guarda na memória."""
+    return df.corr(method='spearman')
+
+@st.cache_data(ttl=3600)
+def cached_interaction_pivot(df, feat_x, feat_y, target):
+    """Calcula os quintis e o pivot pesados uma única vez."""
+    plot_df = df[[feat_x, feat_y, target]].dropna().copy()
+    try:
+        plot_df['qx'] = pd.qcut(plot_df[feat_x], 5, labels=['Q1 (Baixo)','Q2','Q3','Q4','Q5 (Alto)'], duplicates='drop')
+        plot_df['qy'] = pd.qcut(plot_df[feat_y], 5, labels=['Q1 (Baixo)','Q2','Q3','Q4','Q5 (Alto)'], duplicates='drop')
+        plot_df['qx'] = plot_df['qx'].astype(str)
+        plot_df['qy'] = plot_df['qy'].astype(str)
+    except:
+        plot_df['qx'] = pd.cut(plot_df[feat_x], 5, duplicates='drop').astype(str)
+        plot_df['qy'] = pd.cut(plot_df[feat_y], 5, duplicates='drop').astype(str)
+        
+    return plot_df.pivot_table(index='qy', columns='qx', values=target, aggfunc='mean') * 100
+
+
 def plot_correlation_matrix(df):
     """Gera matriz de correlação de Spearman para variáveis numéricas."""
-    # Seleciona numéricas e remove colunas administrativas
     numeric_df = df.select_dtypes(include=[np.number])
     cols_to_drop = ['target', 'fpd', 'num_cpf', 'cpf', 'safra_int']
     numeric_df = numeric_df.drop(columns=[c for c in cols_to_drop if c in numeric_df.columns], errors='ignore')
@@ -339,7 +361,7 @@ def plot_correlation_matrix(df):
     if numeric_df.empty:
         return go.Figure()
 
-    corr = numeric_df.corr(method='spearman')
+    corr = cached_spearman_corr(numeric_df)
 
     fig = px.imshow(
         corr,
@@ -358,24 +380,13 @@ def plot_correlation_matrix(df):
     )
     return fig
 
+
 def plot_interaction_matrix(df, feat_x, feat_y, target='target'):
     """Gera Heatmap de Risco cruzando quintis de duas variáveis."""
     if feat_x not in df.columns or feat_y not in df.columns or target not in df.columns:
         return go.Figure()
 
-    plot_df = df[[feat_x, feat_y, target]].dropna().copy()
-
-    try:
-        plot_df['qx'] = pd.qcut(plot_df[feat_x], 5, labels=['Q1 (Baixo)','Q2','Q3','Q4','Q5 (Alto)'], duplicates='drop')
-        plot_df['qy'] = pd.qcut(plot_df[feat_y], 5, labels=['Q1 (Baixo)','Q2','Q3','Q4','Q5 (Alto)'], duplicates='drop')
-        
-        plot_df['qx'] = plot_df['qx'].astype(str)
-        plot_df['qy'] = plot_df['qy'].astype(str)
-    except:
-        plot_df['qx'] = pd.cut(plot_df[feat_x], 5, duplicates='drop').astype(str)
-        plot_df['qy'] = pd.cut(plot_df[feat_y], 5, duplicates='drop').astype(str)
-
-    pivot = plot_df.pivot_table(index='qy', columns='qx', values=target, aggfunc='mean') * 100
+    pivot = cached_interaction_pivot(df, feat_x, feat_y, target)
 
     fig = px.imshow(
         pivot,
@@ -766,25 +777,40 @@ def plot_age_analysis(df):
     
     return fig
 
+@st.cache_data(show_spinner=False)
+def get_cached_geojson():
+    """Lê o arquivo de mapas uma única vez e guarda em cache."""
+    try:
+        with open("streamlit/utils/br_states.geojson", "r") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {"features": []}
+
 def plot_geo_map(df, uf_selecionada=None, regiao_sel=None):
     """
     Mapa de Bolhas Geolocalizado.
     Visualização profissional com foco em densidade e risco.
     """
-
-    import json
-    with open("streamlit/utils/br_states.geojson", "r") as f:
-        geojson = json.load(f)
-    locations = [f["properties"]["sigla"] for f in geojson["features"]]
+    geojson = get_cached_geojson()
+    locations = [f["properties"]["sigla"] for f in geojson.get("features", [])]
 
     stats = df.groupby(['uf', 'estado_nome']).agg(
         n=('target', 'count'),
         bad_rate=('target', 'mean')
     ).reset_index()
     
-    stats['lat'] = stats['uf'].map(lambda x: STATE_COORDS.get(x, (0,0))[0])
-    stats['lon'] = stats['uf'].map(lambda x: STATE_COORDS.get(x, (0,0))[1])
-    stats = stats[stats['lat'] != 0]
+    coords_df = (
+        pd.DataFrame.from_dict(
+            STATE_COORDS,
+            orient="index",
+            columns=["lat", "lon"]
+        )
+        .reset_index()
+        .rename(columns={"index": "uf"})
+    )
+
+    stats = stats.merge(coords_df, on="uf", how="left")
+    stats = stats.dropna(subset=["lat"])
 
     if len(stats) == 1:
         center_lat = stats['lat'].values[0]
