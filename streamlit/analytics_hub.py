@@ -1048,7 +1048,19 @@ def main():
                             unsafe_allow_html=True)
                         
                     with c_chart2:
-                        st.plotly_chart(plot_geo_map(df_filtered), width='stretch')
+                        
+                        uf_highlight = None
+                        if sel_estado_display not in ["Todos da Região", "Todos"] and "(" in sel_estado_display:
+                            uf_highlight = sel_estado_display.split('(')[-1].replace(')', '')
+
+                        st.plotly_chart(
+                            plot_geo_map(
+                                df_filtered,
+                                uf_selecionada=uf_highlight,
+                                regiao_sel=sel_regiao
+                            ),
+                            width='stretch'
+                        )
 
                         st.markdown(
                             """
