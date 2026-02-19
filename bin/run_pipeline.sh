@@ -1,4 +1,28 @@
 #!/usr/bin/env bash
+#chmod +x bin/run_pipeline.sh
+#
+# ==============================================================================
+# ORQUESTRADOR DO PIPELINE DE DADOS (SQUAD 3)
+# ==============================================================================
+# Este script é responsável por orquestrar a execução sequencial de todas as
+# etapas do pipeline de dados, seguindo a arquitetura Medallion (Raw -> Gold).
+#
+# Funcionalidades principais:
+# 1. Rastreabilidade e Logs: Gera logs estruturados (com timestamp, níveis de 
+#    severidade e duração) salvos em 'bin/reports/pipeline_execution.log'.
+# 2. Execução Segura (Fail-Fast): Utiliza 'set -euo pipefail' para garantir que 
+#    o pipeline seja interrompido imediatamente em caso de falha crítica em 
+#    qualquer etapa, evitando propagação de dados incorretos.
+# 3. Gestão de Camadas: 
+#    - RAW: Validação de contratos (Quality) e Profiling.
+#    - BRONZE: Transformação básica, Profiling e Inspeção de partições.
+#    - SILVER: Refinamento, Profiling e Inspeção.
+#    - GOLD: Geração de features/ABTs, Labels FPD e Profiling final.
+# 4. Observabilidade e Relatórios: Ao final do processamento, extrai o tempo 
+#    total, gera um relatório JSON da execução e faz o upload (parse e envio) 
+#    para alimentar os painéis de observabilidade.
+# ==============================================================================
+
 set -euo pipefail
 
 #########################################
