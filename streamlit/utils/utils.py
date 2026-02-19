@@ -110,8 +110,11 @@ def get_db_connection():
     """Gerencia a conexão com DuckDB/S3 com tratamento de SSL."""
     try:
         con = get_duckdb_connection()
-        
         con.execute("LOAD httpfs;")
+
+        #con.execute("INSTALL httpfs; LOAD httpfs;")
+        #con.execute("SET s3_use_ssl=false;")      
+        #con.execute("SET s3_url_style='path';")   
         
         return con
     except Exception as e:
@@ -620,14 +623,14 @@ def plot_decision_boundary(df, cutoff, min_age, min_pay):
 # ==============================================================================
 
 STATE_COORDS = {
-    'AC': (-8.77, -70.55), 'AL': (-9.71, -35.73), 'AM': (-3.07, -61.66),
+    'AC': (-8.77, -70.55), 'AL': (-9.71, -35.73), 'AM': (-4.9, -64.56),
     'AP': (1.41, -51.77), 'BA': (-12.96, -38.51), 'CE': (-3.71, -38.54),
     'DF': (-15.83, -47.86), 'ES': (-19.19, -40.34), 'GO': (-16.64, -49.31),
     'MA': (-2.55, -44.30), 'MG': (-18.10, -44.38), 'MS': (-20.51, -54.54),
     'MT': (-12.64, -55.42), 'PA': (-5.53, -52.29), 'PB': (-7.06, -35.55),
     'PE': (-8.28, -35.07), 'PI': (-8.28, -43.68), 'PR': (-24.89, -51.55),
     'RJ': (-22.84, -43.15), 'RN': (-5.22, -36.52), 'RO': (-11.22, -62.80),
-    'RR': (-1.99, -60.58), 'RS': (-30.01, -51.22), 'SC': (-27.33, -49.44),
+    'RR': (1.87, -61.21), 'RS': (-30.01, -51.22), 'SC': (-27.33, -49.44),
     'SE': (-10.90, -37.07), 'SP': (-23.55, -46.64), 'TO': (-10.25, -48.25)
 }
 
@@ -729,8 +732,26 @@ def plot_age_analysis(df):
     )
     
     avg_bad = df['target'].mean() * 100
-    fig.add_hline(y=avg_bad, line_dash="dash", line_color=COLORS['good'], 
-                  annotation_text=f"Média: {avg_bad:.1f}%", secondary_y=True)
+    fig.add_hline(
+        y=avg_bad,
+        line_dash="dash",
+        line_width=2,
+        line_color=COLORS['text_light'],
+        secondary_y=True
+    )
+
+    fig.add_annotation(
+        x=stats['faixa_etaria'].iloc[-1],
+        y=avg_bad,
+        xref="x",
+        yref="y2",
+        text=f"Média: {avg_bad:.1f}%",
+        showarrow=False,
+        yshift=10,
+        font=dict(size=12, color=COLORS['text_light']),
+        xanchor="left",
+        align="left"
+    )
 
     fig.update_layout(
         title="<b>Risco por Faixa Etária</b>",
@@ -745,11 +766,17 @@ def plot_age_analysis(df):
     
     return fig
 
-def plot_geo_map(df):
+def plot_geo_map(df, uf_selecionada=None, regiao_sel=None):
     """
-    Mapa de Bolhas Geolocalizado (Estilo Carto-Positron).
+    Mapa de Bolhas Geolocalizado.
     Visualização profissional com foco em densidade e risco.
     """
+
+    import json
+    with open("streamlit/utils/br_states.geojson", "r") as f:
+        geojson = json.load(f)
+    locations = [f["properties"]["sigla"] for f in geojson["features"]]
+
     stats = df.groupby(['uf', 'estado_nome']).agg(
         n=('target', 'count'),
         bad_rate=('target', 'mean')
@@ -806,9 +833,49 @@ def plot_geo_map(df):
         ),
         
         hoverlabel=dict(
-            bgcolor="white",
+            bgcolor="#1A1C24",
             font_size=12,
             font_family="Inter, sans-serif"
+        )
+    )
+
+
+    z = [0] * len(locations)
+    line_widths = [0.4] * len(locations)
+    line_colors = ["#3A7C89"] * len(locations)
+
+    reg = regiao_sel if regiao_sel is not None else "Todas"
+    est = uf_selecionada if uf_selecionada is not None else "Todos"
+
+    if reg not in ["Brasil (Todas)", "Todas"] and est in ["Todos", None]:
+
+        estados_da_regiao = [
+            uf for uf, r in REGION_MAP.items() if r == reg
+        ]
+
+        z = [1.8 if sigla in estados_da_regiao else 0 for sigla in locations]
+        line_widths = [1.4 if sigla in estados_da_regiao else 0.4 for sigla in locations]
+        line_colors = ["#3A7C89"] * len(locations)
+
+    elif est not in ["Todos", None]:
+
+        z = [1.8 if sigla == est else 0 for sigla in locations]
+        line_widths = [1.4 if sigla == est else 0.4 for sigla in locations]
+        line_colors = ["#3A7C89"] * len(locations)
+
+
+    fig.add_trace(
+        go.Choroplethmapbox(
+            geojson=geojson,
+            locations=locations,
+            z=[0] * len(locations),
+            colorscale=[[0, "rgba(0,0,0,0)"], [1, "rgba(0,0,0,0)"]],
+            showscale=False,
+            marker_line_width=line_widths,
+            marker_line_color=line_colors,
+            featureidkey="properties.sigla",
+            hoverinfo="skip",
+            autocolorscale=False
         )
     )
     
