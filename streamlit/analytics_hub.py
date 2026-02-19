@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import duckdb
 import plotly.express as px
 import plotly.graph_objects as go
 from datetime import datetime
@@ -106,11 +107,11 @@ st.sidebar.markdown(
     /* Logo customizado */
     .custom-sidebar-logo {
         position: relative;   
-        top: -10px;           
+        top: -10px;            
         display: flex;
         justify-content: center;
         margin-bottom: -23px; 
-        z-index: 10;       
+        z-index: 10;        
     }
     .custom-sidebar-logo img {
         max-width: 260px; 
@@ -133,6 +134,29 @@ st.sidebar.markdown(
 # ==============================================================================
 def main():
 
+    @st.cache_data(ttl=3600)
+    def get_cached_iv_dict(df, features):
+        iv_scores = {}
+        for col in features:
+            val, _ = calculate_iv(df, col)
+            iv_scores[col] = val
+        return iv_scores
+    
+    @st.cache_data(ttl=3600)
+    def load_and_process_demo():
+        df = load_sample_data(n_samples=100000)
+        df = process_demographics(df) 
+        
+        cols_categoricas = ['regiao', 'uf', 'estado_nome', 'faixa_etaria']
+        for col in cols_categoricas:
+            if col in df.columns:
+                df[col] = df[col].astype('category')
+
+        global_bad_rate = df['target'].mean()
+
+        return df, global_bad_rate
+
+
     if view_mode == "👤 Home | Estudo de Público":
 
         st.markdown(
@@ -151,26 +175,28 @@ def main():
 
         tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
             "Visão Geral",
+            "Análise Demográfica",
             "Análise Univariada",
             "Análise Multivariada",
             "Ranking de Variáveis",
             "Estabilidade Temporal",
-            "Análise Demográfica"
         ])
 
         # --- TAB 1: VISÃO GERAL ---
         with tab1:
             with st.expander("📊 Monitoramento de Carteira e Saúde do Modelo", expanded=True):
                 
-                # Inicializa variavel
                 summary_df = pd.DataFrame()
                 
-                # 1. Carregamento dos Dados com Tratamento de Erro na UI
                 try:
-                    # O Toast e Spinner ficam AQUI fora
-                    st.toast("Conectando a OCI...", icon="📡")
-                    
-                    with st.spinner("Consultando dados atualizados do Lake..."):
+                    if 'lake_loaded' not in st.session_state:
+                        st.toast("Conectando a OCI...", icon="📡")
+                        with st.spinner("Consultando dados atualizados do Lake..."):
+                            summary_df = load_data_summary()
+                            assets = load_assets()
+                            metadata = assets.get('metadata', {})
+                        st.session_state['lake_loaded'] = True
+                    else:
                         summary_df = load_data_summary()
                         assets = load_assets()
                         metadata = assets.get('metadata', {})
@@ -180,18 +206,12 @@ def main():
                         st.stop()
 
                 except Exception as e:
-                    # Mostra o erro aqui na UI
                     st.error(f"❌ {str(e)}")
                     st.stop()
 
-                # 2. Cálculo dos KPIs (Só executa se summary_df existir)
                 if not summary_df.empty:
-                    # Ordena por data
                     summary_df = summary_df.sort_values('safra')
 
-
-                    
-                    # Cálculos Gerais
                     total_reg = summary_df['total_registros'].sum()
                     total_bads = summary_df['total_bads'].sum()
                     avg_bad_rate = total_bads / total_reg if total_reg > 0 else 0
@@ -200,7 +220,6 @@ def main():
                     avg_bad = total_bad_absoluto / total_reg if total_reg > 0 else 0
                     odds = (1 - avg_bad) / avg_bad if avg_bad > 0 else 0
                     
-                    # Cálculos do Último Mês vs Mês Anterior
                     last_month = summary_df.iloc[-1]
                     prev_month = summary_df.iloc[-2] if len(summary_df) > 1 else last_month
                     
@@ -212,7 +231,6 @@ def main():
                     with k1:
 
                         vol_str = f"{total_reg/1e6:.2f}M"
-                        # Lógica MoM
                         cor_delta = "#5EA758" if vol_mom >= 0 else "#B53744"
                         seta = "+" if vol_mom >= 0 else ""
                         
@@ -227,11 +245,7 @@ def main():
                             </div>
                         """, unsafe_allow_html=True)
 
-
-
-                    # KPI 2: Inadimplência (FPD)
                     with k2:
-                        # Lógica MoM Invertida (Subir risco é ruim)
                         cor_delta = "#B53744" if risk_mom > 0 else "#5EA758"
                         seta = "+" if risk_mom >= 0 else ""
                         
@@ -245,8 +259,8 @@ def main():
                                 <p style="font-size: 0.75rem; color: #666; margin-top: 0px;">Média ponderada da safra</p>
                             </div>
                         """, unsafe_allow_html=True)
-                    with k3:
 
+                    with k3:
                         gini_atual = metadata.get('gini_oot', 0)
                         delta_gini = gini_atual - 40 # Meta de 40 definida no notebook
                         target_gini = 40.0
@@ -264,11 +278,10 @@ def main():
                                 <p style="font-size: 0.75rem; color: #666; margin-top: 0px;">Performance OOT (Produção)</p>
                             </div>
                         """, unsafe_allow_html=True)
+                        
                     with k4:
-
                         ks_atual = metadata.get('ks_oot', 0)
                         delta_ks = ks_atual - 30
-
                         target_ks = 30.0
                         diff_ks = ks_atual - target_ks
                         cor_delta = "#5EA758" if diff_ks >= 0 else "#B53744"
@@ -285,24 +298,20 @@ def main():
                             </div>
                         """, unsafe_allow_html=True)
 
-                    # KPI 5: Estabilidade (PSI)
                     with k5:
-                        # Tenta pegar do metadata ou calcula proxy básico
                         psi_atual = metadata.get('psi_oot', 0.0)
                         
-                        # Lógica de Meta (PSI < 0.25 é o alvo)
                         target_psi = 0.25
                         diff_psi = target_psi - psi_atual # Quanto maior a "sobra" até 0.25, melhor
                         
-                        # Definição de Cores/Status
                         if psi_atual < 0.10:
-                            cor_delta = "#5EA758" # Verde (Excelente)
+                            cor_delta = "#5EA758" 
                             status_psi = "Estável"
                         elif psi_atual < 0.25:
-                            cor_delta = "#FFA500" # Laranja (Alerta)
+                            cor_delta = "#FFA500" 
                             status_psi = "Atenção"
                         else:
-                            cor_delta = "#B53744" # Vermelho (Crítico)
+                            cor_delta = "#B53744" 
                             status_psi = "Drift"
 
                         st.markdown(f"""
@@ -318,8 +327,7 @@ def main():
                 else:
                     st.warning("A consulta retornou vazia. Verifique os filtros ou a tabela no S3.")
 
-            with st.expander("📅 Evolução Temporal: Volume de Entrada & Risco Real", expanded=False): 
-                      
+            with st.expander("📅 Evolução Temporal: Volume de Entrada & Risco Real", expanded=False):                      
                 st.plotly_chart(plot_bad_rate_trend(summary_df), width='stretch')
 
                 st.markdown(
@@ -343,7 +351,6 @@ def main():
                     unsafe_allow_html=True
                 )
                 
-
             bloco_contexto = """
             <div style="
                 background-color:#1A1A1A;
@@ -390,13 +397,200 @@ def main():
             st.markdown(bloco_contexto, unsafe_allow_html=True)
 
 
-
-
-
-
-        # --- TAB 2: ANÁLISE UNIVARIADA ---
+        # --- TAB 2: ANÁLISE DEMOGRÁFICA ---
         with tab2:
+            with st.expander("🗺️ Segmentação Demográfica e Geográfica", expanded=True):
+                try:
+                    df_demo, global_bad_rate = load_and_process_demo()
+                except Exception as e:
+                    st.error(f"Erro ao carregar os dados demográficos: {e}")
+                    st.stop()
+                
+                c_region, c_state, c_score = st.columns([1, 1, 1.2])
+                
+                with c_region:
+                    regioes_disponiveis = ["Brasil (Todas)"] + sorted(df_demo['regiao'].unique().tolist())
+                    sel_regiao = st.selectbox("1. Filtrar Região:", regioes_disponiveis)
+                
+                with c_state:
+                    if sel_regiao == "Brasil (Todas)":
+                        estados_filtrados = ["Todos"]
+                        disabled_state = True
+                        index_state = 0
+                    else:
+                        filtro_regiao = df_demo[df_demo['regiao'] == sel_regiao]
+                        lista_ufs = sorted(filtro_regiao['uf'].unique())
+                        estados_filtrados = ["Todos da Região"] + [f"{STATE_NAMES.get(uf, uf)} ({uf})" for uf in lista_ufs]
+                        disabled_state = False
+                        index_state = 0
+                    
+                    sel_estado_display = st.selectbox(
+                        "2. Filtrar Estado:", 
+                        estados_filtrados, 
+                        index=index_state,
+                        disabled=disabled_state
+                    )
 
+                with c_score:
+                    min_score, max_score = st.slider(
+                        "3. Faixa de Score (Bureau):", 
+                        0, 1000, (0, 1000)
+                    )
+                
+                mask = pd.Series(True, index=df_demo.index)
+
+                if min_score > 0 or max_score < 1000:
+                    mask &= df_demo['bur_score_02'].between(min_score, max_score)
+
+                if sel_regiao != "Brasil (Todas)":
+                    mask &= (df_demo['regiao'] == sel_regiao)
+
+                    if sel_estado_display != "Todos da Região":
+                        sigla_uf = sel_estado_display.split('(')[-1].replace(')', '')
+                        mask &= (df_demo['uf'] == sigla_uf)
+
+                df_filtered = df_demo[mask]
+                # ---------------------------------------------------------
+                        
+                
+            with st.expander("📊 Resultados da Segmentação", expanded=True):
+
+                if df_filtered.empty:
+                    st.warning("Nenhum dado encontrado para os filtros selecionados.")
+                else:
+                    col_m1, col_m2, col_m3 = st.columns(3)
+
+                    avg_risk = df_filtered['target'].mean()
+                    delta_risk = avg_risk - global_bad_rate
+
+                    with col_m1:
+                        vol_str = f"{len(df_filtered):,.0f}".replace(",", ".")
+                        
+                        st.markdown(f"""
+                            <div style="display: flex; flex-direction: column;">
+                                <p style="font-size: 0.85rem; color: #999; margin-bottom: 0px;">Volume da Amostra</p>
+                                <div style="display: flex; align-items: baseline; gap: 8px;">
+                                    <span style="font-size: 1.8rem; font-weight: 600; color: #FFF;">{vol_str}</span>
+                                </div>
+                                <p style="font-size: 0.75rem; color: #666; margin-top: 0px;">Total de Clientes no Segmento</p>
+                            </div>
+                        """, unsafe_allow_html=True)
+
+                    with col_m2:
+                        if delta_risk <= 0:
+                            cor_delta = "#5EA758" 
+                            seta = "↓"
+                        else:
+                            cor_delta = "#B53744" 
+                            seta = "↑"
+                        
+                        val_fmt = f"{avg_risk:.2%}"
+                        delta_fmt = f"{seta} {abs(delta_risk):.2%}"
+
+                        st.markdown(f"""
+                            <div style="display: flex; flex-direction: column;">
+                                <p style="font-size: 0.85rem; color: #999; margin-bottom: 0px;">Bad Rate (Inadimplência)</p>
+                                <div style="display: flex; align-items: baseline; gap: 8px;">
+                                    <span style="font-size: 1.8rem; font-weight: 600; color: #FFF;">{val_fmt}</span>
+                                    <span style="font-size: 1rem; color: {cor_delta}; font-weight: bold;">{delta_fmt}</span>
+                                </div>
+                                <p style="font-size: 0.75rem; color: #666; margin-top: 0px;">vs. Total da Amostra</p>
+                            </div>
+                        """, unsafe_allow_html=True)
+
+                    with col_m3:
+                        idade_media = df_filtered['idade'].mean()
+                        
+                        st.markdown(f"""
+                            <div style="display: flex; flex-direction: column;">
+                                <p style="font-size: 0.85rem; color: #999; margin-bottom: 0px;">Idade Média</p>
+                                <div style="display: flex; align-items: baseline; gap: 8px;">
+                                    <span style="font-size: 1.8rem; font-weight: 600; color: #FFF;">{idade_media:.1f}</span>
+                                    <span style="font-size: 0.9rem; color: #888; font-weight: normal;">anos</span>
+                                </div>
+                                <p style="font-size: 0.75rem; color: #666; margin-top: 0px;">Média do Segmento</p>
+                            </div>
+                        """, unsafe_allow_html=True)
+                    
+                    st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
+
+                    c_chart1, c_chart2 = st.columns([1.2, 1])
+                    
+                    with c_chart1:
+                        st.plotly_chart(plot_age_analysis(df_filtered), width='stretch')
+
+                        st.markdown(
+                            """
+                            <div style="
+                                height: 35px;            
+                                min-height: 35px;
+                                display: flex;
+                                align-items: center;
+                                padding: 0 0 0 0px;
+                                font-size: 0.80rem;
+                                color: rgba(255,255,255,0.65);
+                                justify-content: center;
+                                text-align: center;
+                                margin-top: -17px
+                            ">
+                                Distribuição de volume e risco de crédito por faixa etária da amostra.
+                            </div>
+                            """,
+                            unsafe_allow_html=True)
+                        
+                    with c_chart2:
+                        
+                        uf_highlight = None
+                        if sel_estado_display not in ["Todos da Região", "Todos"] and "(" in sel_estado_display:
+                            uf_highlight = sel_estado_display.split('(')[-1].replace(')', '')
+
+                        st.plotly_chart(
+                            plot_geo_map(
+                                df_filtered,
+                                uf_selecionada=uf_highlight,
+                                regiao_sel=sel_regiao
+                            ),
+                            width='stretch'
+                        )
+
+                        st.markdown(
+                            """
+                            <div style="
+                                height: 35px;            
+                                min-height: 35px;
+                                display: flex;
+                                align-items: center;
+                                padding: 0 0 0 0px;
+                                font-size: 0.80rem;
+                                color: rgba(255,255,255,0.65);
+                                justify-content: center;
+                                text-align: center;
+                                margin-top: -17px
+                            ">
+                                Distribuição Espacial: Concentração de clientes e Bad Rate.
+                            </div>
+                            """,
+                            unsafe_allow_html=True)
+
+            st.markdown("""
+            <div style="background-color:#1A1A1A; color:#888; padding:16px 16px 0px 16px; border-radius:8px; border-left:6px solid #731E27; font-family:sans-serif; font-size:14px;">
+                <h6 style="margin-top:0px; margin-bottom:-10px; color:#DDD;">🌍 INSIGHTS DEMOGRÁFICOS</h6>
+                <hr style="margin-top:2px; margin-bottom:15px; border:1px solid #444;">
+                <div style="display:flex; gap:20px; align-items:flex-start; flex-wrap: wrap;">
+                    <div style="flex:1; min-width: 200px;">
+                        <strong style="color: #DDD;">🎂 Fator Idade:</strong>
+                        <p style="margin-top:5px;">O risco cai drasticamente com a idade. O grupo 18-24 anos tem Bad Rate ~26%, enquanto o grupo 65+ tem ~17%.</p>
+                    </div>
+                    <div style="flex:1; min-width: 200px;">
+                        <strong style="color: #DDD;">📍 Fator Região:</strong>
+                        <p style="margin-top:5px;">Historicamente, estados do Norte/Nordeste apresentam risco ajustado maior que o Sudeste/Sul. Use os filtros acima para validar.</p>
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        # --- TAB 3: ANÁLISE UNIVARIADA ---
+        with tab3:
             with st.expander("🔍 Análise Univariada de Variáveis", expanded=True):
                 
                 df_sample = pd.DataFrame()
@@ -418,12 +612,8 @@ def main():
                 if not available_features:
                     st.warning("Nenhuma variável numérica encontrada para análise.")
                 else:
-                    # Pré-cálculo dos IVs para ordenação
-                    iv_scores = {}
                     with st.spinner("Calculando ranking de variáveis (IV)"):
-                        for col in available_features:
-                            val, _ = calculate_iv(df_sample, col)
-                            iv_scores[col] = val
+                        iv_scores = get_cached_iv_dict(df_sample, available_features)
 
                     sorted_features = sorted(available_features, key=lambda x: iv_scores.get(x, 0), reverse=True)
 
@@ -440,10 +630,9 @@ def main():
                             "Selecione a Variável (IV ↓):", 
                             sorted_features,
                             format_func=format_func,
-                            index=0 # Seleciona automaticamente a melhor variável
+                            index=0 
                         )
 
-                    # Recupera o IV da variável selecionada (já calculado)
                     iv_val = iv_scores.get(selected_feature, 0)
                     
                     with c_metrics:
@@ -461,7 +650,7 @@ def main():
                         st.markdown(
                             f"""
                             <div style="
-                                height: 70px;             
+                                height: 70px;              
                                 min-height: 70px;
                                 display: flex;
                                 flex-direction: column;
@@ -551,11 +740,9 @@ def main():
                     )
 
 
-
-        # --- TAB 3: ANÁLISE MULTIVARIADA ---
-        with tab3:
+        # --- TAB 4: ANÁLISE MULTIVARIADA ---
+        with tab4:
                 
-            # 1. Carregamento dos Dados
             df_multi = pd.DataFrame()
             try:
                 with st.spinner("Carregando dados para correlação..."):
@@ -567,20 +754,14 @@ def main():
                 st.warning("Dados indisponíveis.")
                 st.stop()
 
-            # 2. Identificação de Variáveis Numéricas
             ignored_cols = ['target', 'fpd', 'safra', 'num_cpf', 'cpf']
             numeric_cols = df_multi.select_dtypes(include=[np.number]).columns.tolist()
             valid_cols = [c for c in numeric_cols if c not in ignored_cols]
-
-            # 3. Filtragem por IV > 0.1 (NOVO BLOCO)
-            selected_cols_for_corr = []
             
-            # Barra de progresso visual (opcional, mas bom para UX)
             with st.spinner("Filtrando variáveis relevantes (IV > 0.1)..."):
-                for col in valid_cols:
-                    iv_val, _ = calculate_iv(df_multi, col)
-                    if iv_val > 0.1:
-                        selected_cols_for_corr.append(col)
+                dict_iv_aba3 = get_cached_iv_dict(df_multi, valid_cols)
+                
+                selected_cols_for_corr = [col for col, val in dict_iv_aba3.items() if val > 0.1]
             
 
             with st.expander("🔗 Matriz de Risco Combinada (Bad Rate %)", expanded=True):
@@ -591,7 +772,6 @@ def main():
 
                     with mat1:
 
-                        # Tenta selecionar scores como padrão se existirem
                         idx_x = valid_cols.index('bur_score_02') if 'bur_score_02' in valid_cols else 0
                         var_x = st.selectbox("Eixo X (Variável 1):", valid_cols, index=idx_x)
 
@@ -703,8 +883,8 @@ def main():
                     unsafe_allow_html=True
                 )
 
-        # --- TAB 4: RANKING DE VARIÁVEIS ---
-        with tab4:
+        # --- TAB 5: RANKING DE VARIÁVEIS ---
+        with tab5:
             with st.expander("🏆 Ranking de Poder Discriminatório", expanded=True):
                 
                 df_rank_sample = pd.DataFrame()
@@ -780,8 +960,8 @@ def main():
 
                     st.write("")
 
-        # --- TAB 5: ESTABILIDADE TEMPORAL (PSI) ---
-        with tab5:
+        # --- TAB 6: ESTABILIDADE TEMPORAL (PSI) ---
+        with tab6:
             with st.expander("⚖️ Monitoramento de Estabilidade (PSI)", expanded=True):
                 
                 df_psi = pd.DataFrame()
@@ -861,7 +1041,6 @@ def main():
                             unsafe_allow_html=True
                         )
 
-
                         st.markdown(
                             """
                             <div style="
@@ -908,196 +1087,6 @@ def main():
                             unsafe_allow_html=True
                         )
 
-        # --- TAB 6: ANÁLISE DEMOGRÁFICA ---
-        with tab6:
-            with st.expander("🗺️ Segmentação Demográfica e Geográfica", expanded=True):
-                
-                df_demo = pd.DataFrame()
-                try:
-                    df_demo = load_sample_data(n_samples=100000)
-                    df_demo = process_demographics(df_demo)
-                except:
-                    st.stop()
-                
-                c_region, c_state, c_score = st.columns([1, 1, 1.2])
-                
-                with c_region:
-                    regioes_disponiveis = ["Brasil (Todas)"] + sorted(df_demo['regiao'].unique().tolist())
-                    sel_regiao = st.selectbox("1. Filtrar Região:", regioes_disponiveis)
-                
-                with c_state:
-                    if sel_regiao == "Brasil (Todas)":
-                        estados_filtrados = ["Todos"]
-                        disabled_state = True
-                        index_state = 0
-                    else:
-                        filtro_regiao = df_demo[df_demo['regiao'] == sel_regiao]
-                        lista_ufs = sorted(filtro_regiao['uf'].unique())
-                        estados_filtrados = ["Todos da Região"] + [f"{STATE_NAMES.get(uf, uf)} ({uf})" for uf in lista_ufs]
-                        disabled_state = False
-                        index_state = 0
-                    
-                    sel_estado_display = st.selectbox(
-                        "2. Filtrar Estado:", 
-                        estados_filtrados, 
-                        index=index_state,
-                        disabled=disabled_state
-                    )
-
-                with c_score:
-                    min_score, max_score = st.slider(
-                        "3. Faixa de Score (Bureau):", 
-                        0, 1000, (0, 1000)
-                    )
-                
-                if min_score > 0 or max_score < 1000:
-                    df_filtered = df_demo[df_demo['bur_score_02'].between(min_score, max_score)]
-                else:
-                    df_filtered = df_demo.copy()
-                
-                if sel_regiao != "Brasil (Todas)":
-                    df_filtered = df_filtered[df_filtered['regiao'] == sel_regiao]
-                    
-                    if sel_estado_display != "Todos da Região":
-                        sigla_uf = sel_estado_display.split('(')[-1].replace(')', '')
-                        df_filtered = df_filtered[df_filtered['uf'] == sigla_uf]
-
-            with st.expander("📊 Resultados da Segmentação", expanded=True):
-
-                if df_filtered.empty:
-                    st.warning("Nenhum dado encontrado para os filtros selecionados.")
-                else:
-                    col_m1, col_m2, col_m3 = st.columns(3)
-
-                    avg_risk = df_filtered['target'].mean()
-                    delta_risk = avg_risk - df_demo['target'].mean()
-
-                    with col_m1:
-                        vol_str = f"{len(df_filtered):,.0f}".replace(",", ".")
-                        
-                        st.markdown(f"""
-                            <div style="display: flex; flex-direction: column;">
-                                <p style="font-size: 0.85rem; color: #999; margin-bottom: 0px;">Volume da Amostra</p>
-                                <div style="display: flex; align-items: baseline; gap: 8px;">
-                                    <span style="font-size: 1.8rem; font-weight: 600; color: #FFF;">{vol_str}</span>
-                                </div>
-                                <p style="font-size: 0.75rem; color: #666; margin-top: 0px;">Total de Clientes no Segmento</p>
-                            </div>
-                        """, unsafe_allow_html=True)
-
-                    with col_m2:
-                        if delta_risk <= 0:
-                            cor_delta = "#5EA758" # Verde
-                            seta = "↓"
-                        else:
-                            cor_delta = "#B53744" # Vermelho
-                            seta = "↑"
-                        
-                        val_fmt = f"{avg_risk:.2%}"
-                        delta_fmt = f"{seta} {abs(delta_risk):.2%}"
-
-                        st.markdown(f"""
-                            <div style="display: flex; flex-direction: column;">
-                                <p style="font-size: 0.85rem; color: #999; margin-bottom: 0px;">Bad Rate (Inadimplência)</p>
-                                <div style="display: flex; align-items: baseline; gap: 8px;">
-                                    <span style="font-size: 1.8rem; font-weight: 600; color: #FFF;">{val_fmt}</span>
-                                    <span style="font-size: 1rem; color: {cor_delta}; font-weight: bold;">{delta_fmt}</span>
-                                </div>
-                                <p style="font-size: 0.75rem; color: #666; margin-top: 0px;">vs. Total da Amostra</p>
-                            </div>
-                        """, unsafe_allow_html=True)
-
-                    with col_m3:
-                        idade_media = df_filtered['idade'].mean()
-                        
-                        st.markdown(f"""
-                            <div style="display: flex; flex-direction: column;">
-                                <p style="font-size: 0.85rem; color: #999; margin-bottom: 0px;">Idade Média</p>
-                                <div style="display: flex; align-items: baseline; gap: 8px;">
-                                    <span style="font-size: 1.8rem; font-weight: 600; color: #FFF;">{idade_media:.1f}</span>
-                                    <span style="font-size: 0.9rem; color: #888; font-weight: normal;">anos</span>
-                                </div>
-                                <p style="font-size: 0.75rem; color: #666; margin-top: 0px;">Média do Segmento</p>
-                            </div>
-                        """, unsafe_allow_html=True)
-                    
-                    st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
-
-                    c_chart1, c_chart2 = st.columns([1.2, 1])
-                    
-                    with c_chart1:
-                        st.plotly_chart(plot_age_analysis(df_filtered), width='stretch')
-
-                        st.markdown(
-                            """
-                            <div style="
-                                height: 35px;            
-                                min-height: 35px;
-                                display: flex;
-                                align-items: center;
-                                padding: 0 0 0 0px;
-                                font-size: 0.80rem;
-                                color: rgba(255,255,255,0.65);
-                                justify-content: center;
-                                text-align: center;
-                                margin-top: -17px
-                            ">
-                                Distribuição de volume e risco de crédito por faixa etária da amostra.
-                            </div>
-                            """,
-                            unsafe_allow_html=True)
-                        
-                    with c_chart2:
-                        
-                        uf_highlight = None
-                        if sel_estado_display not in ["Todos da Região", "Todos"] and "(" in sel_estado_display:
-                            uf_highlight = sel_estado_display.split('(')[-1].replace(')', '')
-
-                        st.plotly_chart(
-                            plot_geo_map(
-                                df_filtered,
-                                uf_selecionada=uf_highlight,
-                                regiao_sel=sel_regiao
-                            ),
-                            width='stretch'
-                        )
-
-                        st.markdown(
-                            """
-                            <div style="
-                                height: 35px;            
-                                min-height: 35px;
-                                display: flex;
-                                align-items: center;
-                                padding: 0 0 0 0px;
-                                font-size: 0.80rem;
-                                color: rgba(255,255,255,0.65);
-                                justify-content: center;
-                                text-align: center;
-                                margin-top: -17px
-                            ">
-                                Distribuição Espacial: Concentração de clientes e Bad Rate.
-                            </div>
-                            """,
-                            unsafe_allow_html=True)
-
-            # Bloco de Contexto
-            st.markdown("""
-            <div style="background-color:#1A1A1A; color:#888; padding:16px 16px 0px 16px; border-radius:8px; border-left:6px solid #731E27; font-family:sans-serif; font-size:14px;">
-                <h6 style="margin-top:0px; margin-bottom:-10px; color:#DDD;">🌍 INSIGHTS DEMOGRÁFICOS</h6>
-                <hr style="margin-top:2px; margin-bottom:15px; border:1px solid #444;">
-                <div style="display:flex; gap:20px; align-items:flex-start; flex-wrap: wrap;">
-                    <div style="flex:1; min-width: 200px;">
-                        <strong style="color: #DDD;">🎂 Fator Idade:</strong>
-                        <p style="margin-top:5px;">O risco cai drasticamente com a idade. O grupo 18-24 anos tem Bad Rate ~26%, enquanto o grupo 65+ tem ~17%.</p>
-                    </div>
-                    <div style="flex:1; min-width: 200px;">
-                        <strong style="color: #DDD;">📍 Fator Região:</strong>
-                        <p style="margin-top:5px;">Historicamente, estados do Norte/Nordeste apresentam risco ajustado maior que o Sudeste/Sul. Use os filtros acima para validar.</p>
-                    </div>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
 
     elif view_mode == "🧪 Simulação de Política":
 
@@ -1138,14 +1127,12 @@ def main():
 
         with st.expander("🛠️ Simulador de Política de Crédito", expanded=True):
             
-            # 1. Carregar Dados
             df_sim = pd.DataFrame()
             try:
                 df_sim = load_sample_data(n_samples=50000) # Amostra menor para ser rápido no loop
             except:
                 st.stop()
 
-            # Verifica colunas necessárias
             required_cols = ['bur_score_02', 'idade', 'pag_vlr_total_geral', 'target']
             missing = [c for c in required_cols if c not in df_sim.columns]
             
@@ -1178,15 +1165,17 @@ def main():
                     disabled=(mode == "AI Sweet Spot")
                 )
 
-            mask_aprov = (
-                (df_sim['bur_score_02'] >= score_cutoff) &
-                (df_sim['idade'] >= min_idade) &
-                (df_sim['pag_vlr_total_geral'].fillna(0) >= min_pagto)
-            )
-            
-        aprovados_df = df_sim[mask_aprov]
+                query_aprovados = f"""
+                    SELECT * FROM df_sim 
+                    WHERE bur_score_02 >= {score_cutoff}
+                    AND idade >= {min_idade}
+                    AND COALESCE(pag_vlr_total_geral, 0) >= {min_pagto}
+                """
+                try:
+                    aprovados_df = duckdb.query(query_aprovados).df()
+                except Exception:
+                    aprovados_df = pd.DataFrame()
         
-        # Métricas
         taxa_aprovacao = len(aprovados_df) / len(df_sim)
         bad_rate_atual = df_sim['target'].mean()
         bad_rate_novo = aprovados_df['target'].mean() if not aprovados_df.empty else 0.0
@@ -1195,7 +1184,6 @@ def main():
         with st.expander("📊 Impacto Projetado na Carteira", expanded=True):
             k1, k2, k3 = st.columns(3)
             with k1:
-                # Formata o volume com separador de milhar (ponto)
                 vol_str = f"{len(aprovados_df):,.0f}".replace(",", ".")
                 
                 st.markdown(f"""
@@ -1209,7 +1197,6 @@ def main():
                     </div>
                 """, unsafe_allow_html=True)
             
-            # K2: Bad Rate Esperado 
             with k2:
                 diff_br = bad_rate_novo - bad_rate_atual
                 
@@ -1234,7 +1221,6 @@ def main():
                     </div>
                 """, unsafe_allow_html=True)
 
-            # K3: Redução de Risco 
             with k3:
                 if reducao_risco > 0:
                     cor_delta_red = "#5EA758"
@@ -1256,7 +1242,6 @@ def main():
 
             st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
 
-            # 4. Visualização da Fronteira
             st.plotly_chart(
                 plot_decision_boundary(df_sim, score_cutoff, min_idade, min_pagto),
                 width='stretch'
@@ -1268,7 +1253,6 @@ def main():
                 plot_policy_tradeoff(curve_df, score_cutoff, sweet_spot if mode == "AI Sweet Spot" else None),
                 width='stretch'
             )
-
 
 
     elif view_mode == "⚙️ Motor de Decisão":
@@ -1287,7 +1271,6 @@ def main():
         st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
         st.write("")
 
-        # 1. Carregar Modelo
         try:
             asset = load_assets()
             model = asset['model']
@@ -1312,14 +1295,12 @@ def main():
                 st.write(f"**Features:** {len(features_raw)}")
                 st.write(f"**KS OOT:** {metadata.get('ks_oot', 0.0):.2f}%")
 
-        # 2. Formulário de Input 
         p1, p2 = st.columns([1, 1.2])
         
         with p1:
             with st.form("risk_form"):
                 st.subheader("📝 Dados do Proponente")
                 
-                # Inputs agrupados por domínio
                 inputs = {}
                 
                 st.markdown("**🏛️ Bureau & Cadastro**")
@@ -1348,24 +1329,19 @@ def main():
 
                 submit_val = st.form_submit_button("🚀 CALCULAR RISCO")
 
-        # 3. Processamento e Resultados
         if submit_val:
             try:
                 df_input = pd.DataFrame([inputs])
                 
-
                 for col in features_raw:
                     if col not in df_input.columns:
                         df_input[col] = np.nan # WoE encoder lida com NaN
                 
-                # Transformação WoE
                 df_woe = encoder.transform(df_input, features_raw)
                 
-                # Seleciona apenas as colunas de woe geradas
                 woe_cols = [f'{col}_woe' for col in features_raw]
                 X_model = df_woe[woe_cols].fillna(0) 
                 
-                # Predição
                 prob = model.predict_proba(X_model)[:, 1][0]
                 score = calculate_score(prob)
                 tier, color = get_risk_tier(score)
@@ -1373,7 +1349,6 @@ def main():
                 with p2:
                     
                     with st.expander("**📊 Painel de Decisão**", expanded=True):
-                        # Gauge Chart
                         fig_gauge = go.Figure(go.Indicator(
                             mode="gauge+number", value=score,
                             title={'text': "Behavior Score"},
