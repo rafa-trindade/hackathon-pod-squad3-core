@@ -127,10 +127,14 @@ st.sidebar.markdown(
     unsafe_allow_html=True
 )
 
-
-
-
-st.sidebar.title("Painel de Observabilidade")
+st.sidebar.markdown(
+    """
+    <h3 style='font-size: 1.3rem; font-weight: 600; text-align: center; margin-top: 10px; line-height: 1.2;'>
+        Painel de Observabilidade
+    </h3>
+    """, 
+    unsafe_allow_html=True
+)
 st.sidebar.write("<hr style='margin-top:-10px; margin-bottom:0px;'>", unsafe_allow_html=True)
 
 if 'last_view_mode' not in st.session_state:
@@ -339,7 +343,7 @@ if data:
 
             st.markdown(f"### Painel de Custos Cloud (OCI): <code class='theme-1'>{display_name}</code> - <code class='theme-1'>{region}</code>", unsafe_allow_html=True)
 
-            st.caption(f"Caminho no Lake: s3://{BUCKET_NAME}/{selected_report_key}")
+            st.caption(f"☁️ **Caminho no Lake:** `s3://{BUCKET_NAME}/{selected_report_key}`")
             st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
 
             st.caption(f"🕒 Dados atualizados em **{timestamp_final}**")
@@ -389,10 +393,10 @@ if data:
 
                     m4.markdown(f"""
                         <div style="display: flex; flex-direction: column;">
-                            <p style="font-size: 0.9rem; color: gray; margin-bottom: 0;">Custo {ultimo_dia.strftime('%d/%m/%Y')}</p>
+                            <p style="font-size: 0.9rem; color: gray; margin-bottom: 0;">Custo {ultimo_dia.strftime('%d/%m/%Y')} (DoD)</p>
                             <div style="display: flex; align-items: baseline; gap: 10px;">
                                 <span style="font-size: 1.6rem; font-weight: bold;">{format_brl(valor_ultimo_dia)}</span>
-                                <span style="font-size: 1rem; color: {delta_color}; font-weight: bold;">{setinha} {format_brl(delta_valor)}</span>
+                                <span style="font-size: 1rem; color: {delta_color}; font-weight: bold;">{setinha} {format_brl(abs(delta_valor))}</span>
                             </div>
                         </div>
                     """, unsafe_allow_html=True)
@@ -544,7 +548,7 @@ if data:
                 timestamp_final = buckets_data.get('updated_at', 'N/I')
             
             st.markdown(f"### Infraestrutura & Armazenamento (OCI): <code class='theme-1'>{display_name}</code> - <code class='theme-1'>{region}</code>", unsafe_allow_html=True)
-            st.caption(f"Caminhos no Lake: s3://{BUCKET_NAME}/{status_key} + observability_reports_oci_buckets.json")   
+            st.caption(f"☁️ **Caminho no Lake:** `s3://{BUCKET_NAME}/{status_key}` + `observability_reports_oci_buckets.json`")   
             st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
             st.caption(f"🕒 Relatório de infraestrutura gerado em **{timestamp_final}**")
 
@@ -631,7 +635,7 @@ if data:
                     """, unsafe_allow_html=True)
 
 
-                    render_simple_metric(m4, "Última Atualização", freshness_label)
+                    render_simple_metric(m4, "Última Atualização (Freshness)", freshness_label)
 
                     st.write("") 
                     st.progress(percent_used)
@@ -748,7 +752,7 @@ if data:
             unsafe_allow_html=True
         )
 
-        st.caption(f"Caminho no Lake: s3://{BUCKET_NAME}/{selected_report_key}")
+        st.caption(f"☁️ **Caminho no Lake:** `s3://{BUCKET_NAME}/{selected_report_key}`")
         st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
         render_timestamp(integrity_timestamp)
 
@@ -877,7 +881,7 @@ if data:
             unsafe_allow_html=True
         )
         
-        st.caption(f"Caminho no Lake: s3://{BUCKET_NAME}/{selected_report_key}")
+        st.caption(f"☁️ **Caminho no Lake:** `s3://{BUCKET_NAME}/{selected_report_key}`")
         st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
         render_timestamp(integrity_timestamp)
 
@@ -925,7 +929,7 @@ if data:
             unsafe_allow_html=True
         )
 
-        st.caption(f"Caminho no Lake: s3://{BUCKET_NAME}/{selected_report_key}")
+        st.caption(f"☁️ **Caminho no Lake:** `s3://{BUCKET_NAME}/{selected_report_key}`")
         st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
         render_timestamp(integrity_timestamp)
 
@@ -979,7 +983,7 @@ if data:
             unsafe_allow_html=True
         )
 
-        st.caption(f"Caminho no Lake: s3://{BUCKET_NAME}/{selected_report_key}")
+        st.caption(f"☁️ **Caminho no Lake:** `s3://{BUCKET_NAME}/{selected_report_key}`")
         st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
         render_timestamp(integrity_timestamp)
 
