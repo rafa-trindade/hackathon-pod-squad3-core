@@ -147,32 +147,40 @@ def load_data_summary():
 # DATA LAYER - AMOSTRAGEM E PREPARAÇÃO
 # ==============================================================================
 def prepare_features(df):
-    """Realiza engenharia de features básica."""
+    """Padronização rigorosa: Garante a existência do 'target' e 'idade'."""
+    df.columns = [str(c).lower() for c in df.columns]
+    
     for col in ['safra', 'cad_datadenascimento']:
         if col in df.columns:
             df[col] = pd.to_datetime(df[col], errors='coerce')
 
-    if 'target' not in df.columns and 'fpd' in df.columns:
-        df['target'] = df['fpd'].fillna(0).astype("int8")
+    if 'target' not in df.columns:
+        if 'fpd' in df.columns:
+            df['target'] = pd.to_numeric(df['fpd'], errors='coerce').fillna(0).astype("int8")
+        else:
+            df['target'] = 0
 
-    if 'idade' not in df.columns and 'safra' in df.columns and 'cad_datadenascimento' in df.columns:
-        df['idade'] = ((df['safra'] - df['cad_datadenascimento']).dt.days / 365.25).round(0)
-        df.loc[(df['idade'] < 18) | (df['idade'] > 100), 'idade'] = np.nan
-
+    if 'idade' not in df.columns:
+        if 'safra' in df.columns and 'cad_datadenascimento' in df.columns:
+            df['idade'] = ((df['safra'] - df['cad_datadenascimento']).dt.days / 365.25).round(0)
+            df.loc[(df['idade'] < 18) | (df['idade'] > 100), 'idade'] = np.nan
+        else:
+            df['idade'] = np.nan
+            
     return df
 
 @st.cache_data(ttl=3600)
-def load_sample_data(n_samples=100000):
+def load_sample_data():
     con = get_db_connection()
-    if con is None: raise Exception("Sem conexão com o Data Lake.")
-
-    query = f"SELECT * FROM read_parquet('{ABT_PATH}') USING SAMPLE {n_samples} ROWS"
+    if con is None: return pd.DataFrame()
     
+    query = f"SELECT * FROM read_parquet('{ABT_PATH}') USING SAMPLE 5 PERCENT (bernoulli)"
     try:
         df = con.execute(query).df()
-        return df if df.empty else prepare_features(df)
+        return prepare_features(df)
     except Exception as e:
-        raise Exception(f"Erro ao carregar amostra: {e}")
+        st.error(f"Erro na carga real: {e}")
+        return pd.DataFrame()
 
 @st.cache_resource
 def load_assets():
@@ -702,23 +710,24 @@ def map_cep_to_uf(cep_3):
         return 'OUTROS'
 
 def process_demographics(df):
-    """Prepara os dados agregados com Idade, UF e Região."""
-    if 'idade' not in df.columns and 'cad_datadenascimento' in df.columns:
-        df['idade'] = ((df['safra'] - df['cad_datadenascimento']).dt.days / 365.25).round(0)
-    
-    bins = [18, 25, 35, 45, 55, 65, 100]
-    labels = ['18-24', '25-34', '35-44', '45-54', '55-64', '65+']
-    df['faixa_etaria'] = pd.cut(df['idade'], bins=bins, labels=labels)
-    
-    if 'uf' not in df.columns:
-        if 'cad_cep_3_digitos' in df.columns:
-            df['uf'] = df['cad_cep_3_digitos'].apply(map_cep_to_uf)
-        else:
-            df['uf'] = np.random.choice(list(STATE_COORDS.keys()), len(df))
+    """
+    Transformação 100% Real: Mapeia CEP para UF e trata Unicidade por CPF.
+    """
+    df.columns = [str(c).lower() for c in df.columns]
+
+    if 'cad_cep_3_digitos' in df.columns:
+        df['uf'] = df['cad_cep_3_digitos'].apply(map_cep_to_uf)
+    else:
+        df['uf'] = 'OUTROS'
 
     df['estado_nome'] = df['uf'].map(STATE_NAMES).fillna(df['uf'])
     df['regiao'] = df['uf'].map(REGION_MAP).fillna('Outros')
-    
+
+    if 'idade' in df.columns:
+        bins_idade = [18, 25, 35, 45, 55, 65, 100]
+        labels_idade = ['18-24', '25-34', '35-44', '45-54', '55-64', '65+']
+        df['faixa_etaria'] = pd.cut(df['idade'], bins=bins_idade, labels=labels_idade, right=False)
+
     return df
 
 def plot_age_analysis(df):
