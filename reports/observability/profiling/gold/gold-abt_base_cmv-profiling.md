@@ -1,4 +1,4 @@
-# Relatório de Profiling: `gold/abt_base_cmv` - `20260221`
+# Relatório de Profiling: `gold/abt_base_cmv` - `20260223`
 
 ### ⚙️ Sumário Técnico do Dataset: `abt_base_cmv`
 
@@ -138,6 +138,34 @@
 | tel_var_91                        | VARCHAR                  | 50.3%         |
 | tel_var_92                        | VARCHAR                  | 50.3%         |
 | tel_var_93                        | VARCHAR                  | 50.3%         |
+| cad_cep_3_digitos                 | VARCHAR                  | 5.49%         |
+| cad_datadenascimento              | DATE                     | 0.23%         |
+| cad_flag_mig2                     | VARCHAR                  | 0.0%          |
+| cad_statusrf                      | VARCHAR                  | 0.2%          |
+| cad_var_02                        | INTEGER                  | 94.22%        |
+| cad_var_03                        | INTEGER                  | 6.82%         |
+| cad_var_04                        | INTEGER                  | 0.2%          |
+| cad_var_05                        | INTEGER                  | 3.56%         |
+| cad_var_06                        | INTEGER                  | 79.39%        |
+| cad_var_07                        | DOUBLE                   | 81.85%        |
+| cad_var_08                        | INTEGER                  | 79.4%         |
+| cad_var_09                        | INTEGER                  | 59.2%         |
+| cad_var_10                        | VARCHAR                  | 98.19%        |
+| cad_var_11                        | DOUBLE                   | 98.32%        |
+| cad_var_12                        | DATE                     | 35.4%         |
+| cad_var_13                        | DATE                     | 85.0%         |
+| cad_var_14                        | INTEGER                  | 89.31%        |
+| cad_var_15                        | VARCHAR                  | 86.86%        |
+| cad_var_16                        | INTEGER                  | 86.86%        |
+| cad_var_17                        | INTEGER                  | 86.86%        |
+| cad_var_18                        | VARCHAR                  | 79.39%        |
+| cad_var_19                        | VARCHAR                  | 59.2%         |
+| cad_var_20                        | VARCHAR                  | 97.88%        |
+| cad_var_21                        | VARCHAR                  | 35.4%         |
+| cad_var_22                        | VARCHAR                  | 89.31%        |
+| cad_var_23                        | VARCHAR                  | 86.86%        |
+| cad_var_24                        | VARCHAR                  | 35.4%         |
+| cad_var_25                        | VARCHAR                  | 9.96%         |
 | idade                             | BIGINT                   | 0.23%         |
 | tempo_conta_dias                  | BIGINT                   | 35.4%         |
 | flag_auxilio_emergencial          | INTEGER                  | 0.0%          |
@@ -171,7 +199,7 @@
 | rec_qtd_plano_controle_geral      | 333,00        | 34,52            | ⚠️ Outlier Detected |
 | pag_vlr_total_geral               | 2.537.770,97  | 23.318,89        | ⚠️ Outlier Detected |
 | pag_vlr_total_l90d                | 979.673,73    | 7.149,32         | ⚠️ Outlier Detected |
-| pag_ticket_medio_geral            | 181.269,36    | 1.408,01         | ⚠️ Outlier Detected |
+| pag_ticket_medio_geral            | 181.269,35    | 1.408,01         | ⚠️ Outlier Detected |
 | pag_qtd_faturas_geral             | 110,00        | 24,66            | ⚠️ Outlier Detected |
 | pag_media_dias_atraso_geral       | 4.853,00      | 125,39           | ⚠️ Outlier Detected |
 | pag_max_dias_atraso_geral         | 4.853,00      | 213,81           | ⚠️ Outlier Detected |
@@ -193,13 +221,13 @@
 ### 📦 Volumetria: `abt_base_cmv`
 | diretorio      |   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
 |:---------------|---------------:|:------------|----------:|-------------------------:|----------------------------:|
-| ano_mes=202410 |              1 | 426.104     |       120 |                    29.42 |                       40.32 |
-| ano_mes=202411 |              1 | 454.572     |       120 |                    32.24 |                       44.37 |
-| ano_mes=202412 |              1 | 445.154     |       120 |                    32.49 |                       44.79 |
-| ano_mes=202501 |              1 | 452.621     |       120 |                    32.85 |                       45.16 |
-| ano_mes=202502 |              1 | 419.453     |       120 |                    30.49 |                       42.15 |
-| ano_mes=202503 |              1 | 435.996     |       120 |                    32.1  |                       44.26 |
-| TOTAL          |              6 | 2.633.900   |       120 |                   189.59 |                      261.06 |
+| ano_mes=202410 |              1 | 426.104     |       148 |                    35.4  |                       47.62 |
+| ano_mes=202411 |              1 | 454.572     |       148 |                    38.4  |                       51.81 |
+| ano_mes=202412 |              1 | 445.154     |       148 |                    37.84 |                       50.91 |
+| ano_mes=202501 |              1 | 452.621     |       148 |                    38.39 |                       51.61 |
+| ano_mes=202502 |              1 | 419.453     |       148 |                    35.81 |                       48.32 |
+| ano_mes=202503 |              1 | 435.996     |       148 |                    37.56 |                       50.72 |
+| TOTAL          |              6 | 2.633.900   |       148 |                   223.4  |                      300.99 |
 
 ---
 
@@ -226,7 +254,7 @@
 | atr_      |              8 | 34.08%              | 65.92%            |
 | bur_      |              3 | 0.25%               | 99.75%            |
 | tel_      |             69 | 50.34%              | 49.66%            |
-| cad_      |              1 | 0.0%                | 100.0%            |
+| cad_      |             29 | 54.16%              | 45.84%            |
 | outros    |             11 | 3.24%               | 96.76%            |
 
 ---
@@ -248,17 +276,17 @@
 | bur_score_01                    |   -0.224621  |
 | atr_max_aging_divida_geral      |    0.145128  |
 | pag_qtd_faturas_geral           |   -0.104181  |
+| cad_var_05                      |   -0.103676  |
 | tel_var_28                      |    0.0992972 |
 | pag_dias_desde_ultimo_pagamento |    0.0992828 |
 | flag_bolsa_familia              |    0.099142  |
 | tel_var_31                      |    0.087449  |
+| cad_var_02                      |    0.0859616 |
 | flag_auxilio_emergencial        |    0.0822269 |
 | rec_qtd_sos_geral               |    0.081496  |
 | pag_max_dias_atraso_geral       |    0.0790687 |
 | pag_media_dias_atraso_geral     |    0.0789047 |
 | tel_var_30                      |    0.0766779 |
-| atr_qtd_faturas_atrasadas_geral |   -0.0757858 |
-| tel_var_50                      |    0.0744812 |
 
 ---
 
@@ -268,7 +296,7 @@
 | feature      |   min |   p25 |   median |     avg |   p75 |   max |      std |
 |:-------------|------:|------:|---------:|--------:|------:|------:|---------:|
 | bur_score_01 |     0 |   558 |      593 | 590.948 |   626 |   778 |  56.3142 |
-| bur_score_02 |     1 |   575 |      653 | 651.013 |   731 |   926 | 101.717  |
+| bur_score_02 |     1 |   575 |      653 | 651.013 |   730 |   926 | 101.717  |
 
 ---
 
