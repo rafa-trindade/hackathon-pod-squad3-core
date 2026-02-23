@@ -1,6 +1,6 @@
-📋 GOLD ABT REPORT - abt_base_prod | RUN: 20260212
+📋 GOLD ABT REPORT - abt_base_prod | RUN: 20260221
 ====================================================================================================
-🏆 STATUS GERAL: ✅ SUCCESS | VARIÁVEIS: 199 features | REGISTROS: 1.321.168 | CPFs ÚNICOS: 1.272.095
+🏆 STATUS GERAL: ✅ SUCCESS | VARIÁVEIS: 113 features | REGISTROS: 1.321.168 | CPFs ÚNICOS: 1.272.095
 ====================================================================================================
 
 INTEGRIDADE E COBERTURA DE DADOS:
@@ -8,7 +8,7 @@ INTEGRIDADE E COBERTURA DE DADOS:
 FONTE DE DADOS          | TIPO         | STATUS | PREENCHIMENTO (%) | INFO ADICIONAL
 ----------------------------------------------------------------------------------------------------
 Bureau Score            | Master Join  | PASS   |            99.0% | 12.839 registros órfãos
-Dados Cadastrais        | Master Join  | PASS   |            99.9% | 1.455 registros órfãos
+Dados Cadastrais        | Processado   | PASS   |            99.9% | CPFs com Info na Receita/Cadastral
 Telco Features          | Master Join  | PASS   |           100.0% | 0 registros órfãos
 Histórico Recarga       | Agregação    | PASS   |           100.0% | CPFs com atividade de recarga
 Histórico Pagamento     | Agregação    | PASS   |            22.3% | CPFs com evidência de pagamento
