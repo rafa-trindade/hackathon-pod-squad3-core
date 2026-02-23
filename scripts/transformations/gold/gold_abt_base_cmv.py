@@ -192,21 +192,25 @@ def run():
             t.* EXCLUDE (num_cpf, safra, prod),
 
             -- ==========================================
-            -- DADOS CADASTRAIS (PROCESADOS)
+            -- DADOS CADASTRAIS (BRUTOS + PROCESSADOS)
             -- ==========================================
+            -- 1. Traz todas as colunas originais
+            c.* EXCLUDE (num_cpf, safra, prod),
+
+            -- 2. Mantém as features 
             -- Idade original preservada
             DATE_DIFF('year', c.cad_datadenascimento, a.safra) AS idade,
             
-            -- Tempo de conta em dias (Lealdade)
+            -- Tempo de conta em dias 
             DATE_DIFF('day', c.cad_var_12, a.safra) AS tempo_conta_dias,
 
-            -- Extração de Perfil de Renda (Flags Binárias Ouro)
+            -- Extração de Perfil de Renda 
             CASE WHEN c.cad_var_25 ILIKE '%AUX_EMRG%' THEN 1 ELSE 0 END AS flag_auxilio_emergencial,
             CASE WHEN c.cad_var_25 ILIKE '%BOLSA_FAMILIA%' OR c.cad_var_23 = 'BOLSA_FAMILIA' THEN 1 ELSE 0 END AS flag_bolsa_familia,
             CASE WHEN c.cad_var_25 ILIKE '%APOSENTADO%' OR c.cad_var_18 = 'APOSENTADO' THEN 1 ELSE 0 END AS flag_aposentado,
             CASE WHEN c.cad_var_25 ILIKE '%FUNC_PRIVADO%' OR c.cad_var_21 = 'FUNC_PRIVADO' THEN 1 ELSE 0 END AS flag_funcionario_privado,
 
-            -- Status Receita Federal (Pessoas com CPF irregular têm chance absurda de fraude/FPD)
+            -- Status Receita Federal
             CASE WHEN c.cad_statusrf IN ('NULA', 'SUSPENSA', 'TITULAR FALECIDO') THEN 1 ELSE 0 END AS cad_flag_statusrf_irregular,
 
             -- Metadados finais
@@ -283,7 +287,7 @@ def run():
     with open(QUALITY_REPORT_PATH, "w") as f: 
         f.write(report_log)
 
-    con.execute(f"COPY (SELECT * FROM work_db.gold_step1 ORDER BY ano_mes) TO '{GOLD_PATH}' (FORMAT PARQUET, PARTITION_BY (ano_mes), OVERWRITE_OR_IGNORE 1)")
+    con.execute(f"COPY (SELECT * FROM work_db.gold_step1) TO '{GOLD_PATH}' (FORMAT PARQUET, PARTITION_BY (ano_mes), OVERWRITE_OR_IGNORE 1)")    
     
     con.execute("DETACH work_db")
     if os.path.exists(WORK_DB_PATH): os.remove(WORK_DB_PATH)
