@@ -19,6 +19,9 @@ scikit-learn==1.6.1
 statsmodels==0.14.4
 streamlit==1.54.0
 plotly==6.5.2
+optuna==4.7.0
+optuna-dashboard==0.20.0
+lightgbm==4.6.0
 
 
 
