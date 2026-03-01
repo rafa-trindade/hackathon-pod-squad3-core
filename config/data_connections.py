@@ -82,8 +82,8 @@ def get_duckdb_connection(
         PRAGMA temp_directory='{temp_dir}';
         SET max_temp_directory_size='150GB';
 
-        SET memory_limit='{memory_limit}';
-        SET threads={threads};
+        SET memory_limit='48GB';
+        SET threads=12;
 
         SET s3_endpoint='{duckdb_endpoint}';
         SET s3_access_key_id='{os.getenv("AWS_ACCESS_KEY_ID")}';
