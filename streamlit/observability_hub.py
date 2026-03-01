@@ -374,6 +374,7 @@ if data:
 
                     df_daily['amount'] = pd.to_numeric(df_daily['amount'], errors='coerce').fillna(0)
                     df_daily['date'] = pd.to_datetime(df_daily['date'])
+                    df_daily['amount_cum'] = df_daily['amount'].cumsum()
 
                     df_grouped = df_daily.groupby('date', as_index=False)['amount'].sum()
                     df_grouped = df_grouped.sort_values('date')
@@ -441,7 +442,7 @@ if data:
 
                         fig_daily = go.Figure(go.Bar(
                             x=x_labels,
-                            y=df_daily['amount'],
+                            y=df_daily['amount_cum'],
                             marker_color='#731E27',
                             text=df_daily['amount'].map(lambda x: f"R$ {x:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")),
                             textposition='auto',
