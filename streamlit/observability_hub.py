@@ -375,17 +375,10 @@ if data:
 
                 st.progress(min(usage_pct, 1.0))
 
-                df_raw_items = pd.DataFrame(data.get("items", []))
+                df_costs = pd.DataFrame(data.get("items_by_service", []))
 
-                if not df_raw_items.empty:
-                    df_raw_items['amount'] = pd.to_numeric(df_raw_items['amount'], errors='coerce').fillna(0)
-
-                    df_costs = (
-                        df_raw_items
-                        .groupby('service', as_index=False)['amount']
-                        .sum()
-                    )
-
+                if not df_costs.empty:
+                    df_costs['amount'] = pd.to_numeric(df_costs['amount'], errors='coerce').fillna(0)
                     df_costs = df_costs[df_costs['amount'] > 0].sort_values(by='amount', ascending=False)
                 else:
                     df_costs = pd.DataFrame(columns=['service', 'amount'])
