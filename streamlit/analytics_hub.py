@@ -1110,7 +1110,7 @@ def main():
             """,
             unsafe_allow_html=True
         )
-        caminho = "models/behavior_baseline_woe_v1.pkl"
+        caminho = "models/behavior_catboost_v1.pkl"
         st.caption(f"🎯 Escoragem real-time executada sobre o Asset de Modelagem: `{caminho.split('/')[-1]}`")
         st.write("<hr style='margin-top:-6.5px; margin-bottom:15px;'>", unsafe_allow_html=True)
 
@@ -1834,7 +1834,7 @@ def main():
             unsafe_allow_html=True
         )
         
-        caminho = "models/behavior_baseline_woe_v1.pkl"
+        caminho = "models/behavior_catboost_v1.pkl"
         st.caption(f"🛠️ **Modelo de Produção (Artefato):** `{caminho.split('/')[-1]}`")
         
         st.write("<hr style='margin-top:0px; margin-bottom:15px; border:1px solid #444;'>", unsafe_allow_html=True)

@@ -185,8 +185,8 @@ def load_sample_data():
 @st.cache_resource
 def load_assets():
     base_dir = Path(__file__).resolve().parent.parent.parent
-    path = base_dir / "models" / "behavior_baseline_woe_v1.pkl"
-    
+    path = base_dir / "reports" / "observability" / "modeling" / "v1" / "models" / "behavior_catboost_v1.pkl"
+
     if not path.exists(): raise FileNotFoundError(f"Modelo não encontrado em: {path}")
 
     with open(path, 'rb') as f:
