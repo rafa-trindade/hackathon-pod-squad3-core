@@ -80,6 +80,7 @@ def get_duckdb_connection(
 
     con.execute(f"""
         PRAGMA temp_directory='{temp_dir}';
+        SET max_temp_directory_size='150GB';
 
         SET memory_limit='{memory_limit}';
         SET threads={threads};
