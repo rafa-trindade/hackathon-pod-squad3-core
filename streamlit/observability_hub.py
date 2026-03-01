@@ -376,7 +376,21 @@ if data:
                 st.progress(min(usage_pct, 1.0))
 
                 df_raw_items = pd.DataFrame(data.get("items", []))
-                df_costs = df_raw_items.groupby('service')['amount'].sum().reset_index() if not df_raw_items.empty else pd.DataFrame()
+
+                if not df_raw_items.empty:
+                    df_raw_items['amount'] = pd.to_numeric(df_raw_items['amount'], errors='coerce').fillna(0)
+
+                    df_costs = (
+                        df_raw_items
+                        .groupby('service', as_index=False)['amount']
+                        .sum()
+                    )
+
+                    df_costs = df_costs[df_costs['amount'] > 0].sort_values(by='amount', ascending=False)
+                else:
+                    df_costs = pd.DataFrame(columns=['service', 'amount'])
+
+
                 if not df_costs.empty:
                     df_costs = df_costs[df_costs['amount'] > 0].sort_values(by='amount', ascending=False)
 
@@ -407,7 +421,7 @@ if data:
 
             with st.expander("📑 Breakdown por Serviço", expanded=True):
 
-                if not df_costs.empty:
+                if not df_costs.empty and df_costs['amount'].sum() > 0:
                     df_display = df_costs.copy()
                     df_display['amount'] = df_display['amount'].map(format_brl)
 
@@ -472,7 +486,7 @@ if data:
 
             with c2:
                 with st.expander("📊 Distribuição de Custos", expanded=True):
-                    if not df_costs.empty:
+                    if not df_costs.empty and df_costs['amount'].sum() > 0:
                         fig_pie = go.Figure(data=[go.Pie(
                             labels=df_costs['service'], 
                             values=df_costs['amount'],
