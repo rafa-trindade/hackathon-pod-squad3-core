@@ -21,7 +21,7 @@ streamlit==1.54.0
 plotly==6.5.2
 optuna==4.7.0
 optuna-dashboard==0.20.0
-lightgbm==4.6.0
+catboost==1.2.10
 
 
 
