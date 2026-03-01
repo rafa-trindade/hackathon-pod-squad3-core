@@ -111,7 +111,7 @@ def run():
                 print(f"✨ Coluna '{col}': Já estava em conformidade.")
 
     # ------------------------------------------------------------------
-    # ETAPA 2: Deduplicação (Otimizada e Sem Ambiguidade)
+    # ETAPA 2: Deduplicação
     # ------------------------------------------------------------------
     print("--------------------------------------------------")
     print("💎 Etapa 2: Validando necessidade de deduplicação...")
@@ -120,18 +120,52 @@ def run():
     chave_tecnica_cols = list(keys_to_clean.keys())
     chave_cols_str = ", ".join(chave_tecnica_cols)
 
-    con.execute(f"""
-        CREATE TABLE work_db.silver_{TABLE_NAME}_step2 AS
-        SELECT * FROM {step1_table}
-        QUALIFY ROW_NUMBER() OVER(
-            PARTITION BY {chave_cols_str} 
-            ORDER BY ingestion_ts DESC, safra DESC
-        ) = 1
-    """)
-    con.execute("CHECKPOINT work_db")
-    
-    final_count = con.execute(f"SELECT COUNT(*) FROM work_db.silver_{TABLE_NAME}_step2").fetchone()[0]
-    print(f"✨ Unicidade garantida: {final_count:,} registros mantidos.".replace(",", "."))
+    check_duplicados = con.execute(f"""
+        SELECT 
+            COUNT(*) as total,
+            COUNT(DISTINCT ({chave_cols_str})) as distintos
+        FROM {step1_table}
+    """).fetchone()
+
+    total_linhas = check_duplicados[0]
+    total_distintos = check_duplicados[1]
+    qtd_duplicados = total_linhas - total_distintos
+
+    if qtd_duplicados > 0:
+        print(f"⚠️ Detectados {qtd_duplicados:,} registros duplicados. Iniciando deduplicação...".replace(",", "."))
+        
+        con.execute(f"""
+            CREATE TABLE work_db.chaves_duplicadas AS 
+            SELECT {chave_cols_str} FROM {step1_table} 
+            GROUP BY {chave_cols_str} HAVING COUNT(*) > 1
+        """)
+        con.execute(f"""
+            CREATE TABLE work_db.silver_{TABLE_NAME}_step2 AS
+            SELECT * FROM {step1_table} t
+            WHERE NOT EXISTS (
+                SELECT 1 FROM work_db.chaves_duplicadas d 
+                WHERE {' AND '.join([f't.{c} = d.{c}' for c in chave_tecnica_cols])}
+            )
+            UNION ALL
+            SELECT * EXCLUDE(row_num) FROM (
+                SELECT t.*, 
+                       ROW_NUMBER() OVER(
+                           PARTITION BY {", ".join([f"t.{c}" for c in chave_tecnica_cols])} 
+                           ORDER BY ingestion_ts DESC, safra DESC  -- <--- ADICIONADO DESEMPATE
+                       ) as row_num
+                FROM {step1_table} t
+                JOIN work_db.chaves_duplicadas d ON {' AND '.join([f't.{c} = d.{c}' for c in chave_tecnica_cols])}
+            ) WHERE row_num = 1
+        """)
+        con.execute("CHECKPOINT work_db")
+        
+        step2_table = f"work_db.silver_{TABLE_NAME}_step2"
+        final_count = con.execute(f"SELECT COUNT(*) FROM {step2_table}").fetchone()[0]
+        print(f"✨ Unicidade garantida: {final_count:,} registros mantidos.".replace(",", "."))
+    else:
+        print("✅ Nenhuma duplicata detectada. Ignorando etapa de deduplicação.")
+        con.execute(f"CREATE VIEW work_db.silver_{TABLE_NAME}_step2 AS SELECT * FROM {step1_table}")
+        final_count = total_linhas
 
     # ------------------------------------------------------------------
     # ETAPA 3: Limpeza de Colunas

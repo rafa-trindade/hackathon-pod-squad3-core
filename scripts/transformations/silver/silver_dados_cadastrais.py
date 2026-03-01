@@ -109,7 +109,7 @@ def run():
                 print(f"✨ Coluna '{col}': Já estava em conformidade.")
 
     # ------------------------------------------------------------------
-    # ETAPA 2: Deduplicação 
+    # ETAPA 2: Deduplicação
     # ------------------------------------------------------------------
     print("--------------------------------------------------")
     print("💎 Etapa 2: Validando necessidade de deduplicação...")
@@ -133,12 +133,28 @@ def run():
         print(f"⚠️ Detectados {qtd_duplicados:,} registros duplicados. Iniciando deduplicação...".replace(",", "."))
         
         con.execute(f"""
+            CREATE TABLE work_db.chaves_duplicadas AS 
+            SELECT {chave_cols_str} FROM {step1_table} 
+            GROUP BY {chave_cols_str} HAVING COUNT(*) > 1
+        """)
+
+        con.execute(f"""
             CREATE TABLE work_db.silver_{TABLE_NAME}_step2 AS
-            SELECT * FROM {step1_table}
-            QUALIFY ROW_NUMBER() OVER(
-                PARTITION BY {chave_cols_str} 
-                ORDER BY ingestion_ts DESC, safra DESC
-            ) = 1
+            SELECT * FROM {step1_table} t
+            WHERE NOT EXISTS (
+                SELECT 1 FROM work_db.chaves_duplicadas d 
+                WHERE {' AND '.join([f't.{c} = d.{c}' for c in chave_tecnica_cols])}
+            )
+            UNION ALL
+            SELECT * EXCLUDE(row_num) FROM (
+                SELECT t.*, 
+                       ROW_NUMBER() OVER(
+                           PARTITION BY {", ".join([f"t.{c}" for c in chave_tecnica_cols])} 
+                           ORDER BY ingestion_ts DESC, safra DESC
+                       ) as row_num
+                FROM {step1_table} t
+                JOIN work_db.chaves_duplicadas d ON {' AND '.join([f't.{c} = d.{c}' for c in chave_tecnica_cols])}
+            ) WHERE row_num = 1
         """)
         con.execute("CHECKPOINT work_db")
         
