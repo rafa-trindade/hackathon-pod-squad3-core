@@ -53,7 +53,6 @@ def run():
 
     con.execute("SET memory_limit='30GB'")
     con.execute("SET threads=4")
-    con.execute("SET temp_directory='/mnt/nvme/duckdb_tmp'")
     con.execute("SET preserve_insertion_order = false")
 
     WORK_DB_PATH = f"/mnt/nvme/duckdb_temp/work_{TABLE_NAME}.db"
