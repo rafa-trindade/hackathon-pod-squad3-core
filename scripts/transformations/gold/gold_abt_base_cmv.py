@@ -30,8 +30,6 @@ MAX_GOLD_RUNS = int(os.getenv("GOLD_MAX_RUNS", 1))
 def run():
     con = get_duckdb_connection()
     con.execute("SET preserve_insertion_order = false")
-    # Trava de segurança para a VPS
-    con.execute("SET memory_limit = '5GB'")
     
     WORK_DB_PATH = f"/mnt/nvme/duckdb_temp/work_{TARGET_TABLE}.db"
     if os.path.exists(WORK_DB_PATH): os.remove(WORK_DB_PATH)
