@@ -328,19 +328,17 @@ if data:
         status_data = load_json_from_s3(status_key)
 
         if data:
-            # --- PROCESSAMENTO DOS DADOS (BUG FIX: Cálculo antecipado para Metrics e Escada) ---
+
             df_daily = pd.DataFrame(data.get("daily_items", []))
+
             if not df_daily.empty:
                 df_daily['amount'] = pd.to_numeric(df_daily['amount'], errors='coerce').fillna(0)
                 df_daily['date'] = pd.to_datetime(df_daily['date'])
                 df_daily = df_daily.sort_values('date')
-                
-                # Soma tudo o que está no arquivo (histórico completo) para o totalizador
-                total_val = df_daily['amount'].sum()
-                # Cria a coluna acumulada para o gráfico em escada
-                df_daily['amount_cum'] = df_daily['amount'].cumsum()
+
+                df_grouped = df_daily.groupby('date', as_index=False)['amount'].sum()
             else:
-                total_val = data.get("total_amount", 0)
+                df_grouped = pd.DataFrame(columns=['date', 'amount'])
 
             display_name = "SQUAD•03"
             if status_data and "instances" in status_data and len(status_data["instances"]) > 0:
@@ -361,8 +359,9 @@ if data:
 
             st.caption(f"🕒 Dados atualizados em **{timestamp_final}**")
             
+            total_val = df_grouped['amount'].sum()
             budget_limit = 2500.00
-            usage_pct = (total_val / budget_limit)
+            usage_pct = total_val / budget_limit if budget_limit > 0 else 0
 
             with st.expander("✅ Indicadores Financeiros", expanded=True):
                 m1, m2, m3, m4 = st.columns(4)
@@ -376,9 +375,10 @@ if data:
 
                 st.progress(min(usage_pct, 1.0))
 
-                if not df_daily.empty:
-                    df_grouped = df_daily.groupby('date', as_index=False)['amount'].sum()
-                    df_grouped = df_grouped.sort_values('date')
+                df_raw_items = pd.DataFrame(data.get("items", []))
+                df_costs = df_raw_items.groupby('service')['amount'].sum().reset_index() if not df_raw_items.empty else pd.DataFrame()
+                if not df_costs.empty:
+                    df_costs = df_costs[df_costs['amount'] > 0].sort_values(by='amount', ascending=False)
 
                     ultimo_dia = df_grouped['date'].iloc[-1]
                     valor_ultimo_dia = df_grouped['amount'].iloc[-1]
@@ -389,6 +389,7 @@ if data:
                         valor_penultimo_dia = valor_ultimo_dia
 
                     delta_valor = valor_ultimo_dia - valor_penultimo_dia
+
                     delta_color = "#37B544" if delta_valor <= 0 else "#B53744"
                     setinha = "↓" if delta_valor <= 0 else "↑"
 
@@ -405,42 +406,67 @@ if data:
                     render_simple_metric(m4, "Custo Último Dia", "N/I")
 
             with st.expander("📑 Breakdown por Serviço", expanded=True):
-                df_raw_items = pd.DataFrame(data.get("items", []))
-                df_costs = df_raw_items.groupby('service')['amount'].sum().reset_index() if not df_raw_items.empty else pd.DataFrame()
+
                 if not df_costs.empty:
-                    df_costs = df_costs[df_costs['amount'] > 0].sort_values(by='amount', ascending=False)
                     df_display = df_costs.copy()
                     df_display['amount'] = df_display['amount'].map(format_brl)
 
                     row_height = 35
                     header_height = 38
-                    height_dynamic = min(700, header_height + len(df_display) * row_height)
+
+                    height_dynamic = min(
+                        700,
+                        header_height + len(df_display) * row_height
+                    )
 
                     st.dataframe(
-                        df_display.rename(columns={"service": "Serviço", "amount": "Valor"}),
-                        width='stretch', hide_index=True, height=height_dynamic
+                        df_display.rename(columns={
+                            "service": "Serviço",
+                            "amount": "Valor"
+                        }),
+                        width='stretch',
+                        hide_index=True,
+                        height=height_dynamic
                     )
+
 
             c1, c2 = st.columns([3, 1.1])    
 
             with c1:
                 with st.expander("📈 Trend de Consumo Diário", expanded=True):
+
                     if not df_daily.empty:
-                        x_labels = df_daily['date'].dt.strftime('%d/%m')
+
+                        x_labels = df_grouped['date'].dt.strftime('%d/%m/%Y')
+
                         fig_daily = go.Figure(go.Bar(
                             x=x_labels,
-                            y=df_daily['amount_cum'], # PLOTA A ESCADA ACUMULADA
+                            y=df_grouped['amount'],
                             marker_color='#731E27',
-                            text=df_daily['amount_cum'].map(lambda x: f"R$ {x:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")),
+                            text=df_grouped['amount'].map(
+                                lambda x: f"R$ {x:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+                            ),                            
                             textposition='auto',
                         ))
+
                         fig_daily.update_layout(
-                            height=350, margin=dict(t=0, b=0, l=0, r=0),
-                            xaxis_title="Data", yaxis_title="Valor Acumulado",
-                            yaxis=dict(tickprefix="R$ ", separatethousands=True, tickformat=".2f")
+                            height=350,
+                            margin=dict(t=0, b=0, l=0, r=0),
+                            xaxis_title="Data",
+                            yaxis_title="Valor",
+                            yaxis=dict(
+                                tickprefix="R$ ",
+                                separatethousands=True,
+                                tickformat=".2f"
+                            )
                         )
-                        fig_daily.update_yaxes(tickformat=",.2f")
+
+                        fig_daily.update_yaxes(
+                            tickformat=",.2f"
+                        )
+
                         st.plotly_chart(fig_daily, width='stretch')
+
                     else:
                         st.markdown(">Série temporal diária não disponível.")
 
@@ -448,13 +474,16 @@ if data:
                 with st.expander("📊 Distribuição de Custos", expanded=True):
                     if not df_costs.empty:
                         fig_pie = go.Figure(data=[go.Pie(
-                            labels=df_costs['service'], values=df_costs['amount'],
-                            hole=.4, textinfo='percent',
+                            labels=df_costs['service'], 
+                            values=df_costs['amount'],
+                            hole=.4, 
+                            textinfo='percent',
                             marker_colors=['#1A1C24', '#731E27', '#9E9E9E', '#555555', '#DAD0D1'],
                             rotation=45 
                         )])
                         fig_pie.update_layout(
-                            margin=dict(t=10, b=10, l=0, r=0), height=350,
+                            margin=dict(t=10, b=10, l=0, r=0), 
+                            height=350,
                             legend=dict(orientation="h", yanchor="bottom", y=-0.2, xanchor="center", x=0.5)
                         )
                         st.plotly_chart(fig_pie, width='stretch')
@@ -465,6 +494,7 @@ if data:
                 
                 with col_info:
                     finops_insight_msg = ("Considere instâncias 'Preemptible' para economizar." if top_service == 'Compute' else "Revise políticas de expiração de objetos.")
+                    
                     html_finops = f"""
                     <div style="background-color:#1A1A1A; color:#888; padding:12px; border-radius:8px; border-left:6px solid #4F1C22; font-family:sans-serif; font-size: 14.5px;">
                         <h6 style="margin-top:0px; margin-bottom:3px;">FINOPS INSIGHT</h6>
@@ -478,9 +508,12 @@ if data:
                     st.markdown(html_finops, unsafe_allow_html=True)
 
                 with col_alert:
-                    if usage_pct > 0.9: status_msg = "🚨 <b>Crítico:</b> 90% do budget atingido!"
-                    elif usage_pct > 0.7: status_msg = "⚠️ <b>Atenção:</b> 70% do budget consumido."
-                    else: status_msg = "✅ Orçamento dentro do esperado, continue monitorando."
+                    if usage_pct > 0.9:
+                        status_msg = "🚨 <b>Crítico:</b> 90% do budget atingido!"
+                    elif usage_pct > 0.7:
+                        status_msg = "⚠️ <b>Atenção:</b> 70% do budget consumido."
+                    else:
+                        status_msg = "✅ Orçamento dentro do esperado, continue monitorando."
 
                     html_budget = f"""
                     <div style="background-color:#1A1A1A; color:#888; padding:12px; border-radius:8px; border-left:6px solid #4F1C22; font-family:sans-serif; font-size: 14.5px;">
@@ -488,7 +521,7 @@ if data:
                         <hr style="margin-top:0px; margin-bottom:15px; border:1px solid #666;">
                         <div style="margin-left:10px;">
                             <p>{status_msg}</p>
-                            <p style="margin-bottom:0px;">&ensp;</p>
+                             <p style="margin-bottom:0px;">&ensp;</p>
                         </div>
                     </div>
                     """
