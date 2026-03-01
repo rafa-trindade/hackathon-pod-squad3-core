@@ -51,10 +51,7 @@ keys_to_clean = {
 def run():
     con = get_duckdb_connection()
 
-    con.execute("SET memory_limit='30GB'")
-    con.execute("SET threads=4")
     con.execute("SET preserve_insertion_order = false")
-
     WORK_DB_PATH = f"/mnt/nvme/duckdb_temp/work_{TABLE_NAME}.db"
     if os.path.exists(WORK_DB_PATH): os.remove(WORK_DB_PATH)
     con.execute(f"ATTACH '{WORK_DB_PATH}' AS work_db")
