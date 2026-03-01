@@ -93,7 +93,7 @@ def run():
     con.execute("CHECKPOINT work_db")
 
     # ------------------------------------------------------------------
-    # ETAPA 2: Deduplicação (Determinística)
+    # ETAPA 2: Deduplicação (Otimizada para Memória)
     # ------------------------------------------------------------------
     print("--------------------------------------------------")
     print("💎 Etapa 2: Validando necessidade de deduplicação...")
@@ -106,35 +106,25 @@ def run():
     qtd_duplicados = check_duplicados[0] - check_duplicados[1]
 
     if qtd_duplicados > 0:
-        print(f"⚠️ Detectados {qtd_duplicados:,} duplicados. Deduplicando...".replace(",", "."))
-        con.execute(f"CREATE TABLE work_db.chaves_duplicadas AS SELECT {chave_cols_str} FROM {step1_table} GROUP BY {chave_cols_str} HAVING COUNT(*) > 1")
+        print(f"⚠️ Detectados {qtd_duplicados:,} duplicados. Deduplicando de forma otimizada...".replace(",", "."))
         
         con.execute(f"""
             CREATE TABLE work_db.silver_{TABLE_NAME}_step2 AS
-            SELECT * FROM {step1_table} t WHERE NOT EXISTS (
-                SELECT 1 FROM work_db.chaves_duplicadas d 
-                WHERE {' AND '.join([f't.{c} = d.{c}' for c in chave_tecnica_cols])}
-            )
-            UNION ALL
-            SELECT * EXCLUDE(row_num) FROM (
-                SELECT t.*, 
-                        ROW_NUMBER() OVER(
-                            PARTITION BY {", ".join([f"t.{c}" for c in chave_tecnica_cols])} 
-                            ORDER BY 
-                                 t.ingestion_ts DESC, 
-                                 t.dat_referencia DESC,
-                                 t.num_cpf ASC
-                        ) as row_num
-                FROM {step1_table} t 
-                JOIN work_db.chaves_duplicadas d ON {' AND '.join([f't.{c} = d.{c}' for c in chave_tecnica_cols])}
-            ) WHERE row_num = 1
+            SELECT * FROM {step1_table}
+            QUALIFY ROW_NUMBER() OVER (
+                PARTITION BY {chave_cols_str} 
+                ORDER BY 
+                    ingestion_ts DESC, 
+                    dat_referencia DESC,
+                    num_cpf ASC
+            ) = 1
         """)
     else:
         print("✅ Nenhuma duplicata detectada.")
         con.execute(f"CREATE VIEW work_db.silver_{TABLE_NAME}_step2 AS SELECT * FROM {step1_table}")
 
     # ------------------------------------------------------------------
-    # ETAPA 3: Agregação de Dimensões (Enriquecimento Robusto)
+    # ETAPA 3: Agregação de Dimensões 
     # ------------------------------------------------------------------
     print("--------------------------------------------------")
     print("🧩 Etapa 3: Agregando dimensões (Enriquecimento)...")
