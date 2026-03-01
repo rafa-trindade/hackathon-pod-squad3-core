@@ -63,47 +63,6 @@ def local_css(file_name):
         pass 
 
 # ==============================================================================
-# CLASSE WOE (COMPATÍVEL COM O NOTEBOOK)
-# ==============================================================================
-class WoEEncoder:
-    """
-    Weight of Evidence Encoder compatível com o modelo baseline_v1.0.
-    """
-    def __init__(self, n_bins=10, min_pct_bin=0.05, regularization=0.0001):
-        self.n_bins = n_bins
-        self.min_pct_bin = min_pct_bin
-        self.reg = regularization
-        self.woe_maps_ = {}
-        self.bin_edges_ = {}
-        self.iv_values_ = {}
-        self.woe_tables_ = {}
-        self.missing_woe_ = {}
-        self.fitted_ = False
-
-    def transform(self, df, features):
-        """Aplica WoE com bins do fit. Missings -> WoE do grupo MISSING."""
-        result = pd.DataFrame(index=df.index)
-
-        for feat in features:
-            if feat not in self.woe_maps_:
-                continue
-            
-            series = df[feat].copy()
-            edges = self.bin_edges_.get(feat)
-
-            if edges is not None:
-                edges = edges.copy() 
-                edges[0], edges[-1] = -np.inf, np.inf
-                binned = pd.cut(series, bins=edges, include_lowest=True).astype(str).fillna('MISSING')
-            else:
-                binned = series.astype(str).fillna('MISSING')
-
-            default_woe = self.missing_woe_.get(feat, 0.0)
-            result[f'{feat}_woe'] = binned.map(self.woe_maps_[feat]).fillna(default_woe)
-            
-        return result
-
-# ==============================================================================
 # DATA LAYER (Conexão e Carregamento)
 # ==============================================================================
 @st.cache_resource
@@ -229,11 +188,12 @@ def calculate_score(prob):
     return int((1 - prob) * 1000)
 
 def get_risk_tier(score):
-    if score >= 750: return "A (Prime)", COLORS['success']
-    if score >= 600: return "B (Baixo)", "#8BC34A"
-    if score >= 450: return "C (Médio)", COLORS['warning']
-    if score >= 300: return "D (Alto)", "#EF6C00"
-    return "E (Crítico)", COLORS['danger']
+    """Tierização alinhada com a estratégia de Marketing/CRM (A a E)"""
+    if score >= 800: return "A (Premium)", "#1B5E20"    # Verde Escuro
+    if score >= 600: return "B (Seguro)", "#4CAF50"     # Verde Claro
+    if score >= 400: return "C (Standard)", "#FFC107"   # Amarelo/Ouro
+    if score >= 200: return "D (Atenção)", "#FF9800"    # Laranja
+    return "E (Alto Risco)", "#F44336"                  # Vermelho
 
 def plot_bad_rate_trend(summary_df):
     fig = make_subplots(specs=[[{"secondary_y": True}]])
@@ -546,7 +506,7 @@ def calculate_policy_curve(df, min_age, min_payment):
     total_obs = len(df)
     
     for c in cutoffs:
-        mask_score = (df['bur_score_02'] >= c).fillna(False)
+        mask_score = (df['behavior_score'] >= c).fillna(False)
         mask_final = mask_static & mask_score
         
         aprovados = mask_final.sum()
@@ -608,7 +568,7 @@ def plot_decision_boundary(df, cutoff, min_age, min_pay):
     plot_df = df.sample(min(2000, len(df))).copy()
     
     mask = (
-        (plot_df['bur_score_02'] >= cutoff) & 
+        (plot_df['behavior_score'] >= cutoff) & 
         (plot_df['idade'] >= min_age) & 
         (plot_df['pag_vlr_total_geral'].fillna(0) >= min_pay)
     )
@@ -618,7 +578,7 @@ def plot_decision_boundary(df, cutoff, min_age, min_pay):
     plot_df['Decisão'] = np.where(mask, 'Aprovado', 'Reprovado')
     
     fig = px.scatter(
-        plot_df, x='idade', y='bur_score_02', color='Decisão',
+        plot_df, x='idade', y='behavior_score', color='Decisão',
         color_discrete_map={'Aprovado': COLORS['success'], 'Reprovado': COLORS['neutral']},
         title="<b>Fronteira de Decisão:</b> Score vs Idade",
         opacity=0.6
@@ -914,4 +874,71 @@ def plot_geo_map(df, uf_selecionada=None, regiao_sel=None):
         )
     )
     
+    return fig
+
+
+def plot_tierizacao_financeira(df, conversao, upsell, ltv, arpu, meses_inad, fator_escala=20):
+    """
+    Gera o gráfico de EBITDA Potencial vs Bad Rate por Tier de Risco.
+    fator_escala=20 assume que o df é uma amostra de 5% da base total (20 * 5 = 100%).
+    """
+    # Cria os 5 decis (Ratings A-E) com base na probabilidade do modelo
+    df_plot = df.copy()
+    
+    # Evita erro caso os decis gerem bordas duplicadas
+    df_plot['rating_crm'] = pd.qcut(df_plot['prob_modelo'], q=5, labels=['A (Premium)', 'B (Seguro)', 'C (Standard)', 'D (Atenção)', 'E (Alto Risco)'], duplicates='drop')
+
+    analise_tier = df_plot.groupby('rating_crm', observed=True).agg(
+        Volume_CPFs=('prob_modelo', 'count'),
+        Inadimplencia_FPD=('target', 'mean')
+    ).reset_index()
+
+    # Escala os volumes e calcula a receita potencial por Tier
+    analise_tier['Vol_Nacional'] = analise_tier['Volume_CPFs'] * fator_escala * conversao
+    
+    # Lógica de negócio: Receita (Bons) - Prejuízo (Maus)
+    receita = (analise_tier['Vol_Nacional'] * (1 - analise_tier['Inadimplencia_FPD']) * upsell * ltv)
+    prejuizo = (analise_tier['Vol_Nacional'] * analise_tier['Inadimplencia_FPD'] * arpu * meses_inad)
+    analise_tier['EBITDA_Potencial'] = receita - prejuizo
+
+    # Criação do gráfico com 2 eixos
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
+
+    fig.add_trace(go.Bar(
+        x=analise_tier['rating_crm'], 
+        y=analise_tier['EBITDA_Potencial'],
+        name="EBITDA Incremental Projetado (R$)",
+        marker_color=['#1B5E20', '#4CAF50', '#D4A017', '#FF9800', '#B53744'], # Cores alinhadas ao tema
+        opacity=0.85,
+        text=analise_tier['EBITDA_Potencial'].apply(lambda x: f"R$ {x/1e6:.1f}M" if x > 0 else f"-R$ {abs(x)/1e6:.1f}M"),
+        textposition="outside"
+    ), secondary_y=False)
+
+    fig.add_trace(go.Scatter(
+        x=analise_tier['rating_crm'], 
+        y=analise_tier['Inadimplencia_FPD'] * 100,
+        name="Inadimplência FPD (%)",
+        mode="lines+markers+text",
+        text=(analise_tier['Inadimplencia_FPD'] * 100).apply(lambda x: f"{x:.1f}%"),
+        textposition="top center",
+        line=dict(color='#DAD0D1', width=3, dash='dot'), 
+        marker=dict(size=10, color='#FFF')
+    ), secondary_y=True)
+
+    fig.update_layout(
+        title="<b>Tierização Estratégica: Receita vs Risco por Segmento</b>",
+        height=450,
+        template="plotly_dark",
+        margin=dict(l=20, r=20, t=60, b=20),
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        legend=dict(orientation="h", yanchor="bottom", y=1.05, xanchor="right", x=1)
+    )
+    
+    # Ajusta o eixo Y para dar espaço aos rótulos
+    max_ebitda = analise_tier['EBITDA_Potencial'].max()
+    min_ebitda = analise_tier['EBITDA_Potencial'].min()
+    fig.update_yaxes(title_text="EBITDA Projetado (R$)", secondary_y=False, range=[min_ebitda * 1.2, max_ebitda * 1.3])
+    fig.update_yaxes(title_text="FPD (%)", secondary_y=True, showgrid=False)
+
     return fig

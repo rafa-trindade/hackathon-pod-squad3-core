@@ -15,6 +15,7 @@ from pathlib import Path
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import roc_curve, roc_auc_score
+from catboost import CatBoostClassifier
 
 # ==============================================================================
 # 0. CONFIGURAÇÃO INICIAL
@@ -49,12 +50,12 @@ try:
         calculate_policy_curve,
         plot_policy_tradeoff,  
         plot_decision_boundary,
-        WoEEncoder,
         process_demographics, 
         plot_age_analysis,   
         plot_geo_map,
         STATE_NAMES,
-        STATE_COORDS
+        STATE_COORDS,
+        plot_tierizacao_financeira
     )
 except ImportError:
     pass  
@@ -122,10 +123,11 @@ st.sidebar.write("<hr style='margin-top:-10px; margin-bottom:0px;'>", unsafe_all
 view_mode = st.sidebar.radio(
     "Selecione a Visualização",
     [
-        "👤 Home | Estudo de Público",
-        "🎯 Estratégia de Política",
+        "👤 Home | Análise de Dados",
+        "📈 Performance & Benchmark",
         "⚙️ Motor de Decisão",
-        "📈 Performance & Benchmark"
+        "🎯 Estratégia de Política",
+        "💰 Impacto para o Negócio"
     ],
     index=0,
     label_visibility="collapsed"
@@ -166,7 +168,7 @@ st.sidebar.markdown(
 def main():
 
     # ==============================================================================
-    # 1. INGESTÃO CENTRALIZADA DE DADOS (SINGLE SOURCE OF TRUTH)
+    # 1. INGESTÃO CENTRALIZADA DE DADOS 
     # ==============================================================================
     @st.cache_data(ttl=3600)
     def load_master_data():
@@ -201,18 +203,27 @@ def main():
         st.error("❌ Falha ao carregar a base de dados central.")
         st.stop()
 
+    try:
+        assets = load_assets()
+        feat_raw = assets['features_raw']
+        X_all = df_master[feat_raw].apply(pd.to_numeric, errors='coerce').astype(float).fillna(0)
+        probs_all = assets['model'].predict_proba(X_all)[:, 1]
+        df_master['behavior_score'] = ((1 - probs_all) * 1000).astype(int)
+    except:
+        df_master['behavior_score'] = df_master.get('bur_score_02', pd.Series(0, index=df_master.index)).fillna(0)
+
     df_demo = prep_demographic_data(df_master)
     global_bad_rate_demo = df_demo['target'].mean()
     global_bad_rate_master = df_master['target'].mean()
 
 
 
-    if view_mode == "👤 Home | Estudo de Público":
+    if view_mode == "👤 Home | Análise de Dados":
 
         st.markdown(
             f"""
             <h3 style="font-weight:700; margin-bottom: 0px;">
-                Visão Geral e Estudo de Público: Migração Pré para Controle - 
+                Visão Geral e Análise de Dados: Migração Pré para Controle - 
                 <code class="theme-1" style="font-size: 1.2rem;">eda_v1.0</code>
             </h3>
             """,
@@ -473,14 +484,14 @@ def main():
 
                 with c_score:
                     min_score, max_score = st.slider(
-                        "3. Faixa de Score (Bureau):", 
+                        "3. Faixa de Score (Behavior):",
                         0, 1000, (0, 1000)
                     )
                 
                 mask = pd.Series(True, index=df_demo.index)
 
                 if min_score > 0 or max_score < 1000:
-                    mask &= df_demo['bur_score_02'].between(min_score, max_score)
+                    mask &= df_demo['behavior_score'].between(min_score, max_score) 
 
                 if sel_regiao != "Brasil (Todas)":
                     mask &= (df_demo['regiao'] == sel_regiao)
@@ -633,7 +644,7 @@ def main():
                 
                 df_sample = df_master.copy()
 
-                ignored_cols = ['target', 'fpd', 'safra', 'num_cpf', 'cpf']
+                ignored_cols = ['target', 'fpd', 'safra', 'num_cpf', 'cpf', 'behavior_score', 'prob_modelo']
                 numeric_cols = df_sample.select_dtypes(include=[np.number]).columns.tolist()
                 available_features = [c for c in numeric_cols if c not in ignored_cols]
 
@@ -773,7 +784,7 @@ def main():
                 
             df_multi = df_master.copy()
 
-            ignored_cols = ['target', 'fpd', 'safra', 'num_cpf', 'cpf']
+            ignored_cols = ['target', 'fpd', 'safra', 'num_cpf', 'cpf', 'behavior_score', 'prob_modelo']
             numeric_cols = df_multi.select_dtypes(include=[np.number]).columns.tolist()
             valid_cols = [c for c in numeric_cols if c not in ignored_cols]
             
@@ -905,10 +916,10 @@ def main():
         # --- TAB 5: RANKING DE VARIÁVEIS ---
         with tab5:
             with st.expander("🏆 Ranking de Poder Discriminatório", expanded=True):
-                
                 try:
                     with st.spinner("Calculando Gini e IV para todas as variáveis..."):
-                        ranking_df = get_feature_ranking(df_master)
+                        df_features_only = df_master.drop(columns=['behavior_score', 'prob_modelo'], errors='ignore')
+                        ranking_df = get_feature_ranking(df_features_only)
                         
                 except Exception as e:
                     st.error(f"Erro ao processar ranking: {e}")
@@ -1001,7 +1012,7 @@ def main():
                     feat_psi = st.selectbox(
                         "Variável para Análise:", 
                         cols_validas, 
-                        index=cols_validas.index('bur_score_02') if 'bur_score_02' in cols_validas else 0
+                        index=cols_validas.index('behavior_score') if 'behavior_score' in cols_validas else 0 
                     )
                 
                 with c2:
@@ -1123,22 +1134,19 @@ def main():
                 df_perf = df_master.copy()
                 assets = load_assets()
                 model = assets['model']
-                encoder = assets['woe_encoder']
                 features_raw = assets['features_raw']
-
                 metadata = assets.get('metadata', {})
         except Exception as e:
             st.error(f"Erro ao carregar modelo ou base de dados: {e}")
             st.stop()
 
         df_to_score = df_perf.copy()
+        
         for col in features_raw:
             if col not in df_to_score.columns:
                 df_to_score[col] = np.nan
         
-        df_woe = encoder.transform(df_to_score, features_raw)
-        woe_cols = [f'{col}_woe' for col in features_raw]
-        X_model = df_woe[woe_cols].fillna(0)
+        X_model = df_to_score[features_raw] 
         df_perf['prob_modelo'] = model.predict_proba(X_model)[:, 1]
 
         fpr, tpr, _ = roc_curve(df_perf['target'], df_perf['prob_modelo'])
@@ -1220,7 +1228,7 @@ def main():
             pct_swap_out = (n_swap_out / len(df_view)) * 100 if len(df_view) > 0 else 0
 
             # =================================================================
-            # 4. RENDERIZAÇÃO DOS PAINÉIS ALINHADOS
+            # 4. RENDERIZAÇÃO DOS PAINÉIS 
             # =================================================================
             kpi_swap01, kpi_swap02 = st.columns([1, 2.5])
             ALTURA_CARD = "215px"
@@ -1371,7 +1379,6 @@ def main():
                 font=dict(color="#BBB")
             )
             
-            # Linha de Benchmark
             fig_wf.add_hline(
                 y=ks_bench, 
                 line_dash="dash", 
@@ -1403,28 +1410,27 @@ def main():
         )
         st.caption("🎯 Simulação, Otimização e Insights para Definição de Regras de Aprovação")
         st.write("<hr style='margin-top:-6.5px; margin-bottom:15px;'>", unsafe_allow_html=True)
-
+        
         # ---------------------------------------------------------
         # CARREGAMENTO DA BASE & FILTROS GLOBAIS
         # ---------------------------------------------------------
-        df_sim = df_master.copy()
-
-        required_cols = ['bur_score_02', 'idade', 'pag_vlr_total_geral', 'target']
+        df_sim = df_master.copy() 
+        
+        required_cols = ['behavior_score', 'idade', 'pag_vlr_total_geral', 'target']
         missing = [c for c in required_cols if c not in df_sim.columns]
+
         if missing:
             st.error(f"Faltam colunas para o simulador: {missing}")
             st.stop()
             
         st.caption(f"📦 Volume da amostra (5% da base): **{len(df_sim):,} registros**")
         
-        # =========================================================
-        # CRIAÇÃO DAS ABAS
-        # =========================================================
+
         tab_engine, tab_simulacao  = st.tabs(["⚖️ Policy Engine", "🎛️ Simulação"])
 
 
         # =========================================================
-        # ABA 1: O SEU CÓDIGO ORIGINAL INTACTO
+        # ABA 1
         # =========================================================
         with tab_simulacao:
             st.markdown("""
@@ -1472,7 +1478,7 @@ def main():
                         
                         for c in np.arange(300, 901, 10):
                             mask = (
-                                (df_sim["bur_score_02"] >= c) & 
+                                (df_sim["behavior_score"] >= c) & 
                                 (df_sim["idade"] >= min_idade) & 
                                 (df_sim["pag_vlr_total_geral"].fillna(0) >= min_pagto)
                             ).fillna(False)
@@ -1493,22 +1499,30 @@ def main():
                         default_score = 0
 
                     score_cutoff = st.slider(
-                        "Score Mínimo (Bureau)", 
+                        "Score Mínimo (Behavior)",
                         0, 1000, 
                         value=default_score,
                         disabled=(mode == "Sweet Spot")
                     )
 
-                    query_aprovados = f"""
-                        SELECT * FROM df_sim 
-                        WHERE bur_score_02 >= {score_cutoff}
-                        AND idade >= {min_idade}
-                        AND COALESCE(pag_vlr_total_geral, 0) >= {min_pagto}
-                    """
-                    try:
-                        aprovados_df = duckdb.query(query_aprovados).df()
-                    except Exception:
-                        aprovados_df = pd.DataFrame()
+                    if score_cutoff >= 800: tier_minimo = "A (Premium)"
+                    elif score_cutoff >= 600: tier_minimo = "B (Seguro)"
+                    elif score_cutoff >= 400: tier_minimo = "C (Standard)"
+                    elif score_cutoff >= 200: tier_minimo = "D (Atenção)"
+                    else: tier_minimo = "E (Alto Risco)"
+                
+                st.info(f"🏷️ **Perfil Comercial:** Aprovando clientes a partir do Rating **{tier_minimo}**")
+
+                query_aprovados = f"""
+                    SELECT * FROM df_sim 
+                    WHERE behavior_score >= {score_cutoff} /* <--- CORRIGIDO AQUI! */
+                    AND idade >= {min_idade}
+                    AND COALESCE(pag_vlr_total_geral, 0) >= {min_pagto}
+                """
+                try:
+                    aprovados_df = duckdb.query(query_aprovados).df()
+                except Exception:
+                    aprovados_df = pd.DataFrame()
             
             curve_df = calculate_policy_curve(df_sim, min_idade, min_pagto)
             taxa_aprovacao = len(aprovados_df) / len(df_sim)
@@ -1575,7 +1589,6 @@ def main():
         
                 st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
 
-                # Mantido o seu gráfico de Trade-off
                 st.plotly_chart(
                     plot_policy_tradeoff(curve_df, score_cutoff, sweet_spot if mode == "Sweet Spot" else None),
                     width='stretch'
@@ -1609,10 +1622,17 @@ def main():
             # 1. EXTENDER DE SEGMENTAÇÃO (MACHINE LEARNING)
             # ---------------------------------------------------------
             with st.expander("📡 Motor de Clusterização - Identificação de Perfis Ocultos", expanded=True):
-                st.caption("O motor agrupa a amostra para identificar padrões comuns de risco e oportunidade ocultos.")
+                st.caption("O motor agrupa a amostra para identificar padrões comuns de risco e oportunidade ocultos para ações de CRM e Vendas.")
 
-                cluster_features = ["bur_score_02", "idade", "pag_vlr_total_geral"]
+                cluster_features = ["behavior_score", "idade", "pag_vlr_total_geral"]
                 df_cluster = df_sim[cluster_features].copy().fillna(0)
+                
+                # --- TRATAMENTO DE OUTLIERS ---
+                # para que o K-Means não crie um cluster de 1 pessoa só.
+                limite_pagto = df_cluster["pag_vlr_total_geral"].quantile(0.99)
+                df_cluster["pag_vlr_total_geral"] = df_cluster["pag_vlr_total_geral"].clip(upper=limite_pagto)
+                
+                scaler = StandardScaler()
                 
                 scaler = StandardScaler()
                 X_scaled = scaler.fit_transform(df_cluster)
@@ -1626,7 +1646,7 @@ def main():
                     .agg(
                         clientes=("cluster", "count"), 
                         bad_rate=("target", "mean"),
-                        score_medio=("bur_score_02", "mean"), 
+                        score_medio=("behavior_score", "mean"),
                         idade_media=("idade", "mean"),
                         pagamento_medio=("pag_vlr_total_geral", "mean"),
                     ).reset_index()
@@ -1640,21 +1660,28 @@ def main():
                         cluster_summary, x="score_medio", y="bad_rate", size="clientes", color="bad_rate",
                         text="cluster", color_continuous_scale="RdYlGn_r", title="Mapa de Segmentos de Risco"
                     )
-                    fig_cluster.update_layout(template="plotly_dark", xaxis_title="Score Médio", height=320, yaxis_title="Bad Rate (%)", margin=dict(l=0, r=0, t=20, b=0))
+                    fig_cluster.update_layout(template="plotly_dark", xaxis_title="Behavior Score Médio", height=430, yaxis_title="Inadimplência - FPD (%)", margin=dict(l=0, r=0, t=20, b=0))
                     st.plotly_chart(fig_cluster, use_container_width=True)
 
                 with col_insights:
-                    for _, row in cluster_summary.sort_values("bad_rate").iterrows():
+                    for i, (_, row) in enumerate(cluster_summary.sort_values("bad_rate").iterrows()):
                         risco = row["bad_rate"]
-                        if risco < 15: tag, cor = "🟢 Baixo Risco", "#5EA758"
-                        elif risco < 30: tag, cor = "🟡 Médio Risco", "#D4A017"
-                        else: tag, cor = "🔴 Alto Risco", "#B53744"
+                        
+                        if i == 0: 
+                            tag, cor, acao = "Rating A/B (Premium)", "#5EA758", "Aprovado - Oferta Cross-Sell (Crescimento)"
+                        elif i == 1: 
+                            tag, cor, acao = "Rating C (Standard)", "#4CAF50", "Aprovado - Oferta Plano Entrada"
+                        elif i == 2: 
+                            tag, cor, acao = "Rating D (Atenção)", "#D4A017", "Mesa / Limitado - Controle de Risco"
+                        else: 
+                            tag, cor, acao = "Rating E (Alto Risco)", "#B53744", "Reprovado - Bloqueio (Blindagem FPD)"
 
                         st.markdown(f"""
                         <div style="background-color:#1A1A1A; padding:10px; border-radius:8px; margin-bottom:10px; border-left:4px solid {cor};">
-                            <strong>Cluster {int(row['cluster'])} - {tag}</strong><br>
+                            <strong style="color: #DDD;">Cluster {int(row['cluster'])} - </strong><strong style="color: {cor};">{tag}</strong><br>
                             <span style="font-size: 0.85em; color: #BBB;">
-                            Vol: {int(row['clientes']):,} | Score: {row['score_medio']:.0f} | Idade: {row['idade_media']:.0f}
+                            Vol: {int(row['clientes']):,} | Score: ~{row['score_medio']:.0f} | Idade: ~{row['idade_media']:.0f}<br>
+                            <span style="color: {cor}; font-weight: bold;">Diretriz:</span> {acao}
                             </span>
                         </div>
                         """, unsafe_allow_html=True)
@@ -1677,11 +1704,27 @@ def main():
                 if total_w == 0: total_w = 1
                 w_growth, w_risk, w_quality = w_growth/total_w, w_risk/total_w, w_quality/total_w
 
+                if 'behavior_score' not in df_sim.columns:
+                    try:
+                        assets = load_assets()
+                        model_pkl = assets['model']
+                        feat_raw = assets['features_raw']
+                        
+                        X_sim = df_sim.copy()
+                        for col in feat_raw:
+                            if col not in X_sim.columns: X_sim[col] = np.nan
+                        
+                        X_sim = X_sim[feat_raw].apply(pd.to_numeric, errors='coerce').astype(float)
+                        probs = model_pkl.predict_proba(X_sim)[:, 1]
+                        df_sim['behavior_score'] = ((1 - probs) * 1000).astype(int)
+                    except:
+                        df_sim['behavior_score'] = df_sim['bur_score_02'].fillna(0)
+
                 policy_rows = []
                 cutoffs = np.arange(300, 901, 10)
 
                 for c in cutoffs:
-                    mask = (df_sim["bur_score_02"] >= c).fillna(False)
+                    mask = (df_sim["behavior_score"] >= c).fillna(False)
                     approval = mask.mean()
                     bad_rate = df_sim.loc[mask, "target"].mean() if mask.sum() > 0 else np.nan
                     efficiency = approval * (1 - bad_rate) if pd.notna(bad_rate) else 0
@@ -1696,13 +1739,24 @@ def main():
                 df_policy["ai_score"] = (w_growth * df_policy["approval_n"] + w_risk * df_policy["risk_n"] + w_quality * df_policy["eff_n"])
                 best_policy = df_policy.sort_values("ai_score", ascending=False).iloc[0]
 
-
                 # =================================================================
                 # LÓGICA DE DIAGNÓSTICO DA POLÍTICA (AI ENGINE)
                 # =================================================================
                 cutoff_sugerido = int(best_policy['cutoff'])
                 aprovacao_estimada = best_policy['approval']
                 risco_estimado = best_policy['bad_rate']
+                
+                # Traduz o cutoff sugerido para o Rating do Negócio
+                if cutoff_sugerido >= 800: tier_sug = "A (Premium)"
+                elif cutoff_sugerido >= 600: tier_sug = "B (Seguro)"
+                elif cutoff_sugerido >= 400: tier_sug = "C (Standard)"
+                elif cutoff_sugerido >= 200: tier_sug = "D (Atenção)"
+                else: tier_sug = "E (Alto Risco)"
+
+                if w_growth > w_risk:
+                    perfil_estrategia = "EXPANSIVA (Foco em Market Share)"
+                    perfil_cor = "#5EA758"
+                    justificativa = "priorizando a aprovação de novos clientes e o crescimento da carteira."
 
                 if w_growth > w_risk:
                     perfil_estrategia = "EXPANSIVA (Foco em Market Share)"
@@ -1724,7 +1778,7 @@ def main():
                 <div style="background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(212, 160, 23, 0.2); padding: 15px; border-radius: 8px;">
                     <span style="color: {perfil_cor}; font-weight: bold; font-size: 14px; letter-spacing: 0.5px;">🎯 PARECER DO MODELO: {perfil_estrategia}</span><br>
                     <p style="font-size: 13.5px; color: #DDD; margin-top: 8px; line-height: 1.6; margin-bottom: 0;">
-                        Com base na calibração atual, a política recomendada é o <span style="color: {perfil_cor}; font-weight: bold;">Cutoff {cutoff_sugerido}</span></b>, {justificativa}
+                        Com base na calibração atual, a política recomendada é o <span style="color: {perfil_cor}; font-weight: bold;">Cutoff {cutoff_sugerido}</span> - <span style="color: {perfil_cor}; font-weight: bold;"> Rating Mínimo: {tier_sug}</span>, {justificativa}
                         Esta configuração projeta uma <b>taxa de aprovação de {aprovacao_estimada:.1%}</b> com uma 
                         <b>inadimplência esperada (FPD) de {risco_estimado:.1%}</b>. 
                         Este cenário maximiza o índice de aderência estratégica em relação aos objetivos de negócio definidos nos parâmetros acima.
@@ -1752,8 +1806,10 @@ def main():
                         template="plotly_dark",
                         xaxis_title="Taxa de Aprovação",
                         yaxis_title="Inadimplência (FPD)",
-                        coloraxis_colorbar=dict(title="Índice"),  # muda legenda da cor
-                        margin=dict(l=0, r=0, t=40, b=0)
+                        coloraxis_colorbar=dict(title="Índice"), 
+                        margin=dict(l=0, r=0, t=40, b=0),
+                        paper_bgcolor="rgba(0,0,0,0)",
+                        plot_bgcolor="rgba(0,0,0,0)"
                     )
                     fig_pareto.add_vline(x=best_policy["approval"], line_dash="dash", line_color="#4F1C22")
                     fig_pareto.add_hline(y=best_policy["bad_rate"], line_dash="dash", line_color="#4F1C22")
@@ -1783,10 +1839,12 @@ def main():
                     fig_top.update_layout(
                         template="plotly_dark",
                         title="Top 10 Cutoffs por Índice de Aderência",
-                        xaxis_title="Índice de Aderência",
-                        yaxis_title="Corte de Score",
+                        xaxis_title=None,
+                        yaxis_title=None,
                         height=350,
                         margin=dict(l=0, r=50, t=40, b=0),
+                        paper_bgcolor="rgba(0,0,0,0)",
+                        plot_bgcolor="rgba(0,0,0,0)",
                         xaxis=dict(range=[top_policies["ai_score"].min() - 0.01, top_policies["ai_score"].max() + 0.005])
                     )
                     st.plotly_chart(fig_top, use_container_width=True)
@@ -1824,12 +1882,10 @@ def main():
         # ==========================================================
         st.markdown(
             f"""
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h3 style="font-weight:700; margin-bottom: 0px; color: #DAD0D1;">
-                    Credit Risk Engine - <span style="color: #888; font-weight: 500;">Behavior Score</span>
-                    <code style="font-size: 1rem; margin-left: 10px; background-color: #1A1C24; color: #5EA758; border: 1px solid #333; padding: 4px 8px; border-radius: 6px;">woe_v1.0</code> 
-                </h3>
-            </div>
+            <h3 style="font-weight:700; margin-bottom: 0px;">
+                 Credit Risk Engine - <span style="color: #888; font-weight: 500;">Behavior Score</span> - 
+                <code class="theme-1" style="font-size: 1.2rem;">Release 1.0</code>
+            </h3>
             """,
             unsafe_allow_html=True
         )
@@ -1858,7 +1914,7 @@ def main():
         # ==========================================================
         # 3. METADADOS DO MODELO
         # ==========================================================
-        with st.expander("🔍 Metadados do Modelo em Produção", expanded=False):
+        with st.expander("🏷️ Metadados do Modelo em Produção", expanded=False):
             st.markdown(f"""
                 <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 5px;">
                     <div style="background-color: #1A1A1A; border-left: 4px solid #4F1C22; border-radius: 6px; padding: 12px 20px; flex: 1; min-width: 150px;">
@@ -1882,114 +1938,168 @@ def main():
             st.write("") 
 
         # ==========================================================
-        # 4. ESTRUTURA PRINCIPAL (Formulário e Dashboard)
+        # 4. ESTRUTURA PRINCIPAL 
         # ==========================================================
-        p1, p2 = st.columns([1, 1.4]) 
+        
+        p1, p2 = st.columns([1,2]) 
         
         with p1:
-            with st.form("risk_form", clear_on_submit=False):
-                st.markdown("<h4 style='margin-bottom: 10px; color: #DAD0D1;'>📝 Dados do Proponente</h4>", unsafe_allow_html=True)
+            
+            @st.cache_data(show_spinner=False)
+            def get_curated_cpfs(_df, _model, features, pct_bur):
+                X_all = _df[features].apply(pd.to_numeric, errors='coerce').astype(float)
+                probs = _model.predict_proba(X_all)[:, 1]
+                scores = ((1 - probs) * 1000).astype(int)
                 
-                UI_CONFIG = {
-                    'bur_score_02': {'label': 'Bureau Score 02', 'min': 0.0, 'max': 1000.0, 'default': 450.0, 'grupo': '🏛️ Bureau & Cadastro', 'help': 'Principal score de mercado'},
-                    'bur_score_01': {'label': 'Bureau Score 01', 'min': 0.0, 'max': 1000.0, 'default': 500.0, 'grupo': '🏛️ Bureau & Cadastro', 'help': 'Score secundário'},
-                    'cad_var_02': {'label': 'Tempo Residência (Meses)', 'min': 0.0, 'max': 360.0, 'default': 24.0, 'grupo': '🏛️ Bureau & Cadastro', 'help': ''},
-                    
-                    'rec_vlr_avg_geral': {'label': 'Vlr Médio Recarga (R$)', 'min': 0.0, 'max': 500.0, 'default': 35.0, 'grupo': '📱 Comportamento Recarga', 'help': ''},
-                    'rec_dias_desde_ultima': {'label': 'Dias desde última recarga', 'min': 0.0, 'max': 365.0, 'default': 5.0, 'grupo': '📱 Comportamento Recarga', 'help': ''},
-                    'rec_ratio_vlr_l30d_l60d': {'label': 'Razão Recarga L30/L60', 'min': 0.0, 'max': 10.0, 'default': 1.0, 'grupo': '📱 Comportamento Recarga', 'help': ''},
-                    
-                    'pag_dias_desde_ultimo_pagamento': {'label': 'Recência Pagamento (Dias)', 'min': 0.0, 'max': 365.0, 'default': 10.0, 'grupo': '💳 Pagamentos & Atrasos', 'help': ''},
-                    'atr_vlr_acumulado_geral': {'label': 'Valor em Atraso (R$)', 'min': 0.0, 'max': 10000.0, 'default': 0.0, 'grupo': '💳 Pagamentos & Atrasos', 'help': ''},
-                    'tel_var_28': {'label': 'Idade na Telco (Meses)', 'min': 0.0, 'max': 240.0, 'default': 12.0, 'grupo': '💳 Pagamentos & Atrasos', 'help': ''}
-                }
-
-                inputs = {}
-                grupos_para_renderizar = {}
+                cutoff_bur = np.nanpercentile(_df['bur_score_02'], pct_bur)
+                aprova_bur = _df['bur_score_02'] >= cutoff_bur
+                aprova_mod = scores >= 400
                 
-                for feat in features_raw:
-                    config = UI_CONFIG.get(feat, {
-                        'label': feat, 
-                        'min': 0.0, 
-                        'max': 100000.0, 
-                        'default': 0.0, 
-                        'grupo': '🔄 Novas Variáveis', 
-                        'help': 'Variável adicionada na última versão'
-                    })
-                    
-                    nome_grupo = config['grupo']
-                    if nome_grupo not in grupos_para_renderizar:
-                        grupos_para_renderizar[nome_grupo] = []
-                    
-                    grupos_para_renderizar[nome_grupo].append({'id': feat, **config})
+                m_si = aprova_mod & (~aprova_bur)
+                m_so = (~aprova_mod) & aprova_bur
+                m_aa = aprova_mod & aprova_bur
+                m_ar = (~aprova_mod) & (~aprova_bur)
+                
+                cpf_si = _df[m_si]['num_cpf'].dropna().astype(str).values[0]
+                cpf_so = _df[m_so]['num_cpf'].dropna().astype(str).values[0]
+                cpf_aa = _df[m_aa]['num_cpf'].dropna().astype(str).values[0]
+                cpf_ar = _df[m_ar]['num_cpf'].dropna().astype(str).values[0]
+                
+                top_4 = [
+                    f"{cpf_si}",
+                    f"{cpf_so}",
+                    f"{cpf_aa}",
+                    f"{cpf_ar}"
+                ]
+                
+                cpfs_demo = [cpf_si, cpf_so, cpf_aa, cpf_ar]
+                resto_normal = _df[~_df['num_cpf'].astype(str).isin(cpfs_demo)]['num_cpf'].dropna().astype(str).unique()[:5000].tolist()
+                
+                return top_4 + resto_normal
+                
+            pct_bureau = metadata.get('cutoff_bureau_pct', 30.0)
+            lista_cpfs_view = get_curated_cpfs(df_master, model, features_raw, pct_bureau)
+           
+            with st.expander("🔍 Buscar Cliente", expanded=True):
 
-                for nome_grupo, lista_feats in grupos_para_renderizar.items():
-                    st.markdown(f"<div style='font-size: 0.9rem; font-weight: 600; color: #BBB; margin-top: 15px; margin-bottom: 5px; border-bottom: 1px dashed #444; padding-bottom: 5px;'>{nome_grupo}</div>", unsafe_allow_html=True)
-                    cols = st.columns(2)
-                    
-                    for i, f_data in enumerate(lista_feats):
-                        with cols[i % 2]: 
-                            inputs[f_data['id']] = st.number_input(
-                                label=f_data['label'], 
-                                min_value=float(f_data['min']), 
-                                max_value=float(f_data['max']), 
-                                value=float(f_data['default']),
-                                help=f_data['help'],
-                                key=f"input_{f_data['id']}" 
+                cpf_selecionado_raw = st.selectbox(
+                    "Selecione o caso para demonstração ao vivo:", 
+                    options=[""] + lista_cpfs_view, 
+                    index=0,
+                    help="Clique e digite o cenário desejado (ex: Swap-In) ou um CPF."
+                )
+
+            cpf_selecionado = cpf_selecionado_raw.split(" | ")[0] if cpf_selecionado_raw else ""
+
+            if cpf_selecionado != "":
+                dados_cliente = df_master[df_master['num_cpf'].astype(str) == cpf_selecionado].iloc[0]
+                                
+                with st.expander("📋 Perfil do Cliente Capturado", expanded=False):
+                    cols_feat = st.columns(2)
+                    for i, feat in enumerate(features_raw):
+                        val = dados_cliente.get(feat, 0.0)
+                        with cols_feat[i % 2]:
+                            st.number_input(
+                                label=feat,
+                                value=float(val) if pd.notna(val) else 0.0,
+                                disabled=True,
+                                key=f"disabled_{feat}_{cpf_selecionado}" 
                             )
-
-                st.write("")
-                submit_val = st.form_submit_button("🚀 PROCESSAR MOTOR", use_container_width=True)
-
-        # ==========================================================
-        # 5. PROCESSAMENTO E RESULTADOS 
-        # ==========================================================
-        if submit_val:
-            try:
-                df_input = pd.DataFrame([inputs])
-                for col in features_raw:
-                    if col not in df_input.columns:
-                        df_input[col] = np.nan 
-                df_input = df_input[features_raw]
                 
-                df_woe = encoder.transform(df_input, features_raw)
-                woe_cols = [f'{col}_woe' for col in features_raw]
-                X_model = df_woe[woe_cols].fillna(0) 
-                
-                prob = model.predict_proba(X_model)[:, 1][0]
-                score = calculate_score(prob)
-                tier, color_tier = get_risk_tier(score) # color_tier original
-                
-                decision = "APROVADO" if score >= 600 else "MESA DE CRÉDITO" if score >= 450 else "REPROVADO"
-                
-                decision_color = "#5EA758" if decision == "APROVADO" else "#D4A017" if decision == "MESA DE CRÉDITO" else "#B53744"
-                
+                # ==========================================================
+                # 5. PROCESSAMENTO AUTOMÁTICO DO MOTOR
+                # ==========================================================
                 cor_gauge_aprovado = "rgba(94, 167, 88, 0.2)"
                 cor_gauge_mesa = "rgba(212, 160, 23, 0.2)"
                 cor_gauge_reprovado = "rgba(181, 55, 68, 0.2)"
-
-                with p2:
-                    st.markdown(f"""
-                    <div style="background-color: rgba(94, 167, 88, 0.1); border-left: 4px solid #5EA758; padding: 10px 15px; border-radius: 4px; margin-bottom: 20px;">
-                        <span style="color: #5EA758; font-weight: 600; font-size: 14px;">✅ Análise Concluída com Sucesso.</span>
-                    </div>
-                    """, unsafe_allow_html=True)
-
-                    st.markdown("<h4 style='color: #DAD0D1; margin-bottom: 15px;'>📊 Painel de Decisão</h4>", unsafe_allow_html=True)
+                
+                try:
+                    features_cliente = pd.to_numeric(dados_cliente[features_raw], errors='coerce').astype(float)
+                    X_model = features_cliente.to_frame().T
                     
+                    prob = model.predict_proba(X_model)[:, 1][0]
+                    score = calculate_score(prob)
+                    tier, color_tier = get_risk_tier(score)
+                    
+                    if score >= 600:
+                        decision = "APROVADO"
+                        decision_sub = "Oferta Cross-Sell"
+                        decision_color = "#4CAF50"
+                    elif score >= 400:
+                        decision = "MESA / LIMITADO"
+                        decision_sub = "Oferta Plano Entrada"
+                        decision_color = "#FFC107"
+                    else:
+                        decision = "REPROVADO"
+                        decision_sub = "Bloqueio (Blindagem)"
+                        decision_color = "#F44336"
+                        
+                except Exception as e:
+                    st.error(f"Erro ao calcular score do cliente: {e}")
+                    prob, score, tier, decision, decision_sub, decision_color = 0, 0, "Erro", "ERRO", "Falha", "#B53744"
+
+
+
+        # ==========================================================
+        # 6. RENDERIZAÇÃO DO PAINEL DE RESULTADOS 
+        # ==========================================================
+    
+        with p2:
+
+            
+            if cpf_selecionado != "":
+                with st.expander("📊 Painel de Decisão e Explicabilidade", expanded=True):
+                    
+                    # ==========================================================
+                    # LÓGICA DE SWAP (DIRETO DO PKL)
+                    # ==========================================================
+                    pct_bureau = metadata.get('cutoff_bureau_pct', 30.0)
+                    
+                    cutoff_bureau = np.nanpercentile(df_master['bur_score_02'], pct_bureau)
+                    bureau_score = float(dados_cliente.get('bur_score_02', 0))
+                    
+                    aprova_bureau = bureau_score >= cutoff_bureau
+                    aprova_behavior = score >= 400 
+                    
+                    if aprova_behavior and aprova_bureau:
+                        swap_status = "Ambos Aprovam"
+                        swap_desc = f"Bureau ({bureau_score:.0f}) e Motor de Acordo"
+                        swap_color = "#4CAF50" 
+                    elif not aprova_behavior and not aprova_bureau:
+                        swap_status = "Ambos Reprovam"
+                        swap_desc = f"Bureau ({bureau_score:.0f}) e Motor Rejeitam"
+                        swap_color = "#F44336"
+                    elif aprova_behavior and not aprova_bureau:
+                        swap_status = "Swap-In (Ganho)"
+                        swap_desc = f"Resgatado! Bureau era {bureau_score:.0f} (Reprova)"
+                        swap_color = "#2196F3"
+                    else:
+                        swap_status = "Swap-Out (Proteção)"
+                        swap_desc = f"Barrado! Bureau era {bureau_score:.0f} (Aprova)"
+                        swap_color = "#FF9800" 
+
+                    # ==========================================================
+                    # CARDS SUPERIORES 
+                    # ==========================================================
                     st.markdown(f"""
                         <div style="display: flex; gap: 15px; margin-bottom: 20px;">
                             <div style="flex: 1; background: linear-gradient(145deg, #1A1C24, #1E1E1E); padding: 15px; border-radius: 8px; border-top: 3px solid #455A64; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
                                 <div style="font-size: 0.80rem; color: #999; font-weight: 600; margin-bottom: 5px;">PROBABILIDADE (PD)</div>
                                 <div style="font-size: 1.8rem; font-weight: 700; color: #FFF;">{prob:.2%}</div>
                             </div>
-                            <div style="flex: 1; background: linear-gradient(145deg, #1A1C24, #1E1E1E); padding: 15px; border-radius: 8px; border-top: 3px solid {decision_color}; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
-                                <div style="font-size: 0.80rem; color: #999; font-weight: 600; margin-bottom: 5px;">FAIXA DE RISCO</div>
-                                <div style="font-size: 1.8rem; font-weight: 700; color: {decision_color};">{tier}</div>
+                            <div style="flex: 1; background: linear-gradient(145deg, #1A1C24, #1E1E1E); padding: 15px; border-radius: 8px; border-top: 3px solid {color_tier}; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+                                <div style="font-size: 0.80rem; color: #999; font-weight: 600; margin-bottom: 5px;">RATING CRM</div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: {color_tier}; margin-top: 5px;">{tier}</div>
                             </div>
                             <div style="flex: 1.2; background: linear-gradient(145deg, #1A1C24, #1E1E1E); padding: 15px; border-radius: 8px; border-top: 3px solid {decision_color}; border-bottom: 1px solid {decision_color}40; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
-                                <div style="font-size: 0.80rem; color: #999; font-weight: 600; margin-bottom: 5px;">DECISÃO DO MOTOR</div>
-                                <div style="font-size: 1.5rem; font-weight: 700; color: {decision_color}; margin-top: 5px;">{decision}</div>
+                                <div style="font-size: 0.80rem; color: #999; font-weight: 600; margin-bottom: 0px;">DECISÃO (AÇÃO)</div>
+                                <div style="font-size: 1.4rem; font-weight: 700; color: {decision_color}; margin-top: 2px;">{decision}</div>
+                                <div style="font-size: 0.75rem; color: #BBB; margin-top: 2px;">{decision_sub}</div>
+                            </div>
+                            <div style="flex: 1.2; background: linear-gradient(145deg, #1A1C24, #1E1E1E); padding: 15px; border-radius: 8px; border-top: 3px solid {swap_color}; border-bottom: 1px solid {swap_color}40; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+                                <div style="font-size: 0.75rem; color: #999; font-weight: 600; margin-bottom: 0px;">MATRIZ DE SWAP</div>
+                                <div style="font-size: 1.2rem; font-weight: 700; color: {swap_color}; margin-top: 2px;">{swap_status}</div>
+                                <div style="font-size: 0.70rem; color: #BBB; margin-top: 2px;">{swap_desc}</div>
                             </div>
                         </div>
                     """, unsafe_allow_html=True)
@@ -1999,76 +2109,85 @@ def main():
                     with c_gauge:
                         fig_gauge = go.Figure(go.Indicator(
                             mode="gauge+number", value=score,
-                            title={'text': "Behavior Score", 'font': {'size': 16, 'color': '#BBB'}},
-                            number={'font': {'size': 42, 'color': '#FFF'}},
+                            title={'text': "<b>Behavior Score</b>", 'font': {'size': 14, 'color': '#BBB'}},
+                            number={'font': {'size': 62, 'color': '#FFF'}},
                             gauge={
                                 'axis': {'range': [0, 1000], 'tickwidth': 1, 'tickcolor': "#666"}, 
-                                'bar': {'color': decision_color, 'thickness': 0.25},
+                                'bar': {'color': "#FFFFFF", 'thickness': 0.15}, 
                                 'bgcolor': "#1A1C24",
                                 'borderwidth': 0,
                                 'steps': [
-                                    {'range': [0, 450], 'color': cor_gauge_reprovado}, 
-                                    {'range': [450, 600], 'color': cor_gauge_mesa}, 
-                                    {'range': [600, 1000], 'color': cor_gauge_aprovado}
+                                    {'range': [0, 200], 'color': 'rgba(244, 67, 54, 0.4)'},     # E
+                                    {'range': [200, 400], 'color': 'rgba(255, 152, 0, 0.4)'},   # D
+                                    {'range': [400, 600], 'color': 'rgba(255, 193, 7, 0.4)'},   # C
+                                    {'range': [600, 800], 'color': 'rgba(76, 175, 80, 0.4)'},   # B
+                                    {'range': [800, 1000], 'color': 'rgba(27, 94, 32, 0.4)'}    # A
                                 ]
                             }
                         ))
                         fig_gauge.update_layout(
                             height=280, 
-                            margin=dict(l=20, r=20, t=40, b=10),
+                            margin=dict(l=20, r=20, t=0, b=0),
                             paper_bgcolor="rgba(0,0,0,0)",
                             font={'family': "Inter, sans-serif"}
                         )
                         st.plotly_chart(fig_gauge, use_container_width=True)
 
-                    # Explainability Chart Dark
                     with c_expl:
+                        importances = model.get_feature_importance()
+                        
                         contributions = []
-                        for feat, woe_col in zip(features_raw, woe_cols):
-                            idx_feature = features_raw.index(feat)
-                            coef = model.coef_[0][idx_feature]
-                            val_woe = X_model[woe_col].values[0]
-                            impact = coef * val_woe
-                            nome_amigavel = UI_CONFIG.get(feat, {}).get('label', feat)
-                            contributions.append({'Feature': nome_amigavel, 'Impacto': impact})
+                        for feat, imp in zip(features_raw, importances):
+                            if feat not in ['bur_score_01', 'bur_score_02']:
+                                contributions.append({'Feature': feat, 'Impacto': imp})
                         
-                        df_contrib = pd.DataFrame(contributions).sort_values('Impacto', ascending=False)
+                        df_contrib = pd.DataFrame(contributions).sort_values('Impacto', ascending=False).head(8)
+                        df_contrib = df_contrib.sort_values('Impacto', ascending=True) 
                         
-                        fig_expl = px.bar(
-                            df_contrib, x='Impacto', y='Feature', orientation='h',
-                            color='Impacto', color_continuous_scale='RdYlGn',
-                            title="Drivers de Risco (Log-Odds)"
-                        )
+                        fig_expl = go.Figure()
+                        
+                        fig_expl.add_trace(go.Bar(
+                            x=df_contrib['Impacto'],
+                            y=df_contrib['Feature'],
+                            orientation='h',
+                            marker_color=decision_color, 
+                            width=0.15,      
+                            hoverinfo="x+y"
+                        ))
+
                         fig_expl.update_layout(
                             template="plotly_dark",
                             height=280, 
-                            margin=dict(l=10, r=20, t=40, b=20),
+                            margin=dict(l=10, r=20, t=50, b=25),
                             paper_bgcolor="rgba(0,0,0,0)",
                             plot_bgcolor="rgba(0,0,0,0)",
-                            xaxis_title=None,
-                            yaxis_title=None,
+                            xaxis=dict(showgrid=False, zeroline=False, showticklabels=False, title=None),
+                            yaxis=dict(showgrid=False, zeroline=False, title=None),
                             showlegend=False,
-                            yaxis={'categoryorder':'total ascending'},
+                            title="<b>Drivers de Risco</b> (Top 8)",
                             title_font=dict(size=14, color='#BBB')
                         )
                         st.plotly_chart(fig_expl, use_container_width=True)
-                        
-            except Exception as e:
-                st.error(f"Erro no processamento do motor: {str(e)}")
-        
-        else:
-            with p2:
-                st.markdown("""
-                    <div style="height: 650px; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #1A1A1A; border: 2px dashed #444; border-radius: 12px; margin-top: 45px;">
-                        <div style="background-color: #222; padding: 20px; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.3); margin-bottom: 20px;">
-                            <span style="font-size: 3.5rem;">⚙️</span>
-                        </div>
-                        <h3 style="color:#FFF; margin-bottom: 5px;">Motor Aguardando Parâmetros</h3>
-                        <p style="color:#BBB; font-size: 1.1rem; text-align: center; max-width: 400px;">
-                            Preencha as informações do proponente no formulário ao lado e clique em <b>Processar Motor</b> para visualizar a decisão.
-                        </p>
+
+                    st.markdown(f"""
+                    <div style="background-color: rgba(255, 255, 255, 0.05); border-left: 4px solid #455A64; padding: 10px 15px; border-radius: 4px; margin-bottom: 15px;">
+                        <span style="color: #BBB; font-weight: 600; font-size: 14px;">✓ Análise Concluída para o CPF: {cpf_selecionado}</span>
                     </div>
-                """, unsafe_allow_html=True)
+                    """, unsafe_allow_html=True)
+
+                        
+            else:
+                    st.markdown("""
+                        <div style="height: 400px; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #1A1A1A; border: 2px dashed #444; border-radius: 12px; margin-top: 0px;">
+                            <div style="background-color: #222; padding: 20px; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.3); margin-bottom: 20px;">
+                                <span style="font-size: 3.5rem;">⚙️</span>
+                            </div>
+                            <h3 style="color:#FFF; margin-bottom: 5px;">Motor Aguardando Seleção</h3>
+                            <p style="color:#BBB; font-size: 1.1rem; text-align: center; max-width: 400px;">
+                                Busque o <b>CPF</b> do proponente na barra lateral para autocompletar as variáveis e processar o risco instantaneamente.
+                            </p>
+                        </div>
+                    """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
