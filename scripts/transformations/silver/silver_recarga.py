@@ -51,7 +51,11 @@ keys_to_clean = {
 def run():
     con = get_duckdb_connection()
 
+    con.execute("SET memory_limit='30GB'")
+    con.execute("SET threads=4")
+    con.execute("SET temp_directory='/mnt/nvme/duckdb_tmp'")
     con.execute("SET preserve_insertion_order = false")
+
     WORK_DB_PATH = f"/mnt/nvme/duckdb_temp/work_{TABLE_NAME}.db"
     if os.path.exists(WORK_DB_PATH): os.remove(WORK_DB_PATH)
     con.execute(f"ATTACH '{WORK_DB_PATH}' AS work_db")
@@ -111,20 +115,21 @@ def run():
     chave_cols_str = ", ".join(chave_tecnica_cols)
 
     con.execute(f"""
+        CREATE TABLE work_db._max_ingestion AS
+        SELECT
+            {chave_cols_str},
+            MAX(ingestion_ts) as max_ingestion_ts
+        FROM {step1_table}
+        GROUP BY {chave_cols_str}
+    """)
+
+    con.execute(f"""
         CREATE TABLE work_db.silver_{TABLE_NAME}_step2 AS
-        SELECT * FROM {step1_table}
-        QUALIFY ROW_NUMBER() OVER(
-            PARTITION BY {chave_cols_str} 
-            ORDER BY 
-                 ingestion_ts DESC, 
-                 dat_insercao_credito DESC, 
-                 hor_insercao_credito DESC,
-                 -- Mantendo suas prioridades de negócio:
-                 (CASE WHEN dw_instituicao IS NOT NULL AND TRY_CAST(dw_instituicao AS INT) > 0 THEN 0 ELSE 1 END) ASC,
-                 (CASE WHEN cod_promocao IS NOT NULL AND TRY_CAST(cod_promocao AS INT) > 0 THEN 0 ELSE 1 END) ASC,
-                 num_cpf ASC,
-                 dw_num_ntc ASC
-        ) = 1
+        SELECT f.*
+        FROM {step1_table} f
+        JOIN work_db._max_ingestion m
+        ON {" AND ".join([f"f.{c} = m.{c}" for c in chave_tecnica_cols])}
+        AND f.ingestion_ts = m.max_ingestion_ts
     """)
     con.execute("CHECKPOINT work_db")
     print("✅ Deduplicação concluída com sucesso usando QUALIFY.")
