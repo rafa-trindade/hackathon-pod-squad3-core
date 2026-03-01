@@ -1,4 +1,4 @@
-# Relatório de Profiling: `gold/abt_base_cmv` - `20260223`
+# Relatório de Profiling: `gold/abt_base_cmv` - `20260301`
 
 ### ⚙️ Sumário Técnico do Dataset: `abt_base_cmv`
 
@@ -35,37 +35,60 @@
 | flag_instalacao                   | BOOLEAN                  | 0.0%          |
 | rec_qtd_geral                     | BIGINT                   | 0.0%          |
 | rec_qtd_l30d                      | BIGINT                   | 0.0%          |
+| rec_qtd_l60d                      | BIGINT                   | 0.0%          |
 | rec_qtd_l90d                      | BIGINT                   | 0.0%          |
 | rec_vlr_total_geral               | DOUBLE                   | 28.17%        |
 | rec_vlr_total_l30d                | DOUBLE                   | 41.68%        |
+| rec_vlr_total_l60d                | DOUBLE                   | 33.85%        |
 | rec_vlr_total_l90d                | DOUBLE                   | 31.11%        |
 | rec_tendencia_vlr_l30_l90         | DOUBLE                   | 57.65%        |
 | rec_qtd_sos_geral                 | BIGINT                   | 0.0%          |
 | rec_qtd_sos_l90d                  | BIGINT                   | 0.0%          |
 | rec_vlr_sos_l90d                  | DOUBLE                   | 82.68%        |
 | rec_qtd_canais_digitais_geral     | BIGINT                   | 0.0%          |
+| rec_qtd_canais_digitais_l90d      | BIGINT                   | 0.0%          |
 | rec_dias_desde_ultima             | BIGINT                   | 28.17%        |
 | rec_vlr_std_l90d                  | DOUBLE                   | 35.94%        |
 | rec_vlr_bonus_geral               | DOUBLE                   | 28.17%        |
+| rec_vlr_bonus_l90d                | DOUBLE                   | 31.11%        |
 | rec_qtd_plano_controle_geral      | BIGINT                   | 0.0%          |
+| rec_volatilidade_ticket           | DOUBLE                   | 42.59%        |
+| rec_indice_concentracao           | DOUBLE                   | 42.11%        |
+| rec_share_status_ativo            | DOUBLE                   | 28.17%        |
+| rec_qtd_plat_autoc                | BIGINT                   | 0.0%          |
+| rec_taxa_cartao_online            | DOUBLE                   | 28.17%        |
+| rec_indice_estresse_financeiro    | DOUBLE                   | 0.0%          |
 | pag_vlr_total_geral               | DOUBLE                   | 70.16%        |
 | pag_vlr_total_l90d                | DOUBLE                   | 72.26%        |
 | pag_ticket_medio_geral            | DOUBLE                   | 70.16%        |
+| pag_ticket_medio_l90d             | DOUBLE                   | 72.26%        |
 | pag_qtd_faturas_geral             | BIGINT                   | 0.0%          |
+| pag_qtd_faturas_l90d              | BIGINT                   | 0.0%          |
 | pag_media_dias_atraso_geral       | DOUBLE                   | 73.7%         |
+| pag_media_dias_atraso_l90d        | DOUBLE                   | 77.46%        |
 | pag_max_dias_atraso_geral         | BIGINT                   | 73.7%         |
 | pag_qtd_debito_direto_geral       | BIGINT                   | 0.0%          |
+| pag_qtd_debito_direto_l90d        | BIGINT                   | 0.0%          |
 | pag_share_faturas_com_juros_geral | DOUBLE                   | 70.16%        |
-| pag_vlr_std_l90d                  | DOUBLE                   | 74.11%        |
+| pag_share_faturas_com_juros_l90d  | DOUBLE                   | 0.0%          |
 | pag_dias_desde_ultimo_pagamento   | BIGINT                   | 70.16%        |
+| pag_vlr_std_geral                 | DOUBLE                   | 71.33%        |
+| pag_instabilidade_pagamento       | DOUBLE                   | 71.33%        |
+| pag_taxa_fatura_aberta            | DOUBLE                   | 70.16%        |
+| pag_fator_risco_comportamental    | DOUBLE                   | 0.0%          |
 | atr_vlr_acumulado_geral           | DOUBLE                   | 68.15%        |
+| atr_vlr_acumulado_l90d            | DOUBLE                   | 70.78%        |
 | atr_vlr_max_geral                 | DOUBLE                   | 68.15%        |
 | atr_qtd_faturas_atrasadas_geral   | BIGINT                   | 0.0%          |
+| atr_qtd_faturas_atrasadas_l90d    | BIGINT                   | 0.0%          |
 | atr_dias_desde_ultimo_atraso      | BIGINT                   | 68.15%        |
 | atr_max_aging_divida_geral        | INTEGER                  | 68.15%        |
+| atr_max_aging_divida_l90d         | INTEGER                  | 70.78%        |
 | atr_qtd_pdd_geral                 | BIGINT                   | 0.0%          |
 | atr_qtd_wo_geral                  | BIGINT                   | 0.0%          |
 | atr_qtd_fraude_geral              | BIGINT                   | 0.0%          |
+| atr_fator_cronico                 | DOUBLE                   | 68.15%        |
+| atr_indice_gravidade_historica    | DOUBLE                   | 0.0%          |
 | bur_flag_mig2                     | VARCHAR                  | 0.0%          |
 | bur_score_01                      | INTEGER                  | 0.67%         |
 | bur_score_02                      | INTEGER                  | 0.07%         |
@@ -173,6 +196,17 @@
 | flag_aposentado                   | INTEGER                  | 0.0%          |
 | flag_funcionario_privado          | INTEGER                  | 0.0%          |
 | cad_flag_statusrf_irregular       | INTEGER                  | 0.0%          |
+| cad_completude                    | INTEGER                  | 0.0%          |
+| cad_indice_estabilidade           | INTEGER                  | 0.0%          |
+| cad_bureau_x_estabilidade         | DECIMAL(18,2)            | 0.0%          |
+| rec_dependencia_sos               | DOUBLE                   | 51.2%         |
+| rec_share_digital                 | DOUBLE                   | 31.11%        |
+| rec_share_bonus                   | DOUBLE                   | 51.2%         |
+| atr_intensidade                   | DOUBLE                   | 72.26%        |
+| pag_esforco                       | DOUBLE                   | 72.26%        |
+| pag_taxa_falha                    | DOUBLE                   | 67.97%        |
+| pag_vs_recarga_total              | DOUBLE                   | 70.16%        |
+| pag_severidade_juros              | DOUBLE                   | 0.0%          |
 | run_id                            | BIGINT                   | 0.0%          |
 | ingestion_ts                      | TIMESTAMP WITH TIME ZONE | 0.0%          |
 | ano_mes                           | BIGINT                   | 0.0%          |
@@ -185,49 +219,76 @@
 |:----------------------------------|:--------------|:-----------------|:--------------------|
 | rec_qtd_geral                     | 3.387,00      | 106,89           | ⚠️ Outlier Detected |
 | rec_qtd_l30d                      | 260,00        | 9,83             | ⚠️ Outlier Detected |
+| rec_qtd_l60d                      | 511,00        | 18,02            | ⚠️ Outlier Detected |
 | rec_qtd_l90d                      | 738,00        | 26,00            | ⚠️ Outlier Detected |
 | rec_vlr_total_geral               | 425.000,00    | 3.079,36         | ⚠️ Outlier Detected |
 | rec_vlr_total_l30d                | 50.000,00     | 242,92           | ⚠️ Outlier Detected |
+| rec_vlr_total_l60d                | 50.109,80     | 399,18           | ⚠️ Outlier Detected |
 | rec_vlr_total_l90d                | 75.164,70     | 588,25           | ⚠️ Outlier Detected |
 | rec_qtd_sos_geral                 | 321,00        | 12,38            | ⚠️ Outlier Detected |
 | rec_qtd_sos_l90d                  | 57,00         | 3,13             | ⚠️ Outlier Detected |
 | rec_vlr_sos_l90d                  | 1.040,00      | 66,51            | ⚠️ Outlier Detected |
 | rec_qtd_canais_digitais_geral     | 167,00        | 8,94             | ⚠️ Outlier Detected |
+| rec_qtd_canais_digitais_l90d      | 36,00         | 2,66             | ⚠️ Outlier Detected |
 | rec_dias_desde_ultima             | 517,00        | 139,36           | ⚠️ Outlier Detected |
 | rec_vlr_std_l90d                  | 13.693,06     | 87,93            | ⚠️ Outlier Detected |
 | rec_vlr_bonus_geral               | 20.904.231,55 | 1.535.574,35     | ⚠️ Outlier Detected |
+| rec_vlr_bonus_l90d                | 3.480.566,00  | 348.208,16       | ⚠️ Outlier Detected |
 | rec_qtd_plano_controle_geral      | 333,00        | 34,52            | ⚠️ Outlier Detected |
+| rec_volatilidade_ticket           | 33,09         | 4,46             | ⚠️ Outlier Detected |
+| rec_qtd_plat_autoc                | 318,00        | 33,25            | ⚠️ Outlier Detected |
+| rec_indice_estresse_financeiro    | 75,00         | 53,68            | ⚠️ Outlier Detected |
 | pag_vlr_total_geral               | 2.537.770,97  | 23.318,89        | ⚠️ Outlier Detected |
 | pag_vlr_total_l90d                | 979.673,73    | 7.149,32         | ⚠️ Outlier Detected |
 | pag_ticket_medio_geral            | 181.269,35    | 1.408,01         | ⚠️ Outlier Detected |
+| pag_ticket_medio_l90d             | 122.459,22    | 1.225,07         | ⚠️ Outlier Detected |
 | pag_qtd_faturas_geral             | 110,00        | 24,66            | ⚠️ Outlier Detected |
+| pag_qtd_faturas_l90d              | 40,00         | 5,82             | ⚠️ Outlier Detected |
 | pag_media_dias_atraso_geral       | 4.853,00      | 125,39           | ⚠️ Outlier Detected |
+| pag_media_dias_atraso_l90d        | 4.853,00      | 115,58           | ⚠️ Outlier Detected |
 | pag_max_dias_atraso_geral         | 4.853,00      | 213,81           | ⚠️ Outlier Detected |
 | pag_qtd_debito_direto_geral       | 195,00        | 9,10             | ⚠️ Outlier Detected |
+| pag_qtd_debito_direto_l90d        | 75,00         | 3,43             | ⚠️ Outlier Detected |
 | pag_share_faturas_com_juros_geral | 7,80          | 2,16             | ⚠️ Outlier Detected |
-| pag_vlr_std_l90d                  | 208.314,08    | 950,68           | ⚠️ Outlier Detected |
+| pag_share_faturas_com_juros_l90d  | 7,33          | 1,33             | ⚠️ Outlier Detected |
 | pag_dias_desde_ultimo_pagamento   | 516,00        | 166,07           | ⚠️ Outlier Detected |
+| pag_vlr_std_geral                 | 129.430,18    | 922,94           | ⚠️ Outlier Detected |
+| pag_instabilidade_pagamento       | 6,37          | 1,65             | ⚠️ Outlier Detected |
+| pag_taxa_fatura_aberta            | 1,00          | 0,15             | ⚠️ Outlier Detected |
+| pag_fator_risco_comportamental    | 55,76         | 17,74            | ⚠️ Outlier Detected |
 | atr_vlr_acumulado_geral           | 55.931.388,30 | 206.947,05       | ⚠️ Outlier Detected |
+| atr_vlr_acumulado_l90d            | 10.318.683,75 | 46.142,49        | ⚠️ Outlier Detected |
 | atr_vlr_max_geral                 | 3.406.523,69  | 11.804,53        | ⚠️ Outlier Detected |
 | atr_qtd_faturas_atrasadas_geral   | 319,00        | 25,17            | ⚠️ Outlier Detected |
+| atr_qtd_faturas_atrasadas_l90d    | 111,00        | 5,36             | ⚠️ Outlier Detected |
 | atr_dias_desde_ultimo_atraso      | 517,00        | 263,62           | ⚠️ Outlier Detected |
 | atr_max_aging_divida_geral        | 276,00        | 269,88           | ⚠️ Outlier Detected |
+| atr_max_aging_divida_l90d         | 276,00        | 268,90           | ⚠️ Outlier Detected |
 | atr_qtd_pdd_geral                 | 2.316,00      | 18,03            | ⚠️ Outlier Detected |
 | atr_qtd_wo_geral                  | 1.271,00      | 12,51            | ⚠️ Outlier Detected |
 | atr_qtd_fraude_geral              | 28,00         | 0,46             | ⚠️ Outlier Detected |
+| atr_fator_cronico                 | 1,05          | 1,02             | ⚠️ Outlier Detected |
+| atr_indice_gravidade_historica    | 100,00        | 73,81            | ⚠️ Outlier Detected |
+| rec_dependencia_sos               | 1,00          | 0,47             | ⚠️ Outlier Detected |
+| rec_share_digital                 | 1,00          | 0,46             | ⚠️ Outlier Detected |
+| rec_share_bonus                   | 16.491.063,00 | 126.665,69       | ⚠️ Outlier Detected |
+| atr_intensidade                   | 237.701,00    | 1.470,53         | ⚠️ Outlier Detected |
+| pag_esforco                       | 237.701,00    | 1.468,29         | ⚠️ Outlier Detected |
+| pag_vs_recarga_total              | 73.870,00     | 678,94           | ⚠️ Outlier Detected |
+| pag_severidade_juros              | 4.853,00      | 51,69            | ⚠️ Outlier Detected |
 
 ---
 
 ### 📦 Volumetria: `abt_base_cmv`
 | diretorio      |   qtd_arquivos | registros   |   colunas |   tamanho_comprimido_mib |   tamanho_descomprimido_mib |
 |:---------------|---------------:|:------------|----------:|-------------------------:|----------------------------:|
-| ano_mes=202410 |              1 | 426.104     |       148 |                    35.4  |                       47.62 |
-| ano_mes=202411 |              1 | 454.572     |       148 |                    38.4  |                       51.81 |
-| ano_mes=202412 |              1 | 445.154     |       148 |                    37.84 |                       50.91 |
-| ano_mes=202501 |              1 | 452.621     |       148 |                    38.39 |                       51.61 |
-| ano_mes=202502 |              1 | 419.453     |       148 |                    35.81 |                       48.32 |
-| ano_mes=202503 |              1 | 435.996     |       148 |                    37.56 |                       50.72 |
-| TOTAL          |              6 | 2.633.900   |       148 |                   223.4  |                      300.99 |
+| ano_mes=202410 |              1 | 426.104     |       182 |                    51.68 |                       70.78 |
+| ano_mes=202411 |              1 | 454.572     |       182 |                    55.84 |                       76.43 |
+| ano_mes=202412 |              1 | 445.154     |       182 |                    56.46 |                       76.75 |
+| ano_mes=202501 |              1 | 452.621     |       182 |                    57.62 |                       77.98 |
+| ano_mes=202502 |              1 | 419.453     |       182 |                    53.38 |                       72.48 |
+| ano_mes=202503 |              1 | 435.996     |       182 |                    55.48 |                       75.11 |
+| TOTAL          |              6 | 2.633.900   |       182 |                   330.47 |                      449.53 |
 
 ---
 
@@ -249,12 +310,12 @@
 
 | prefixo   |   qtd_features | pct_missing_medio   | densidade_sinal   |
 |:----------|---------------:|:--------------------|:------------------|
-| rec_      |             15 | 22.24%              | 77.76%            |
-| pag_      |             10 | 57.44%              | 42.56%            |
-| atr_      |              8 | 34.08%              | 65.92%            |
+| rec_      |             28 | 24.04%              | 75.96%            |
+| pag_      |             22 | 48.78%              | 51.22%            |
+| atr_      |             14 | 39.61%              | 60.39%            |
 | bur_      |              3 | 0.25%               | 99.75%            |
 | tel_      |             69 | 50.34%              | 49.66%            |
-| cad_      |             29 | 54.16%              | 45.84%            |
+| cad_      |             32 | 49.09%              | 50.91%            |
 | outros    |             11 | 3.24%               | 96.76%            |
 
 ---
@@ -273,20 +334,20 @@
 | feature                         |   correlacao |
 |:--------------------------------|-------------:|
 | bur_score_02                    |   -0.305193  |
+| pag_taxa_falha                  |    0.245682  |
 | bur_score_01                    |   -0.224621  |
+| atr_max_aging_divida_l90d       |    0.155479  |
 | atr_max_aging_divida_geral      |    0.145128  |
+| atr_fator_cronico               |    0.123989  |
+| rec_dependencia_sos             |    0.115053  |
+| rec_indice_estresse_financeiro  |    0.113249  |
 | pag_qtd_faturas_geral           |   -0.104181  |
 | cad_var_05                      |   -0.103676  |
 | tel_var_28                      |    0.0992972 |
 | pag_dias_desde_ultimo_pagamento |    0.0992828 |
 | flag_bolsa_familia              |    0.099142  |
-| tel_var_31                      |    0.087449  |
-| cad_var_02                      |    0.0859616 |
-| flag_auxilio_emergencial        |    0.0822269 |
-| rec_qtd_sos_geral               |    0.081496  |
-| pag_max_dias_atraso_geral       |    0.0790687 |
-| pag_media_dias_atraso_geral     |    0.0789047 |
-| tel_var_30                      |    0.0766779 |
+| pag_qtd_faturas_l90d            |   -0.0934844 |
+| rec_share_status_ativo          |   -0.0907412 |
 
 ---
 
