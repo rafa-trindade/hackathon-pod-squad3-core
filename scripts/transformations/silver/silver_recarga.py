@@ -110,44 +110,24 @@ def run():
     chave_tecnica_cols = list(keys_to_clean.keys())
     chave_cols_str = ", ".join(chave_tecnica_cols)
 
-    check_duplicados = con.execute(f"SELECT COUNT(*) as total, COUNT(DISTINCT ({chave_cols_str})) as distintos FROM {step1_table}").fetchone()
-    qtd_duplicados = check_duplicados[0] - check_duplicados[1]
-
-    if qtd_duplicados > 0:
-        print(f"⚠️ Detectados {qtd_duplicados:,} duplicados. Deduplicando...".replace(",", "."))
-        con.execute(f"CREATE TABLE work_db.chaves_duplicadas AS SELECT {chave_cols_str} FROM {step1_table} GROUP BY {chave_cols_str} HAVING COUNT(*) > 1")
-        
-        con.execute(f"""
-            CREATE TABLE work_db.silver_{TABLE_NAME}_step2 AS
-            SELECT * FROM {step1_table} t WHERE NOT EXISTS (
-                SELECT 1 FROM work_db.chaves_duplicadas d 
-                WHERE {' AND '.join([f't.{c} = d.{c}' for c in chave_tecnica_cols])}
-            )
-            UNION ALL
-            SELECT * EXCLUDE(row_num) FROM (
-                SELECT t.*, 
-                       ROW_NUMBER() OVER(
-                           PARTITION BY {", ".join([f"t.{c}" for c in chave_tecnica_cols])} 
-                           ORDER BY 
-                                t.ingestion_ts DESC, 
-                                t.dat_insercao_credito DESC, 
-                                t.hor_insercao_credito DESC,
-                                -- Prioridade 1: Registros com Instituição (0 ganha de 1)
-                                (CASE WHEN t.dw_instituicao IS NOT NULL AND TRY_CAST(t.dw_instituicao AS INT) > 0 THEN 0 ELSE 1 END) ASC,
-                                -- Prioridade 2: Registros com Promoção
-                                (CASE WHEN t.cod_promocao IS NOT NULL AND TRY_CAST(t.cod_promocao AS INT) > 0 THEN 0 ELSE 1 END) ASC,
-                                -- Desempate determinístico final (substituindo o t.* que deu erro)
-                                t.num_cpf ASC,
-                                t.dw_num_ntc ASC
-                       ) as row_num
-                FROM {step1_table} t 
-                JOIN work_db.chaves_duplicadas d ON {' AND '.join([f't.{c} = d.{c}' for c in chave_tecnica_cols])}
-            ) WHERE row_num = 1
-        """)
-        con.execute("CHECKPOINT work_db")
-    else:
-        print("✅ Nenhuma duplicata detectada.")
-        con.execute(f"CREATE VIEW work_db.silver_{TABLE_NAME}_step2 AS SELECT * FROM {step1_table}")
+    con.execute(f"""
+        CREATE TABLE work_db.silver_{TABLE_NAME}_step2 AS
+        SELECT * FROM {step1_table}
+        QUALIFY ROW_NUMBER() OVER(
+            PARTITION BY {chave_cols_str} 
+            ORDER BY 
+                 ingestion_ts DESC, 
+                 dat_insercao_credito DESC, 
+                 hor_insercao_credito DESC,
+                 -- Mantendo suas prioridades de negócio:
+                 (CASE WHEN dw_instituicao IS NOT NULL AND TRY_CAST(dw_instituicao AS INT) > 0 THEN 0 ELSE 1 END) ASC,
+                 (CASE WHEN cod_promocao IS NOT NULL AND TRY_CAST(cod_promocao AS INT) > 0 THEN 0 ELSE 1 END) ASC,
+                 num_cpf ASC,
+                 dw_num_ntc ASC
+        ) = 1
+    """)
+    con.execute("CHECKPOINT work_db")
+    print("✅ Deduplicação concluída com sucesso usando QUALIFY.")
 
     # ------------------------------------------------------------------
     # ETAPA 3: Agregação de Dimensões (Enriquecimento)
