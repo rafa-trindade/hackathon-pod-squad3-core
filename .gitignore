@@ -6,3 +6,6 @@ __pycache__/
 *tests/
 
 streamlit.log
+
+*.cbm
+catboost_info/
