@@ -425,7 +425,7 @@ def main():
                     else:
                         st.warning("A consulta retornou vazia. Verifique os filtros ou a tabela no S3.")
 
-                with st.expander("📅 Evolução Temporal: Volume de Entrada & Risco Real", expanded=False):                      
+                with st.expander("📅 Evolução Temporal: Volume de Entrada & Risco Real", expanded=True):                      
                     st.plotly_chart(plot_bad_rate_trend(summary_df), width='stretch')
 
                     st.markdown(
@@ -1151,290 +1151,536 @@ def main():
                                 unsafe_allow_html=True
                             )
 
+
         # ==============================================================================
-        # PERFORMANCE & BENCHMARK 
+        # IMPACTO PARA O NEGÓCIO (BUSINESS VALUATION DINÂMICO)
         # ==============================================================================
+        elif view_mode == "💰 Impacto para o Negócio":
+            
+            st.markdown(
+                f"""
+                <h3 style="font-weight:700; margin-bottom: 0px;">
+                    Impacto no Negócio - <span style="color: #888; font-weight: 500;">Behavior Score</span> -   
+                    <code class="theme-1" style="font-size: 1.2rem;">Release 1.0</code>
+                </h3>
+                """,
+                unsafe_allow_html=True
+            )
+            caminho_parquet = "base_escorada_swap_v1.parquet"
+            st.caption(f"💰 **Impacto no Negócio** consolidado do Artefato do Lake: `{caminho_parquet}`")            
+            st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
+            
+            # ---------------------------------------------------------
+            # 1. PREMISSAS DE NEGÓCIO (Do Notebook)
+            # ---------------------------------------------------------
+            ARPU_CONTROLE = 59.00
+            ARPU_PRE = 39.59
+            UPSELL = 19.41
+            MESES_LTV = 12
+            MESES_INADIMPLENCIA = 3
+            CONVERSAO_ORGANICA = 0.0498 
+            BASE_NACIONAL = 35_000_000 
+
+            # ---------------------------------------------------------
+            # 2. CARREGAMENTO DO ARTEFATO DO GRUPO CONTROLE
+            # ---------------------------------------------------------
+            df_biz = pd.DataFrame()
+            with st.spinner("Buscando Base Escorada Oficial do Grupo Controle no Data Lake..."):
+                try:
+                    from config.data_connections import get_duckdb_connection
+                    con_lake = get_duckdb_connection()
+                    con_lake.execute("LOAD httpfs;") 
+                    
+                    path_swap = "s3://lake/observability/reports/run_id=*/modeling/v1/artifacts/base_escorada_swap_v1.parquet"
+                    df_biz = con_lake.execute(f"SELECT target, bur_score_02, prob_modelo FROM read_parquet('{path_swap}')").df()
+                
+                except Exception as e:
+                    st.error(f"Erro ao carregar o artefato de Swap do Lake: {e}")
+                    st.stop()
+
+            if df_biz.empty:
+                st.warning("⚠️ A base de Controle retornou vazia.")
+                st.stop()
+
+            # ---------------------------------------------------------
+            # 3. TOGGLE DE ESCALA E CONVERSÃO
+            # ---------------------------------------------------------
+            col_t1, col_t2 = st.columns([1, 1])
+
+            with col_t1:
+
+                usar_extrapolacao = st.toggle("🌎 Extrapolar para Escala Nacional (35M Clientes)", value=False)
+                
+                if usar_extrapolacao:
+                    fator_escala = BASE_NACIONAL / len(df_biz)
+                    label_escopo = "Projeção Nacional (35 Milhões de Clientes)"
+                else:
+                    fator_escala = 1.0
+                    label_escopo = f"Grupo Controle ({len(df_biz):,} clientes)"
+            
+            with col_t2:
+                st.markdown(f"""
+                    <div style="display: flex; justify-content: flex-end; align-items: center; margin-top:8px;">
+                        <span style="font-size: 12px; color: #BBB; background: rgba(255,255,255,0.05); padding: 3px 8px; border-radius: 4px; border: 1px solid #333;">
+                            Escopo Ativo: <strong style="color: #FFF;">{label_escopo}</strong>
+                        </span>
+                    </div>
+                """, unsafe_allow_html=True)
+
+            # ----------------------------------------------------------------
+            # 5. DASHBOARD SUPERIOR: CONCILIAÇÃO FINANCEIRA
+            # ----------------------------------------------------------------
+            with st.expander(f"Escopo Ativo: {label_escopo}", expanded=True):
+
+
+                if usar_extrapolacao:
+                    conversao_meta = st.slider("🎯 Taxa de Conversão Nacional Alvo (Marketing)", 1.0, 10.0, 3.0, 0.5) / 100
+                else:
+                    conversao_meta = st.slider("🎯 Conversão Orgânica Fixa (Grupo Controle)", 1.0, 10.0, float(CONVERSAO_ORGANICA*100), 0.01, disabled=True) / 100
+
+                # ---------------------------------------------------------
+                # 6. O MOTOR MATEMÁTICO DE RENTABILIDADE E TABELA DE VALOR
+                # ---------------------------------------------------------
+                df_biz['bur_score_02'] = df_biz.get('bur_score_02', pd.Series(0, index=df_biz.index)).fillna(0)
+                df_biz['rank_bur'] = df_biz['bur_score_02'].rank(method='first', ascending=False)
+                df_biz['rank_mod'] = df_biz['prob_modelo'].rank(method='first', ascending=True)
+
+                percentis_alvo = [50, 60, 70, 75, 80, 85, 90]
+                total_clientes = len(df_biz)
+                cenarios_biz = []
+
+                for pct in percentis_alvo:
+                    n_aprov = int(total_clientes * (pct/100)) 
+                    mask_bur = df_biz['rank_bur'] <= n_aprov
+                    mask_mod = df_biz['rank_mod'] <= n_aprov
+                    
+                    # Réguas de Corte
+                    cutoff_val_bur = df_biz.loc[df_biz['rank_bur'] == n_aprov, 'bur_score_02'].values[0] if n_aprov > 0 else 0
+                    cutoff_val_mod = df_biz.loc[df_biz['rank_mod'] == n_aprov, 'prob_modelo'].values[0] if n_aprov > 0 else 0
+                    
+                    swap_in = (~mask_bur) & mask_mod
+                    swap_out = mask_bur & (~mask_mod)
+                    
+                    in_goods = swap_in.sum() - df_biz.loc[swap_in, 'target'].sum()
+                    in_bads = df_biz.loc[swap_in, 'target'].sum()
+                    out_goods = swap_out.sum() - df_biz.loc[swap_out, 'target'].sum()
+                    out_bads = df_biz.loc[swap_out, 'target'].sum()
+                    
+                    # Receita e Proteção Net (Líquida)
+                    upsell_net = (in_goods - out_goods) * fator_escala * conversao_meta * UPSELL * MESES_LTV
+                    pdd_net = (out_bads - in_bads) * fator_escala * conversao_meta * ARPU_CONTROLE * MESES_INADIMPLENCIA
+                    ebitda_total = upsell_net + pdd_net
+
+                    # Valores brutos para a Tabela de Comparação (Legado x Modelo)
+                    bur_goods = mask_bur.sum() - df_biz.loc[mask_bur, 'target'].sum()
+                    bur_bads = df_biz.loc[mask_bur, 'target'].sum()
+                    rec_legado = (bur_goods * fator_escala * conversao_meta * UPSELL * MESES_LTV) - (bur_bads * fator_escala * conversao_meta * ARPU_CONTROLE * MESES_INADIMPLENCIA)
+                    
+                    mod_goods = mask_mod.sum() - df_biz.loc[mask_mod, 'target'].sum()
+                    mod_bads = df_biz.loc[mask_mod, 'target'].sum()
+                    rec_modelo = (mod_goods * fator_escala * conversao_meta * UPSELL * MESES_LTV) - (mod_bads * fator_escala * conversao_meta * ARPU_CONTROLE * MESES_INADIMPLENCIA)
+
+                    cenarios_biz.append({
+                        'Taxa de Aprovação': f"{pct}%",
+                        'Régua Bureau': f"≥ {cutoff_val_bur:.0f}",
+                        'Régua Modelo': f"≤ {cutoff_val_mod*100:.1f}%",
+                        'Resultado Legado (12m)': rec_legado,
+                        'Resultado Modelo (12m)': rec_modelo,
+                        'GANHO LÍQUIDO': ebitda_total,
+                        'Aprovacao_Num': pct,
+                        'Upsell_Net': upsell_net,
+                        'PDD_Net': pdd_net,
+                        'EBITDA': ebitda_total
+                    })
+
+                df_report = pd.DataFrame(cenarios_biz)
+                idx_otimo = df_report['EBITDA'].idxmax()
+                dados_otimos = df_report.loc[idx_otimo]
+
+                def format_moeda_kpi(v):
+                    prefix = "-" if v < 0 else ""
+                    v = abs(v)
+                    if v >= 1e6: return f"{prefix}R$ {v/1e6:.2f}M"
+                    elif v >= 1e3: return f"{prefix}R$ {v/1e3:.1f}k"
+                    return f"{prefix}R$ {v:.0f}"
+
+                def format_moeda_table(v):
+                    prefix = "-" if v < 0 else ""
+                    v = abs(v)
+                    if v >= 1e6: return f"{prefix}R$ {v/1e6:.2f}M"
+                    elif v >= 1e3: return f"{prefix}R$ {v/1e3:.1f}k" # Adicionado formatação em 'k'
+                    return f"{prefix}R$ {v:.0f}"
+
+                col_big1, col_big2, col_big3 = st.columns(3)
+                with col_big1:
+                    st.markdown(f"""
+                    <div style="background: linear-gradient(145deg, #1A1C24, #182B3A); padding: 20px; border-radius: 8px; border-top: 3px solid #1565C0; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+                        <div style="font-size: 0.85rem; color: #999; font-weight: 600;">GERAÇÃO DE RECEITA (UPSELL LÍQUIDO)</div>
+                        <div style="font-size: 2.2rem; font-weight: bold; color: #42A5F5; margin: 10px 0;">{format_moeda_kpi(dados_otimos['Upsell_Net'])}</div>
+                        <div style="font-size: 0.75rem; color: #888;">LTV 12m dos bons clientes resgatados</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                with col_big2:
+                    st.markdown(f"""
+                    <div style="background: linear-gradient(145deg, #1A1C24, #1B3A1C); padding: 20px; border-radius: 8px; border-top: 3px solid #43A047; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+                        <div style="font-size: 0.85rem; color: #999; font-weight: 600;">EFICIÊNCIA DE RISCO (PDD POUPADA)</div>
+                        <div style="font-size: 2.2rem; font-weight: bold; color: #66BB6A; margin: 10px 0;">{format_moeda_kpi(dados_otimos['PDD_Net'])}</div>
+                        <div style="font-size: 0.75rem; color: #888;">3 meses de ARPU salvos dos maus barrados</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                with col_big3:
+                    st.markdown(f"""
+                    <div style="background: linear-gradient(145deg, #1A1C24, #262118); padding: 20px; border-radius: 8px; border-top: 3px solid #D4A017; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+                        <div style="font-size: 0.85rem; color: #999; font-weight: 600;">EBITDA INCREMENTAL TOTAL</div>
+                        <div style="font-size: 2.2rem; font-weight: bold; color: #FFF; margin: 10px 0;">{format_moeda_kpi(dados_otimos['EBITDA'])}</div>
+                        <div style="font-size: 0.75rem; color: #888;">No Corte Campeão de {dados_otimos['Taxa de Aprovação']} de Aprovação</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                st.write("<hr style='margin-top:20px; margin-bottom:20px;'>", unsafe_allow_html=True)
+
+                # ----------------------------------------------------------------
+                # 6. GRÁFICOS INFERIORES: TABELA DE RENTABILIDADE E BRIDGE
+                # ----------------------------------------------------------------
+                c_g1, c_g2 = st.columns([1.5, 1])
+
+                with c_g1:
+                    st.markdown("<p style='font-size: 16px; font-weight: 600; color: #FFF; margin-bottom: 10px;'>Rentabilidade Líquida da Campanha: Visão de Valor (LTV)</p>", unsafe_allow_html=True)
+                    
+                    label_ganho = "GANHO LÍQUIDO (ESCALA 12m)" if usar_extrapolacao else "GANHO LÍQUIDO (HOLD-OUT 12m)"
+                    
+                    df_table = df_report[['Taxa de Aprovação', 'Régua Bureau', 'Régua Modelo', 'Resultado Legado (12m)', 'Resultado Modelo (12m)', 'GANHO LÍQUIDO']].copy()
+                    df_table.rename(columns={'GANHO LÍQUIDO': label_ganho}, inplace=True)
+                    
+                    for col in ['Resultado Legado (12m)', 'Resultado Modelo (12m)', label_ganho]:
+                        df_table[col] = df_table[col].apply(format_moeda_table)
+                        
+                    def highlight_optimal(s):
+                        if s.name == idx_otimo:
+                            return ['background-color: #5EA758; color: #333; font-weight: bold'] * len(s)
+                        return ['background-color: rgba(255,255,255,0.05)'] * len(s)
+
+                    st.dataframe(
+                        df_table.style.apply(highlight_optimal, axis=1),
+                        use_container_width=True,
+                        hide_index=True
+                    )
+
+                with c_g2:
+                    st.markdown("<p style='font-size: 16px; font-weight: 600; color: #FFF; margin-bottom: 10px;'>Bridge de EBITDA (A Composição do Valor)</p>", unsafe_allow_html=True)
+                    
+                    fig_bridge = go.Figure(go.Waterfall(
+                        name="Bridge", orientation="v", measure=["relative", "relative", "total"],
+                        x=["Geração de Receita<br>(Upsell Líquido)", "Eficiência de Risco<br>(PDD Protegida)", "Impacto Líquido<br>(EBITDA Incremental)"],
+                        y=[dados_otimos['Upsell_Net'], dados_otimos['PDD_Net'], 0],
+                        text=[format_moeda_kpi(dados_otimos['Upsell_Net']), format_moeda_kpi(dados_otimos['PDD_Net']), format_moeda_kpi(dados_otimos['EBITDA'])],
+                        textposition="outside",
+                        connector={"line": {"color": "#666", "width": 2, "dash":"dot"}},
+                        increasing={"marker": {"color": "#1565C0"}}, 
+                        decreasing={"marker": {"color": "#C62828"}}, 
+                        totals={"marker": {"color": "#5EA758"}}
+                    ))
+
+                    fig_bridge.update_layout(
+                        template="plotly_dark", height=290, margin=dict(l=20, r=20, t=0, b=0),
+                        plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)',
+                        yaxis_title="Valor Financeiro Incremental (R$)"
+                    )
+                    
+                    if usar_extrapolacao:
+                        fig_bridge.add_annotation(x=2, y=dados_otimos['EBITDA'], text=f"Calculado com Conversão de {conversao_meta*100:.1f}%", showarrow=False, yshift=45, font=dict(color="#D4A017", size=11))
+                    else:
+                        fig_bridge.add_annotation(x=2, y=dados_otimos['EBITDA'], text=f"Calculado com Conversão Orgânica {CONVERSAO_ORGANICA*100:.2f}%", showarrow=False, yshift=35, font=dict(color="#D4A017", size=11))
+
+
+                    st.plotly_chart(fig_bridge, use_container_width=True)
+                    
+                st.markdown(f"""
+                <div style="background-color:#1A1A1A; color:#888; padding:16px 16px 10px 16px; border-radius:8px; border-left:6px solid #4F1C22; font-family:sans-serif; font-size:14px;">
+                    <h6 style="margin-top:0px; margin-bottom:-10px; color:#DDD;">📋 Dicionário de Premissas Financeiras:</h6>
+                    <hr style="margin-top:0px; margin-bottom:15px; border:1px solid #444;">
+                    <ul style="margin-top:10px; margin-bottom:0; padding-left: 10px; line-height: 1.5;">
+                        <li style="margin-top:5px;"><strong>ARPU Controle: R$ {ARPU_CONTROLE:.2f}</strong> - <i>AVG(pagamento_fatura) | Filtro: RR 5,00 < val < R$ 300,00</li>
+                        <li style="margin-top:5px;"><strong>ARPU Pré: R$ {ARPU_PRE:.2f}</strong> - <i>AVG(SUM(recarga) por CPF/Mês) | Filtro: PREPG</li>
+                        <li style="margin-top:5px;"><strong>Upsell Incremental: R$ {UPSELL:.2f}</strong> - <i>ARPU Controle - ARPU Pré</li>
+                        <li style="margin-top:5px;"><strong>LTV Considerado: {MESES_LTV} meses</strong> - <i>Multiplicador fixo baseado na regra contábil de LTV</li>
+                        <li style="margin-top:5px;"><strong>Loss/PDD: {MESES_INADIMPLENCIA} meses</strong> - <i>Média de meses para provisionamento de PDD</li>
+                    </ul>
+                </div>
+                """, unsafe_allow_html=True)
+
+
+
+
+# ==============================================================================
+# PERFORMANCE & BENCHMARK (ESTÁTICO DO PKL - OFICIAL DO NOTEBOOK)
+# ==============================================================================
         elif view_mode == "📈 Performance & Benchmark":
             
             st.markdown(
                 f"""
                 <h3 style="font-weight:700; margin-bottom: 0px;">
-                    Avaliação de Performance e Benchmark - 
+                    Avaliação de Performance e Benchmark - <span style="color: #888; font-weight: 500;">Behavior Score</span> -  
                     <code class="theme-1" style="font-size: 1.2rem;">model_v1.0</code>
                 </h3>
                 """,
                 unsafe_allow_html=True
             )
             caminho = "models/behavior_catboost_v1.pkl"
-            st.caption(f"🎯 Escoragem real-time executada sobre o Asset de Modelagem: `{caminho.split('/')[-1]}`")
-            st.write("<hr style='margin-top:-6.5px; margin-bottom:15px;'>", unsafe_allow_html=True)
+            st.caption(f"🔬 **Validação Científica Oficial** extraída do Artefato MLOps: `{caminho.split('/')[-1]}`")
+            st.write("<hr style='margin-top:-6.5px; margin-bottom:0px;'>", unsafe_allow_html=True)
 
             # ---------------------------------------------------------
-            # CARREGAMENTO DA BASE & DO MODELO
+            # 1. LEITURA DOS METADADOS DO MODELO (SEM INFERÊNCIA PESADA)
             # ---------------------------------------------------------
-            df_perf = pd.DataFrame()
             try:
-                with st.spinner("Carregando amostra e escorando com o modelo de produção..."):
-                    df_perf = df_master.copy()
-                    assets = load_assets()
-                    model = assets['model']
-                    features_raw = assets['features_raw']
-                    metadata = assets.get('metadata', {})
+                assets = load_assets()
+                metadata = assets.get('metadata', {})
+                
+                # Resgate seguro dos KPIs OOT (Out-of-Time)
+                ks_oot = metadata.get('ks_oot', 34.53)
+                gini_oot = metadata.get('gini_oot', 46.60)
+                psi_oot = metadata.get('psi_oot', 0.0010)
+                ks_bench = metadata.get('ks_bench', 33.1)
+                
+                # Resgate seguro dos Swaps (Grupo Controle)
+                swap_in_vol = metadata.get('swap_in_vol', 6837)
+                swap_in_pct = metadata.get('swap_in_pct', 6.2)
+                swap_in_br = metadata.get('swap_in_br', 32.88)
+                
+                swap_out_vol = metadata.get('swap_out_vol', 7066)
+                swap_out_pct = metadata.get('swap_out_pct', 6.4)
+                swap_out_br = metadata.get('swap_out_br', 52.12)
+                bads_evitados = metadata.get('bads_evitados', 3683)
+
             except Exception as e:
-                st.error(f"Erro ao carregar modelo ou base de dados: {e}")
+                st.error(f"Erro ao ler metadados do modelo: {e}")
                 st.stop()
 
-            df_to_score = df_perf.copy()
-            
-            for col in features_raw:
-                if col not in df_to_score.columns:
-                    df_to_score[col] = np.nan
-            
-            X_model = df_to_score[features_raw] 
-            df_perf['prob_modelo'] = model.predict_proba(X_model)[:, 1]
-
-            fpr, tpr, _ = roc_curve(df_perf['target'], df_perf['prob_modelo'])
-            ks_live = max(tpr - fpr) * 100
-
-
-            cutoff_bureau = np.nanpercentile(df_perf['bur_score_02'], 30)
-            df_perf['aprova_bureau'] = df_perf['bur_score_02'] >= cutoff_bureau
-            
-            cutoff_modelo = np.percentile(df_perf['prob_modelo'], 70)
-            df_perf['aprova_modelo'] = df_perf['prob_modelo'] <= cutoff_modelo
-
-            swap_in_mask = (~df_perf['aprova_bureau']) & (df_perf['aprova_modelo'])
-            swap_out_mask = (df_perf['aprova_bureau']) & (~df_perf['aprova_modelo'])
-
-            n_swap_in = swap_in_mask.sum()
-            br_swap_in = df_perf.loc[swap_in_mask, 'target'].mean() * 100 if n_swap_in > 0 else 0
-            
-            n_swap_out = swap_out_mask.sum()
-            br_swap_out = df_perf.loc[swap_out_mask, 'target'].mean() * 100 if n_swap_out > 0 else 0
-
-            bads_evitados = df_perf.loc[swap_out_mask, 'target'].sum()
-            pct_swap_in = (n_swap_in / len(df_perf)) * 100
-            pct_swap_out = (n_swap_out / len(df_perf)) * 100
-
-
-            # ---------------------------------------------------------
-            # 1. GRUPO CONTROLE & KPI DE BENCHMARK
-            # ---------------------------------------------------------
-
-            with st.expander("⚡ Performance do Modelo na Amostra (Real-Time)", expanded=True):
-
-                excluir_controle = st.toggle("🔒 Excluir Grupo Controle da Avaliação de Performance", value=False)
-
-                if excluir_controle:
-                    cpf_clean = df_perf['num_cpf'].astype(str).str.replace(r'[^a-zA-Z0-9]', '', regex=True).str.zfill(11).str.upper()
-                    mask_controle = cpf_clean.str[5:7].isin(['ZZ', 'ZX'])
-                    df_view = df_perf[~mask_controle].copy()
-                    label_amostra = f"Amostra Filtrada (Ex-Controle): <b>{len(df_view):,}</b> registros"
-                else:
-                    df_view = df_perf.copy()
-                    label_amostra = f"Amostra Total (Sem Filtro): <b>{len(df_view):,}</b> registros"
-
-                st.markdown(f"""
-                <div style="background-color:#1A1A1A; padding:15px; border-radius:8px; border-left:4px solid #D4A017; margin-bottom:10px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                        <strong style="color: #FFF;">Filtro de Grupo Controle</strong>
-                        <span style="font-size: 12px; color: #D4A017; background: rgba(212, 160, 23, 0.1); padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(212, 160, 23, 0.2);">
-                            {label_amostra}
+            # ----------------------------------------------------------------
+            # 2. PAINEL EXECUTIVO: MÉTRICAS OFICIAIS (OOT + CONTROLE)
+            # ----------------------------------------------------------------
+            st.markdown("""
+                <div style="background-color:#1A1A1A; padding:15px; border-radius:8px; border-left:4px solid #4F1C22; margin-bottom:15px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <strong style="color: #FFF; font-size: 14px;">🔬 Escopo da Validação (Dados Oficiais do Treinamento)</strong>
+                        <span style="font-size: 12px; color: #BBB; background: rgba(255,255,255,0.05); padding: 3px 8px; border-radius: 4px; border: 1px solid #333;">
+                            Volume Processado: <strong style="color: #FFF;">2.633.900</strong> CPFs
                         </span>
                     </div>
-                    <span style="font-size: 13px; color: #BBB;">Regra de identificação: 6º e 7º dígitos do CPF contendo combinações <b>ZZ</b> e <b>ZX</b>.</span>
+                    <div style="font-size: 13.5px; color: #BBB; margin-top: 10px; line-height: 1.6;">
+                        <div style="margin-bottom: 4px;">
+                            • <b>Desenvolvimento (Out/24 a Jan/25):</b> Treino e Teste Out-of-Sample para calibração do algoritmo.
+                            <span style="color: #999; background-color: rgba(255, 255, 255, 0.05); padding: 2px 6px; border-radius: 4px; font-size: 11px; margin-left: 5px; border: 1px solid #444;">N = 1.362.431 (Treino)</span>
+                            <span style="color: #999; background-color: rgba(255, 255, 255, 0.05); padding: 2px 6px; border-radius: 4px; font-size: 11px; margin-left: 2px; border: 1px solid #444;">N = 340.608 (Teste)</span>
+                        </div>
+                        <div style="margin-bottom: 4px;">
+                            • <b>Métricas de Separação (KS/Gini):</b> Aferidas sobre a Safra OOT <b>(Fev/25 a Mar/25)</b> atestando generalização no tempo.
+                            <span style="color: #D4A017; background-color: rgba(212, 160, 23, 0.15); padding: 2px 6px; border-radius: 4px; font-size: 11px; margin-left: 5px; border: 1px solid rgba(212, 160, 23, 0.3);">N = 820.593 (OOT)</span>
+                        </div>
+                        <div>
+                            • <b>Métricas de Negócio (Swap):</b> Aferidas sobre o Grupo Controle <b>(Holdout ZZ/ZX)</b> isento de viés.
+                            <span style="color: #5EA758; background-color: rgba(94, 167, 88, 0.15); padding: 2px 6px; border-radius: 4px; font-size: 11px; margin-left: 5px; border: 1px solid rgba(94, 167, 88, 0.3);">N = 110.268 (Controle)</span>
+                        </div>
+                    </div>
                 </div>
-                """, unsafe_allow_html=True)
-                
-                st.write("<hr style='margin-top:5px; margin-bottom:20px;'>", unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
 
-                # =================================================================
-                # 3. CÁLCULO DAS MÉTRICAS AO VIVO
-                # =================================================================
-                fpr, tpr, _ = roc_curve(df_view['target'], df_view['prob_modelo'])
-                ks_live = max(tpr - fpr) * 100
+            with st.expander("⚡ Performance do Modelo: Estabilidade Temporal e Eficiência", expanded=True):
 
-                cutoff_bureau = np.nanpercentile(df_view['bur_score_02'], 30)
-                df_view['aprova_bureau'] = df_view['bur_score_02'] >= cutoff_bureau
-                cutoff_modelo = np.percentile(df_view['prob_modelo'], 70)
-                df_view['aprova_modelo'] = df_view['prob_modelo'] <= cutoff_modelo
+                # Fileira 1: KPIs Oficiais
+                col1, col2, col3, col4 = st.columns(4)
 
-                swap_in_mask = (~df_view['aprova_bureau']) & (df_view['aprova_modelo'])
-                swap_out_mask = (df_view['aprova_bureau']) & (~df_view['aprova_modelo'])
-
-                n_swap_in = swap_in_mask.sum()
-                br_swap_in = df_view.loc[swap_in_mask, 'target'].mean() * 100 if n_swap_in > 0 else 0
-                n_swap_out = swap_out_mask.sum()
-                br_swap_out = df_view.loc[swap_out_mask, 'target'].mean() * 100 if n_swap_out > 0 else 0
-
-                bads_evitados = df_view.loc[swap_out_mask, 'target'].sum()
-                pct_swap_in = (n_swap_in / len(df_view)) * 100 if len(df_view) > 0 else 0
-                pct_swap_out = (n_swap_out / len(df_view)) * 100 if len(df_view) > 0 else 0
-
-                # =================================================================
-                # 4. RENDERIZAÇÃO DOS PAINÉIS 
-                # =================================================================
-                kpi_swap01, kpi_swap02 = st.columns([1, 2.5])
-                ALTURA_CARD = "215px"
-
-                with kpi_swap01:
-                    ks_bench = metadata.get('ks_bench', 33.1)
-                    delta_ks = ks_live - ks_bench
+                with col1:
+                    delta_ks = ks_oot - ks_bench
                     cor_delta = "#5EA758" if delta_ks >= 0 else "#B53744"
                     seta = "↑" if delta_ks >= 0 else "↓"
-
                     st.markdown(f"""
-                    <div style="height: {ALTURA_CARD}; background: linear-gradient(145deg, #1A1C24, #262118); padding: 20px; border-radius: 10px; border-top: 4px solid #D4A017; box-shadow: 0 4px 6px rgba(0,0,0,0.2); display: flex; flex-direction: column;">
-                        <h4 style="margin-top: 0; color: #D4A017;">🎯 KS do Modelo</h4>
-                        <p style="font-size: 13px; color: #BBB; flex-grow: 1; margin-bottom: 0;">Poder de discriminação de risco calculado na amostra.</p>   
-                        <div style="background-color: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; margin-top: auto; display: flex; justify-content: space-between; align-items: flex-end;">
-                            <div>
-                                <span style="font-size: 2rem; font-weight: bold; color: #FFF; line-height: 1;">{ks_live:.1f}</span><br>
-                                <span style="font-size: 12px; color: #888;">Benchmark: {ks_bench}</span>
-                            </div>
-                            <div style="text-align: right; margin-bottom: 2px;">
-                                <div style="background-color: rgba(0,0,0,0.4); padding: 4px 8px; border-radius: 4px; border: 1px solid #333; display: inline-block;">
-                                    <span style="font-size: 13px; color: {cor_delta}; font-weight: bold;">{seta} {abs(delta_ks):.1f}</span>
-                                </div>
-                            </div>
+                    <div style="background: linear-gradient(145deg, #1A1C24, #1E1E1E); padding: 15px; border-radius: 8px; border-top: 3px solid #D4A017; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+                        <div style="font-size: 0.80rem; color: #999; font-weight: 600; margin-bottom: 5px;">KS (SEPARAÇÃO OOT)</div>
+                        <div style="display: flex; align-items: baseline; gap: 8px;">
+                            <span style="font-size: 1.8rem; font-weight: 700; color: #FFF;">{ks_oot:.2f}%</span>
+                            <span style="font-size: 0.9rem; color: {cor_delta}; font-weight: bold;">{seta} {abs(delta_ks):.2f}pp</span>
+                        </div>
+                        <div style="font-size: 0.75rem; color: #888;">Benchmark: {ks_bench:.1f}%</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with col2:
+                    st.markdown(f"""
+                    <div style="background: linear-gradient(145deg, #1A1C24, #1E1E1E); padding: 15px; border-radius: 8px; border-top: 3px solid #455A64; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+                        <div style="font-size: 0.80rem; color: #999; font-weight: 600; margin-bottom: 5px;">GINI (ORDENAÇÃO OOT)</div>
+                        <div style="font-size: 1.8rem; font-weight: 700; color: #FFF;">{gini_oot:.2f}%</div>
+                        <div style="font-size: 0.75rem; color: #888;">Poder de Discriminação Real</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with col3:
+                    status_psi = "Estável" if psi_oot < 0.1 else "Atenção" if psi_oot < 0.25 else "Drift"
+                    cor_psi = "#5EA758" if psi_oot < 0.1 else "#D4A017" if psi_oot < 0.25 else "#B53744"
+                    st.markdown(f"""
+                    <div style="background: linear-gradient(145deg, #1A1C24, #1E1E1E); padding: 15px; border-radius: 8px; border-top: 3px solid {cor_psi}; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+                        <div style="font-size: 0.80rem; color: #999; font-weight: 600; margin-bottom: 5px;">PSI (ESTABILIDADE)</div>
+                        <div style="display: flex; align-items: baseline; gap: 8px;">
+                            <span style="font-size: 1.8rem; font-weight: 700; color: #FFF;">{psi_oot:.4f}</span>
+                            <span style="font-size: 0.9rem; color: {cor_psi}; font-weight: bold;">{status_psi}</span>
+                        </div>
+                        <div style="font-size: 0.75rem; color: #888;">Degradação Temporal (Train/OOT)</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    
+                with col4:
+                    eficiencia_swap = swap_out_br - swap_in_br
+                    st.markdown(f"""
+                    <div style="background: linear-gradient(145deg, #1A1C24, #1E1E1E); padding: 15px; border-radius: 8px; border-top: 3px solid #2196F3; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+                        <div style="font-size: 0.80rem; color: #999; font-weight: 600; margin-bottom: 5px;">REDUÇÃO DE FPD (SWAP)</div>
+                        <div style="display: flex; align-items: baseline; gap: 8px;">
+                            <span style="font-size: 1.8rem; font-weight: 700; color: #FFF;">{eficiencia_swap:.2f}pp</span>
+                        </div>
+                        <div style="font-size: 0.75rem; color: #888;">Geração de Valor no Controle</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                
+                st.write("")
+
+                # Fileira 2: Os Cards de Swap (Grupo Controle)
+                ALTURA_CARD = "215px"
+                kpi_swap01, kpi_swap02 = st.columns([1, 1])
+
+                with kpi_swap01:
+                    st.markdown(f"""
+                    <div style="height: {ALTURA_CARD}; background: linear-gradient(145deg, #1A1C24, #1E2822); padding: 20px; border-radius: 10px; border-top: 4px solid #5EA758; box-shadow: 0 4px 6px rgba(0,0,0,0.2); display: flex; flex-direction: column;">
+                        <h4 style="margin-top: 0; color: #5EA758;">🟩 Swap-In (Oportunidade)</h4>
+                        <p style="font-size: 13px; color: #BBB; flex-grow: 1; margin-bottom: 0;">Clientes do <b>Grupo Controle</b> que seriam reprovados pelo mercado, mas resgatados pelo Behavior Score.</p>
+                        <div style="background-color: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; margin-top: auto;">
+                            <span style="font-size: 2.2rem; font-weight: bold; color: #FFF; line-height: 1;">{int(swap_in_vol):,}</span> <span style="font-size: 14px; color: #888;">({swap_in_pct:.1f}% da base)</span><br>
+                            <span style="font-size: 14px; color: #5EA758; font-weight:bold;">Bad Rate Real de {swap_in_br:.2f}%</span> <span style="font-size: 12px; color: #888;">(Risco absorvido com segurança)</span>
                         </div>
                     </div>
                     """, unsafe_allow_html=True)
 
                 with kpi_swap02:
                     st.markdown(f"""
-                    <div style="display: flex; gap: 20px;">
-                        <div style="flex: 1; height: {ALTURA_CARD}; background: linear-gradient(145deg, #1A1C24, #1E2822); padding: 20px; border-radius: 10px; border-top: 4px solid #5EA758; box-shadow: 0 4px 6px rgba(0,0,0,0.2); display: flex; flex-direction: column;">
-                            <h4 style="margin-top: 0; color: #5EA758;">🟩 Swap-In (Oportunidade)</h4>
-                            <p style="font-size: 13px; color: #BBB; flex-grow: 1; margin-bottom: 0;">Clientes que seriam <b>reprovados</b> pelo Bureau, mas <b>aprovados</b> pelo Behavior Score.</p>
-                            <div style="background-color: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; margin-top: auto;">
-                                <span style="font-size: 2rem; font-weight: bold; color: #FFF; line-height: 1;">{n_swap_in:,}</span> <span style="font-size: 13px; color: #888;">clientes ({pct_swap_in:.1f}%)</span><br>
-                                <span style="font-size: 13px; color: #5EA758; font-weight:bold;">Bad Rate de {br_swap_in:.1f}%</span> <span style="font-size: 11px; color: #888;">(Risco controlado)</span>
-                            </div>
-                        </div>
-                        <div style="flex: 1; height: {ALTURA_CARD}; background: linear-gradient(145deg, #1A1C24, #2A1A1C); padding: 20px; border-radius: 10px; border-top: 4px solid #B53744; box-shadow: 0 4px 6px rgba(0,0,0,0.2); display: flex; flex-direction: column;">
-                            <h4 style="margin-top: 0; color: #B53744;">🟥 Swap-Out (Proteção)</h4>
-                            <p style="font-size: 13px; color: #BBB; flex-grow: 1; margin-bottom: 0;">Clientes que seriam <b>aprovados</b> pelo Bureau, mas <b>reprovados</b> pelo Behavior Score.</p>
-                            <div style="background-color: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; margin-top: auto;">
-                                <span style="font-size: 2rem; font-weight: bold; color: #FFF; line-height: 1;">{n_swap_out:,}</span> <span style="font-size: 13px; color: #888;">clientes ({pct_swap_out:.1f}%)</span><br>
-                                <span style="font-size: 13px; color: #B53744; font-weight:bold;">Bad Rate de {br_swap_out:.1f}%</span> <span style="font-size: 11px; color: #888;">(Evitou {bads_evitados:,.0f} inadimplentes)</span>
-                            </div>
+                    <div style="height: {ALTURA_CARD}; background: linear-gradient(145deg, #1A1C24, #2A1A1C); padding: 20px; border-radius: 10px; border-top: 4px solid #B53744; box-shadow: 0 4px 6px rgba(0,0,0,0.2); display: flex; flex-direction: column;">
+                        <h4 style="margin-top: 0; color: #B53744;">🟥 Swap-Out (Proteção)</h4>
+                        <p style="font-size: 13px; color: #BBB; flex-grow: 1; margin-bottom: 0;">Inadimplentes latentes do <b>Grupo Controle</b> que o Bureau aprovaria, mas o Behavior Score barrou.</p>
+                        <div style="background-color: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; margin-top: auto;">
+                            <span style="font-size: 2.2rem; font-weight: bold; color: #FFF; line-height: 1;">{int(swap_out_vol):,}</span> <span style="font-size: 14px; color: #888;">({swap_out_pct:.1f}% da base)</span><br>
+                            <span style="font-size: 14px; color: #B53744; font-weight:bold;">Bad Rate Real de {swap_out_br:.2f}%</span> <span style="font-size: 12px; color: #888;">(Evitou {int(bads_evitados):,} FPDs diretos)</span>
                         </div>
                     </div>
                     """, unsafe_allow_html=True)
 
-                # =================================================================
-                # LÓGICA DE DIAGNÓSTICO DINÂMICO
-                # =================================================================
-                ks_status = "acima" if ks_live >= ks_bench else "abaixo"
-                ks_cor = "#5EA758" if ks_live >= ks_bench else "#B53744"
+                st.write("")
 
-                eficiencia_swap = br_swap_out - br_swap_in
-                if eficiencia_swap > 0:
-                    swap_diag = f"ganho de qualidade de <b>{eficiencia_swap:.1f} p.p.</b> na troca de público"
-                    swap_conclusao = "confirmando a eficiência do modelo em substituir riscos elevados por oportunidades rentáveis."
-                else:
-                    swap_diag = "atenção na calibração"
-                    swap_conclusao = "indicando que o público resgatado possui risco similar ou superior ao barrado. Recomenda-se revisar o cutoff."
+            # ----------------------------------------------------------------
+            # 3. TABELA & GRÁFICO: KS INCREMENTAL (Exatamente como no Notebook)
+            # ----------------------------------------------------------------
+            with st.expander("📚 A Jornada de Modelagem: Valor Adicionado por Fonte (OOT)", expanded=True):
+                
+                # CORREÇÃO: Usar nomes em string para as abas
+                tab_ks_01, tab_ks_02  = st.tabs(["📈 Evolução Incremental do KS", "📊 Tabela de Ganhos"])
 
-                if ks_live >= ks_bench and eficiencia_swap > 0:
-                    header_str = "✅ DIAGNÓSTICO: ALTA PERFORMANCE"
-                    bg_opacity = "0.05"
-                    border_color = "rgba(94, 167, 88, 0.2)"
-                else:
-                    header_str = "⚠️ DIAGNÓSTICO: NECESSITA ATENÇÃO"
-                    bg_opacity = "0.1"
-                    border_color = "rgba(212, 160, 23, 0.4)"
+                # Estrutura de dados
+                incremental_data = [
+                    {"Bloco": "Score 1", "Features": 1, "KS_OOT": 26.14, "Delta_KS": 26.14},
+                    {"Bloco": "Score 2", "Features": 2, "KS_OOT": 30.72, "Delta_KS": 4.58},
+                    {"Bloco": "Telco", "Features": 11, "KS_OOT": 30.94, "Delta_KS": 0.22},
+                    {"Bloco": "Cadastro", "Features": 16, "KS_OOT": 31.21, "Delta_KS": 0.27},
+                    {"Bloco": "Recarga", "Features": 41, "KS_OOT": 34.01, "Delta_KS": 2.80},
+                    {"Bloco": "Pagamento e Atraso", "Features": 62, "KS_OOT": 34.53, "Delta_KS": 0.52}
+                ]
 
-                # =================================================================
-                # RENDERIZAÇÃO DO DISCLAIMER DINÂMICO
-                # =================================================================
-                st.markdown(f"""
-                <div style="background-color: rgba(255, 255, 255, {bg_opacity}); border: 1px solid {border_color}; padding: 15px; border-radius: 8px; margin: 20px 0 20px 0;">
-                    <span style="color: {ks_cor}; font-weight: bold; font-size: 14px; letter-spacing: 0.5px;">{header_str}</span><br>
-                    <p style="font-size: 13.5px; color: #DDD; margin-top: 8px; line-height: 1.6; margin-bottom: 0;">
-                        A análise da amostra {'<b>Ex-Controle</b>' if excluir_controle else '<b>Total</b>'} indica que o modelo opera com 
-                        <span style="color: {ks_cor}; font-weight: bold;">KS de {ks_live:.1f}</span> (resultado {ks_status} do benchmark de {ks_bench}). 
-                        Houve um {swap_diag}, {swap_conclusao}
-                        A operação resultou na preservação de <b>{bads_evitados:,.0f} contratos</b> que resultariam em FPD (Bad Rate de {br_swap_out:.1f}% no Swap-Out).
-                    </p>
-                </div>
-                """, unsafe_allow_html=True)
-            
-            st.write("<hr style='margin-top:5px; margin-bottom:20px;'>", unsafe_allow_html=True)
+                df_incr = pd.DataFrame(incremental_data)
 
+                with tab_ks_02:
 
-            with st.expander("📚 Construção do Modelo: KS Incremental por Fonte (Histórico)", expanded=True):
+                    df_incr['Status'] = df_incr['KS_OOT'].apply(lambda x: "🚀 BATEU BENCHMARK!" if x >= ks_bench else "")
+                    
+                    df_tab = df_incr.copy()
+                    df_tab.rename(columns={'Bloco': 'Bloco Adicionado', 'Features': 'Nº Features Acumuladas', 'KS_OOT': 'KS Acumulado (OOT)'}, inplace=True)
+                    df_tab['Delta_KS'] = df_tab.apply(lambda row: f"+{row['Delta_KS']:.2f}pp" if row.name > 0 else f"{row['Delta_KS']:.2f}%", axis=1)
+                    df_tab['KS Acumulado (OOT)'] = df_tab['KS Acumulado (OOT)'].apply(lambda x: f"{x:.2f}%")
+                    
+                    st.dataframe(
+                        df_tab.style.apply(lambda x: ['color: #5EA758; font-weight: bold' if "🚀" in str(v) else '' for v in x], subset=['Status'])
+                                    .apply(lambda x: ['background-color: rgba(255,255,255,0.05)' if i%2==0 else '' for i in range(len(x))]),
+                        use_container_width=True,
+                        hide_index=True
+                    )
+                
+                with tab_ks_01:
+                    
+                    fig_inc = make_subplots(specs=[[{"secondary_y": True}]])
+                    colors_inc = [COLORS['good'] if d > 0 else COLORS['bad'] for d in df_incr['Delta_KS']]
+                    
+                    fig_inc.add_trace(go.Bar(
+                        x=df_incr['Bloco'], 
+                        y=df_incr['Delta_KS'], 
+                        name='Delta KS Marginal', 
+                        marker_color=colors_inc, 
+                        text=df_incr['Delta_KS'].apply(lambda x: f'+{x:.2f}pp'), 
+                        textposition='outside'
+                    ), secondary_y=False)
+                    
+                    fig_inc.add_trace(go.Scatter(
+                        x=df_incr['Bloco'], 
+                        y=df_incr['KS_OOT'], 
+                        mode='lines+markers+text', 
+                        name='KS Acumulado OOT (%)', 
+                        marker=dict(symbol='diamond', size=12, color='#1f77b4'), 
+                        line=dict(width=3, color='#1f77b4'),
+                        text=df_incr['KS_OOT'].apply(lambda x: f'{x:.2f}%'), 
+                        textposition='top center'
+                    ), secondary_y=True)
+                    
+                    fig_inc.add_hline(
+                        y=ks_bench, 
+                        line_dash="dash", 
+                        line_color="#1f77b4", 
+                        secondary_y=True,
+                        annotation_text=f"Benchmark ({ks_bench}%)", 
+                        annotation_position="bottom right",
+                        annotation_font_color="#BBB",
+                        annotation_yshift=-195
+                    )
+
+                    fig_inc.update_layout(
+                        template='plotly_dark', 
+                        height=450, 
+                        margin=dict(l=20, r=0, t=0, b=0),
+                        plot_bgcolor='rgba(0,0,0,0)',
+                        paper_bgcolor='rgba(0,0,0,0)',
+                        legend=dict(orientation="h", yanchor="bottom", y=0.90, xanchor="center", x=0.835)
+                    )
+
+                    fig_inc.update_yaxes(
+                        title_text="Delta KS Marginal (pp)", 
+                        secondary_y=False, 
+                        showgrid=False, 
+                        range=[-2, max(df_incr['Delta_KS'])+8]
+                    )
+                    
+                    fig_inc.update_yaxes(
+                        title_text="KS Acumulado OOT (%)", 
+                        secondary_y=True, 
+                        showgrid=True, 
+                        gridcolor='rgba(255,255,255,0.1)', 
+                        range=[20, 45]
+                    )
+                    
+                    fig_inc.update_yaxes(title_text="Delta KS Marginal (pp)", secondary_y=False, range=[-2, max(df_incr['Delta_KS'])+8])
+                    fig_inc.update_yaxes(title_text="KS Acumulado OOT (%)", secondary_y=True, range=[20, 45])
+                    
+                    st.plotly_chart(fig_inc, use_container_width=True)
 
                 st.markdown("""
-                <div style="background-color:#1A1A1A; padding:15px; border-radius:8px; border-left:4px solid #455A64; margin-bottom:15px; display: flex; flex-direction: column;">
-                    <strong style="color: #FFF; font-size: 14px;">📸 Foto do Treinamento (Out-of-Time)</strong>
-                    <span style="font-size: 13px; color: #BBB; margin-top: 4px;">
-                        Evolução do poder de separação aferido na documentação oficial de modelagem (OOT). Nota: Esta visão reflete a validação histórica do treinamento do modelo.
+                <div style="background-color:#1A1A1A; padding:15px; border-radius:8px; border-left:4px solid #4F1C22; margin-top:0px; margin-bottom:10px; display: flex; flex-direction: column;">
+                    <span style="font-size: 13.5px; color: #BBB;">
+                        Dados extraídos da validação OOT. Demonstra o salto de performance e o peso informacional real de cada bloco de dados interno da Claro para superar o benchmark sem depender de variáveis sensíveis (ESG).
                     </span>
                 </div>
                 """, unsafe_allow_html=True)
-
-                metadata = assets.get('metadata', {})
-                ks_bench = metadata.get('ks_bench', 33.1)
-                ks_final_notebook = metadata.get('ks_oot', 32.71)
-                
-                fallback_steps = {
-                    'Bureau': 31.71,
-                    '+ Cadastral': 0.02,
-                    '+ Telco': -0.01,
-                    '+ Recarga': 0.82,
-                    '+ Pagamento': 0.09,
-                    '+ Atraso': 0.07
-                }
-                
-                wf_steps = metadata.get('waterfall_steps', fallback_steps)
-
-                x_labels = list(wf_steps.keys()) + ["KS Final (Treino)"]
-                y_values = list(wf_steps.values()) + [ks_final_notebook]
-                
-                measures = ["relative"] * len(wf_steps) + ["total"]
-                
-                text_labels = [f"+{v:.2f}" if v > 0 else f"{v:.2f}" for v in wf_steps.values()] + [f"{ks_final_notebook:.2f}"]
-                if text_labels and '+' in text_labels[0]:
-                    text_labels[0] = text_labels[0].replace('+', '')
-
-                fig_wf = go.Figure(go.Waterfall(
-                    name="KS Incremental",
-                    orientation="v",
-                    measure=measures,
-                    x=x_labels,
-                    y=y_values,
-                    textposition="outside",
-                    text=text_labels,
-                    connector={"line": {"color": "#555", "width": 1.5, "dash": "dot"}},
-                    decreasing={"marker": {"color": "#B53744"}}, #
-                    increasing={"marker": {"color": "#5EA758"}}, 
-                    totals={"marker": {"color": "#D4A017"}}     
-                ))
-
-                fig_wf.update_layout(
-                    template="plotly_dark",
-                    height=380,
-                    margin=dict(l=20, r=20, t=40, b=20),
-                    plot_bgcolor='rgba(0,0,0,0)',
-                    paper_bgcolor='rgba(0,0,0,0)',
-                    yaxis_title="Poder de Separação (KS)",
-                    font=dict(color="#BBB")
-                )
-                
-                fig_wf.add_hline(
-                    y=ks_bench, 
-                    line_dash="dash", 
-                    line_color="#455A64", 
-                    annotation_text=f"Benchmark ({ks_bench})", 
-                    annotation_position="top left",
-                    annotation_font_color="#BBB"
-                )
-                
-                st.plotly_chart(fig_wf, use_container_width=True)
-
-
 
 
 # ==============================================================================
@@ -1445,13 +1691,14 @@ def main():
             st.markdown(
                 f"""
                 <h3 style="font-weight:700; margin-bottom: 0px;">
-                    Estratégia de Política de Crédito - 
+                    Estratégia de Política de Crédito - <span style="color: #888; font-weight: 500;">Behavior Score</span> - 
                     <code class="theme-1" style="font-size: 1.2rem;">Release 1.0</code>
                 </h3>
                 """,
                 unsafe_allow_html=True
             )
-            st.caption("🎯 Simulação, Otimização e Insights baseados no Modelo Comportamental (Behavior Score)")
+            caminho = "models/behavior_catboost_v1.pkl"
+            st.caption(f"⚖️ **Simulação e Otimização Estratégica** tracionadas pelo Artefato MLOps: `{caminho.split('/')[-1]}`")
             
             st.write("<hr style='margin-top:-6.5px; margin-bottom:-30px;'>", unsafe_allow_html=True)
             
@@ -1972,7 +2219,7 @@ def main():
             )
             
             caminho = "models/behavior_catboost_v1.pkl"
-            st.caption(f"🛠️ **Modelo de Produção (Artefato):** `{caminho.split('/')[-1]}`")
+            st.caption(f"⚡ **Escoragem em Tempo Real** executada pelo Artefato MLOps: `{caminho.split('/')[-1]}`")
             
             st.write("<hr style='margin-top:-6.5px; margin-bottom:-30px;'>", unsafe_allow_html=True)
 
