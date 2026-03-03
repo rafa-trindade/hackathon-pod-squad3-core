@@ -278,13 +278,55 @@ def parse_pandera_log(content):
     return data
 
 def parse_pipeline_execution_log(content):
-    """Parse de logs de execução global do pipeline."""
-    data = {"report_type": "Pipeline Execution", "steps": []}
-    run_id = re.search(r'RUN_ID:\s+(\d+)', content)
-    if run_id: data['run_id'] = run_id.group(1)
-    steps = re.findall(r'([\d\- :]+) \| \[SUCCESS\]\s*\| (.*?) \s*\| Status: (.*?) \| Duração: ([\d:]+)', content)
+    """Parse robusto de logs de execução global do pipeline (somente última execução)."""
+    
+    data = {
+        "report_type": "Pipeline Execution",
+        "steps": []
+    }
+
+    # 1️⃣ Captura apenas o ÚLTIMO bloco entre START e END
+    blocks = re.findall(
+        r'\[START\].*?\[END\]',
+        content,
+        re.DOTALL
+    )
+
+    if not blocks:
+        return data
+
+    last_block = blocks[-1]
+
+    run_id = re.search(r'RUN_ID:\s+(\d+)', last_block)
+    if run_id:
+        data['run_id'] = run_id.group(1)
+
+    steps = re.findall(
+        r'([\d\- :]+) \| \[SUCCESS\]\s*\| (.*?) \s*\| Status: (.*?) \| Duração: ([\d:]+)',
+        last_block
+    )
+
+    seen = set()
+
     for match in steps:
-        data['steps'].append({"timestamp": match[0], "step": match[1].strip(), "status": match[2].strip(), "duration": match[3].strip()})
+        step_name = match[1].strip()
+
+        if step_name in seen:
+            continue
+
+        seen.add(step_name)
+
+        data['steps'].append({
+            "timestamp": match[0],
+            "step": step_name,
+            "status": match[2].strip(),
+            "duration": match[3].strip()
+        })
+
+    total_time = re.search(r'TEMPO TOTAL:\s*([\d:]+)', last_block)
+    if total_time:
+        data['tempo_total'] = total_time.group(1)
+
     return data
 
 def main():
