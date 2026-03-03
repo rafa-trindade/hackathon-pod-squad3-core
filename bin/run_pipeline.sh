@@ -205,7 +205,5 @@ separator
 #########################################
 echo "Gerando JSON de execução..."
 $PYTHON_BIN scripts/observability/generate_pipeline_report.py "$RUN_ID" "$(whoami)" "$TOTAL_TIME_STR" "$LOG_FILE"
-
-run_step "PARSE OBSERVABILITY REPORTS" "scripts.observability.parse_reports"
-
-run_step "UPLOAD OBSERVABILITY REPORTS" "scripts.transformations.utils.upload_observability_reports"
+$PYTHON_BIN -m scripts.observability.parse_reports
+$PYTHON_BIN -m scripts.transformations.utils.upload_observability_reports
