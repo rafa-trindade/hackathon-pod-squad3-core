@@ -335,7 +335,7 @@ def main():
     for root, _, files in os.walk(base_dir):
         for file in files:
             path = os.path.join(root, file)
-            if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.rar', '.zip', '.json')): continue
+            if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.rar', '.zip', '.json', '.pkl', '.parquet', '.cbm')): continue
             try:
                 with open(path, 'r', encoding='utf-8') as f: content = f.read()
                 content_upper = content.upper()
