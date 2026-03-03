@@ -285,17 +285,18 @@ def parse_pipeline_execution_log(content):
         "steps": []
     }
 
-    # 1️⃣ Captura apenas o ÚLTIMO bloco entre START e END
-    blocks = re.findall(
-        r'\[START\].*?\[END\]',
-        content,
-        re.DOTALL
-    )
 
-    if not blocks:
+    last_end_index = content.rfind("[END]")
+
+    if last_end_index == -1:
         return data
 
-    last_block = blocks[-1]
+    start_index = content.rfind("[START]", 0, last_end_index)
+
+    if start_index == -1:
+        return data
+
+    last_block = content[start_index:last_end_index]
 
     run_id = re.search(r'RUN_ID:\s+(\d+)', last_block)
     if run_id:
