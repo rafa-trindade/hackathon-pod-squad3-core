@@ -33,7 +33,7 @@ except ImportError:
 # ==============================================================================
 # CONSTANTES E CORES (CORRIGIDO)
 # ==============================================================================
-ABT_PATH = "s3://lake/gold/abt_base_cmv/**/*.parquet"
+ABT_PATH = "s3://lake/gold/abt_model_features/**/*.parquet"
 
 COLORS = {
     'primary': '#731E27',   
@@ -133,7 +133,7 @@ def load_sample_data():
     con = get_db_connection()
     if con is None: return pd.DataFrame()
     
-    query = f"SELECT * FROM read_parquet('{ABT_PATH}') USING SAMPLE 5 PERCENT (bernoulli)"
+    query = f"SELECT * FROM read_parquet('{ABT_PATH}') USING SAMPLE 5 PERCENT (bernoulli, 42)"
     try:
         df = con.execute(query).df()
         return prepare_features(df)
@@ -490,7 +490,7 @@ def plot_psi_distribution(expected, actual, label_base, label_curr, feature):
 # ==============================================================================
 # SIMULADOR DE POLÍTICA (ABA 6)
 # ==============================================================================
-def calculate_policy_curve(df, min_age, min_payment):
+def calculate_policy_curve(df, min_age, min_recarga):
     """
     Calcula o trade-off entre Aprovação e Bad Rate para diferentes cutoffs de score.
     Retorna um DataFrame pronto para plotagem.
@@ -500,7 +500,7 @@ def calculate_policy_curve(df, min_age, min_payment):
     
     mask_static = (
         (df['idade'] >= min_age) & 
-        (df['pag_vlr_total_geral'].fillna(0) >= min_payment)
+        (df['rec_vlr_total_l90d'].fillna(0) >= min_recarga) 
     ).fillna(False) 
     
     total_obs = len(df)
@@ -525,6 +525,9 @@ def calculate_policy_curve(df, min_age, min_payment):
         
     return pd.DataFrame(rows)
 
+
+
+
 def plot_policy_tradeoff(curve_df, active_cutoff, sweet_spot):
     """Plota a curva de Aprovação vs Risco."""
     fig = make_subplots(specs=[[{"secondary_y": True}]])
@@ -542,35 +545,42 @@ def plot_policy_tradeoff(curve_df, active_cutoff, sweet_spot):
     )
     
     fig.add_vline(x=active_cutoff, line_dash="solid", line_color="white", 
-                  annotation_text=f"Cutoff: {active_cutoff}")
+                  annotation_text=f"Cutoff: {active_cutoff}", annotation_position="bottom left")
     
     if sweet_spot:
         fig.add_vline(x=sweet_spot, line_dash="dash", line_color=COLORS['warning'], 
-                      annotation_text=f"Sugestão IA: {sweet_spot}", annotation_position="bottom right")
+                      annotation_text=f"Sweet Spot: {sweet_spot}", annotation_position="top left")
     
     fig.update_layout(
         title="<b>Curva de Trade-off:</b> Risco vs Retorno",
         hovermode="x unified",
-        legend=dict(orientation="h", y=1.02, x=1),
-        height=400,
-        margin=dict(l=20, r=20, t=60, b=20),
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.05,
+            xanchor="center",
+            x=0.80
+        ),
+        height=350,
+        margin=dict(l=20, r=20, t=40, b=0),
         plot_bgcolor='rgba(0,0,0,0)',
         paper_bgcolor='rgba(0,0,0,0)'
     )
     
     fig.update_yaxes(title_text="Taxa de Aprovação (%)", secondary_y=False, showgrid=False)
     fig.update_yaxes(title_text="Bad Rate Esperado (%)", secondary_y=True, showgrid=True, gridcolor='rgba(0,0,0,0.1)')
-    
+    fig.update_xaxes(title_text="Cutoff de Score")
+
     return fig
 
-def plot_decision_boundary(df, cutoff, min_age, min_pay):
+def plot_decision_boundary(df, cutoff, min_age, min_recarga):
     """Scatter plot mostrando a fronteira de decisão (Idade vs Score)."""
     plot_df = df.sample(min(2000, len(df))).copy()
     
     mask = (
         (plot_df['behavior_score'] >= cutoff) & 
         (plot_df['idade'] >= min_age) & 
-        (plot_df['pag_vlr_total_geral'].fillna(0) >= min_pay)
+        (plot_df['rec_vlr_total_l90d'].fillna(0) >= min_recarga)
     )
     
     mask = mask.fillna(False)
@@ -588,11 +598,20 @@ def plot_decision_boundary(df, cutoff, min_age, min_pay):
     fig.add_vline(x=min_age, line_dash="dash", line_color="white")
     
     fig.update_layout(
-        height=350,
-        margin=dict(l=20, r=20, t=50, b=20),
         plot_bgcolor='rgba(0,0,0,0)',
-        paper_bgcolor='rgba(0,0,0,0)'
+        paper_bgcolor='rgba(0,0,0,0)',
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.05,
+            xanchor="center",
+            x=0.80
+        ),
+        height=350,
+        margin=dict(l=20, r=20, t=40, b=0),
     )
+
+    fig.update_layout(legend_title_text='')
     return fig
 
 
@@ -885,7 +904,6 @@ def plot_tierizacao_financeira(df, conversao, upsell, ltv, arpu, meses_inad, fat
     # Cria os 5 decis (Ratings A-E) com base na probabilidade do modelo
     df_plot = df.copy()
     
-    # Evita erro caso os decis gerem bordas duplicadas
     df_plot['rating_crm'] = pd.qcut(df_plot['prob_modelo'], q=5, labels=['A (Premium)', 'B (Seguro)', 'C (Standard)', 'D (Atenção)', 'E (Alto Risco)'], duplicates='drop')
 
     analise_tier = df_plot.groupby('rating_crm', observed=True).agg(
@@ -901,7 +919,6 @@ def plot_tierizacao_financeira(df, conversao, upsell, ltv, arpu, meses_inad, fat
     prejuizo = (analise_tier['Vol_Nacional'] * analise_tier['Inadimplencia_FPD'] * arpu * meses_inad)
     analise_tier['EBITDA_Potencial'] = receita - prejuizo
 
-    # Criação do gráfico com 2 eixos
     fig = make_subplots(specs=[[{"secondary_y": True}]])
 
     fig.add_trace(go.Bar(
