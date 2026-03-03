@@ -176,18 +176,16 @@ run_step "INSPECT SILVER" "scripts.transformations.utils.inspect_partition_silve
 #########################################
 # 6. TRANSFORMING - GOLD
 #########################################
-run_step "GOLD - labels_fpd" "scripts.transformations.gold.gold_labels_fpd"
-run_step "GOLD - abt_base_prod" "scripts.transformations.gold.gold_abt_base_prod"
 run_step "GOLD - labels_fpd_bureau" "scripts.transformations.gold.gold_labels_fpd_bureau"
 run_step "GOLD - abt_base_cmv" "scripts.transformations.gold.gold_abt_base_cmv"
+run_step "GOLD - abt_model_features" "scripts.transformations.gold.gold_abt_model_features"
 
 #########################################
 # 7. PROFILING & INSPECTION - GOLD
 #########################################
-run_step "PROFILING GOLD - labels_fpd" "scripts.profiling.gold.profile_labels_fpd"
-run_step "PROFILING GOLD - abt_base_prod" "scripts.profiling.gold.profile_abt_base_prod"
 run_step "PROFILING GOLD - labels_fpd_bureau" "scripts.profiling.gold.profile_labels_fpd_bureau"
 run_step "PROFILING GOLD - abt_base_cmv" "scripts.profiling.gold.profile_abt_base_cmv"
+run_step "PROFILING GOLD - abt_model_features" "scripts.profiling.gold.profile_abt_model_features"
 run_step "INSPECT GOLD" "scripts.transformations.utils.inspect_partition_gold"
 
 #########################################
