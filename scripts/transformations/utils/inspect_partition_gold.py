@@ -34,16 +34,7 @@ class Logger(object):
 # CONFIGURAÇÃO INDIVIDUAL POR PASTA
 # ------------------------------------------------------------------
 TABLES_CONFIG = {
-    "labels_fpd": {
-        "col_date": "safra",
-        "start": "202410",
-        "end": "202503"
-    },
-    "abt_base_prod": {
-        "col_date": "safra",
-        "start": "202410",
-        "end": "202503"
-    },
+
     "labels_fpd_bureau": {
         "col_date": "safra",
         "start": "202410",
@@ -53,7 +44,12 @@ TABLES_CONFIG = {
         "col_date": "safra",
         "start": "202410",
         "end": "202503"
-    }    
+    },  
+    "abt_model_features": {
+        "col_date": "safra",
+        "start": "202410",
+        "end": "202503"
+    }      
 }
 
 def get_month_list(start_str, end_str):
