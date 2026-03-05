@@ -1580,17 +1580,16 @@ def main():
             # ----------------------------------------------------------------
             with st.expander("📚 A Jornada de Modelagem: Valor Adicionado por Fonte (OOT)", expanded=True):
                 
-                # CORREÇÃO: Usar nomes em string para as abas
                 tab_ks_01, tab_ks_02  = st.tabs(["📈 Evolução Incremental do KS", "📊 Tabela de Ganhos"])
 
                 # Estrutura de dados
                 incremental_data = [
-                    {"Bloco": "Score 1", "Features": 1, "KS_OOT": 26.14, "Delta_KS": 26.14},
-                    {"Bloco": "Score 2", "Features": 2, "KS_OOT": 30.72, "Delta_KS": 4.58},
-                    {"Bloco": "Telco", "Features": 11, "KS_OOT": 30.94, "Delta_KS": 0.22},
-                    {"Bloco": "Cadastro", "Features": 16, "KS_OOT": 31.21, "Delta_KS": 0.27},
-                    {"Bloco": "Recarga", "Features": 41, "KS_OOT": 34.01, "Delta_KS": 2.80},
-                    {"Bloco": "Pagamento e Atraso", "Features": 62, "KS_OOT": 34.53, "Delta_KS": 0.52}
+                    {"Bloco": "Score 1", "Features": 1, "KS_OOT": 26.10, "Delta_KS": 26.10},
+                    {"Bloco": "Score 2", "Features": 2, "KS_OOT": 30.71, "Delta_KS": 4.60},
+                    {"Bloco": "Telco", "Features": 11, "KS_OOT": 30.94, "Delta_KS": 0.24},
+                    {"Bloco": "Cadastro", "Features": 16, "KS_OOT": 31.19, "Delta_KS": 0.25},
+                    {"Bloco": "Recarga", "Features": 41, "KS_OOT": 34.01, "Delta_KS": 2.82},
+                    {"Bloco": "Pagamento e Atraso", "Features": 62, "KS_OOT": 34.46, "Delta_KS": 0.45}
                 ]
 
                 df_incr = pd.DataFrame(incremental_data)
