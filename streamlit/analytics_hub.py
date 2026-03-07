@@ -236,6 +236,12 @@ def main():
 
 
     df_master = load_master_data()
+
+    if "cache_warmed" not in st.session_state:
+        load_master_data()
+        load_data_summary()
+        load_assets()
+        st.session_state["cache_warmed"] = True
     
     if df_master.empty:
         st.error("❌ Falha ao carregar a base de dados central.")
@@ -685,7 +691,7 @@ def main():
             with tab3:
                 with st.expander("🔍 Análise Univariada de Variáveis", expanded=True):
                     
-                    df_sample = df_master.copy()
+                    df_sample = df_master
 
                     ignored_cols = ['target', 'fpd', 'safra', 'num_cpf', 'cpf', 'behavior_score', 'prob_modelo']
                     numeric_cols = df_sample.select_dtypes(include=[np.number]).columns.tolist()
@@ -826,7 +832,7 @@ def main():
             # --- TAB 4: ANÁLISE MULTIVARIADA ---
             with tab4:
                     
-                df_multi = df_master.copy()
+                df_multi = df_master
 
                 ignored_cols = ['target', 'fpd', 'safra', 'num_cpf', 'cpf', 'behavior_score', 'prob_modelo']
                 numeric_cols = df_multi.select_dtypes(include=[np.number]).columns.tolist()
@@ -1033,7 +1039,7 @@ def main():
             with tab6:
                 with st.expander("⚖️ Monitoramento de Estabilidade (PSI)", expanded=True):
                     
-                    df_psi = df_master.copy()
+                    df_psi = df_master
 
                     if df_psi.empty or 'safra' not in df_psi.columns:
                         st.warning("Dados insuficientes ou coluna 'safra' ausente.")
@@ -1706,7 +1712,7 @@ def main():
             # ---------------------------------------------------------
             # 1. CARREGAMENTO DA BASE, ASSETS E ESCORAGEM OFICIAL
             # ---------------------------------------------------------
-            df_sim = df_master.copy() 
+            df_sim = df_master
             
             try:
                 assets = load_assets()

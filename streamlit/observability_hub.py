@@ -60,6 +60,7 @@ BASE_PATH = "observability/reports/"
 def get_client():
     return get_s3_client()
 
+@st.cache_data(ttl=300)
 def list_runs():
     """Lista as runs disponíveis (pastas run_id=...)"""
     s3 = get_client()
@@ -76,6 +77,7 @@ def list_runs():
         st.markdown(f"Erro ao listar runs no S3: {e}")
         return []
 
+@st.cache_data(ttl=300)
 def list_reports(run_id):
     """Lista todos os arquivos JSON dentro de uma run específica."""
     s3 = get_client()
@@ -94,6 +96,7 @@ def list_reports(run_id):
         st.markdown(f"Erro ao listar arquivos da run {run_id}: {e}")
         return []
 
+@st.cache_data(ttl=600)
 def load_json_from_s3(key):
     """Carrega um arquivo JSON do S3."""
     s3 = get_client()

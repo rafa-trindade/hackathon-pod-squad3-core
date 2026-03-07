@@ -128,7 +128,7 @@ def prepare_features(df):
             
     return df
 
-@st.cache_data(ttl=3600)
+@st.cache_resource
 def load_sample_data():
     con = get_db_connection()
     if con is None: return pd.DataFrame()
