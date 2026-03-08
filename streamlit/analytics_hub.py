@@ -1180,11 +1180,11 @@ def main():
             # 1. PREMISSAS DE NEGÓCIO (Do Notebook)
             # ---------------------------------------------------------
             ARPU_CONTROLE = 59.00
-            ARPU_PRE = 39.59
-            UPSELL = 19.41
+            ARPU_PRE = 30.00
+            UPSELL = 29.00
             MESES_LTV = 12
             MESES_INADIMPLENCIA = 3
-            CONVERSAO_ORGANICA = 0.0498 
+            CONVERSAO_ORGANICA = 0.03 
             BASE_NACIONAL = 35_000_000 
 
             # ---------------------------------------------------------
@@ -1215,7 +1215,7 @@ def main():
 
             with col_t1:
 
-                usar_extrapolacao = st.toggle("🌎 Extrapolar para Escala Nacional (35M Clientes)", value=False)
+                usar_extrapolacao = st.toggle("🌎 Extrapolar para Escala Nacional (35M Clientes)", value=True)
                 
                 if usar_extrapolacao:
                     fator_escala = BASE_NACIONAL / len(df_biz)
