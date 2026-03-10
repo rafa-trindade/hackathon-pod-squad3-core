@@ -76,8 +76,6 @@
 | `tel_var_50` | FLOAT | Variável telco 50 - métrica de comportamento de uso | Contínua | Definição exata no dicionário da camada silver telco |
 | `tel_var_82` | FLOAT | Variável telco 82 - métrica de comportamento de uso | Contínua | Definição exata no dicionário da camada silver telco |
 
-> ⚠️ **Nota:** As variáveis telco têm seus nomes ofuscados por política de privacidade. Consulte o dicionário interno da camada `silver/telco` para a descrição completa de cada uma.
-
 ---
 
 ## 5. Recarga
@@ -240,7 +238,3 @@
 | `taxa_*` | Proporções no intervalo `[0.0, 1.0]` |
 | `indice_*` | Scores compostos normalizados ou escalonados |
 | `tendencia_*` | Razões temporais comparando janelas distintas |
-
----
-
-*Book gerado automaticamente a partir da análise do pipeline `abt_base_cmv.py`.*
