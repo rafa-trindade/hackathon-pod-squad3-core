@@ -1459,7 +1459,7 @@ def main():
                 swap_out_vol = metadata.get('swap_out_vol', 7103)
                 swap_out_pct = metadata.get('swap_out_pct', 6.4)
                 swap_out_br = metadata.get('swap_out_br', 51.41)
-                bads_evitados = metadata.get('bads_evitados', 3683)
+                bads_evitados = metadata.get('bads_evitados', 3652)
 
             except Exception as e:
                 st.error(f"Erro ao ler metadados do modelo: {e}")
