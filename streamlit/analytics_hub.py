@@ -1452,13 +1452,13 @@ def main():
                 ks_bench = metadata.get('ks_bench', 33.1)
                 
                 # Resgate seguro dos Swaps (Grupo Controle)
-                swap_in_vol = metadata.get('swap_in_vol', 6837)
+                swap_in_vol = metadata.get('swap_in_vol', 6874)
                 swap_in_pct = metadata.get('swap_in_pct', 6.2)
-                swap_in_br = metadata.get('swap_in_br', 32.88)
+                swap_in_br = metadata.get('swap_in_br', 33.18)
                 
-                swap_out_vol = metadata.get('swap_out_vol', 7066)
+                swap_out_vol = metadata.get('swap_out_vol', 7103)
                 swap_out_pct = metadata.get('swap_out_pct', 6.4)
-                swap_out_br = metadata.get('swap_out_br', 52.12)
+                swap_out_br = metadata.get('swap_out_br', 51.41)
                 bads_evitados = metadata.get('bads_evitados', 3683)
 
             except Exception as e:
