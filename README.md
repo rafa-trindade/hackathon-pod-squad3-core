@@ -2,17 +2,20 @@
 
 ## 🏆 Resultados & Destaques
 
-<div style="display: flex; align-items: center;">
-  
-  <a href="https://drive.google.com/file/d/1fkRzZ8OR5SYczzmBmLq7r0Wg7lajzqf0/view?usp=sharing" target="_blank">
-    <img src="https://i.postimg.cc/52Lv0GKP/hackathon-pod.png" width="100" height="95" style="margin-right:10px;">
-  </a>
-
-  <a href="https://drive.google.com/file/d/19crkCafWzhxnG6tdUh8jsb4D2X1Px2fZ/view?usp=sharing" target="_blank">
-    <img src="https://i.postimg.cc/cLwYHjkz/hackathon-pod-skills.png" width="100" height="95">
-  </a>
-
-</div>
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://drive.google.com/file/d/1fkRzZ8OR5SYczzmBmLq7r0Wg7lajzqf0/view?usp=sharing">
+        <img src="https://i.postimg.cc/52Lv0GKP/hackathon-pod.png" width="100" height="95">
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://drive.google.com/file/d/19crkCafWzhxnG6tdUh8jsb4D2X1Px2fZ/view?usp=sharing">
+        <img src="https://i.postimg.cc/cLwYHjkz/hackathon-pod-skills.png" width="100" height="95">
+      </a>
+    </td>
+  </tr>
+</table>
 
 ---
 
