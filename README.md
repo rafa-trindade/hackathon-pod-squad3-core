@@ -2,7 +2,7 @@
 
 ## 🏆 Resultados & Destaques
 
-<table>
+<table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td align="center">
       <a href="https://drive.google.com/file/d/1fkRzZ8OR5SYczzmBmLq7r0Wg7lajzqf0/view?usp=sharing">
