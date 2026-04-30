@@ -6,7 +6,7 @@
   <tr>
     <td align="center">
       <a href="https://drive.google.com/file/d/1fkRzZ8OR5SYczzmBmLq7r0Wg7lajzqf0/view?usp=sharing">
-        <img src="https://i.postimg.cc/52Lv0GKP/hackathon-pod.png" width="100" height="95">
+        <img src="https://i.postimg.cc/52Lv0GKP/hackathon-pod.png" width="100">
       </a>
     </td>
     <td align="center">
